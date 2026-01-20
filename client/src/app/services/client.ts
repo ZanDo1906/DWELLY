@@ -1,0 +1,20 @@
+import { iClient } from './../interfaces/client';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, retry, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Client {
+  url = '/assets/data/client.json';
+  constructor(private http: HttpClient) { }
+  getClientData(): Observable<iClient[]> {
+    return this.http
+      .get<iClient[]>(this.url)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  handleError(error: HttpErrorResponse) {
+    return throwError(() => new Error(error.message));
+  }
+}
