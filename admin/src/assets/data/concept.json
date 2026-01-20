@@ -1,0 +1,164 @@
+[
+    {
+        "Ma_khong_gian": "01",
+        "Ten_khong_gian": "Phòng ăn Minimal 01",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_minimal/concept_1/overview.png",
+        "Mo_ta": "Không gian phòng ăn được thiết kế theo phong cách Minimal với bố cục gọn gàng, màu sắc trung tính và nội thất tinh giản. Thiết kế mang lại cảm giác thoáng đãng, sạch sẽ và giúp bữa ăn trở nên nhẹ nhàng, thư thái.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "02",
+        "Ten_khong_gian": "Phòng ăn Minimal 02",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_minimal/concept_2/overview.png",
+        "Mo_ta": "Không gian phòng ăn Minimal chú trọng công năng sử dụng, hạn chế chi tiết trang trí rườm rà, tập trung vào ánh sáng và sự cân đối, tạo nên trải nghiệm ăn uống thoải mái và tinh tế.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "03",
+        "Ten_khong_gian": "Phòng ăn Modern 01",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_modern/concept_3/overview.png",
+        "Mo_ta": "Phòng ăn mang phong cách Modern với đường nét rõ ràng, nội thất hiện đại và màu sắc thời thượng. Không gian tạo cảm giác năng động, tiện nghi, phù hợp với gia đình trẻ.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "04",
+        "Ten_khong_gian": "Phòng ăn Modern 02",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_modern/concept_4/overview.png",
+        "Mo_ta": "Thiết kế phòng ăn Modern kết hợp giữa thẩm mỹ và công năng, sử dụng vật liệu hiện đại giúp không gian sang trọng và dễ dàng sử dụng trong sinh hoạt hằng ngày.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "05",
+        "Ten_khong_gian": "Phòng ăn Scandinavian 01",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_scandinavian/concept_5/overview.png",
+        "Mo_ta": "Không gian phòng ăn Scandinavian sử dụng gam màu sáng, gỗ tự nhiên và ánh sáng tự nhiên, tạo cảm giác ấm cúng, gần gũi và thư giãn trong mỗi bữa ăn.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "06",
+        "Ten_khong_gian": "Phòng ăn Scandinavian 02",
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_AN/style_scandinavian/concept_6/overview.png",
+        "Mo_ta": "Thiết kế Scandinavian mang lại sự nhẹ nhàng và cân bằng, giúp phòng ăn trở thành nơi gắn kết gia đình với không khí ấm áp và thoải mái.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "07",
+        "Ten_khong_gian": "Phòng khách Minimal 01",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_minimal/concept_7/overview.png",
+        "Mo_ta": "Phòng khách Minimal được bố trí gọn gàng, hạn chế đồ đạc, tập trung vào công năng và sự thông thoáng, mang lại cảm giác tinh tế và hiện đại.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "08",
+        "Ten_khong_gian": "Phòng khách Minimal 02",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_minimal/concept_8/overview.png",
+        "Mo_ta": "Không gian phòng khách Minimal phù hợp với căn hộ nhỏ, giúp tối ưu diện tích và tạo cảm giác rộng rãi, nhẹ nhàng.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "09",
+        "Ten_khong_gian": "Phòng khách Modern 01",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_modern/concept_9/overview.png",
+        "Mo_ta": "Phòng khách Modern mang phong cách trẻ trung, sử dụng nội thất hiện đại và bố cục linh hoạt, thể hiện cá tính của gia chủ.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "10",
+        "Ten_khong_gian": "Phòng khách Modern 02",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_modern/concept_10/overview.png",
+        "Mo_ta": "Thiết kế Modern nhấn mạnh sự tiện nghi và thẩm mỹ, tạo không gian tiếp khách sang trọng và thoải mái.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "11",
+        "Ten_khong_gian": "Phòng khách Scandinavian 01",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/overview.png",
+        "Mo_ta": "Phòng khách Scandinavian mang đến cảm giác ấm áp với gỗ tự nhiên, màu sáng và ánh sáng dịu nhẹ.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "12",
+        "Ten_khong_gian": "Phòng khách Scandinavian 02",
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/overview.png",
+        "Mo_ta": "Không gian Scandinavian tạo sự gần gũi, thư giãn, phù hợp cho sinh hoạt và tiếp khách hằng ngày.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "13",
+        "Ten_khong_gian": "Phòng ngủ Minimal 01",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_minimal/concept_13/overview.png",
+        "Mo_ta": "Phòng ngủ Minimal mang lại cảm giác yên tĩnh và thư giãn, giúp tái tạo năng lượng sau ngày dài làm việc.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "14",
+        "Ten_khong_gian": "Phòng ngủ Minimal 02",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_minimal/concept_14/overview.png",
+        "Mo_ta": "Thiết kế phòng ngủ tối giản giúp không gian gọn gàng, thoáng đãng và dễ dàng nghỉ ngơi.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "15",
+        "Ten_khong_gian": "Phòng ngủ Modern 01",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_modern/concept_15/overview.png",
+        "Mo_ta": "Phòng ngủ Modern kết hợp giữa thẩm mỹ và tiện nghi, tạo không gian nghỉ ngơi hiện đại và cá tính.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "16",
+        "Ten_khong_gian": "Phòng ngủ Modern 02",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_modern/concept_16/overview.png",
+        "Mo_ta": "Không gian phòng ngủ Modern mang lại sự thoải mái, tiện dụng và phù hợp với nhịp sống hiện đại.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "17",
+        "Ten_khong_gian": "Phòng ngủ Scandinavian 01",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_scandinavian/concept_17/overview.png",
+        "Mo_ta": "Phòng ngủ Scandinavian tạo cảm giác ấm áp và nhẹ nhàng, giúp người dùng thư giãn sâu và dễ ngủ.",
+        "Trang_thai": true
+    },
+    {
+        "Ma_khong_gian": "18",
+        "Ten_khong_gian": "Phòng ngủ Scandinavian 02",
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Hinh_anh": "../assets/product/PHONG_NGU/style_scandinavian/concept_18/overview.png",
+        "Mo_ta": "Thiết kế Scandinavian mang đến sự cân bằng giữa thẩm mỹ và công năng, phù hợp cho không gian nghỉ ngơi lâu dài.",
+        "Trang_thai": true
+    }
+]

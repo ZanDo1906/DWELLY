@@ -1,0 +1,212 @@
+[
+    {
+        "Ma_chi_tiet": "OD001",
+        "Ma_don_mua": "ORD001",
+        "Ma_san_pham": "01",
+        "Don_gia": 50000000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD002",
+        "Ma_don_mua": "ORD001",
+        "Ma_san_pham": "02",
+        "Don_gia": 20500000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD003",
+        "Ma_don_mua": "ORD002",
+        "Ma_san_pham": "03",
+        "Don_gia": 2000000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD004",
+        "Ma_don_mua": "ORD002",
+        "Ma_san_pham": "04",
+        "Don_gia": 1520000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD005",
+        "Ma_don_mua": "ORD003",
+        "Ma_san_pham": "05",
+        "Don_gia": 52400000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD006",
+        "Ma_don_mua": "ORD004",
+        "Ma_san_pham": "06",
+        "Don_gia": 14550000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD007",
+        "Ma_don_mua": "ORD004",
+        "Ma_san_pham": "07",
+        "Don_gia": 15633000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD008",
+        "Ma_don_mua": "ORD005",
+        "Ma_san_pham": "08",
+        "Don_gia": 25241000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD009",
+        "Ma_don_mua": "ORD005",
+        "Ma_san_pham": "09",
+        "Don_gia": 49242000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD010",
+        "Ma_don_mua": "ORD006",
+        "Ma_san_pham": "10",
+        "Don_gia": 33134000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD011",
+        "Ma_don_mua": "ORD007",
+        "Ma_san_pham": "11",
+        "Don_gia": 3245000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD012",
+        "Ma_don_mua": "ORD007",
+        "Ma_san_pham": "12",
+        "Don_gia": 18241000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD013",
+        "Ma_don_mua": "ORD008",
+        "Ma_san_pham": "13",
+        "Don_gia": 20313000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD014",
+        "Ma_don_mua": "ORD008",
+        "Ma_san_pham": "14",
+        "Don_gia": 16214000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD015",
+        "Ma_don_mua": "ORD009",
+        "Ma_san_pham": "15",
+        "Don_gia": 22653000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD016",
+        "Ma_don_mua": "ORD010",
+        "Ma_san_pham": "16",
+        "Don_gia": 2763000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD017",
+        "Ma_don_mua": "ORD010",
+        "Ma_san_pham": "17",
+        "Don_gia": 43600000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD018",
+        "Ma_don_mua": "ORD011",
+        "Ma_san_pham": "18",
+        "Don_gia": 49900000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD019",
+        "Ma_don_mua": "ORD011",
+        "Ma_san_pham": "19",
+        "Don_gia": 10200000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD020",
+        "Ma_don_mua": "ORD012",
+        "Ma_san_pham": "20",
+        "Don_gia": 25500000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD021",
+        "Ma_don_mua": "ORD013",
+        "Ma_san_pham": "21",
+        "Don_gia": 6200000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD022",
+        "Ma_don_mua": "ORD013",
+        "Ma_san_pham": "22",
+        "Don_gia": 12500000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD023",
+        "Ma_don_mua": "ORD014",
+        "Ma_san_pham": "23",
+        "Don_gia": 28900000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD024",
+        "Ma_don_mua": "ORD014",
+        "Ma_san_pham": "24",
+        "Don_gia": 8500000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD025",
+        "Ma_don_mua": "ORD015",
+        "Ma_san_pham": "25",
+        "Don_gia": 7800000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD026",
+        "Ma_don_mua": "ORD016",
+        "Ma_san_pham": "26",
+        "Don_gia": 18399999,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD027",
+        "Ma_don_mua": "ORD016",
+        "Ma_san_pham": "27",
+        "Don_gia": 28000000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD028",
+        "Ma_don_mua": "ORD017",
+        "Ma_san_pham": "28",
+        "Don_gia": 43500000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD029",
+        "Ma_don_mua": "ORD017",
+        "Ma_san_pham": "29",
+        "Don_gia": 15200000,
+        "So_luong": 1
+    },
+    {
+        "Ma_chi_tiet": "OD030",
+        "Ma_don_mua": "ORD018",
+        "Ma_san_pham": "30",
+        "Don_gia": 20300000,
+        "So_luong": 1
+    }
+]

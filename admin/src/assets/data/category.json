@@ -1,0 +1,77 @@
+[
+    {
+        "Ma_danh_muc": "01",
+        "Ten_danh_muc": "Ghế sofa",
+        "Mo_ta": "Sản phẩm nội thất chính của phòng khách, dùng để tiếp khách, thư giãn và tạo điểm nhấn cho không gian sinh hoạt chung."
+    },
+    {
+        "Ma_danh_muc": "02",
+        "Ten_danh_muc": "Bàn trà",
+        "Mo_ta": "Bàn đặt trước ghế sofa, dùng để đặt đồ uống, sách báo và vật dụng trang trí trong phòng khách."
+    },
+    {
+        "Ma_danh_muc": "03",
+        "Ten_danh_muc": "Kệ tivi",
+        "Mo_ta": "Kệ dùng để đặt tivi và các thiết bị giải trí, đồng thời giúp sắp xếp không gian phòng khách gọn gàng."
+    },
+    {
+        "Ma_danh_muc": "04",
+        "Ten_danh_muc": "Tủ trang trí / Kệ trang trí",
+        "Mo_ta": "Sản phẩm dùng để trưng bày đồ decor, sách hoặc vật lưu niệm, giúp không gian thêm thẩm mỹ và cá tính."
+    },
+    {
+        "Ma_danh_muc": "05",
+        "Ten_danh_muc": "Giường ngủ",
+        "Mo_ta": "Nội thất trung tâm của phòng ngủ, phục vụ nhu cầu nghỉ ngơi và mang lại sự thoải mái cho người sử dụng."
+    },
+    {
+        "Ma_danh_muc": "06",
+        "Ten_danh_muc": "Tủ quần áo",
+        "Mo_ta": "Dùng để lưu trữ và sắp xếp quần áo, phụ kiện, giúp phòng ngủ gọn gàng và ngăn nắp."
+    },
+    {
+        "Ma_danh_muc": "07",
+        "Ten_danh_muc": "Tủ đầu giường",
+        "Mo_ta": "Tủ nhỏ đặt cạnh giường ngủ, dùng để đựng vật dụng cá nhân và trang trí không gian nghỉ ngơi."
+    },
+    {
+        "Ma_danh_muc": "08",
+        "Ten_danh_muc": "Bàn trang điểm",
+        "Mo_ta": "Bàn dùng để trang điểm và chăm sóc cá nhân, thường kết hợp với gương, tạo tiện ích cho phòng ngủ."
+    },
+    {
+        "Ma_danh_muc": "09",
+        "Ten_danh_muc": "Bàn ăn",
+        "Mo_ta": "Bàn dùng cho các bữa ăn gia đình, là trung tâm của không gian phòng ăn."
+    },
+    {
+        "Ma_danh_muc": "10",
+        "Ten_danh_muc": "Ghế ăn",
+        "Mo_ta": "Ghế sử dụng cùng bàn ăn, mang lại sự thoải mái khi dùng bữa."
+    },
+    {
+        "Ma_danh_muc": "12",
+        "Ten_danh_muc": "Đèn trần",
+        "Mo_ta": "Thiết bị chiếu sáng gắn trần, cung cấp ánh sáng chính cho phòng ngủ, phòng ăn hoặc các không gian khác."
+    },
+    {
+        "Ma_danh_muc": "13",
+        "Ten_danh_muc": "Bọc chăn gối",
+        "Mo_ta": "Phụ kiện phòng ngủ giúp bảo vệ chăn gối, đồng thời tăng tính thẩm mỹ cho không gian."
+    },
+    {
+        "Ma_danh_muc": "14",
+        "Ten_danh_muc": "Thảm",
+        "Mo_ta": "Sản phẩm trải sàn giúp tạo cảm giác ấm cúng, giảm tiếng ồn và tăng tính thẩm mỹ cho không gian."
+    },
+    {
+        "Ma_danh_muc": "16",
+        "Ten_danh_muc": "Đèn để bàn",
+        "Mo_ta": "Đèn chiếu sáng cục bộ, thường đặt trên bàn làm việc hoặc tủ đầu giường, phục vụ nhu cầu học tập và thư giãn."
+    },
+    {
+        "Ma_danh_muc": "17",
+        "Ten_danh_muc": "Ghế đơn",
+        "Mo_ta": "Ghế ngồi đơn lẻ dùng để thư giãn hoặc làm điểm nhấn trang trí cho phòng khách."
+    }
+]

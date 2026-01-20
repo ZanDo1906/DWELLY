@@ -1,0 +1,17 @@
+[
+    {
+        "Ma_loai_phong": "01",
+        "Ten_loai_phong": "Phòng khách",
+        "Mo_ta": "Không gian sinh hoạt chung của gia đình, dùng để tiếp khách, thư giãn và thể hiện phong cách nội thất của ngôi nhà."
+    },
+    {
+        "Ma_loai_phong": "02",
+        "Ten_loai_phong": "Phòng ngủ",
+        "Mo_ta": "Không gian nghỉ ngơi riêng tư, mang lại sự thoải mái và thư giãn, giúp tái tạo năng lượng sau một ngày dài."
+    },
+    {
+        "Ma_loai_phong": "03",
+        "Ten_loai_phong": "Phòng ăn",
+        "Mo_ta": "Không gian dùng để thưởng thức bữa ăn và gắn kết các thành viên trong gia đình, thường kết hợp với bếp tạo sự ấm cúng."
+    }
+]

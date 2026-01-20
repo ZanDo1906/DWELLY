@@ -1,0 +1,1154 @@
+[
+    {
+        "Ma_danh_gia": "REV001",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "01",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm rất tuyệt vời!",
+        "Thoi_gian_gui": "2025-10-01T08:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV002",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "02",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Chất lượng ổn, giao hàng nhanh.",
+        "Thoi_gian_gui": "2025-10-02T09:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV003",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "03",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Tạm ổn nhưng hơi khác so với ảnh.",
+        "Thoi_gian_gui": "2025-10-03T14:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV004",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "04",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất hài lòng với dịch vụ chăm sóc.",
+        "Thoi_gian_gui": "2025-10-04T10:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV005",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "05",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Đóng gói hơi sơ sài.",
+        "Thoi_gian_gui": "2025-10-05T16:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV006",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "06",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Đáng đồng tiền bát gạo.",
+        "Thoi_gian_gui": "2025-10-06T11:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV007",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "07",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Màu sắc đẹp, đúng như mô tả.",
+        "Thoi_gian_gui": "2025-10-07T13:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV008",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "08",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sẽ tiếp tục ủng hộ shop lâu dài.",
+        "Thoi_gian_gui": "2025-10-08T15:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV009",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "09",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Dùng một thời gian mới đánh giá được.",
+        "Thoi_gian_gui": "2025-10-09T09:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV010",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "10",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hàng tốt trong tầm giá.",
+        "Thoi_gian_gui": "2025-10-10T17:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV011",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "11",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Tuyệt vời, không có gì để chê.",
+        "Thoi_gian_gui": "2025-10-11T08:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV012",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "12",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Giao hàng hơi chậm một chút.",
+        "Thoi_gian_gui": "2025-10-12T12:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV013",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "13",
+        "Diem_danh_gia": 1,
+        "Noi_dung": "Sản phẩm bị lỗi khi nhận hàng.",
+        "Thoi_gian_gui": "2025-10-13T14:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV014",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "14",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Đẹp xuất sắc, nên mua nhé mọi người.",
+        "Thoi_gian_gui": "2025-10-14T11:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV015",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "15",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Tiện lợi và dễ sử dụng.",
+        "Thoi_gian_gui": "2025-10-15T09:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV016",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "16",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "10 điểm cho chất lượng!",
+        "Thoi_gian_gui": "2025-10-16T10:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV017",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "17",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Hơi nhỏ so với mình tưởng tượng.",
+        "Thoi_gian_gui": "2025-10-17T15:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV018",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "18",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Shop tư vấn rất nhiệt tình.",
+        "Thoi_gian_gui": "2025-10-18T13:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV019",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "19",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Chất liệu vải khá mát.",
+        "Thoi_gian_gui": "2025-10-19T16:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV020",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "20",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Không giống như kỳ vọng lắm.",
+        "Thoi_gian_gui": "2025-10-20T08:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV021",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "21",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hàng chính hãng, check được code.",
+        "Thoi_gian_gui": "2025-10-21T17:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV022",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "22",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đóng gói cẩn thận, nhiều lớp chống sốc.",
+        "Thoi_gian_gui": "2025-10-22T14:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV023",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "23",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Quá rẻ cho một sản phẩm chất lượng.",
+        "Thoi_gian_gui": "2025-10-23T11:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV024",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "24",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Phí ship hơi cao nhưng hàng ok.",
+        "Thoi_gian_gui": "2025-10-24T10:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV025",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "25",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sẽ giới thiệu cho bạn bè mua.",
+        "Thoi_gian_gui": "2025-10-25T09:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV026",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "26",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm dùng khá bền.",
+        "Thoi_gian_gui": "2025-10-26T15:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV027",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "27",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Ưng ý nhất từ trước đến nay.",
+        "Thoi_gian_gui": "2025-10-27T12:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV028",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "28",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Cầm rất chắc tay, sang trọng.",
+        "Thoi_gian_gui": "2025-10-28T08:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV029",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "29",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Nhận hàng thấy hộp hơi móp.",
+        "Thoi_gian_gui": "2025-10-29T16:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV030",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "30",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cảm ơn shop, hàng rất tốt.",
+        "Thoi_gian_gui": "2025-10-30T11:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV031",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "31",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đúng như mô tả quảng cáo.",
+        "Thoi_gian_gui": "2025-10-31T13:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV032",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "32",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Bình thường, không có gì đặc biệt.",
+        "Thoi_gian_gui": "2025-11-01T10:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV033",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "33",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Xịn xò thật sự luôn!",
+        "Thoi_gian_gui": "2025-11-02T14:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV034",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "34",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đáng mua nha mọi người.",
+        "Thoi_gian_gui": "2025-11-03T09:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV035",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "35",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Giao hàng nhanh như chớp.",
+        "Thoi_gian_gui": "2025-11-04T15:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV036",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "36",
+        "Diem_danh_gia": 1,
+        "Noi_dung": "Hàng bị trầy xước nhiều.",
+        "Thoi_gian_gui": "2025-11-05T08:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV037",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "37",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Chất lượng vượt xa giá tiền.",
+        "Thoi_gian_gui": "2025-11-06T11:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV038",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "38",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đẹp, nhưng màu hơi đậm hơn hình.",
+        "Thoi_gian_gui": "2025-11-07T13:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV039",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "39",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Mua lần thứ 2 vẫn rất ưng.",
+        "Thoi_gian_gui": "2025-11-08T17:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV040",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "40",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Dùng ổn, nhưng hơi khó lắp đặt.",
+        "Thoi_gian_gui": "2025-11-09T10:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV041",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "41",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Shop làm việc rất chuyên nghiệp.",
+        "Thoi_gian_gui": "2025-11-10T14:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV042",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "42",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Mọi thứ đều ổn.",
+        "Thoi_gian_gui": "2025-11-11T11:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV043",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "43",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cực kỳ hài lòng về sản phẩm.",
+        "Thoi_gian_gui": "2025-11-12T09:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV044",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "44",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Tốt, giao đúng mẫu mã.",
+        "Thoi_gian_gui": "2025-11-13T16:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV045",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "45",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Kích thước không vừa như tư vấn.",
+        "Thoi_gian_gui": "2025-11-14T15:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV046",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "46",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm rất thông minh và tiện lợi.",
+        "Thoi_gian_gui": "2025-11-15T12:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV047",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "47",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Khá hài lòng với mức giá này.",
+        "Thoi_gian_gui": "2025-11-16T08:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV048",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "48",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hàng rất chất lượng, 5 sao!",
+        "Thoi_gian_gui": "2025-11-17T10:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV049",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "49",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Chờ hàng hơi lâu nhưng sản phẩm ok.",
+        "Thoi_gian_gui": "2025-11-18T14:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV050",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "50",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Không có điểm gì để chê luôn.",
+        "Thoi_gian_gui": "2025-11-19T11:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV051",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "51",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Shop uy tín, nên tin tưởng.",
+        "Thoi_gian_gui": "2025-11-20T09:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV052",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "52",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Đã nhận được hàng, rất đẹp.",
+        "Thoi_gian_gui": "2025-11-21T16:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV053",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "53",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sử dụng đơn giản, hiệu quả.",
+        "Thoi_gian_gui": "2025-11-22T13:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV054",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "54",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất thích cách phục vụ của shop.",
+        "Thoi_gian_gui": "2025-11-23T10:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV055",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "55",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Chất lượng không như mong đợi.",
+        "Thoi_gian_gui": "2025-11-24T15:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV056",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "56",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hoàn hảo, đúng ý mình.",
+        "Thoi_gian_gui": "2025-11-25T08:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV057",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "57",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đóng gói chắc chắn, giao nhanh.",
+        "Thoi_gian_gui": "2025-11-26T14:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV058",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "58",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sẽ quay lại mua thêm.",
+        "Thoi_gian_gui": "2025-11-27T11:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV059",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "59",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Chất lượng trung bình.",
+        "Thoi_gian_gui": "2025-11-28T12:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV060",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "60",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Quá xuất sắc cho mức giá này.",
+        "Thoi_gian_gui": "2025-11-29T09:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV061",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "61",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Màu sắc tươi sáng, bền màu.",
+        "Thoi_gian_gui": "2025-11-30T15:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV062",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "62",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm cầm rất chắc chắn.",
+        "Thoi_gian_gui": "2025-12-01T10:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV063",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "63",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Giao hàng đúng hẹn.",
+        "Thoi_gian_gui": "2025-12-02T14:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV064",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "64",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Ưng ý, đúng mẫu 100%.",
+        "Thoi_gian_gui": "2025-12-03T08:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV065",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "65",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đáng để trải nghiệm.",
+        "Thoi_gian_gui": "2025-12-04T16:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV066",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "66",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Dùng được mấy hôm đã thấy lỗi.",
+        "Thoi_gian_gui": "2025-12-05T13:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV067",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "67",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cảm ơn shop vì món quà đi kèm.",
+        "Thoi_gian_gui": "2025-12-06T11:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV068",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "68",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Thiết kế đẹp, hiện đại.",
+        "Thoi_gian_gui": "2025-12-07T09:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV069",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "69",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm rất tốt, khuyên mua.",
+        "Thoi_gian_gui": "2025-12-08T15:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV070",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "70",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hài lòng với dịch vụ.",
+        "Thoi_gian_gui": "2025-12-09T10:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV071",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "71",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Không uổng công chờ đợi.",
+        "Thoi_gian_gui": "2025-12-10T14:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV072",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "72",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm khá ok trong tầm giá.",
+        "Thoi_gian_gui": "2025-12-11T11:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV073",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "01",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Giao hàng nhanh, đóng gói rất kỹ.",
+        "Thoi_gian_gui": "2026-01-01T10:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV074",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "02",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm dùng rất tốt, đúng như quảng cáo.",
+        "Thoi_gian_gui": "2026-01-02T14:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV075",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "03",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Chất lượng khá ổn so với tầm giá.",
+        "Thoi_gian_gui": "2026-01-03T09:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV076",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "04",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Hàng đẹp nhưng giao hơi lâu một chút.",
+        "Thoi_gian_gui": "2026-01-04T16:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV077",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "05",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất hài lòng, sẽ ủng hộ shop tiếp.",
+        "Thoi_gian_gui": "2026-01-05T08:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV078",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "06",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm cầm chắc tay, màu sắc đẹp.",
+        "Thoi_gian_gui": "2026-01-06T11:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV079",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "07",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Tuyệt vời, shop tư vấn rất nhiệt tình.",
+        "Thoi_gian_gui": "2026-01-07T13:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV080",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "08",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Hơi thất vọng vì kích thước nhỏ hơn tưởng tượng.",
+        "Thoi_gian_gui": "2026-01-08T15:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV081",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "09",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Chất liệu cao cấp, rất đáng tiền.",
+        "Thoi_gian_gui": "2026-01-09T10:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV082",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "10",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm ổn, không có lỗi lầm gì.",
+        "Thoi_gian_gui": "2026-01-10T09:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV083",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "11",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "10 điểm cho chất lượng và dịch vụ!",
+        "Thoi_gian_gui": "2026-01-11T14:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV084",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "12",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Màu sắc hơi nhạt hơn so với trên hình.",
+        "Thoi_gian_gui": "2026-01-12T11:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV085",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "13",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hàng chính hãng, check mã ok nha mọi người.",
+        "Thoi_gian_gui": "2026-01-13T17:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV086",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "14",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sử dụng rất tiện lợi, thiết kế thông minh.",
+        "Thoi_gian_gui": "2026-01-14T08:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV087",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "15",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cực kỳ ưng ý, đóng gói chuyên nghiệp.",
+        "Thoi_gian_gui": "2026-01-15T12:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV088",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "16",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Chất lượng tuyệt vời, giá cả phải chăng.",
+        "Thoi_gian_gui": "2026-01-16T15:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV089",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "17",
+        "Diem_danh_gia": 1,
+        "Noi_dung": "Giao sai mẫu, yêu cầu shop đổi trả.",
+        "Thoi_gian_gui": "2026-01-17T10:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV090",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "18",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Quá đẹp, không bõ công chờ đợi.",
+        "Thoi_gian_gui": "2026-01-18T13:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV091",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "19",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hàng xịn, dùng rất bền.",
+        "Thoi_gian_gui": "2026-01-19T09:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV092",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "20",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Đỉnh của chóp, khuyên mọi người nên mua.",
+        "Thoi_gian_gui": "2026-01-20T16:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV093",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "21",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Dùng tạm được, không quá xuất sắc.",
+        "Thoi_gian_gui": "2026-01-21T11:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV094",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "22",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cảm ơn shop nhiều, hàng quá tốt.",
+        "Thoi_gian_gui": "2026-01-22T14:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV095",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "23",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Giao hàng đúng hẹn, đúng mẫu mã.",
+        "Thoi_gian_gui": "2026-01-23T08:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV096",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "24",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Thật sự rất hài lòng với sản phẩm này.",
+        "Thoi_gian_gui": "2026-01-24T12:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV097",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "25",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hộp hơi móp nhưng hàng bên trong vẫn nguyên vẹn.",
+        "Thoi_gian_gui": "2026-01-25T15:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV098",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "26",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Mua làm quà tặng rất hợp lý.",
+        "Thoi_gian_gui": "2026-01-26T10:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV099",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "27",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Chất lượng vượt mong đợi trong tầm giá này.",
+        "Thoi_gian_gui": "2026-01-27T09:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV100",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "28",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất đẹp, sang xịn mịn.",
+        "Thoi_gian_gui": "2026-01-28T14:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV101",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "29",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Bình thường, không có gì nổi bật.",
+        "Thoi_gian_gui": "2026-01-29T11:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV102",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "30",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Shop làm việc rất uy tín, chuyên nghiệp.",
+        "Thoi_gian_gui": "2026-01-30T16:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV103",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "31",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hàng giao đúng như mô tả.",
+        "Thoi_gian_gui": "2026-01-31T13:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV104",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "32",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Tuyệt vời, sẽ giới thiệu cho người quen.",
+        "Thoi_gian_gui": "2026-02-01T10:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV105",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "33",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Dùng rất thích, nhẹ nhàng và êm.",
+        "Thoi_gian_gui": "2026-02-02T08:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV106",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "34",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Chất lượng đỉnh, giao hàng siêu tốc.",
+        "Thoi_gian_gui": "2026-02-03T15:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV107",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "35",
+        "Diem_danh_gia": 2,
+        "Noi_dung": "Sản phẩm không được như ý lắm.",
+        "Thoi_gian_gui": "2026-02-04T12:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV108",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "36",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất đáng mua, mọi người đừng do dự.",
+        "Thoi_gian_gui": "2026-02-05T09:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV109",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "37",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Gói hàng cẩn thận, hàng không trầy xước.",
+        "Thoi_gian_gui": "2026-02-06T14:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV110",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "38",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Cực kỳ thích thiết kế của sản phẩm này.",
+        "Thoi_gian_gui": "2026-02-07T11:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV111",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "39",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm cầm rất chắc chắn và đầm tay.",
+        "Thoi_gian_gui": "2026-02-08T17:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV112",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "40",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hàng đẹp, shop nhiệt tình tư vấn.",
+        "Thoi_gian_gui": "2026-02-09T10:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV113",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "41",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Chất lượng trung bình, phù hợp giá tiền.",
+        "Thoi_gian_gui": "2026-02-10T13:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV114",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "42",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất hài lòng về dịch vụ hậu mãi.",
+        "Thoi_gian_gui": "2026-02-11T15:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV115",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "43",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm tốt, không có gì phàn nàn.",
+        "Thoi_gian_gui": "2026-02-12T08:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV116",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "44",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Thật sự ấn tượng với chất lượng sản phẩm.",
+        "Thoi_gian_gui": "2026-02-13T12:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV117",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "45",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Giao hàng đúng hẹn, đúng chất lượng.",
+        "Thoi_gian_gui": "2026-02-14T09:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV118",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "46",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Tuyệt vời, đúng mẫu 100%.",
+        "Thoi_gian_gui": "2026-02-15T14:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV119",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "47",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Sản phẩm ổn nhưng phí ship hơi cao.",
+        "Thoi_gian_gui": "2026-02-16T11:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV120",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "48",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Không có điểm gì để chê, quá tốt.",
+        "Thoi_gian_gui": "2026-02-17T16:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV121",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "49",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hàng đẹp, dùng rất thích nha.",
+        "Thoi_gian_gui": "2026-02-18T10:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV122",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "50",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Shop rất nhiệt tình, giải đáp mọi thắc mắc.",
+        "Thoi_gian_gui": "2026-02-19T13:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV123",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "51",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Màu sắc rất bắt mắt, thiết kế đẹp.",
+        "Thoi_gian_gui": "2026-02-20T09:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV124",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "52",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hài lòng 100%, sẽ quay lại.",
+        "Thoi_gian_gui": "2026-02-21T15:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV125",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "53",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm chất lượng, đóng gói kỹ.",
+        "Thoi_gian_gui": "2026-02-22T11:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV126",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "54",
+        "Diem_danh_gia": 1,
+        "Noi_dung": "Nhận hàng bị lỗi, mong shop xem lại.",
+        "Thoi_gian_gui": "2026-02-23T08:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV127",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "55",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Quá xịn luôn, giá lại còn rẻ.",
+        "Thoi_gian_gui": "2026-02-24T14:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV128",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "56",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Dùng rất ổn, bền bỉ theo thời gian.",
+        "Thoi_gian_gui": "2026-02-25T10:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV129",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "57",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm tuyệt vời, cảm ơn shop!",
+        "Thoi_gian_gui": "2026-02-26T12:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV130",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "58",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đúng mẫu mã, đúng chất lượng.",
+        "Thoi_gian_gui": "2026-02-27T16:00:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV131",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "59",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Mọi thứ đều hoàn hảo.",
+        "Thoi_gian_gui": "2026-02-28T09:45:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV132",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "60",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Hàng đẹp, giao hàng rất nhanh.",
+        "Thoi_gian_gui": "2026-03-01T14:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV133",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "61",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Chất lượng tốt nhất trong phân khúc.",
+        "Thoi_gian_gui": "2026-03-02T11:10:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV134",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "62",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Rất ưng ý với sản phẩm này.",
+        "Thoi_gian_gui": "2026-03-03T08:35:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV135",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "63",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Sản phẩm xịn, shop làm việc tận tâm.",
+        "Thoi_gian_gui": "2026-03-04T15:50:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV136",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "64",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Tốt, đáng để trải nghiệm.",
+        "Thoi_gian_gui": "2026-03-05T13:25:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV137",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "65",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Rất đáng đồng tiền bát gạo.",
+        "Thoi_gian_gui": "2026-03-06T10:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV138",
+        "Ma_khach_hang": "C05",
+        "Ma_san_pham": "66",
+        "Diem_danh_gia": 3,
+        "Noi_dung": "Dùng ổn, hy vọng sẽ bền.",
+        "Thoi_gian_gui": "2026-03-07T09:05:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV139",
+        "Ma_khach_hang": "C06",
+        "Ma_san_pham": "67",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Không có gì để chê, quá tuyệt.",
+        "Thoi_gian_gui": "2026-03-08T16:40:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV140",
+        "Ma_khach_hang": "C07",
+        "Ma_san_pham": "68",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Đẹp, cầm rất thích.",
+        "Thoi_gian_gui": "2026-03-09T11:55:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV141",
+        "Ma_khach_hang": "C01",
+        "Ma_san_pham": "69",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Chất lượng sản phẩm rất tốt.",
+        "Thoi_gian_gui": "2026-03-10T14:30:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV142",
+        "Ma_khach_hang": "C02",
+        "Ma_san_pham": "70",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm đúng như mong đợi.",
+        "Thoi_gian_gui": "2026-03-11T08:20:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV143",
+        "Ma_khach_hang": "C03",
+        "Ma_san_pham": "71",
+        "Diem_danh_gia": 5,
+        "Noi_dung": "Hài lòng, sẽ mua thêm mẫu khác.",
+        "Thoi_gian_gui": "2026-03-12T12:15:00Z"
+    },
+    {
+        "Ma_danh_gia": "REV144",
+        "Ma_khach_hang": "C04",
+        "Ma_san_pham": "72",
+        "Diem_danh_gia": 4,
+        "Noi_dung": "Sản phẩm khá ok, đóng gói chắc chắn.",
+        "Thoi_gian_gui": "2026-03-13T10:45:00Z"
+    }
+]

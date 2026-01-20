@@ -1,0 +1,26 @@
+[
+    {
+        "Ma_phan_hang": "DONG",
+        "Ten_phan_hang": "Đồng",
+        "Diem_toi_thieu": 0,
+        "Mo_ta": "Khách hàng mới đăng ký tài khoản. Được nhận thông báo khuyến mãi chung của hệ thống và sử dụng đầy đủ các chức năng mua hàng cơ bản. Được áp dụng các voucher có mức giảm thấp do quản trị viên thiết lập."
+    },
+    {
+        "Ma_phan_hang": "BAC",
+        "Ten_phan_hang": "Bạc",
+        "Diem_toi_thieu": 20000,
+        "Mo_ta": "Khách hàng có mức chi tiêu ổn định. Được áp dụng nhiều voucher hơn với mức giảm trung bình (ví dụ 5%, 10%), được ưu tiên xử lý đơn hàng và nhận ưu đãi vào các dịp lễ theo chính sách của hệ thống."
+    },
+    {
+        "Ma_phan_hang": "VANG",
+        "Ten_phan_hang": "Vàng",
+        "Diem_toi_thieu": 50000,
+        "Mo_ta": "Khách hàng thân thiết lâu năm. Được áp dụng đa dạng voucher với mức giảm cao (ví dụ 10%, 12%, 15%, 20%), được ưu tiên hỗ trợ chăm sóc khách hàng và tham gia các chương trình khuyến mãi dành riêng cho thành viên VIP."
+    },
+    {
+        "Ma_phan_hang": "KIMCUONG",
+        "Ten_phan_hang": "Kim cương",
+        "Diem_toi_thieu": 100000,
+        "Mo_ta": "Khách hàng cao cấp nhất của hệ thống. Được áp dụng đầy đủ các voucher do quản trị viên tạo ra, bao gồm các voucher có mức giảm rất cao (ví dụ 20%, 25%, 50%), được miễn phí vận chuyển, nhận quà tặng sinh nhật và có nhân viên hỗ trợ riêng."
+    }
+]

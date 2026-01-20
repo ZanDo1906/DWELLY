@@ -1,0 +1,62 @@
+[
+    {
+        "Ma_khuyen_mai": "KM01",
+        "Ma_so": "UUDAIDONG5",
+        "Phan_tram_giam": 5,
+        "So_luong_con_lai": 200,
+        "Ma_phan_hang_toi_thieu": "DONG",
+        "Ngay_bat_dau": "2026-01-01",
+        "Ngay_het_han": "2026-03-31",
+        "Mo_ta": "Giảm 5% cho tất cả khách hàng từ hạng Đồng trở lên. Áp dụng cho đơn hàng đầu tiên.",
+        "Trang_thai": true,
+        "Ma_quan_tri_vien_tao": "AD01"
+    },
+    {
+        "Ma_khuyen_mai": "KM02",
+        "Ma_so": "UUDAIBAC10",
+        "Phan_tram_giam": 10,
+        "So_luong_con_lai": 150,
+        "Ma_phan_hang_toi_thieu": "BAC",
+        "Ngay_bat_dau": "2026-01-10",
+        "Ngay_het_han": "2026-04-30",
+        "Mo_ta": "Giảm 10% cho khách hàng hạng Bạc trở lên.",
+        "Trang_thai": true,
+        "Ma_quan_tri_vien_tao": "AD01"
+    },
+    {
+        "Ma_khuyen_mai": "KM03",
+        "Ma_so": "UUDAIVANG15",
+        "Phan_tram_giam": 15,
+        "So_luong_con_lai": 100,
+        "Ma_phan_hang_toi_thieu": "VANG",
+        "Ngay_bat_dau": "2026-02-01",
+        "Ngay_het_han": "2026-05-31",
+        "Mo_ta": "Giảm 15% cho khách hàng hạng Vàng trở lên. Áp dụng cho tất cả các sản phẩm nội thất.",
+        "Trang_thai": true,
+        "Ma_quan_tri_vien_tao": "AD02"
+    },
+    {
+        "Ma_khuyen_mai": "KM04",
+        "Ma_so": "VIPKIMCUONG25",
+        "Phan_tram_giam": 25,
+        "So_luong_con_lai": 50,
+        "Ma_phan_hang_toi_thieu": "KIMCUONG",
+        "Ngay_bat_dau": "2026-02-15",
+        "Ngay_het_han": "2026-06-30",
+        "Mo_ta": "Giảm 25% dành riêng cho khách hàng Kim cương. Áp dụng cho toàn bộ đơn hàng, số lượng có hạn.",
+        "Trang_thai": true,
+        "Ma_quan_tri_vien_tao": "AD02"
+    },
+    {
+        "Ma_khuyen_mai": "KM05",
+        "Ma_so": "SIEUSALE50",
+        "Phan_tram_giam": 30,
+        "So_luong_con_lai": 10,
+        "Ma_phan_hang_toi_thieu": "KIMCUONG",
+        "Ngay_bat_dau": "2026-03-01",
+        "Ngay_het_han": "2026-03-15",
+        "Mo_ta": "Voucher đặc biệt giảm 20% cho khách hàng Kim cương trong chương trình khuyến mãi giới hạn.",
+        "Trang_thai": true,
+        "Ma_quan_tri_vien_tao": "AD03"
+    }
+]

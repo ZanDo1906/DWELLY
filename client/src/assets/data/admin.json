@@ -1,0 +1,52 @@
+[
+    {
+        "Ma_quan_tri_vien": "AD01",
+        "Ho_va_ten": "Lê Thanh Như Ngọc",
+        "So_dien_thoai": "0901234567",
+        "Email": "nhungoc.lSe@gmail.com",
+        "Mat_khau": "N@45679",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_admin.png",
+        "Ngay_tao": "2026-01-14T00:00:00.000Z"
+    },
+    {
+        "Ma_quan_tri_vien": "AD02",
+        "Ho_va_ten": "Nguyễn Thị Yến Nhi",
+        "So_dien_thoai": "0912345678",
+        "Email": "yennhi.nguyen@gmail.com",
+        "Mat_khau": "N@45679",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_admin.png",
+        "Ngay_tao": "2026-01-14T00:00:00.000Z"
+    },
+    {
+        "Ma_quan_tri_vien": "AD03",
+        "Ho_va_ten": "Nguyễn Trang Thục Quyên",
+        "So_dien_thoai": "0923456789",
+        "Email": "quyen.nguyen@gmail.com",
+        "Mat_khau": "N@45679",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_admin.png",
+        "Ngay_tao": "2026-01-14T00:00:00.000Z"
+    },
+    {
+        "Ma_quan_tri_vien": "AD04",
+        "Ho_va_ten": "Lê Thị Thanh Thảo",
+        "So_dien_thoai": "0934567890",
+        "Email": "thao.le@gmail.com",
+        "Mat_khau": "N@45679",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_admin.png",
+        "Ngay_tao": "2026-01-14T00:00:00.000Z"
+    },
+    {
+        "Ma_quan_tri_vien": "AD05",
+        "Ho_va_ten": "Đỗ Nhã Văn",
+        "So_dien_thoai": "0945678901",
+        "Email": "van.do@gmail.com",
+        "Mat_khau": "N@45679",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_admin.png",
+        "Ngay_tao": "2026-01-14T00:00:00.000Z"
+    }
+]

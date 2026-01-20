@@ -1,0 +1,52 @@
+[
+    {
+        "Ma_lien_he": "LH01",
+        "Ho_ten": "Nguyễn Minh Tuấn",
+        "Email": "tuan.nguyen@gmail.com",
+        "So_dien_thoai": "0987654321",
+        "Noi_dung": "Tôi muốn hỏi về thời gian bảo hành của sofa da khi mua tại cửa hàng.",
+        "Trang_thai": "Chưa xử lý",
+        "Ngay_gui": "2026-01-10T08:30:00Z",
+        "Ma_quan_tri_vien_xu_ly": "AD01"
+    },
+    {
+        "Ma_lien_he": "LH02",
+        "Ho_ten": "Trần Thị Mai",
+        "Email": "mai.tran@yahoo.com",
+        "So_dien_thoai": "0912345678",
+        "Noi_dung": "Shop có hỗ trợ giao hàng và lắp đặt nội thất trọn gói không?",
+        "Trang_thai": "Đã xử lý",
+        "Ngay_gui": "2026-01-11T02:15:00Z",
+        "Ma_quan_tri_vien_xu_ly": "AD01"
+    },
+    {
+        "Ma_lien_he": "LH03",
+        "Ho_ten": "Lê Hoàng Nam",
+        "Email": "nam.le@outlook.com",
+        "So_dien_thoai": "0909988776",
+        "Noi_dung": "Tôi muốn đổi mẫu bàn ăn đã đặt vì kích thước không phù hợp.",
+        "Trang_thai": "Đã xử lý",
+        "Ngay_gui": "2026-01-12T09:45:00Z",
+        "Ma_quan_tri_vien_xu_ly": "AD01"
+    },
+    {
+        "Ma_lien_he": "LH04",
+        "Ho_ten": "Phạm Thu Hằng",
+        "Email": "hang.pham@gmail.com",
+        "So_dien_thoai": "0977123456",
+        "Noi_dung": "Sản phẩm đèn thả bàn ăn khi sử dụng có hiện tượng nhấp nháy, nhờ kiểm tra giúp.",
+        "Trang_thai": "Chưa xử lý",
+        "Ngay_gui": "2026-01-13T14:20:00Z",
+        "Ma_quan_tri_vien_xu_ly": "AD01"
+    },
+    {
+        "Ma_lien_he": "LH05",
+        "Ho_ten": "Võ Quốc Bảo",
+        "Email": "bao.vo@gmail.com",
+        "So_dien_thoai": "0933445566",
+        "Noi_dung": "Tôi cần tư vấn chọn thảm trải sàn phù hợp cho phòng khách diện tích nhỏ.",
+        "Trang_thai": "Đã xử lý",
+        "Ngay_gui": "2026-01-14T06:05:00Z",
+        "Ma_quan_tri_vien_xu_ly": "AD01"
+    }
+]

@@ -1,0 +1,1442 @@
+[
+    {
+        "Ma_san_pham": "01",
+        "Ten_san_pham": "Giường bọc nệm Seraph",
+        "Gia_ban": 50000000,
+        "Mo_ta": "Chiếc giường Seraph của chúng tôi tạo nên một dấu ấn hiện đại nhưng vẫn giữ được vẻ ấm áp và gần gũi. Với những đường nét uốn lượn nhẹ nhàng được tạo hình tỉ mỉ, phần đầu giường mở rộng sang hai bên như đôi cánh, mang lại cảm giác được che chở và vỗ về. Phần khung giường và đuôi giường bo tròn tiếp nối những đường cong êm ái, được bọc trong lớp vải boucle mềm mại và có bề mặt sợi dệt tinh tế.\n\nChi tiết kỹ thuật:\n- Gỗ thông đạt chứng nhận FSC® và gỗ công nghiệp từ các nguồn rừng được quản lý bền vững.\n- Đệm sợi Polyfiber: Lớp làm đầy bằng sợi tổng hợp tạo độ phồng và êm.\n- Hệ thống nan giường chịu lực, không cần dùng thêm dát giường lò xo.\n- Nút nhựa bảo vệ sàn nhà: Gắn dưới chân giường để tránh trầy xước sàn khi di chuyển.\n- Sản xuất tại Mỹ từ các nguyên liệu nhập khẩu.",
+        "Kich_thuoc": "1.27m (Cao) x 3.38m (Rộng) x 2.27m (Sâu)",
+        "Chat_lieu": "Vải polyester sợi xoắn và gỗ thông",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 14,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "15",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "02",
+        "Ten_san_pham": "Tủ đầu giường gỗ Sồi tự nhiên Anneli",
+        "Gia_ban": 20500000,
+        "Mo_ta": "Được thiết kế để tôn vinh những đường nét của chiếc giường Anneli, chiếc tủ đầu giường này sở hữu cấu trúc hình \"đường đua\" tuyệt đẹp từ gỗ sồi với những đường vân sắc nét. Mặt ngăn kéo cong được thiết kế phẳng mượt với khung bo tròn, lặp lại hình dáng kén của mặt bàn với các cạnh được bo góc liền mạch. Những chiếc núm tay nắm nhỏ nhắn làm điểm nhấn cho mỗi ngăn kéo bằng ánh kim mờ của đồng thau đúc, giúp tăng thêm vẻ thẩm mỹ sạch sẽ và hiện đại. Không chỉ dừng lại ở vẻ ngoài, chiếc tủ này còn được trang bị ổ cắm điện tích hợp cổng USB để bạn thắp sáng đèn và sạc các thiết bị điện tử một cách tiện lợi.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ sồi lạng đạt chứng nhận FSC®, gỗ bạch dương khối và gỗ công nghiệp từ các nguồn rừng được quản lý bền vững.\n- Lớp hoàn thiện: Màu gỗ sồi tự nhiên giúp làm nổi bật vân gỗ.\n- Ngăn kéo: 2 ngăn kéo với ray trượt giảm chấn lắp âm.\n- Tay nắm: Kim loại hoàn thiện màu đồng thau đúc.\n- Bộ nguồn tích hợp: 2 ổ cắm điện, 1 cổng USB, 1 cổng USB-C.\n- Quản lý dây điện: Có khe đi dây phía sau.\n- Chân tăng chỉnh: Có nút điều chỉnh độ cao.\n- Sản xuất tại: Việt Nam.",
+        "Kich_thuoc": "0.79m (Cao) x 1.57m (Rộng) x 0.48m (Sâu)",
+        "Chat_lieu": "Gỗ sồi",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 5,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "07",
+        "Ma_khong_gian": "15",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "03",
+        "Ten_san_pham": "Bọc chăn gối - Vải Cotton Linen hữu cơ kẻ sọc nổi",
+        "Gia_ban": 2000000,
+        "Mo_ta": "Những đường kẻ sọc mang hiệu ứng bề mặt với tông màu mát mẻ của vùng duyên hải mang đến cho chiếc vỏ chăn cảm giác phóng khoáng và dễ chịu. Được dệt từ những sợi vải nhuộm xanh lá xám và xanh sương mù, họa tiết kẻ sọc bất đối xứng kết hợp hài hòa với nền vải cotton-linen nguyên bản, tạo nên vẻ thư thái và đậm chất biển cả.\n\nChi tiết kỹ thuật:\n- Chất liệu: Mặt trên 55% cotton & 45% linen, mặt dưới 100% cotton.\n- Cấu tạo: Có dây buộc bốn góc và hàng khuy cài giữ ruột chăn.\n- Đặc tính: Mềm mại, dày dặn nhưng thoáng khí.\n- Tính ứng dụng: Phù hợp cho mọi mùa.\n- Sản xuất tại: Ấn Độ.",
+        "Kich_thuoc": "2.00m (Rộng) x 2.20m (Dài)",
+        "Chat_lieu": "Cotton và linen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 30,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "13",
+        "Ma_khong_gian": "15",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "04",
+        "Ten_san_pham": "Thảm trải sàn Whistler",
+        "Gia_ban": 1520000,
+        "Mo_ta": "Mẫu thảm Whistler tinh khôi và thanh nhã được dệt thủ công bởi những nghệ nhân bậc thầy. Sự kết hợp giữa sợi đay tự nhiên và sợi viscose bóng bẩy tạo nên chiều sâu thị giác và vẻ đẹp đa chiều đầy nghệ thuật. Thảm phù hợp cho những khu vực có mật độ đi lại thấp đến trung bình.\n\nChi tiết kỹ thuật:\n- Chế tác: Dệt khung cửi & dệt tay.\n- Bề mặt: 60% viscose, 40% sợi đay.\n- Đế thảm: 100% cotton.\n- Cạnh thảm: Vắt sổ tỉ mỉ.\n- Chứng nhận GoodWeave.\n- Sản xuất tại: Ấn Độ.",
+        "Kich_thuoc": "3.66m (Rộng) x 4.57m (Dài)",
+        "Chat_lieu": "Sợi viscose, sợi đay và cotton",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 8,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "15",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "05",
+        "Ten_san_pham": "Giường ngủ Adelaide: Bọc nệm cao cấp",
+        "Gia_ban": 52400000,
+        "Mo_ta": "Hãy tận hưởng sự nghỉ ngơi tuyệt vời trong những đường cong đầy đặn và mềm mại của chiếc giường Adelaide. Được thiết kế với các đường nét bo tròn và lớp đệm dày dặn tạo nên vẻ ngoài vừa ấm cúng vừa thanh lịch, phần đầu giường uốn cong nhẹ ôm lấy khung giường như một vòng tay vỗ về đầy thoải mái.\n\nChi tiết kỹ thuật:\n- Chất liệu khung: Gỗ thông đạt chứng nhận FSC® và gỗ công nghiệp từ các nguồn rừng được quản lý bền vững.\n- Lớp đệm: Đệm mút Polyfoam.\n- Hệ thống nan giường: Không cần dùng thêm đế nệm lò xo.\n- Bảo vệ sàn: Nút nhựa dưới chân giường.\n- Sản xuất tại: Mỹ từ các nguyên liệu nhập khẩu.",
+        "Kich_thuoc": "1.27m (Cao) x 3.38m (Rộng) x 2.27m (Sâu)",
+        "Chat_lieu": "Gỗ thông và vải Chenille từ sợi Poly tái chế",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 15,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "05",
+        "Ma_khong_gian": "16",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "06",
+        "Ten_san_pham": "Đèn chùm thủy tinh Etienne",
+        "Gia_ban": 14550000,
+        "Mo_ta": "Đèn chùm Etienne gây ấn tượng mạnh mẽ với cụm 10 bóng đèn thủy tinh hình dáng hữu cơ, hoàn thiện sắc champagne rực rỡ. Phần thân và đế bằng đồng thau đúc tạo nên vẻ sang trọng và cuốn hút khi treo trên bàn ăn, sảnh chờ hoặc phòng ngủ.\n\nChi tiết kỹ thuật:\n- Chất liệu: Đế thép hoàn thiện màu đồng thau đúc.\n- Bóng đèn: Thủy tinh phủ bóng màu champagne.\n- Đui đèn: 10 đui E12.\n- Công suất: Bóng sợi đốt 60W hoặc LED 5W.\n- Điều chỉnh: Có thể thay đổi độ cao, phù hợp nhiều loại trần.\n- Tương thích: Công tắc điều chỉnh độ sáng.\n- Xuất xứ: Nhập khẩu Mỹ.",
+        "Kich_thuoc": "0.41m (Cao) x 1.02m (Rộng) x 0.89m (Sâu)",
+        "Chat_lieu": "Thủy tinh và đồng thau",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 2,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "16",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "07",
+        "Ten_san_pham": "Đèn bàn Beachwood - Đế đá cẩm thạch Calacatta vàng & Chao mây đan",
+        "Gia_ban": 15633000,
+        "Mo_ta": "Đèn bàn Beachwood là sự giao thoa giữa vẻ sang trọng của đá cẩm thạch Calacatta vàng và nét phóng khoáng của mây tre đan thủ công. Thiết kế mang tính điêu khắc, phù hợp cho bàn trà, kệ sảnh hoặc tủ trang điểm.\n\nChi tiết kỹ thuật:\n- Chao đèn: Mây đan hình nón.\n- Đế: Đá cẩm thạch Calacatta vàng.\n- Cổ & đế đỡ: Thép hoàn thiện màu đồng thau đúc.\n- Đui đèn: 1 socket E26.\n- Công suất: Tối đa 60W (sợi đốt) hoặc 9W (LED).\n- Dây điện: Dài 2.44m, bọc vải.\n- Xuất xứ: Nhập khẩu Hàn Quốc.",
+        "Kich_thuoc": "0.73m (Cao) x 0.53m (Rộng) x 0.53m (Sâu)",
+        "Chat_lieu": "Đá cẩm thạch và thép",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 23,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "16",
+        "Ma_khong_gian": "16",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "08",
+        "Ten_san_pham": "Tủ đầu giường Lafayette - Gỗ màu trắng vôi, dáng hẹp",
+        "Gia_ban": 25241000,
+        "Mo_ta": "Tủ đầu giường Lafayette mang phong cách hiện đại với các đường cong bo tròn thanh thoát và lớp hoàn thiện màu tro tẩy trắng. Thiết kế dáng hẹp, phù hợp cho phòng ngủ nhỏ, tích hợp một ngăn kéo và kệ hở tiện dụng.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ sồi trắng đạt chứng nhận FSC®, gỗ lạng và gỗ công nghiệp bền vững.\n- Lớp hoàn thiện: Màu tro tẩy làm nổi bật vân gỗ.\n- Ngăn kéo: 1 ngăn, ray trượt lắp âm.\n- Tay nắm: Nhôm đúc thủ công phủ màu đồng thau cổ điển.\n- Chân tăng chỉnh: Có nút điều chỉnh độ cao.\n- Sản xuất tại: Indonesia.",
+        "Kich_thuoc": "0.61m (Cao) x 0.48m (Rộng) x 0.46m (Sâu)",
+        "Chat_lieu": "Gỗ sồi trắng và gỗ lạng",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 16,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "07",
+        "Ma_khong_gian": "16",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "09",
+        "Ten_san_pham": "Giường ngủ Keane: Gỗ nguyên khối màu Driftwood",
+        "Gia_ban": 49242000,
+        "Mo_ta": "Keane làm mới kiểu dáng giường hiện đại kinh điển bằng chất liệu gỗ gụ tuyệt đẹp, được làm sáng bởi lớp hoàn thiện màu gỗ lũa. Chiếc giường sở hữu cấu trúc khung hình khối vững chãi nhưng vẫn giữ được nét gần gũi, phù hợp với mọi phong cách phòng ngủ.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ gụ đạt chứng nhận FSC® với lớp phủ màu xám gỗ lũa và gỗ công nghiệp.\n- Đặc tính tự nhiên: Có thể xảy ra giãn nở và co ngót theo độ ẩm môi trường.\n- Hệ thống nan giường: Không cần dùng thêm đế nệm lò xo.\n- Cân bằng: Có nút chân tăng chỉnh.\n- Sản xuất tại: Indonesia.",
+        "Kich_thuoc": "1.27m (Cao) x 2.04m (Rộng) x 2.15m (Sâu)",
+        "Chat_lieu": "Gỗ gụ và gỗ tự nhiên",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 3,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "05",
+        "Ma_khong_gian": "17",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "10",
+        "Ten_san_pham": "Tủ quần áo 6 ngăn kéo Keane - Gỗ nguyên khối màu Driftwood",
+        "Gia_ban": 33134000,
+        "Mo_ta": "Tinh xảo và táo bạo, tủ Keane nâng tầm không gian lưu trữ cho phòng ngủ. Sản phẩm được chế tác từ gỗ gụ và gỗ meranti với lớp hoàn thiện màu xám gỗ lũa, kết hợp tay nắm kim loại màu đồng thau tạo điểm nhấn ấm áp.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ gụ FSC®, gỗ lạng meranti và gỗ công nghiệp.\n- Hệ thống ngăn kéo: 6 ngăn với ray trượt kim loại lắp âm có giảm chấn.\n- Tay nắm: Kim loại hoàn thiện màu đồng thau.\n- An toàn: Có bộ phụ kiện chống lật.\n- Cân bằng: Có nút chân tăng chỉnh.\n- Sản xuất tại: Indonesia.",
+        "Kich_thuoc": "1.63m (Rộng) x 0.51m (Sâu) x 0.81m (Cao)",
+        "Chat_lieu": "Gỗ gụ và gỗ lạng",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 24,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "06",
+        "Ma_khong_gian": "17",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "11",
+        "Ten_san_pham": "Bọc chăn gối - Vải Cotton Linen họa tiết hoa núi màu xanh rêu cháy",
+        "Gia_ban": 3245000,
+        "Mo_ta": "Lấy cảm hứng từ những loài hoa mong manh nở trên sườn núi, chiếc vỏ chăn linen mang đến không gian nghỉ ngơi mộc mạc với bảng màu xanh rêu cháy hiện đại. Họa tiết in lưới thủ công tạo nên sự độc bản tinh tế cho từng sản phẩm.\n\nChi tiết kỹ thuật:\n- Chất liệu: Mặt trên 100% linen, mặt dưới 100% cotton.\n- Kỹ thuật in: In lưới thủ công.\n- Cấu tạo: Có dây buộc bốn góc và hàng khuy cài.\n- Đặc tính: Càng giặt càng mềm.\n- Chứng nhận: OEKO-TEX® STANDARD 100.\n- Sản xuất tại: Ấn Độ.",
+        "Kich_thuoc": "2.00m (Rộng) x 2.20m (Dài)",
+        "Chat_lieu": "Linen và cotton",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 42,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "13",
+        "Ma_khong_gian": "17",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "12",
+        "Ten_san_pham": "Đèn chùm nến Iiona",
+        "Gia_ban": 18241000,
+        "Mo_ta": "Mẫu đèn chùm Iiona mang đến sự cân bằng giữa nét thanh thoát và vẻ rạng rỡ với 10 cánh tay uốn cong đầy điêu khắc. Lớp hoàn thiện thép đen giúp tôn vinh những đường cong mềm mại và ánh sáng nến tinh tế.\n\nChi tiết kỹ thuật:\n- Chất liệu: Thép hoàn thiện màu đen.\n- Đui đèn: 10 đui E12.\n- Bóng khuyên dùng: T6.\n- Công suất: Tối đa 25W (sợi đốt) hoặc LED 4W.\n- Điều chỉnh: Có thể thay đổi độ cao.\n- Tương thích: Công tắc điều chỉnh độ sáng.\n- Xuất xứ: Nhập khẩu Nhật Bản.",
+        "Kich_thuoc": "0.50m (Cao) x 0.65m (Rộng)",
+        "Chat_lieu": "Thép và thủy tinh",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "17",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "13",
+        "Ten_san_pham": "Đèn chùm Saintes 5 bóng",
+        "Gia_ban": 20313000,
+        "Mo_ta": "Lấy cảm hứng từ thiết kế cổ điển và phong cách hiện đại giữa thế kỷ, đèn chùm Saintes kết hợp phần khung thép hoàn thiện màu đồng thau đúc với các chao đèn thủy tinh mờ hình nón mang hơi hướng retro. Ánh sáng dịu nhẹ lan tỏa tạo nên bầu không khí thư giãn, đặc biệt phù hợp cho phòng ngủ.\n\nChi tiết kỹ thuật:\n- Chao đèn: Thủy tinh mờ.\n- Chất liệu khung: Thép hoàn thiện màu đồng thau đúc.\n- Ốp trần: Đường kính 7 inch (~17.8 cm).\n- Điều chỉnh: Có thể điều chỉnh độ cao với 6 đoạn thân nối.\n- Đui đèn: 5 đui E12.\n- Bóng khuyên dùng: G16.5.\n- Công suất: Tối đa 60W (sợi đốt) hoặc LED 5W.\n- Lắp đặt: Có thể lắp trên trần nghiêng.\n- Lưu ý: Không phù hợp phòng tắm.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "0.44m (Cao) x 0.74m (Rộng)",
+        "Chat_lieu": "Thủy tinh mờ và thép",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 24,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "18",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "14",
+        "Ten_san_pham": "Đèn bàn Jorgen",
+        "Gia_ban": 16214000,
+        "Mo_ta": "Đèn bàn Jorgen nổi bật với phần đế gồm hai khối trụ đá cẩm thạch Calacatta vàng xếp chồng, kết hợp cùng chao đèn vải linen trắng tinh giản. Thiết kế mang vẻ đẹp xa hoa nhưng tiết chế, phù hợp cho bàn sảnh, phòng làm việc tại gia hoặc tủ ngăn kéo.\n\nChi tiết kỹ thuật:\n- Chất liệu: Đá cẩm thạch Calacatta vàng và thép hoàn thiện màu đen.\n- Chao đèn: Vải linen hình trống.\n- Dây điện: Dài 2.5m, bọc vải, tích hợp công tắc.\n- Đui đèn: 2 đui E26.\n- Bóng khuyên dùng: A19.\n- Công suất: Tối đa 60W (sợi đốt) hoặc LED 9W.\n- Lưu ý: Vân đá và màu sắc có thể khác nhau giữa các sản phẩm.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "0.71m (Cao) x 0.43m (Rộng) x 0.43m (Sâu)",
+        "Chat_lieu": "Đá cẩm thạch",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 13,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "16",
+        "Ma_khong_gian": "18",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "15",
+        "Ten_san_pham": "Tủ đầu giường Campagna",
+        "Gia_ban": 22653000,
+        "Mo_ta": "Tủ đầu giường Campagna mang vẻ đẹp đối xứng tối giản với chất liệu mây đan thoáng đãng kết hợp khung gỗ sồi nguyên khối chắc chắn. Thiết kế bao quanh bằng lưới mây đan tinh tế, kết hợp hai ngăn kéo giảm chấn với tay nắm âm giúp duy trì vẻ ngoài liền mạch và thanh lịch.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ sồi nguyên khối FSC®, gỗ lạng sồi và gỗ công nghiệp bền vững.\n- Hoàn thiện: Màu gỗ sồi tự nhiên.\n- Chi tiết: Mây đan tự nhiên bao quanh.\n- Ngăn kéo: 2 ngăn soft-close với ray trượt kim loại lắp âm.\n- Cân bằng: Có nút chân tăng chỉnh.\n- Sản xuất tại: Việt Nam.",
+        "Kich_thuoc": "0.74m (Rộng) x 0.51m (Sâu) x 0.64m (Cao)",
+        "Chat_lieu": "Gỗ sồi tự nhiên và mây đan",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 23,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "07",
+        "Ma_khong_gian": "18",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "16",
+        "Ten_san_pham": "Thảm Orly – Sợi len pha, dệt tay",
+        "Gia_ban": 2763000,
+        "Mo_ta": "Thảm Orly được dệt tay thủ công từ các vòng sợi len màu kem và xám tự nhiên, kết hợp cùng sợi polyester bền chắc để tăng độ bền trong sinh hoạt hằng ngày. Thiết kế đa sắc thái giúp che giấu vết bẩn tốt và mang lại cảm giác ấm áp, hữu cơ cho không gian phòng ngủ hoặc phòng khách.\n\nChi tiết kỹ thuật:\n- Kỹ thuật: Dệt tay thủ công.\n- Bề mặt: 85% len, 15% sợi polyester.\n- Đế thảm: 100% cotton.\n- Hoàn thiện: Cạnh vắt sổ chắc chắn.\n- Khuyên dùng: Sử dụng thêm miếng lót thảm.\n- Sản xuất tại: Ấn Độ.",
+        "Kich_thuoc": "3.05m (Rộng) x 4.27m (Dài)",
+        "Chat_lieu": "Len, sợi polyester và cotton",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "18",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "17",
+        "Ten_san_pham": "Bàn ăn gỗ sồi Terra",
+        "Gia_ban": 43600000,
+        "Mo_ta": "Được chế tác từ gỗ sồi trắng nguyên khối với lớp hoàn thiện màu nâu ấm áp sơn thủ công, bàn ăn Terra tôn vinh vẻ đẹp mộc mạc của chất liệu gỗ. Thiết kế chân bàn xuyên cắt qua mặt bàn tấm lớn, làm lộ vân gỗ đầu cây độc bản với các mắt gỗ và vết nứt tự nhiên theo thời gian.\n\nChi tiết kỹ thuật:\n- Sản phẩm được chà nhám, ghép nối và hoàn thiện thủ công.\n- Gỗ sồi trắng nguyên khối đạt chứng nhận FSC®.\n- Sức chứa: 6–8 người.\n- Biến đổi màu sắc và vết nứt nhẹ là đặc tính tự nhiên của gỗ.\n- Sản xuất tại Romania.",
+        "Kich_thuoc": "2.29m (Dài)",
+        "Chat_lieu": "Gỗ sồi trắng nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 20,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "01",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "18",
+        "Ten_san_pham": "Tủ TV Seraph",
+        "Gia_ban": 49900000,
+        "Mo_ta": "Tủ TV Seraph mang dấu ấn hiện đại với mặt đan tinh xảo kết hợp veneer óc chó hoàn thiện bằng lớp sơn Cool Walnut gốc nước. Thiết kế 4 cánh thông thoáng cùng chân gỗ bạch đàn nguyên khối và tay nắm kim loại bọc da tạo nên một điểm nhấn sang trọng cho không gian giải trí.\n\nChi tiết kỹ thuật:\n- Thân tủ: Gỗ công nghiệp phủ veneer óc chó (walnut).\n- Chân tủ: Gỗ bạch đàn (eucalyptus) nguyên khối.\n- Hoàn thiện: Sơn Cool Walnut gốc nước, sấy lò kiln-dried chống cong vênh.\n- Lưu trữ: 4 cánh, 2 kệ điều chỉnh độ cao.\n- Tiện ích: Phù hợp TV đến 72 inch, có 2 lỗ thoát dây cáp.\n- An toàn: Kèm bộ phụ kiện chống lật (anti-tip kit).",
+        "Kich_thuoc": "1.83m (Rộng) x 0.47m (Sâu) x 0.66m (Cao)",
+        "Chat_lieu": "Gỗ công nghiệp phủ veneer óc chó và gỗ bạch đàn",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 13,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "11",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "19",
+        "Ten_san_pham": "Ghế ăn gỗ Fyn",
+        "Gia_ban": 10200000,
+        "Mo_ta": "Ghế ăn Fyn mang phong cách Ý hiện đại, lấy cảm hứng từ thiết kế Wishbone biểu tượng. Tông màu đen sang trọng tôn vinh các đường nét vượt thời gian với chân ghế thon gọn, thanh giằng mềm mại và mặt ghế chạm khắc tinh xảo.\n\nChi tiết kỹ thuật:\n- Gỗ dẻ gai (Beechwood) đặc đạt chứng nhận FSC®.\n- Gỗ sấy khô (kiln-dried) hạn chế cong vênh, co ngót.\n- Hoàn thiện sơn đen mượt.\n- Nút nhựa bảo vệ sàn nhà dưới chân ghế.\n- Sản xuất tại Ý.",
+        "Kich_thuoc": "0.75m (Cao) x 0.55m (Rộng) x 0.52m (Sâu)",
+        "Chat_lieu": "Gỗ dẻ gai (Beechwood) và gỗ công nghiệp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 20,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "01",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "20",
+        "Ten_san_pham": "Đèn thả trần Traverse đá vân thạch trắng",
+        "Gia_ban": 25500000,
+        "Mo_ta": "Được mô phỏng từ tác phẩm ánh sáng tại cửa hàng Broadway, đèn thả Traverse là một tác phẩm nghệ thuật điêu khắc với khung thép đen hỗ trợ hai quả cầu đá vân thạch trắng tự nhiên.\n\nChi tiết kỹ thuật:\n- Chao đèn bằng đá vân thạch (Alabaster) tự nhiên với vân đá độc bản.\n- Khung thép đen và chi tiết nhôm mạ đồng thau bóng.\n- Chiều cao linh hoạt, bao gồm các thanh treo nhiều kích cỡ.\n- Sử dụng 2 bóng đuôi E12, tương thích dimmer.\n- Phù hợp cho bàn ăn dài hoặc đảo bếp.\n- Sản xuất tại Ý.",
+        "Kich_thuoc": "1.43m (Dài) x Cao tùy chỉnh",
+        "Chat_lieu": "Đá vân thạch tự nhiên, thép và đồng thau",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 14,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "1",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "21",
+        "Ten_san_pham": "Thảm dệt tay Monaco cao cấp",
+        "Gia_ban": 6200000,
+        "Mo_ta": "Thảm Monaco mang vẻ đẹp sang trọng với khả năng chịu lực cao, phù hợp cho các khu vực có mật độ đi lại lớn. Sản phẩm được dệt tay thủ công, sở hữu các sọc màu kem và ngà vượt thời gian.\n\nChi tiết kỹ thuật:\n- Sợi hiệu năng cao chống bám bẩn, dễ vệ sinh.\n- Phù hợp cho cả không gian trong nhà và ngoài trời.\n- Chứng nhận GoodWeave đảm bảo sản xuất có trách nhiệm.\n- Độ dày sợi trung bình, viền thảm chắc chắn.\n- Khuyên dùng kèm tấm lót thảm.\n- Sản xuất tại Ấn Độ.",
+        "Kich_thuoc": "2.74m (Rộng) x 3.66m (Dài)",
+        "Chat_lieu": "100% sợi Polypropylene hiệu năng cao",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 20,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "1",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "22",
+        "Ten_san_pham": "Ghế ăn gỗ Arca Soft",
+        "Gia_ban": 12500000,
+        "Mo_ta": "Ghế ăn Arca Soft là sự kết hợp hài hòa giữa khung gỗ vững chãi và phần đệm ngồi êm ái. Tựa lưng cong bán nguyệt ôm sát cơ thể, mang lại cảm giác thoải mái tối đa trong những bữa ăn dài.\n\nChi tiết kỹ thuật:\n- Khung ghế mộng ghép thủ công truyền thống.\n- Đệm mút đàn hồi cao, bọc vải nỉ linen chống thấm nhẹ.\n- Hoàn thiện gỗ nhẵn mịn, phủ dầu bảo vệ giữ vân tự nhiên.\n- Sản xuất tại Việt Nam theo tiêu chuẩn xuất khẩu Châu Âu.",
+        "Kich_thuoc": "0.78m (Cao) x 0.58m (Rộng) x 0.55m (Sâu)",
+        "Chat_lieu": "Khung gỗ sồi/óc chó và vải nỉ linen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 40,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "4",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "23",
+        "Ten_san_pham": "Bàn ăn Oval Sola",
+        "Gia_ban": 28900000,
+        "Mo_ta": "Bàn ăn Oval Sola sở hữu mặt bàn oval bo tròn mềm mại, giúp kết nối các thành viên trong những bữa ăn ấm cúng. Hệ chân trụ đôi vững chãi tối ưu không gian để chân và tăng tính thẩm mỹ.\n\nChi tiết kỹ thuật:\n- Sức chứa: 8–10 người.\n- Gỗ nguyên khối sấy lò chống cong vênh.\n- Hệ chân trụ đôi chịu lực tốt, có đệm cao su chống trầy sàn.\n- Bảo hành 5 năm cho kết cấu gỗ.\n- Sản xuất tại Việt Nam.",
+        "Kich_thuoc": "2.40m x 1.10m x 0.75m",
+        "Chat_lieu": "Gỗ sồi trắng nguyên khối sơn màu Walnut",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "4",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "24",
+        "Ten_san_pham": "Đèn thả Nimbus Cloud",
+        "Gia_ban": 8500000,
+        "Mo_ta": "Như một đám mây bồng bềnh trôi nhẹ trên bàn ăn, đèn thả Nimbus mang lại ánh sáng khuếch tán dịu nhẹ, không gây chói mắt. Thiết kế hình khối hữu cơ với các nếp gấp mềm mại tạo hiệu ứng ánh sáng ấm cúng, là sự giao thoa giữa tinh thần Wabi-sabi mộc mạc và nội thất hiện đại.\n\nChi tiết kỹ thuật:\n- Ánh sáng: LED tích hợp 3000K, CRI >90.\n- Điều chỉnh: Dây treo điều chỉnh độ cao từ 0.5m đến 1.5m.\n- Độ bền: Chao đèn chống ố màu, dễ vệ sinh.\n- Tương thích: Sử dụng với dimmer.\n- Sản xuất tại: Hàn Quốc.",
+        "Kich_thuoc": "1.50m (Dài) x 0.40m (Rộng)",
+        "Chat_lieu": "Khung thép mảnh và Polymer composite cao cấp giả giấy Washi",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 10,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "4",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "25",
+        "Ten_san_pham": "Thảm len dệt tay Zen Series",
+        "Gia_ban": 7800000,
+        "Mo_ta": "Thảm Zen Series được thiết kế để định hình không gian phòng ăn theo tinh thần Minimalism. Bề mặt lì, mật độ sợi cao mang lại cảm giác êm ái, dễ phối với sàn gỗ và nội thất trung tính.\n\nChi tiết kỹ thuật:\n- Kỹ thuật: Hand-tufted (dệt tay).\n- Độ dày: 12mm, thuận tiện khi kéo ghế ăn.\n- Tính năng: Len kháng khuẩn tự nhiên, chống bám bụi.\n- Mặt đế: Cotton canvas chống trượt.\n- Sản xuất tại: Anh.",
+        "Kich_thuoc": "2.00m (Rộng) x 3.00m (Dài)",
+        "Chat_lieu": "80% Len New Zealand, 20% Viscose tự nhiên",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "4",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "26",
+        "Ten_san_pham": "Bàn Trà Gỗ Tự Nhiên Acacia",
+        "Gia_ban": 18399999,
+        "Mo_ta": "Bàn trà Acacia mang vẻ đẹp tối giản hiện đại, giữ được sự ấm áp của gỗ tự nhiên. Thiết kế hình học rõ ràng, phù hợp với không gian phòng khách hiện đại.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ keo (acacia) nguyên khối.\n- Hoàn thiện: Gỗ sấy lò chống cong vênh, phủ sơn gốc nước an toàn.\n- Tiêu chuẩn: Đạt chuẩn cấp độ thương mại (contract-grade).\n- Sản xuất tại: Ấn Độ.",
+        "Kich_thuoc": "1.22m (Rộng) x 0.61m (Sâu) x 0.41m (Cao)",
+        "Chat_lieu": "Gỗ keo (Acacia) nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 10,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "3",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "27",
+        "Ten_san_pham": "Ghế Sofa Góc Harmony",
+        "Gia_ban": 28000000,
+        "Mo_ta": "Ghế sofa góc Harmony sở hữu thiết kế module linh hoạt, cho phép sắp xếp và mở rộng theo nhu cầu sử dụng. Hệ đệm đàn hồi cao mang lại cảm giác ngồi êm ái, phù hợp cho sinh hoạt gia đình hiện đại.\n\nChi tiết kỹ thuật:\n- Khung sườn: Gỗ thông tự nhiên kết hợp gỗ công nghiệp.\n- Hệ đệm: Mút polyurethane đàn hồi cao, bọc sợi êm.\n- Thiết kế: Module linh hoạt, vỏ bọc có khóa kéo tháo rời.\n- Tiêu chuẩn: Cấp độ thương mại.\n- Lắp ráp tại: Mỹ.",
+        "Kich_thuoc": "2.84m (Rộng) x 1.61m (Sâu) x 0.83m (Cao)",
+        "Chat_lieu": "Gỗ thông nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 15,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "11",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "28",
+        "Ten_san_pham": "Bàn ăn mở rộng Lakin (Gỗ Sồi Trắng)",
+        "Gia_ban": 43500000,
+        "Mo_ta": "Được ghép từ những thanh gỗ sồi trắng nguyên khối với lớp hoàn thiện satin tự nhiên, bàn ăn Lakin bừng sáng không gian với màu sắc mộc mạc và vân gỗ sống động. Điểm nhấn độc đáo nằm ở phần chân kim loại được xử lý giả cổ mô phỏng vẻ đẹp của gang đúc, kết hợp liền mạch với phần yếm gỗ và choãi nhẹ ra ngoài, vừa tối ưu hóa không gian để chân vừa tạo nét thẩm mỹ hiện đại. Thiết kế thông minh với phần đầu bàn (breadboard ends) có thể kéo ra linh hoạt để lắp thêm hai tấm mở rộng, sẵn sàng đón tiếp những bữa tiệc đông người.\n\nChi tiết kỹ thuật:\n- Hoàn thiện: Gỗ sồi trắng phủ lớp bảo vệ satin tự nhiên (Satin natural stain).\n- Kết cấu chân: Chân nhôm đúc với lớp hoàn thiện màu đen giả cổ (Antiqued black finish).\n- Cơ chế mở rộng: Bao gồm 2 tấm lá mở rộng (leaves), mỗi tấm dài 48 cm.\n- Sức chứa: 8 người (khi không mở rộng) và lên đến 10 người (khi mở rộng tối đa).\n- Xuất xứ: Sản xuất tại Ấn Độ.",
+        "Kich_thuoc": "Dài 1.55 m – 2.51 m",
+        "Chat_lieu": "Gỗ sồi trắng nguyên khối (Solid White Oak) & Chân nhôm (Aluminum)",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 15,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "02",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "29",
+        "Ten_san_pham": "Ghế ăn gỗ Teak bọc da Lakin",
+        "Gia_ban": 15200000,
+        "Mo_ta": "Được thiết kế để đồng bộ hoàn hảo với bộ sưu tập bàn ăn Lakin, chiếc ghế này là một thiết kế kinh điển có thể phối hợp với bất kỳ chiếc bàn nào. Gỗ Teak (Giả tỵ) nguyên khối tỏa sáng qua sự kết hợp duyên dáng giữa các đường cong và nét thẳng: chân ghế thon gọn, lưng tựa ngả nhẹ và dáng đứng vững chãi. Đệm ngồi lọt lòng được bọc da cao cấp, mang lại vẻ hiện đại bổ sung hoàn hảo cho tông màu gỗ ấm áp của khung ghế.\n\nChi tiết kỹ thuật:\n- Nguồn gốc gỗ: Gỗ Teak đạt chứng nhận FSC® và gỗ kỹ thuật từ các khu rừng được quản lý có trách nhiệm.\n- Hoàn thiện: Bề mặt gỗ hoàn thiện tự nhiên (Natural finish).\n- Đệm ngồi: Mút Polyfoam đàn hồi, bọc da thật.\n- Đặc tính: Màu sắc và vân gỗ biến đổi tự nhiên, tạo nên tính độc bản cho từng chiếc ghế.\n- Màu da tùy chọn: Than chì (Charcoal) hoặc Nâu rượu (Cognac).\n- Xuất xứ: Nhập khẩu.",
+        "Kich_thuoc": "0.85 m (Cao) x 0.50 m (Rộng) x 0.55 m (Sâu)",
+        "Chat_lieu": "Gỗ Teak (Giả tỵ) nguyên khối & Da thật",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 16,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "02",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "30",
+        "Ten_san_pham": "Đèn chùm Etienne Glass (0.7m)",
+        "Gia_ban": 20300000,
+        "Mo_ta": "Đèn chùm Etienne gây ấn tượng thị giác mạnh mẽ với cụm 10 chụp đèn thủy tinh mang hình dáng hữu cơ tự nhiên, được phủ lớp hoàn thiện màu sâm panh (champagne) óng ả. Khi thắp sáng, đèn tỏa ra ánh hào quang vàng ấm áp, nổi bật trên nền khung trục bằng thép mạ đồng thau bóng bẩy (burnished brass). Đây là điểm nhấn xa hoa hoàn hảo cho không gian bàn ăn, sảnh đón khách hoặc phòng thay đồ cao cấp.\n\nChi tiết kỹ thuật:\n- Nguồn sáng: 10 bóng đuôi E12 (khuyên dùng bóng G16.5).\n- Công suất: Tương thích bóng sợi đốt tối đa 60W hoặc LED 5W (không kèm bóng).\n- Chiều cao linh hoạt: Bộ thanh treo nối dài nhiều kích cỡ để tùy chỉnh độ thả.\n- Tính năng: Tương thích trần nghiêng và công tắc chiết áp (dimmer).\n- Tiêu chuẩn: Đạt chuẩn an toàn sử dụng trong môi trường ẩm (Bathroom-rated).\n- Xuất xứ: Nhập khẩu.",
+        "Kich_thuoc": "Đường kính chao: 0.70 m; Đế ốp trần: 0.15 m",
+        "Chat_lieu": "Đế thép hoàn thiện màu đồng thau (Burnished Brass) & Thủy tinh màu Champagne",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 20,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "02",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "31",
+        "Ten_san_pham": "Thảm len dệt nút thủ công Verona",
+        "Gia_ban": 2800000,
+        "Mo_ta": "Phải mất hơn một tháng làm việc tỉ mỉ để các nghệ nhân hoàn thiện những họa tiết thực vật và hình học phức tạp trên thảm Verona. Sử dụng 100% len New Zealand nguyên chất, thảm được dệt nút thủ công (hand-knotted) tạo nên hoa văn hoa lá độc đáo, phù hợp cho cả không gian truyền thống lẫn đương đại.\n\nChi tiết kỹ thuật:\n- Chứng nhận GoodWeave: Đảm bảo quy trình sản xuất thủ công có trách nhiệm.\n- Kỹ thuật: Dệt nút bằng tay trên nền đế cotton chắc chắn.\n- Kết cấu: Sợi lông cao (High pile), viền vắt sổ tăng độ bền.\n- Độ bền: Phù hợp khu vực có mật độ đi lại cao.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "2.44 m (Rộng) x 3.05 m (Dài)",
+        "Chat_lieu": "100% Len New Zealand & Đế 100% Cotton",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 25,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "02",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "32",
+        "Ten_san_pham": "Thảm Tròn Stella Geometric",
+        "Gia_ban": 6450000,
+        "Mo_ta": "Được thiết kế để định hình tâm điểm cho không gian phòng ăn, thảm tròn Stella Geometric sở hữu họa tiết hình học ngôi sao 6 cánh lấy cảm hứng từ hoa văn Asanoha Nhật Bản. Tông màu kem be nhã nhặn kết hợp dệt nổi mang lại chiều sâu thị giác nhẹ nhàng.\n\nChi tiết kỹ thuật:\n- Kết cấu: Dệt máy mật độ cao.\n- Bề mặt: Sợi lông ngắn (Low pile) dễ vệ sinh.\n- Viền thảm: Bo viền chắc chắn, chống bung xổ.\n- Tính năng: Đế chống trượt nhẹ.\n- Xuất xứ: Thổ Nhĩ Kỳ.",
+        "Kich_thuoc": "Đường kính 2.0 m (Phù hợp bàn ăn 4–6 ghế)",
+        "Chat_lieu": "100% Sợi Polypropylene Soft-Touch",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 5,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "03",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "33",
+        "Ten_san_pham": "Đèn thả trần Ornavigo Bauhaus (3 bóng)",
+        "Gia_ban": 10500000,
+        "Mo_ta": "Lấy cảm hứng từ trường phái Bauhaus kinh điển, đèn Ornavigo là sự kết hợp của các khối hình học cơ bản với ánh sáng khuếch tán dịu nhẹ, tạo bầu không khí ấm cúng và nghệ thuật cho phòng ăn hiện đại.\n\nChi tiết kỹ thuật:\n- Nguồn sáng: 3 bóng LED đui E27 hoặc G9.\n- Đế ốp trần: Thanh ngang chữ nhật sơn tĩnh điện đen mờ.\n- Dây treo: Điều chỉnh độ thả linh hoạt.\n- Diện tích chiếu sáng: 10–15 m².\n- Xuất xứ: Hong Kong.",
+        "Kich_thuoc": "Thanh ngang ốp trần: 1.0 m; Chao đèn: Ø18 cm; Dây treo tối đa 1.2 m",
+        "Chat_lieu": "Thép không gỉ mạ Chrome & Thủy tinh Opal mờ",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "03",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "34",
+        "Ten_san_pham": "Ghế ăn Lunar Open-Back (Vải Premium)",
+        "Gia_ban": 4250000,
+        "Mo_ta": "Ghế ăn Lunar mang thiết kế open-back bán nguyệt thanh thoát, kết hợp đệm ngồi êm ái và chân gỗ chắc chắn, phù hợp cho những bữa tiệc dài.\n\nChi tiết kỹ thuật:\n- Khung chân: Gỗ Tần bì (Ash) màu Walnut.\n- Đệm mút: Mút Inoac Nhật Bản tỷ trọng cao.\n- Vải bọc: Linen pha Polyester chống bám bẩn.\n- Tiêu chuẩn: Kết cấu mộng chắc chắn, chuẩn Châu Âu.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "0.52 m (Rộng) x 0.58 m (Sâu) x 0.82 m (Cao)",
+        "Chat_lieu": "Gỗ Tần bì & Vải Linen cao cấp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 22,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "03",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "35",
+        "Ten_san_pham": "Bàn ăn Oval Signature (Gỗ Óc Chó)",
+        "Gia_ban": 14500000,
+        "Mo_ta": "Bàn ăn Oval Signature mang vẻ đẹp tối giản với mặt bàn bo tròn và hệ chân trụ vững chãi, phù hợp cho 8–10 người.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Veneer Óc chó Bắc Mỹ hạng A.\n- Chân bàn: Gỗ tự nhiên nguyên khối.\n- Hoàn thiện: Sấy lò chống cong vênh, phủ 5 lớp bảo vệ.\n- Tiêu chuẩn: Cấp độ thương mại.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "1.80 m x 0.90 m x 0.76 m",
+        "Chat_lieu": "Gỗ tự nhiên & Veneer Óc chó",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 17,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "03",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "36",
+        "Ten_san_pham": "Bộ ghế Sofa góc ba mảnh",
+        "Gia_ban": 25000000,
+        "Mo_ta": "Bộ sofa góc phong cách Tối giản hiện đại với đệm lông vũ êm ái, thiết kế modular cho 3–4 người ngồi.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ cứng kỹ thuật sấy khô.\n- Đệm: 45% lông vịt, 5% lông tơ.\n- Vải bọc: Linen dệt nhuộm sợi.\n- Tiêu chuẩn: Contract-grade.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "3.00 m x 1.99 m x 0.94 m",
+        "Chat_lieu": "Khung gỗ cứng & Vải Linen cao cấp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 18,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "07",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "37",
+        "Ten_san_pham": "Bàn Trà Mô-đun Hữu Cơ (Size Lớn)",
+        "Gia_ban": 5500000,
+        "Mo_ta": "Bàn trà mô-đun dáng oval hữu cơ, tạo điểm nhấn nghệ thuật và cân bằng thẩm mỹ cho phòng khách.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Gỗ nguyên khối tuỳ chọn.\n- Chân bàn: Gỗ keo sấy khô.\n- Tiêu chuẩn: Thương mại.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "1.28 m x 0.72 m x 0.36 m",
+        "Chat_lieu": "Mặt gỗ nguyên khối & Chân gỗ Keo",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 23,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "07",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "38",
+        "Ten_san_pham": "Ghế Accent xoay Millie",
+        "Gia_ban": 7300000,
+        "Mo_ta": "Ghế Accent Millie thiết kế Modern Organic, xoay 360 độ ẩn dưới hệ đệm bo tròn mềm mại.\n\nChi tiết kỹ thuật:\n- Vải bọc: Bouclé cao cấp.\n- Khung: Gỗ sấy khô.\n- Chân: Kim loại xoay.\n- Xuất xứ: Mexico.",
+        "Kich_thuoc": "Ø0.79 m x 0.70 m",
+        "Chat_lieu": "Vải Bouclé & Khung gỗ sấy khô",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 23,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "17",
+        "Ma_khong_gian": "07",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "39",
+        "Ten_san_pham": "Kệ trang trí Hazel Entry Console",
+        "Gia_ban": 4300000,
+        "Mo_ta": "Kệ trang trí phong cách Tối giản hiện đại, tông trắng tinh khôi, phù hợp sảnh vào hoặc sau sofa.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Gỗ công nghiệp cao cấp.\n- Chân: Gỗ bạch dương FSC.\n- Hoàn thiện: Sơn mài gốc nước.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "1.07 m x 0.36 m x 0.76 m",
+        "Chat_lieu": "Gỗ công nghiệp & Gỗ bạch dương FSC",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 41,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "07",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "40",
+        "Ten_san_pham": "Sofa băng Minimalist chân gỗ",
+        "Gia_ban": 19600000,
+        "Mo_ta": "Sofa băng phong cách Modern Minimalist với chân gỗ liền, form vuông gọn gàng và đệm đàn hồi cao.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ kỹ thuật.\n- Đệm: Lõi đặc + lò xo uốn lượn.\n- Vải: Linen cao cấp.\n- Xuất xứ: Hoa Kỳ.",
+        "Kich_thuoc": "2.50 m x 1.07 m x 0.84 m",
+        "Chat_lieu": "Khung gỗ kỹ thuật & Vải Linen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 26,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "08",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "41",
+        "Ten_san_pham": "Bàn trà đôi Minimalist xếp lồng",
+        "Gia_ban": 12300000,
+        "Mo_ta": "Bộ bàn trà đôi xếp lồng linh hoạt, thiết kế tối giản với mặt tròn và chân gỗ tự nhiên.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Bê tông nhẹ phủ mịn.\n- Chân: Gỗ keo sấy khô.\n- Chịu tải: 136 kg/bàn.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "Bàn lớn: 0.93 x 0.91 x 0.41 m; Bàn nhỏ: 0.63 x 0.61 x 0.34 m",
+        "Chat_lieu": "Bê tông nhẹ & Gỗ Keo",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 37,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "08",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "42",
+        "Ten_san_pham": "Ghế Accent chân gỗ Emmie",
+        "Gia_ban": 6800000,
+        "Mo_ta": "Ghế Accent Emmie thiết kế bo tròn mềm mại, tựa lưng ôm sát, phù hợp góc đọc sách hoặc tiếp khách.\n\nChi tiết kỹ thuật:\n- Vải: Bouclé hoặc Linen.\n- Chân: Gỗ cao su màu Walnut.\n- Lò xo: Sinuous springs.\n- Xuất xứ: Thái Lan.",
+        "Kich_thuoc": "0.69 m x 0.80 m x 0.76 m",
+        "Chat_lieu": "Khung gỗ cứng & Vải dệt cao cấp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 20,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "17",
+        "Ma_khong_gian": "08",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "43",
+        "Ten_san_pham": "Kệ trang trí siêu rộng",
+        "Gia_ban": 12000000,
+        "Mo_ta": "Kệ trang trí Pierce mang phong cách Architectural Minimalist với khung kim loại thanh mảnh kết hợp hệ kệ gỗ sồi rộng rãi, tạo điểm nhấn bề thế cho phòng khách.\n\nChi tiết kỹ thuật:\n- Khung & chân: Kim loại sơn tĩnh điện.\n- Kệ & tủ: Gỗ sồi nguyên khối và gỗ công nghiệp phủ veneer sồi.\n- Hoàn thiện: Gỗ sấy lò, chống cong vênh.\n- Chịu lực: Tối đa 81 kg.\n- Xuất xứ: Indonesia.",
+        "Kich_thuoc": "1.83 m (Rộng) x 0.43 m (Sâu) x 2.00 m (Cao)",
+        "Chat_lieu": "Khung kim loại sơn tĩnh điện & Gỗ sồi nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 16,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "08",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "44",
+        "Ten_san_pham": "Sofa góc Hiện đại chân gỗ liền",
+        "Gia_ban": 21000000,
+        "Mo_ta": "Sofa góc phong cách Modern Industrial với chân gỗ liền khối, dáng low-profile mạnh mẽ và hệ đệm nâng đỡ êm ái.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ dán ván ép chắc chắn.\n- Chân đế: Gỗ bạch dương FSC.\n- Lò xo: Uốn lượn chất lượng cao.\n- Chứng nhận: GREENGUARD Gold.\n- Xuất xứ: Campuchia.",
+        "Kich_thuoc": "3.05 m (Rộng) x 1.61 m (Sâu) x 0.76 m (Cao)",
+        "Chat_lieu": "Khung gỗ kỹ thuật & Chân gỗ bạch dương nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 32,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "09",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "45",
+        "Ten_san_pham": "Bàn trà Parsons vân gỗ Hickory Burl",
+        "Gia_ban": 5400000,
+        "Mo_ta": "Bàn trà phong cách Modern Industrial với thiết kế khối Parsons vuông vức và bề mặt vân gỗ Hickory Burl nghệ thuật.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Gỗ công nghiệp phủ vân gỗ nghệ thuật.\n- Chân đế: Gỗ bạch dương nguyên khối.\n- Hoàn thiện: Gỗ sấy lò chống biến dạng.\n- Chứng nhận: GREENGUARD Gold.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "1.12 m (Rộng) x 0.61 m (Sâu) x 0.41 m (Cao)",
+        "Chat_lieu": "Gỗ công nghiệp phủ vân & Gỗ bạch dương nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 7,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "09",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "46",
+        "Ten_san_pham": "Ghế Accent khung kim loại hiện đại",
+        "Gia_ban": 5200000,
+        "Mo_ta": "Ghế Accent thiết kế Sling Chair với khung kim loại thanh mảnh và đệm rời êm ái, tạo điểm nhấn tương phản nghệ thuật.\n\nChi tiết kỹ thuật:\n- Khung & chân: Thép không gỉ.\n- Đệm: Sợi polyester tơi xốp (độ mềm 1/5).\n- Vải bọc: Chenille Crossweave tái chế.\n- Tiêu chuẩn: Contract-grade.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "0.70 m (Rộng) x 0.81 m (Sâu) x 0.86 m (Cao)",
+        "Chat_lieu": "Khung thép không gỉ & Vải bọc tái chế",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 12,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "17",
+        "Ma_khong_gian": "09",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "47",
+        "Ten_san_pham": "Kệ trang trí gỗ hiện đại đa năng",
+        "Gia_ban": 18500000,
+        "Mo_ta": "Kệ trang trí thiết kế hình khối đan xen với hệ kệ mở và tủ kín, kết hợp giữa thẩm mỹ đương đại và lưu trữ thông minh.\n\nChi tiết kỹ thuật:\n- Khung & cửa tủ: Gỗ gụ nguyên khối.\n- Vách & mặt: Gỗ công nghiệp phủ veneer.\n- Hoàn thiện: Màu Espresso.\n- Số kệ: 5 kệ điều chỉnh.\n- Xuất xứ: Indonesia.",
+        "Kich_thuoc": "1.73 m (Rộng) x 0.46 m (Sâu) x 2.02 m (Cao)",
+        "Chat_lieu": "Gỗ gụ nguyên khối & Gỗ công nghiệp phủ veneer",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 6,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "09",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "48",
+        "Ten_san_pham": "Sofa góc uốn lượn phong cách Sang trọng",
+        "Gia_ban": 27500000,
+        "Mo_ta": "Sofa góc Modern Luxury với các đường cong uốn lượn mềm mại, mang lại trải nghiệm thư giãn đẳng cấp cho 4–5 người.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ đạt chuẩn FSC.\n- Đệm: Lõi xốp polyurethane đàn hồi cao (3/5).\n- Lò xo: Uốn lượn chất lượng cao.\n- Chứng nhận: GREENGUARD Gold.\n- Xuất xứ: Thái Lan.",
+        "Kich_thuoc": "3.07 m (Rộng) x 2.34 m (Sâu) x 0.76 m (Cao)",
+        "Chat_lieu": "Khung gỗ chuẩn FSC & Vải Linen cao cấp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 11,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "10",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "49",
+        "Ten_san_pham": "Bàn trà kim loại đúc nguyên khối",
+        "Gia_ban": 6500000,
+        "Mo_ta": "Bàn trà kim loại đúc thủ công phong cách Modern Luxury, dáng trụ vững chãi với bề mặt ánh kim giả cổ.\n\nChi tiết kỹ thuật:\n- Chất liệu: Nhôm đúc nguyên khối.\n- Hoàn thiện: Đồng cổ Antique Bronze.\n- Tiêu chuẩn: Contract-grade.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "Ø0.91 m x 0.41 m",
+        "Chat_lieu": "Nhôm đúc nguyên khối hoàn thiện đồng cổ",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 17,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "10",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "50",
+        "Ten_san_pham": "Thảm khung dệt thủ công cao cấp",
+        "Gia_ban": 1200000,
+        "Mo_ta": "Thảm dệt thủ công từ sợi TENCEL™ Lyocell với bề mặt mịn và độ bóng tự nhiên, phù hợp làm nền cho sofa và bàn trà.\n\nChi tiết kỹ thuật:\n- Chất liệu: 100% TENCEL™ Lyocell.\n- Lớp lót: Bông tái chế đạt chuẩn RCS.\n- Chế tác: Dệt tay thủ công.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "1.52 m (Rộng) x 2.44 m (Dài)",
+        "Chat_lieu": "100% sợi TENCEL™ Lyocell",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 42,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "10",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "51",
+        "Ten_san_pham": "Ghế đơn xoay Hiện đại chân đế gỗ",
+        "Gia_ban": 12000000,
+        "Mo_ta": "Ghế đơn xoay 360 độ phong cách Contemporary Luxury với khối bo vuông tinh tế và đệm ngồi êm ái.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ đạt chuẩn FSC.\n- Chân đế: Gỗ óc chó xoay 360°.\n- Đệm: Mút polyurethane đàn hồi cao.\n- Tiêu chuẩn: Contract-grade.\n- Xuất xứ: Mexico.",
+        "Kich_thuoc": "0.74 m (Rộng) x 0.91 m (Sâu) x 0.79 m (Cao)",
+        "Chat_lieu": "Khung gỗ FSC & Vải bọc cao cấp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 28,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "02",
+        "Ma_danh_muc": "17",
+        "Ma_khong_gian": "10",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "52",
+        "Ten_san_pham": "Bàn chữ nhật tối giản mặt trắng chân gỗ tự nhiên",
+        "Gia_ban": 8500000,
+        "Mo_ta": "Bàn chữ nhật thiết kế tinh giản với mặt trắng và chân gỗ tự nhiên, phù hợp phòng ăn hoặc không gian làm việc hiện đại.\n\nChi tiết kỹ thuật:\n- Mặt bàn: MDF phủ sơn trắng mịn.\n- Chân bàn: Gỗ tự nhiên sấy khô.\n- Công năng: Dùng cho 4–6 người.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "1.60 m (Dài) x 0.80 m (Rộng) x 0.75 m (Cao)",
+        "Chat_lieu": "MDF sơn trắng & Gỗ tự nhiên",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 50,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "05",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "53",
+        "Ten_san_pham": "Đèn thả trần chụp trắng thân gỗ tự nhiên",
+        "Gia_ban": 4200000,
+        "Mo_ta": "Mẫu đèn thả trần thiết kế cân đối với chụp kim loại trắng kết hợp thân gỗ tự nhiên, mang lại ánh sáng dịu nhẹ và cảm giác tinh tế cho không gian phòng ăn hoặc phòng khách.\n\nChi tiết kỹ thuật:\n- Chụp đèn: Kim loại sơn tĩnh điện trắng.\n- Thân đèn: Gỗ tự nhiên sấy khô.\n- Đui đèn: E27.\n- Công suất khuyến nghị: ≤ 12W (LED).\n- Điện áp: 220V – 50Hz.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "Đường kính chụp 40 cm x Cao 18 cm; Dây treo 1.2 m (điều chỉnh)",
+        "Chat_lieu": "Kim loại sơn tĩnh điện & Gỗ tự nhiên",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 154,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "12",
+        "Ma_khong_gian": "05",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "54",
+        "Ten_san_pham": "Ghế gỗ tự nhiên lưng mây đan thủ công",
+        "Gia_ban": 3600000,
+        "Mo_ta": "Ghế gỗ thiết kế thanh thoát với lưng tựa uốn cong nhẹ kết hợp mây đan thủ công, tạo cảm giác thoáng khí và thoải mái khi sử dụng lâu dài.\n\nChi tiết kỹ thuật:\n- Khung ghế: Gỗ tự nhiên nguyên khối sấy khô.\n- Lưng & mặt ngồi: Mây tự nhiên đan thủ công.\n- Hoàn thiện: Sơn phủ gốc nước an toàn.\n- Tải trọng khuyến nghị: ≤ 120 kg.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "0.45 m (Rộng) x 0.50 m (Sâu) x 0.82 m (Cao)",
+        "Chat_lieu": "Gỗ tự nhiên & Mây đan thủ công",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 56,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "05",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "55",
+        "Ten_san_pham": "Thảm dệt cotton họa tiết hình học viền tua",
+        "Gia_ban": 6500000,
+        "Mo_ta": "Thảm dệt thủ công với tông màu kem tự nhiên, họa tiết hình học dạng lưới tinh tế và viền tua nhẹ, mang lại cảm giác ấm cúng cho không gian sinh hoạt.\n\nChi tiết kỹ thuật:\n- Kết cấu: Dệt thủ công, bề mặt phẳng.\n- Họa tiết: Hình học dệt nổi.\n- Công năng: Giảm trơn trượt, êm chân.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "2.00 m (Dài) x 3.00 m (Rộng)",
+        "Chat_lieu": "Cotton tự nhiên & Sợi dệt gia cường",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 10,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "05",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "56",
+        "Ten_san_pham": "Tủ trưng bày kính khung kim loại tích hợp đèn LED",
+        "Gia_ban": 18900000,
+        "Mo_ta": "Tủ trưng bày dạng đứng với khung kim loại và cửa kính cường lực trong suốt, tích hợp đèn LED âm kệ làm nổi bật vật trưng bày.\n\nChi tiết kỹ thuật:\n- Khung: Kim loại sơn tĩnh điện đen.\n- Cửa & kệ: Kính cường lực.\n- Đèn: LED âm kệ ánh sáng vàng ấm.\n- Khuyến nghị: Cố định tủ vào tường.\n- Xuất xứ: Việt Nam.",
+        "Kich_thuoc": "0.80 m (Rộng) x 0.35–0.40 m (Sâu) x 2.00 m (Cao)",
+        "Chat_lieu": "Kim loại sơn tĩnh điện & Kính cường lực",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 3,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "06",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "57",
+        "Ten_san_pham": "Ghế gỗ tự nhiên lưng cong mặt mây đan thủ công",
+        "Gia_ban": 4200000,
+        "Mo_ta": "Ghế gỗ thiết kế lưng cong liền tay vịn với mặt ngồi mây đan chữ X, mang lại tư thế ngồi thoải mái và thông thoáng.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ tự nhiên uốn cong bằng khuôn nhiệt.\n- Mặt ngồi: Mây đan thủ công.\n- Hoàn thiện: Sơn đen mờ.\n- Tải trọng: ≤ 120 kg.\n- Xuất xứ: Trung Quốc.",
+        "Kich_thuoc": "Rộng 54.5 cm x Sâu 45.5 cm x Cao 77.5 cm",
+        "Chat_lieu": "Gỗ tự nhiên & Mây đan thủ công",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 43,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "06",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "58",
+        "Ten_san_pham": "Ghế bar khung kim loại mặt gỗ",
+        "Gia_ban": 5200000,
+        "Mo_ta": "Ghế bar thiết kế tối giản với mặt ngồi gỗ tự nhiên và khung kim loại sơn đen, phù hợp quầy bếp hoặc quầy bar gia đình.\n\nChi tiết kỹ thuật:\n- Khung: Kim loại sơn tĩnh điện.\n- Mặt ngồi: Gỗ tự nhiên nguyên khối.\n- Vòng giằng: Hỗ trợ gác chân.\n- Tải trọng: ≤ 120 kg.\n- Xuất xứ: Indonesia.",
+        "Kich_thuoc": "Ø36 cm x Cao 65 cm",
+        "Chat_lieu": "Gỗ tự nhiên & Kim loại sơn tĩnh điện",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 68,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "10",
+        "Ma_khong_gian": "06",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "59",
+        "Ten_san_pham": "Bàn ăn gỗ tự nhiên chữ nhật chân vát",
+        "Gia_ban": 12800000,
+        "Mo_ta": "Bàn ăn gỗ tự nhiên thiết kế đơn giản với mặt phẳng và chân vát nhẹ, phù hợp cho 4–6 người sử dụng.\n\nChi tiết kỹ thuật:\n- Hoàn thiện: Bề mặt xử lý mịn.\n- Công năng: Phòng ăn gia đình.\n- Xuất xứ: Indonesia.",
+        "Kich_thuoc": "1.60 m x 0.80 m x 0.75 m",
+        "Chat_lieu": "Gỗ tự nhiên sấy khô phủ bảo vệ",
+        "Hinh_anh": [
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh1.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh2.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh3.png",
+            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 0,
+        "Ma_loai_phong": "03",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "09",
+        "Ma_khong_gian": "06",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "60",
+        "Ten_san_pham": "Bàn C-Side Nesta",
+        "Gia_ban": 10150000,
+        "Mo_ta": "Bàn C-Side Nesta thiết kế chữ C thông minh, dễ lồng ghép vào sofa hoặc giường, mang lại sự tiện dụng linh hoạt cho không gian sống.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ keo (Acacia) nguyên khối.\n- Hoàn thiện: Sơn màu Cool Walnut.\n- Chịu tải: Tối đa 136 kg.\n- Tiêu chuẩn: Contract-grade.\n- Xuất xứ: Ấn Độ.",
+        "Kich_thuoc": "0.39 m x 0.47 m x 0.64 m",
+        "Chat_lieu": "Gỗ keo (Acacia) nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 59,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "03",
+        "Ma_danh_muc": "04",
+        "Ma_khong_gian": "11",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "61",
+        "Ten_san_pham": "Giường ngủ Elora",
+        "Gia_ban": 10150000,
+        "Mo_ta": "Giường Elora mang thiết kế tối giản với kết cấu vững chãi, phù hợp cho nhiều phong cách phòng ngủ hiện đại.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ tự nhiên & gỗ công nghiệp.\n- Nan giường: Gỗ thông tự nhiên.\n- Chân giữa: 3 trụ phân tán lực.\n- Tiêu chuẩn: Contract-grade.\n- Tải trọng: 136 kg.",
+        "Kich_thuoc": "1.04 m x 1.97 m x 0.36 m",
+        "Chat_lieu": "Gỗ tự nhiên & Gỗ công nghiệp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 58,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "05",
+        "Ma_khong_gian": "13",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "62",
+        "Ten_san_pham": "Đèn Bàn Mira",
+        "Gia_ban": 3280000,
+        "Mo_ta": "Đèn bàn Mira kết hợp thân gốm thủ công và chao vải linen, mang lại ánh sáng dịu nhẹ cho góc làm việc hoặc tủ đầu giường.\n\nChi tiết kỹ thuật:\n- Thân đèn: Gốm & kim loại.\n- Chao: Vải linen màu Light Tan.\n- Đui đèn: E12.\n- Dây điện: PVC trong suốt.\n- Chứng nhận: UL & contract-grade.",
+        "Kich_thuoc": "Ø0.22 m x Cao 0.32 m",
+        "Chat_lieu": "Gốm, kim loại & vải linen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 57,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "16",
+        "Ma_khong_gian": "13",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "63",
+        "Ten_san_pham": "Tủ 6 Ngăn Kéo Lyra",
+        "Gia_ban": 38150000,
+        "Mo_ta": "Tủ ngăn kéo Lyra kết hợp vẻ đẹp mộc mạc của gỗ tự nhiên với thiết kế hiện đại, mang lại không gian lưu trữ rộng rãi và cảm giác ấm áp cho phòng ngủ.\n\nChi tiết kỹ thuật:\n- Mặt trên: Gỗ sồi veneer trên nền gỗ công nghiệp.\n- Khung & chân: Gỗ cao su và gỗ gụ nguyên khối.\n- Ngăn kéo: 6 ngăn, ray trượt kim loại.\n- Hoàn thiện: Sơn gốc nước màu Toasted Oak.\n- Xuất xứ: Indonesia.",
+        "Kich_thuoc": "1.52 m (Rộng) x 0.46 m (Sâu) x 0.84 m (Cao)",
+        "Chat_lieu": "Gỗ sồi veneer & Gỗ tự nhiên nguyên khối",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 56,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "06",
+        "Ma_khong_gian": "13",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "64",
+        "Ten_san_pham": "Tủ đầu giường Cora",
+        "Gia_ban": 7600000,
+        "Mo_ta": "Tủ đầu giường Cora sở hữu thiết kế hình trụ mềm mại, mang lại vẻ thanh lịch và tinh tế cho không gian phòng ngủ hiện đại.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ sồi veneer trên cốt gỗ công nghiệp.\n- Ngăn kéo: 1 ngăn, ray kim loại.\n- Chứng nhận: FSC.\n- Tiêu chuẩn: Contract-grade.",
+        "Kich_thuoc": "Ø0.38 m x Cao 0.52 m",
+        "Chat_lieu": "Gỗ sồi veneer & Gỗ công nghiệp",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 55,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "07",
+        "Ma_khong_gian": "13",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "65",
+        "Ten_san_pham": "Tủ đầu giường Rune",
+        "Gia_ban": 15250000,
+        "Mo_ta": "Tủ đầu giường Rune tôn vinh vẻ đẹp tự nhiên của gỗ Xoài nguyên khối với thiết kế mạnh mẽ và không gian lưu trữ linh hoạt.\n\nChi tiết kỹ thuật:\n- Khung & chân: Gỗ Xoài nguyên khối.\n- Lưu trữ: 1 ngăn kéo + 1 kệ hở.\n- Hoàn thiện: Gỗ sấy lò chống nứt.\n- Tiêu chuẩn: Contract-grade.",
+        "Kich_thuoc": "0.71 m (Rộng) x 0.46 m (Sâu) x 0.61 m (Cao)",
+        "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 54,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "07",
+        "Ma_khong_gian": "14",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "66",
+        "Ten_san_pham": "Giường gỗ nguyên khối Rune",
+        "Gia_ban": 48330000,
+        "Mo_ta": "Giường Rune được chế tác từ gỗ Xoài nguyên khối với vân gỗ độc bản, mang lại cảm giác vững chãi, ấm áp và sang trọng cho phòng ngủ.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ Xoài nguyên khối.\n- Nan giường: Gỗ thông tự nhiên.\n- Chân giữa: 3 trụ tăng chịu lực.\n- Phù hợp nệm Queen.",
+        "Kich_thuoc": "1.70 m x 2.08 m x 1.17 m",
+        "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 53,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "05",
+        "Ma_khong_gian": "14",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "67",
+        "Ten_san_pham": "Tủ 6 Ngăn Kéo Elias",
+        "Gia_ban": 38650000,
+        "Mo_ta": "Tủ ngăn kéo Elias nổi bật với kỹ thuật ghép mộng đuôi én truyền thống và chi tiết kim loại sang trọng, đảm bảo độ bền và an toàn cao.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ Sồi kết hợp kim loại Đồng Đen.\n- Ngăn kéo: 6 ngăn, mộng English Dovetail.\n- Tính năng: Chốt an toàn chống lật.\n- Chứng nhận: FSC.",
+        "Kich_thuoc": "1.52 m x 0.48 m x 0.85 m",
+        "Chat_lieu": "Gỗ Sồi & Kim loại Đồng Đen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 52,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "06",
+        "Ma_khong_gian": "14",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "68",
+        "Ten_san_pham": "Thảm Len Dệt Thủ Công Aura",
+        "Gia_ban": 35600000,
+        "Mo_ta": "Thảm Aura kết hợp len tự nhiên và viscose tạo bề mặt mềm mại, bắt sáng nhẹ, mang lại chiều sâu và sự sang trọng cho không gian.\n\nChi tiết kỹ thuật:\n- Thành phần: 60% len, 40% viscose.\n- Kỹ thuật: Dệt thủ công.\n- Lót sau: Bông tái chế đạt chuẩn RCS.\n- Độ dày: ~1.27 cm.",
+        "Kich_thuoc": "2.74 m x 3.66 m",
+        "Chat_lieu": "Len tự nhiên & Viscose",
+        "Hinh_anh": [
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh1.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh2.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh3.png",
+            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 51,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "14",
+        "Ma_khong_gian": "14",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "69",
+        "Ten_san_pham": "Sofa Góc 2 Khối Serene",
+        "Gia_ban": 89000000,
+        "Mo_ta": "Sofa Serene mang thiết kế hiện đại với đệm sâu và độ mềm êm ái, tạo không gian thư giãn lý tưởng cho phòng khách cao cấp.\n\nChi tiết kỹ thuật:\n- Khung: Gỗ thông & gỗ cứng kỹ thuật.\n- Đệm: Lõi polyurethane bọc sợi thay thế lông vũ.\n- Độ mềm: 2/5.\n- Tiêu chuẩn: Contract-grade.",
+        "Kich_thuoc": "2.74 m x 2.21 m x 0.84 m",
+        "Chat_lieu": "Khung gỗ tự nhiên & Gỗ kỹ thuật",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh4.png"
+        ],
+        "So_luong_ton_kho": 50,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "01",
+        "Ma_khong_gian": "12",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "70",
+        "Ten_san_pham": "Bàn Trà Đá Cẩm Thạch Luna",
+        "Gia_ban": 20330000,
+        "Mo_ta": "Bàn trà Luna kết hợp mặt đá cẩm thạch trắng và chân kim loại thanh mảnh, tạo điểm nhấn sang trọng cho phòng khách.\n\nChi tiết kỹ thuật:\n- Mặt bàn: Đá cẩm thạch trắng Banswara.\n- Chân: Kim loại hoàn thiện đồng cổ.\n- Chịu tải: 136 kg.\n- Tiêu chuẩn: Contract-grade.",
+        "Kich_thuoc": "Ø0.91 m x Cao 0.41 m",
+        "Chat_lieu": "Đá cẩm thạch trắng & Kim loại",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh4.png"
+        ],
+        "So_luong_ton_kho": 50,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "02",
+        "Ma_khong_gian": "12",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "71",
+        "Ten_san_pham": "Đèn Sàn Estelle",
+        "Gia_ban": 12690000,
+        "Mo_ta": "Đèn sàn Estelle kết hợp khung thép mảnh mai và chao vải linen, mang lại ánh sáng ấm áp và vẻ đẹp trang trí tinh tế.\n\nChi tiết kỹ thuật:\n- Thân đèn: Thép hoàn thiện Champagne Bronze.\n- Chao: Vải linen Antique White.\n- Công tắc: Đạp chân.\n- Đui đèn: E26.",
+        "Kich_thuoc": "0.41 m x 0.71 m x 1.52 m",
+        "Chat_lieu": "Thép & Vải linen",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh4.png"
+        ],
+        "So_luong_ton_kho": 49,
+        "Ma_loai_phong": "01",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "16",
+        "Ma_khong_gian": "12",
+        "Trang_thai": true
+    },
+    {
+        "Ma_san_pham": "72",
+        "Ten_san_pham": "Kệ Tivi Gỗ Nguyên Khối Rune",
+        "Gia_ban": 48330000,
+        "Mo_ta": "Kệ TV Rune chế tác từ gỗ Xoài nguyên khối với hệ lưu trữ thông minh, mang lại vẻ đẹp ấm áp và bền bỉ cho không gian giải trí.\n\nChi tiết kỹ thuật:\n- Chất liệu: Gỗ Xoài nguyên khối.\n- Lưu trữ: 4 ngăn kéo + 2 khoang lớn.\n- Thiết kế: Có lỗ đi dây phía sau.",
+        "Kich_thuoc": "Chiều rộng khoảng 2.03 m",
+        "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
+        "Hinh_anh": [
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh1.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh2.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh3.png",
+            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh4.png"
+        ],
+        "So_luong_ton_kho": 48,
+        "Ma_loai_phong": "02",
+        "Ma_phong_cach": "01",
+        "Ma_danh_muc": "03",
+        "Ma_khong_gian": "12",
+        "Trang_thai": true
+    }
+]

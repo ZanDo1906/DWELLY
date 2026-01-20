@@ -1,0 +1,99 @@
+[
+    {
+        "Ma_khach_hang": "C01",
+        "Ho_va_ten": "Nguyễn Minh Khôi",
+        "So_dien_thoai": "0987654321",
+        "Email": "khoi.nguyen@gmail.com",
+        "Mat_khau": "khoi123",
+        "Dia_chi": [
+            "123 Nguyễn Trãi, Quận 5, TP. Hồ Chí Minh",
+            "456 Trần Hưng Đạo, Quận 1, TP. Hồ Chí Minh"
+        ],
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-02-14",
+        "Ma_phan_hang": "KIMCUONG",
+        "Tong_diem": 124070
+    },
+    {
+        "Ma_khach_hang": "C02",
+        "Ho_va_ten": "Trần Thị Thu Hà",
+        "So_dien_thoai": "0912345678",
+        "Email": "thuha.tran@gmail.com",
+        "Mat_khau": "ha123",
+        "Dia_chi": "45 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-01-17",
+        "Ma_phan_hang": "VANG",
+        "Tong_diem": 63990
+    },
+    {
+        "Ma_khach_hang": "C03",
+        "Ho_va_ten": "Phạm Quốc Bảo",
+        "So_dien_thoai": "0934567890",
+        "Email": "quocbao.pham@gmail.com",
+        "Mat_khau": "bao123",
+        "Dia_chi": [
+            "78 Hai Bà Trưng, Quận 3, TP. Hồ Chí Minh",
+            "90 Phố Huế, Quận Hoàn Kiếm, Hà Nội"
+        ],
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-01-14",
+        "Ma_phan_hang": "VANG",
+        "Tong_diem": 67783
+    },
+    {
+        "Ma_khach_hang": "C04",
+        "Ho_va_ten": "Lê Ngọc Anh",
+        "So_dien_thoai": "0909988776",
+        "Email": "ngocanh.le@gmail.com",
+        "Mat_khau": "anh123",
+        "Dia_chi": "12 Phan Văn Trị, Quận Bình Thạnh, TP. Hồ Chí Minh",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2025-01-14",
+        "Ma_phan_hang": "BAC",
+        "Tong_diem": 46500
+    },
+    {
+        "Ma_khach_hang": "C05",
+        "Ho_va_ten": "Võ Thành Đạt",
+        "So_dien_thoai": "0978123456",
+        "Email": "thanhdat.vo@gmail.com",
+        "Mat_khau": "dat123",
+        "Dia_chi": "99 Võ Văn Tần, Quận 3, TP. Hồ Chí Minh",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-06-14",
+        "Ma_phan_hang": "BAC",
+        "Tong_diem": 60140
+    },
+    {
+        "Ma_khach_hang": "C06",
+        "Ho_va_ten": "Nguyễn Thị Bích Ngọc",
+        "So_dien_thoai": "0963456789",
+        "Email": "bichngoc.nguyen@gmail.com",
+        "Mat_khau": "ngoc123",
+        "Dia_chi": "56 Lý Thường Kiệt, Quận Hải Châu, Cần Thơ",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-01-06",
+        "Ma_phan_hang": "DONG",
+        "Tong_diem": 0
+    },
+    {
+        "Ma_khach_hang": "C07",
+        "Ho_va_ten": "Trần Văn Hùng",
+        "So_dien_thoai": "0976543210",
+        "Email": "vanhung.tran@gmail.com",
+        "Mat_khau": "hung123",
+        "Dia_chi": "102 Nguyễn Văn Linh, Quận Hải Châu, Đà Nẵng",
+        "Trang_thai": true,
+        "Anh_dai_dien": "../assets/avt/avt_client.png",
+        "Ngay_tao": "2026-01-10",
+        "Ma_phan_hang": "BAC",
+        "Tong_diem": 46463
+    }
+]

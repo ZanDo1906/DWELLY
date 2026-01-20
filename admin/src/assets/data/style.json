@@ -1,0 +1,17 @@
+[
+    {
+        "Ma_phong_cach": "01",
+        "Ten_phong_cach": "Minimal",
+        "Mo_ta": "Phong cách Minimal hướng đến sự tối giản trong thiết kế, loại bỏ những chi tiết không cần thiết để tập trung vào công năng và sự gọn gàng. Không gian thường sử dụng các gam màu trung tính như trắng, be, xám kết hợp với đường nét đơn giản, tạo cảm giác thoáng đãng, nhẹ nhàng và tinh tế. Phong cách này phù hợp với những người yêu thích sự ngăn nắp, yên tĩnh và lối sống tối giản."
+    },
+    {
+        "Ma_phong_cach": "02",
+        "Ten_phong_cach": "Modern",
+        "Mo_ta": "Phong cách Modern mang hơi thở hiện đại, đề cao sự tiện nghi và tính ứng dụng trong không gian sống. Thiết kế thường sử dụng các hình khối rõ ràng, đường thẳng dứt khoát, kết hợp vật liệu như kim loại, kính, gỗ công nghiệp và màu sắc thời thượng. Phong cách này tạo nên không gian trẻ trung, năng động, phù hợp với gia đình hiện đại và những người yêu thích sự đổi mới."
+    },
+    {
+        "Ma_phong_cach": "03",
+        "Ten_phong_cach": "Scandinavian",
+        "Mo_ta": "Phong cách Scandinavian lấy cảm hứng từ Bắc Âu, nổi bật với sự ấm cúng, gần gũi và hài hòa với thiên nhiên. Không gian thường sử dụng tông màu sáng, đặc biệt là trắng, kết hợp với gỗ tự nhiên và ánh sáng tự nhiên để tạo cảm giác dễ chịu, thư giãn. Phong cách này mang lại sự cân bằng giữa thẩm mỹ và công năng, phù hợp với những ai yêu thích sự nhẹ nhàng, tinh tế và ấm áp trong không gian sống."
+    }
+]
