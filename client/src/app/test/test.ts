@@ -1,10 +1,6 @@
-import { iClient } from './../interfaces/client';
-import { iAdmin } from './../interfaces/admin';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Client } from '../services/client';
-import { Admin } from '../services/admin';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-test',
@@ -13,54 +9,82 @@ import { Admin } from '../services/admin';
   styleUrl: './test.css',
 })
 export class Test implements OnInit {
-  clientList: iClient[] = [];
-  adminList: iAdmin[] = [];
-  message: string = 'loading...';
-  selectedClientId: any;
-  selectedAdminId: any;
-  constructor(
-    private router: Router,
-    private clientService: Client,
-    private adminService: Admin,
-    private activatedRoute: ActivatedRoute
+  activeTab: string = 'admin';
+  console = console; // Make console available in template
 
-  ) { }
+  adminList: any[] = [];
+  blogList: any[] = [];
+  careInstructionList: any[] = [];
+  categoryList: any[] = [];
+  clientList: any[] = [];
+  conceptList: any[] = [];
+  contactList: any[] = [];
+  orderList: any[] = [];
+  orderDetailsList: any[] = [];
+  productList: any[] = [];
+  rankingList: any[] = [];
+  reviewList: any[] = [];
+  roomList: any[] = [];
+  styleList: any[] = [];
+  voucherList: any[] = [];
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.clientService.getClientData().subscribe({
-      next: (data) => {
-        this.clientList = data;
-      },
-      error: (error) => {
-        this.message = error.message;
+    this.loadAllData();
+  }
+
+  loadAllData(): void {
+    this.http.get<any[]>('assets/data/admin.json').subscribe(data => {
+      this.adminList = data;
+      console.log('Admin loaded:', this.adminList.length);
+    });
+    this.http.get<any[]>('assets/data/blog.json').subscribe(data => {
+      this.blogList = data;
+      console.log('Blog loaded:', this.blogList.length);
+    });
+    this.http.get<any[]>('assets/data/care_instruction.json').subscribe(data => this.careInstructionList = data);
+    this.http.get<any[]>('assets/data/category.json').subscribe(data => this.categoryList = data);
+    this.http.get<any[]>('assets/data/client.json').subscribe(data => this.clientList = data);
+    this.http.get<any[]>('assets/data/concept.json').subscribe(data => {
+      this.conceptList = data;
+      console.log('Concept loaded:', this.conceptList.length);
+      if (this.conceptList.length > 0) {
+        console.log('First concept image:', this.conceptList[0].Hinh_anh);
+        console.log('Fixed path:', this.fixImagePath(this.conceptList[0].Hinh_anh));
       }
     });
-
-    this.adminService.getAdminData().subscribe({
-      next: (data) => {
-        this.adminList = data;
-      },
-      error: (error) => {
-        this.message = error.message;
+    this.http.get<any[]>('assets/data/contact.json').subscribe(data => this.contactList = data);
+    this.http.get<any[]>('assets/data/order.json').subscribe(data => this.orderList = data);
+    this.http.get<any[]>('assets/data/order_details.json').subscribe(data => this.orderDetailsList = data);
+    this.http.get<any[]>('assets/data/product.json').subscribe(data => {
+      this.productList = data;
+      console.log('Product loaded:', this.productList.length);
+      if (this.productList.length > 0) {
+        console.log('First product image:', this.productList[0].Hinh_anh[0]);
+        console.log('Fixed path:', this.fixImagePath(this.productList[0].Hinh_anh[0]));
       }
     });
+    this.http.get<any[]>('assets/data/ranking.json').subscribe(data => this.rankingList = data);
+    this.http.get<any[]>('assets/data/review.json').subscribe(data => this.reviewList = data);
+    this.http.get<any[]>('assets/data/room.json').subscribe(data => this.roomList = data);
+    this.http.get<any[]>('assets/data/style.json').subscribe(data => this.styleList = data);
+    this.http.get<any[]>('assets/data/voucher.json').subscribe(data => this.voucherList = data);
+  }
 
-    this.activatedRoute.paramMap.subscribe((param) => {
-      let id = param.get('id');
-      if (id != null) this.selectedClientId = id;
-    });
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+  }
 
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
-  onSelectClient(data: any): void {
-    this.router.navigate(['/clients', data.Ma_khach_hang]);
-  }
-  onSelectAdmin(data: any): void {
-    this.router.navigate(['/admins', data.Ma_quan_tri_vien]);
-  }
-  isSelectedClient(d: any): boolean {
-    return d.Ma_khach_hang === this.selectedClientId;
-  }
-  isSelectedAdmin(d: any): boolean {
-    return d.Ma_quan_tri_vien === this.selectedAdminId;
+
+  // Helper method to fix image paths
+  fixImagePath(path: string): string {
+    if (!path) return '';
+    // Replace ../assets/ with assets/assets/
+    // Because the file structure has assets/assets/ instead of just assets/
+    return path.replace(/^\.\.\/assets\//, 'assets/assets/');
   }
 }
