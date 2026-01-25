@@ -6,7 +6,7 @@
         "Email": "nhungoc.lSe@gmail.com",
         "Mat_khau": "N@45679",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_admin.png",
+        "Anh_dai_dien": "assets/images/avt_admin.png",
         "Ngay_tao": "2026-01-14T00:00:00.000Z"
     },
     {
@@ -16,7 +16,7 @@
         "Email": "yennhi.nguyen@gmail.com",
         "Mat_khau": "N@45679",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_admin.png",
+        "Anh_dai_dien": "assets/images/avt_admin.png",
         "Ngay_tao": "2026-01-14T00:00:00.000Z"
     },
     {
@@ -26,7 +26,7 @@
         "Email": "quyen.nguyen@gmail.com",
         "Mat_khau": "N@45679",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_admin.png",
+        "Anh_dai_dien": "assets/images/avt_admin.png",
         "Ngay_tao": "2026-01-14T00:00:00.000Z"
     },
     {
@@ -36,7 +36,7 @@
         "Email": "thao.le@gmail.com",
         "Mat_khau": "N@45679",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_admin.png",
+        "Anh_dai_dien": "assets/images/avt_admin.png",
         "Ngay_tao": "2026-01-14T00:00:00.000Z"
     },
     {
@@ -46,7 +46,7 @@
         "Email": "van.do@gmail.com",
         "Mat_khau": "N@45679",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_admin.png",
+        "Anh_dai_dien": "assets/images/avt_admin.png",
         "Ngay_tao": "2026-01-14T00:00:00.000Z"
     }
 ]

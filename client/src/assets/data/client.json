@@ -10,7 +10,7 @@
             "456 Trần Hưng Đạo, Quận 1, TP. Hồ Chí Minh"
         ],
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-02-14",
         "Ma_phan_hang": "KIMCUONG",
         "Tong_diem": 124070
@@ -23,7 +23,7 @@
         "Mat_khau": "ha123",
         "Dia_chi": "45 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-17",
         "Ma_phan_hang": "VANG",
         "Tong_diem": 63990
@@ -39,7 +39,7 @@
             "90 Phố Huế, Quận Hoàn Kiếm, Hà Nội"
         ],
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-14",
         "Ma_phan_hang": "VANG",
         "Tong_diem": 67783
@@ -52,7 +52,7 @@
         "Mat_khau": "anh123",
         "Dia_chi": "12 Phan Văn Trị, Quận Bình Thạnh, TP. Hồ Chí Minh",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2025-01-14",
         "Ma_phan_hang": "BAC",
         "Tong_diem": 46500
@@ -65,7 +65,7 @@
         "Mat_khau": "dat123",
         "Dia_chi": "99 Võ Văn Tần, Quận 3, TP. Hồ Chí Minh",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-06-14",
         "Ma_phan_hang": "BAC",
         "Tong_diem": 60140
@@ -78,7 +78,7 @@
         "Mat_khau": "ngoc123",
         "Dia_chi": "56 Lý Thường Kiệt, Quận Hải Châu, Cần Thơ",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-06",
         "Ma_phan_hang": "DONG",
         "Tong_diem": 0
@@ -91,7 +91,7 @@
         "Mat_khau": "hung123",
         "Dia_chi": "102 Nguyễn Văn Linh, Quận Hải Châu, Đà Nẵng",
         "Trang_thai": true,
-        "Anh_dai_dien": "assets/assets/avt/avt_client.png",
+        "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-10",
         "Ma_phan_hang": "BAC",
         "Tong_diem": 46463
