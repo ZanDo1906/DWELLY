@@ -1,39 +1,525 @@
-<div class="m-3 p-3">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="border p-3">
-                <h3 class="mb-3">Danh sách khách hàng</h3>
+<div class="container-fluid p-4">
+    <h1 class="mb-4 text-center">📊 Hiển thị Dữ liệu DWELLY</h1>
 
-                <div class="item {{ isSelectedClient(d) ? 'selected' : '' }}" *ngFor="let d of clientList"
-                    (click)="onSelectClient(d)">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>{{ d.Ma_khach_hang }}</strong> - {{ d.Ho_va_ten }}
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'admin'" (click)="setActiveTab('admin')">
+                👥 Admin ({{adminList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'blog'" (click)="setActiveTab('blog')">
+                📝 Blog ({{blogList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'care'" (click)="setActiveTab('care')">
+                🧹 Hướng dẫn ({{careInstructionList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'category'" (click)="setActiveTab('category')">
+                📦 Danh mục ({{categoryList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'client'" (click)="setActiveTab('client')">
+                👤 Khách hàng ({{clientList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'concept'" (click)="setActiveTab('concept')">
+                🏠 Không gian ({{conceptList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'contact'" (click)="setActiveTab('contact')">
+                📧 Liên hệ ({{contactList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'order'" (click)="setActiveTab('order')">
+                🛒 Đơn hàng ({{orderList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'orderDetails'"
+                (click)="setActiveTab('orderDetails')">
+                📋 Chi tiết ĐH ({{orderDetailsList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'product'" (click)="setActiveTab('product')">
+                🛋️ Sản phẩm ({{productList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'ranking'" (click)="setActiveTab('ranking')">
+                🏆 Phân hạng ({{rankingList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'review'" (click)="setActiveTab('review')">
+                ⭐ Đánh giá ({{reviewList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'room'" (click)="setActiveTab('room')">
+                🚪 Loại phòng ({{roomList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'style'" (click)="setActiveTab('style')">
+                🎨 Phong cách ({{styleList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'voucher'" (click)="setActiveTab('voucher')">
+                🎟️ Voucher ({{voucherList.length}})
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Admin Tab -->
+        <div *ngIf="activeTab === 'admin'" class="data-container">
+            <h2>👥 Quản trị viên</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Mã QTV</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of adminList">
+                            <td>
+                                <img [src]="fixImagePath(item.Anh_dai_dien)" [alt]="item.Ho_va_ten"
+                                    class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;"
+                                    (error)="$event.target.src='https://via.placeholder.com/40?text=Admin'">
+                            </td>
+                            <td><strong>{{item.Ma_quan_tri_vien}}</strong></td>
+                            <td>{{item.Ho_va_ten}}</td>
+                            <td>{{item.So_dien_thoai}}</td>
+                            <td>{{item.Email}}</td>
+                            <td>
+                                <span class="badge" [class.bg-success]="item.Trang_thai"
+                                    [class.bg-danger]="!item.Trang_thai">
+                                    {{item.Trang_thai ? 'Hoạt động' : 'Không hoạt động'}}
+                                </span>
+                            </td>
+                            <td>{{item.Ngay_tao | date:'dd/MM/yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Blog Tab -->
+        <div *ngIf="activeTab === 'blog'" class="data-container">
+            <h2>📝 Bài viết Blog</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let item of blogList">
+                    <div class="card h-100">
+                        <img [src]="fixImagePath(item.Hinh_anh)" class="card-img-top" [alt]="item.Tieu_de"
+                            style="height: 200px; object-fit: cover; background-color: #f0f0f0;"
+                            (error)="$event.target.src='https://via.placeholder.com/400x200?text=No+Image'">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.Ma_bai_viet}}: {{item.Tieu_de}}</h5>
+                            <p class="card-text">{{item.Tom_tat}}</p>
+                            <p class="text-muted"><small>Ngày tạo: {{item.Ngay_tao | date:'dd/MM/yyyy'}}</small></p>
+                            <span class="badge" [class.bg-success]="item.Trang_thai"
+                                [class.bg-danger]="!item.Trang_thai">
+                                {{item.Trang_thai ? 'Công khai' : 'Ẩn'}}
+                            </span>
                         </div>
-                        <div class="text-muted">
-                            <small>{{ d.Email }}</small>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <small>SĐT: {{ d.So_dien_thoai }} | Điểm: {{ d.Tong_diem }}</small>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="border p-3">
-                <h3 class="mb-3">Danh sách quản trị viên</h3>
-
-                <div class="item {{ isSelectedAdmin(d) ? 'selected' : '' }}" *ngFor="let d of adminList"
-                    (click)="onSelectAdmin(d)">
-                    <div>
-                        <strong>{{ d.Ma_quan_tri_vien }}</strong> - {{ d.Ho_va_ten }}
+        <!-- Care Instruction Tab -->
+        <div *ngIf="activeTab === 'care'" class="data-container">
+            <h2>🧹 Hướng dẫn chăm sóc</h2>
+            <div *ngFor="let item of careInstructionList" class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.Ma_huong_dan}}</h5>
+                    <p><strong>Danh mục:</strong> {{item.Ma_danh_muc.join(', ')}}</p>
+                    <div class="mb-2">
+                        <strong>Video hướng dẫn:</strong>
+                        <ul>
+                            <li *ngFor="let video of item.Link_video">
+                                <a [href]="video" target="_blank">{{video}}</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="mt-1">
-                        <small>Email: {{ d.Email }} | SĐT: {{ d.So_dien_thoai }}</small>
+                    <p><strong>Hướng dẫn vệ sinh:</strong></p>
+                    <pre class="bg-light p-2">{{item.Huong_dan_ve_sinh}}</pre>
+                    <p><strong>Hướng dẫn đặt sản phẩm:</strong></p>
+                    <pre class="bg-light p-2">{{item.Huong_dan_dat_san_pham}}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Tab -->
+        <div *ngIf="activeTab === 'category'" class="data-container">
+            <h2>📦 Danh mục sản phẩm</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã DM</th>
+                            <th>Tên danh mục</th>
+                            <th>Mô tả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of categoryList">
+                            <td><strong>{{item.Ma_danh_muc}}</strong></td>
+                            <td>{{item.Ten_danh_muc}}</td>
+                            <td>{{item.Mo_ta}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Client Tab -->
+        <div *ngIf="activeTab === 'client'" class="data-container">
+            <h2>👤 Khách hàng</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Mã KH</th>
+                            <th>Họ và tên</th>
+                            <th>SĐT</th>
+                            <th>Email</th>
+                            <th>Phân hạng</th>
+                            <th>Tổng điểm</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of clientList">
+                            <td>
+                                <img [src]="fixImagePath(item.Anh_dai_dien)" [alt]="item.Ho_va_ten"
+                                    class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;"
+                                    (error)="$event.target.src='https://via.placeholder.com/40?text=Client'">
+                            </td>
+                            <td><strong>{{item.Ma_khach_hang}}</strong></td>
+                            <td>{{item.Ho_va_ten}}</td>
+                            <td>{{item.So_dien_thoai}}</td>
+                            <td>{{item.Email}}</td>
+                            <td>
+                                <span class="badge bg-warning" *ngIf="item.Ma_phan_hang === 'DONG'">🥉 Đồng</span>
+                                <span class="badge bg-secondary" *ngIf="item.Ma_phan_hang === 'BAC'">🥈 Bạc</span>
+                                <span class="badge bg-warning text-dark" *ngIf="item.Ma_phan_hang === 'VANG'">🥇
+                                    Vàng</span>
+                                <span class="badge bg-primary" *ngIf="item.Ma_phan_hang === 'KIMCUONG'">💎 Kim
+                                    cương</span>
+                            </td>
+                            <td>{{item.Tong_diem | number}}</td>
+                            <td>
+                                <span class="badge" [class.bg-success]="item.Trang_thai"
+                                    [class.bg-danger]="!item.Trang_thai">
+                                    {{item.Trang_thai ? 'Hoạt động' : 'Khóa'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Concept Tab -->
+        <div *ngIf="activeTab === 'concept'" class="data-container">
+            <h2>🏠 Không gian thiết kế</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let item of conceptList">
+                    <div class="card h-100">
+                        <img [src]="fixImagePath(item.Hinh_anh)" class="card-img-top" [alt]="item.Ten_khong_gian"
+                            style="height: 200px; object-fit: cover; background-color: #f0f0f0;"
+                            (error)="$event.target.src='https://via.placeholder.com/400x200?text=No+Image'">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.Ma_khong_gian}}: {{item.Ten_khong_gian}}</h5>
+                            <p class="card-text">{{item.Mo_ta}}</p>
+                            <p><small>Loại phòng: {{item.Ma_loai_phong}} | Phong cách: {{item.Ma_phong_cach}}</small>
+                            </p>
+                            <span class="badge" [class.bg-success]="item.Trang_thai"
+                                [class.bg-danger]="!item.Trang_thai">
+                                {{item.Trang_thai ? 'Hiển thị' : 'Ẩn'}}
+                            </span>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div *ngIf="activeTab === 'contact'" class="data-container">
+            <h2>📧 Liên hệ</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã LH</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>SĐT</th>
+                            <th>Nội dung</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày gửi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of contactList">
+                            <td><strong>{{item.Ma_lien_he}}</strong></td>
+                            <td>{{item.Ho_ten}}</td>
+                            <td>{{item.Email}}</td>
+                            <td>{{item.So_dien_thoai}}</td>
+                            <td>{{item.Noi_dung}}</td>
+                            <td>
+                                <span class="badge" [class.bg-warning]="item.Trang_thai === 'Chưa xử lý'"
+                                    [class.bg-success]="item.Trang_thai === 'Đã xử lý'">
+                                    {{item.Trang_thai}}
+                                </span>
+                            </td>
+                            <td>{{item.Ngay_gui | date:'dd/MM/yyyy HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Order Tab -->
+        <div *ngIf="activeTab === 'order'" class="data-container">
+            <h2>🛒 Đơn hàng</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã ĐH</th>
+                            <th>Mã KH</th>
+                            <th>Tổng tiền</th>
+                            <th>Thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày đặt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orderList">
+                            <td><strong>{{item.Ma_don_mua}}</strong></td>
+                            <td>{{item.Ma_khach_hang || 'Vãng lai'}}</td>
+                            <td>{{item.Tong_tien | number}} đ</td>
+                            <td>{{item.Hinh_thuc_thanh_toan}}</td>
+                            <td>
+                                <span class="badge bg-success" *ngIf="item.Trang_thai === 'Hoàn thành'">✓ Hoàn
+                                    thành</span>
+                                <span class="badge bg-info" *ngIf="item.Trang_thai === 'Đang giao'">🚚 Đang giao</span>
+                                <span class="badge bg-danger" *ngIf="item.Trang_thai === 'Hủy đơn'">✗ Hủy đơn</span>
+                            </td>
+                            <td>{{item.Ngay_dat | date:'dd/MM/yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Order Details Tab -->
+        <div *ngIf="activeTab === 'orderDetails'" class="data-container">
+            <h2>📋 Chi tiết đơn hàng</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã CT</th>
+                            <th>Mã ĐH</th>
+                            <th>Mã SP</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orderDetailsList">
+                            <td><strong>{{item.Ma_chi_tiet}}</strong></td>
+                            <td>{{item.Ma_don_mua}}</td>
+                            <td>{{item.Ma_san_pham}}</td>
+                            <td>{{item.Don_gia | number}} đ</td>
+                            <td>{{item.So_luong}}</td>
+                            <td><strong>{{item.Don_gia * item.So_luong | number}} đ</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Product Tab -->
+        <div *ngIf="activeTab === 'product'" class="data-container">
+            <h2>🛋️ Sản phẩm</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3" *ngFor="let item of productList">
+                    <div class="card h-100">
+                        <img [src]="fixImagePath(item.Hinh_anh[0])" class="card-img-top" [alt]="item.Ten_san_pham"
+                            style="height: 200px; object-fit: cover; background-color: #f0f0f0;"
+                            (error)="$event.target.src='https://via.placeholder.com/400x200?text=No+Image'">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.Ma_san_pham}}: {{item.Ten_san_pham}}</h5>
+                            <p class="card-text text-danger"><strong>{{item.Gia_ban | number}} đ</strong></p>
+                            <p class="card-text"><small>{{item.Mo_ta?.substring(0, 100)}}...</small></p>
+                            <p><small>Chất liệu: {{item.Chat_lieu}}</small></p>
+                            <p><small>Kích thước: {{item.Kich_thuoc}}</small></p>
+                            <p><small>Tồn kho: {{item.So_luong_ton_kho}}</small></p>
+                            <span class="badge" [class.bg-success]="item.Trang_thai"
+                                [class.bg-danger]="!item.Trang_thai">
+                                {{item.Trang_thai ? 'Còn hàng' : 'Hết hàng'}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ranking Tab -->
+        <div *ngIf="activeTab === 'ranking'" class="data-container">
+            <h2>🏆 Phân hạng thành viên</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let item of rankingList">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span *ngIf="item.Ma_phan_hang === 'DONG'">🥉</span>
+                                <span *ngIf="item.Ma_phan_hang === 'BAC'">🥈</span>
+                                <span *ngIf="item.Ma_phan_hang === 'VANG'">🥇</span>
+                                <span *ngIf="item.Ma_phan_hang === 'KIMCUONG'">💎</span>
+                                {{item.Ten_phan_hang}}
+                            </h5>
+                            <p><strong>Điểm tối thiểu:</strong> {{item.Diem_toi_thieu | number}}</p>
+                            <p class="card-text">{{item.Mo_ta}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Tab -->
+        <div *ngIf="activeTab === 'review'" class="data-container">
+            <h2>⭐ Đánh giá sản phẩm</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã ĐG</th>
+                            <th>Mã KH</th>
+                            <th>Mã SP</th>
+                            <th>Điểm</th>
+                            <th>Nội dung</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of reviewList">
+                            <td><strong>{{item.Ma_danh_gia}}</strong></td>
+                            <td>{{item.Ma_khach_hang}}</td>
+                            <td>{{item.Ma_san_pham}}</td>
+                            <td>
+                                <span class="text-warning">
+                                    <span *ngFor="let star of [1,2,3,4,5]">
+                                        {{star <= item.Diem_danh_gia ? '★' : '☆' }} </span>
+                                    </span>
+                            </td>
+                            <td>{{item.Noi_dung}}</td>
+                            <td>{{item.Thoi_gian_gui | date:'dd/MM/yyyy HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Room Tab -->
+        <div *ngIf="activeTab === 'room'" class="data-container">
+            <h2>🚪 Loại phòng</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let item of roomList">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.Ma_loai_phong}}: {{item.Ten_loai_phong}}</h5>
+                            <p class="card-text">{{item.Mo_ta}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Style Tab -->
+        <div *ngIf="activeTab === 'style'" class="data-container">
+            <h2>🎨 Phong cách thiết kế</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let item of styleList">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.Ma_phong_cach}}: {{item.Ten_phong_cach}}</h5>
+                            <p class="card-text">{{item.Mo_ta}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voucher Tab -->
+        <div *ngIf="activeTab === 'voucher'" class="data-container">
+            <h2>🎟️ Voucher khuyến mãi</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã KM</th>
+                            <th>Mã số</th>
+                            <th>% Giảm</th>
+                            <th>SL còn lại</th>
+                            <th>Hạng tối thiểu</th>
+                            <th>Ngày BĐ</th>
+                            <th>Ngày HH</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of voucherList">
+                            <td><strong>{{item.Ma_khuyen_mai}}</strong></td>
+                            <td><code>{{item.Ma_so}}</code></td>
+                            <td><span class="badge bg-success">{{item.Phan_tram_giam}}%</span></td>
+                            <td>{{item.So_luong_con_lai}}</td>
+                            <td>
+                                <span class="badge bg-warning" *ngIf="item.Ma_phan_hang_toi_thieu === 'DONG'">🥉
+                                    Đồng</span>
+                                <span class="badge bg-secondary" *ngIf="item.Ma_phan_hang_toi_thieu === 'BAC'">🥈
+                                    Bạc</span>
+                                <span class="badge bg-warning text-dark"
+                                    *ngIf="item.Ma_phan_hang_toi_thieu === 'VANG'">🥇 Vàng</span>
+                                <span class="badge bg-primary" *ngIf="item.Ma_phan_hang_toi_thieu === 'KIMCUONG'">💎 Kim
+                                    cương</span>
+                            </td>
+                            <td>{{item.Ngay_bat_dau | date:'dd/MM/yyyy'}}</td>
+                            <td>{{item.Ngay_het_han | date:'dd/MM/yyyy'}}</td>
+                            <td>
+                                <span class="badge" [class.bg-success]="item.Trang_thai"
+                                    [class.bg-danger]="!item.Trang_thai">
+                                    {{item.Trang_thai ? 'Hoạt động' : 'Hết hạn'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

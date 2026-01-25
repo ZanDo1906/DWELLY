@@ -7,10 +7,10 @@
         "Kich_thuoc": "1.27m (Cao) x 3.38m (Rộng) x 2.27m (Sâu)",
         "Chat_lieu": "Vải polyester sợi xoắn và gỗ thông",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 14,
         "Ma_loai_phong": "02",
@@ -27,10 +27,10 @@
         "Kich_thuoc": "0.79m (Cao) x 1.57m (Rộng) x 0.48m (Sâu)",
         "Chat_lieu": "Gỗ sồi",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 5,
         "Ma_loai_phong": "02",
@@ -47,10 +47,10 @@
         "Kich_thuoc": "2.00m (Rộng) x 2.20m (Dài)",
         "Chat_lieu": "Cotton và linen",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 30,
         "Ma_loai_phong": "02",
@@ -67,10 +67,10 @@
         "Kich_thuoc": "3.66m (Rộng) x 4.57m (Dài)",
         "Chat_lieu": "Sợi viscose, sợi đay và cotton",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_15/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_15/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 8,
         "Ma_loai_phong": "02",
@@ -87,10 +87,10 @@
         "Kich_thuoc": "1.27m (Cao) x 3.38m (Rộng) x 2.27m (Sâu)",
         "Chat_lieu": "Gỗ thông và vải Chenille từ sợi Poly tái chế",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 15,
         "Ma_loai_phong": "02",
@@ -107,10 +107,10 @@
         "Kich_thuoc": "0.41m (Cao) x 1.02m (Rộng) x 0.89m (Sâu)",
         "Chat_lieu": "Thủy tinh và đồng thau",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 2,
         "Ma_loai_phong": "02",
@@ -127,10 +127,10 @@
         "Kich_thuoc": "0.73m (Cao) x 0.53m (Rộng) x 0.53m (Sâu)",
         "Chat_lieu": "Đá cẩm thạch và thép",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 23,
         "Ma_loai_phong": "02",
@@ -147,10 +147,10 @@
         "Kich_thuoc": "0.61m (Cao) x 0.48m (Rộng) x 0.46m (Sâu)",
         "Chat_lieu": "Gỗ sồi trắng và gỗ lạng",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_modern/concept_16/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_modern/concept_16/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 16,
         "Ma_loai_phong": "02",
@@ -167,10 +167,10 @@
         "Kich_thuoc": "1.27m (Cao) x 2.04m (Rộng) x 2.15m (Sâu)",
         "Chat_lieu": "Gỗ gụ và gỗ tự nhiên",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 3,
         "Ma_loai_phong": "02",
@@ -187,10 +187,10 @@
         "Kich_thuoc": "1.63m (Rộng) x 0.51m (Sâu) x 0.81m (Cao)",
         "Chat_lieu": "Gỗ gụ và gỗ lạng",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 24,
         "Ma_loai_phong": "02",
@@ -207,10 +207,10 @@
         "Kich_thuoc": "2.00m (Rộng) x 2.20m (Dài)",
         "Chat_lieu": "Linen và cotton",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 42,
         "Ma_loai_phong": "02",
@@ -227,10 +227,10 @@
         "Kich_thuoc": "0.50m (Cao) x 0.65m (Rộng)",
         "Chat_lieu": "Thép và thủy tinh",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_17/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "02",
@@ -247,10 +247,10 @@
         "Kich_thuoc": "0.44m (Cao) x 0.74m (Rộng)",
         "Chat_lieu": "Thủy tinh mờ và thép",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 24,
         "Ma_loai_phong": "02",
@@ -267,10 +267,10 @@
         "Kich_thuoc": "0.71m (Cao) x 0.43m (Rộng) x 0.43m (Sâu)",
         "Chat_lieu": "Đá cẩm thạch",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 13,
         "Ma_loai_phong": "02",
@@ -287,10 +287,10 @@
         "Kich_thuoc": "0.74m (Rộng) x 0.51m (Sâu) x 0.64m (Cao)",
         "Chat_lieu": "Gỗ sồi tự nhiên và mây đan",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 23,
         "Ma_loai_phong": "02",
@@ -307,10 +307,10 @@
         "Kich_thuoc": "3.05m (Rộng) x 4.27m (Dài)",
         "Chat_lieu": "Len, sợi polyester và cotton",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_scandinavian/concept_18/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "02",
@@ -327,10 +327,10 @@
         "Kich_thuoc": "2.29m (Dài)",
         "Chat_lieu": "Gỗ sồi trắng nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 20,
         "Ma_loai_phong": "03",
@@ -347,10 +347,10 @@
         "Kich_thuoc": "1.83m (Rộng) x 0.47m (Sâu) x 0.66m (Cao)",
         "Chat_lieu": "Gỗ công nghiệp phủ veneer óc chó và gỗ bạch đàn",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 13,
         "Ma_loai_phong": "01",
@@ -367,10 +367,10 @@
         "Kich_thuoc": "0.75m (Cao) x 0.55m (Rộng) x 0.52m (Sâu)",
         "Chat_lieu": "Gỗ dẻ gai (Beechwood) và gỗ công nghiệp",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 20,
         "Ma_loai_phong": "03",
@@ -387,10 +387,10 @@
         "Kich_thuoc": "1.43m (Dài) x Cao tùy chỉnh",
         "Chat_lieu": "Đá vân thạch tự nhiên, thép và đồng thau",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp3/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 14,
         "Ma_loai_phong": "03",
@@ -407,10 +407,10 @@
         "Kich_thuoc": "2.74m (Rộng) x 3.66m (Dài)",
         "Chat_lieu": "100% sợi Polypropylene hiệu năng cao",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_1/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_1/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 20,
         "Ma_loai_phong": "03",
@@ -427,10 +427,10 @@
         "Kich_thuoc": "0.78m (Cao) x 0.58m (Rộng) x 0.55m (Sâu)",
         "Chat_lieu": "Khung gỗ sồi/óc chó và vải nỉ linen",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 40,
         "Ma_loai_phong": "03",
@@ -447,10 +447,10 @@
         "Kich_thuoc": "2.40m x 1.10m x 0.75m",
         "Chat_lieu": "Gỗ sồi trắng nguyên khối sơn màu Walnut",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "03",
@@ -467,10 +467,10 @@
         "Kich_thuoc": "1.50m (Dài) x 0.40m (Rộng)",
         "Chat_lieu": "Khung thép mảnh và Polymer composite cao cấp giả giấy Washi",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp3/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 10,
         "Ma_loai_phong": "03",
@@ -487,10 +487,10 @@
         "Kich_thuoc": "2.00m (Rộng) x 3.00m (Dài)",
         "Chat_lieu": "80% Len New Zealand, 20% Viscose tự nhiên",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_4/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_4/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "03",
@@ -507,10 +507,10 @@
         "Kich_thuoc": "1.22m (Rộng) x 0.61m (Sâu) x 0.41m (Cao)",
         "Chat_lieu": "Gỗ keo (Acacia) nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 10,
         "Ma_loai_phong": "01",
@@ -527,10 +527,10 @@
         "Kich_thuoc": "2.84m (Rộng) x 1.61m (Sâu) x 0.83m (Cao)",
         "Chat_lieu": "Gỗ thông nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 15,
         "Ma_loai_phong": "01",
@@ -547,10 +547,10 @@
         "Kich_thuoc": "Dài 1.55 m – 2.51 m",
         "Chat_lieu": "Gỗ sồi trắng nguyên khối (Solid White Oak) & Chân nhôm (Aluminum)",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 15,
         "Ma_loai_phong": "03",
@@ -567,10 +567,10 @@
         "Kich_thuoc": "0.85 m (Cao) x 0.50 m (Rộng) x 0.55 m (Sâu)",
         "Chat_lieu": "Gỗ Teak (Giả tỵ) nguyên khối & Da thật",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 16,
         "Ma_loai_phong": "03",
@@ -587,10 +587,10 @@
         "Kich_thuoc": "Đường kính chao: 0.70 m; Đế ốp trần: 0.15 m",
         "Chat_lieu": "Đế thép hoàn thiện màu đồng thau (Burnished Brass) & Thủy tinh màu Champagne",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp3/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 20,
         "Ma_loai_phong": "03",
@@ -607,10 +607,10 @@
         "Kich_thuoc": "2.44 m (Rộng) x 3.05 m (Dài)",
         "Chat_lieu": "100% Len New Zealand & Đế 100% Cotton",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_minimal/concept_2/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_minimal/concept_2/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 25,
         "Ma_loai_phong": "03",
@@ -627,10 +627,10 @@
         "Kich_thuoc": "Đường kính 2.0 m (Phù hợp bàn ăn 4–6 ghế)",
         "Chat_lieu": "100% Sợi Polypropylene Soft-Touch",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 5,
         "Ma_loai_phong": "03",
@@ -647,10 +647,10 @@
         "Kich_thuoc": "Thanh ngang ốp trần: 1.0 m; Chao đèn: Ø18 cm; Dây treo tối đa 1.2 m",
         "Chat_lieu": "Thép không gỉ mạ Chrome & Thủy tinh Opal mờ",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "03",
@@ -667,10 +667,10 @@
         "Kich_thuoc": "0.52 m (Rộng) x 0.58 m (Sâu) x 0.82 m (Cao)",
         "Chat_lieu": "Gỗ Tần bì & Vải Linen cao cấp",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 22,
         "Ma_loai_phong": "03",
@@ -687,10 +687,10 @@
         "Kich_thuoc": "1.80 m x 0.90 m x 0.76 m",
         "Chat_lieu": "Gỗ tự nhiên & Veneer Óc chó",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 17,
         "Ma_loai_phong": "03",
@@ -707,10 +707,10 @@
         "Kich_thuoc": "3.00 m x 1.99 m x 0.94 m",
         "Chat_lieu": "Khung gỗ cứng & Vải Linen cao cấp",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 18,
         "Ma_loai_phong": "01",
@@ -727,10 +727,10 @@
         "Kich_thuoc": "1.28 m x 0.72 m x 0.36 m",
         "Chat_lieu": "Mặt gỗ nguyên khối & Chân gỗ Keo",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 23,
         "Ma_loai_phong": "01",
@@ -747,10 +747,10 @@
         "Kich_thuoc": "Ø0.79 m x 0.70 m",
         "Chat_lieu": "Vải Bouclé & Khung gỗ sấy khô",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 23,
         "Ma_loai_phong": "01",
@@ -767,10 +767,10 @@
         "Kich_thuoc": "1.07 m x 0.36 m x 0.76 m",
         "Chat_lieu": "Gỗ công nghiệp & Gỗ bạch dương FSC",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 41,
         "Ma_loai_phong": "01",
@@ -787,10 +787,10 @@
         "Kich_thuoc": "2.50 m x 1.07 m x 0.84 m",
         "Chat_lieu": "Khung gỗ kỹ thuật & Vải Linen",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 26,
         "Ma_loai_phong": "01",
@@ -807,10 +807,10 @@
         "Kich_thuoc": "Bàn lớn: 0.93 x 0.91 x 0.41 m; Bàn nhỏ: 0.63 x 0.61 x 0.34 m",
         "Chat_lieu": "Bê tông nhẹ & Gỗ Keo",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 37,
         "Ma_loai_phong": "01",
@@ -827,10 +827,10 @@
         "Kich_thuoc": "0.69 m x 0.80 m x 0.76 m",
         "Chat_lieu": "Khung gỗ cứng & Vải dệt cao cấp",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 20,
         "Ma_loai_phong": "01",
@@ -847,10 +847,10 @@
         "Kich_thuoc": "1.83 m (Rộng) x 0.43 m (Sâu) x 2.00 m (Cao)",
         "Chat_lieu": "Khung kim loại sơn tĩnh điện & Gỗ sồi nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_minimal/concept_8/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 16,
         "Ma_loai_phong": "01",
@@ -867,10 +867,10 @@
         "Kich_thuoc": "3.05 m (Rộng) x 1.61 m (Sâu) x 0.76 m (Cao)",
         "Chat_lieu": "Khung gỗ kỹ thuật & Chân gỗ bạch dương nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 32,
         "Ma_loai_phong": "01",
@@ -887,10 +887,10 @@
         "Kich_thuoc": "1.12 m (Rộng) x 0.61 m (Sâu) x 0.41 m (Cao)",
         "Chat_lieu": "Gỗ công nghiệp phủ vân & Gỗ bạch dương nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 7,
         "Ma_loai_phong": "01",
@@ -907,10 +907,10 @@
         "Kich_thuoc": "0.70 m (Rộng) x 0.81 m (Sâu) x 0.86 m (Cao)",
         "Chat_lieu": "Khung thép không gỉ & Vải bọc tái chế",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "01",
@@ -927,10 +927,10 @@
         "Kich_thuoc": "1.73 m (Rộng) x 0.46 m (Sâu) x 2.02 m (Cao)",
         "Chat_lieu": "Gỗ gụ nguyên khối & Gỗ công nghiệp phủ veneer",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_9/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_9/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 6,
         "Ma_loai_phong": "01",
@@ -947,10 +947,10 @@
         "Kich_thuoc": "3.07 m (Rộng) x 2.34 m (Sâu) x 0.76 m (Cao)",
         "Chat_lieu": "Khung gỗ chuẩn FSC & Vải Linen cao cấp",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 11,
         "Ma_loai_phong": "01",
@@ -967,10 +967,10 @@
         "Kich_thuoc": "Ø0.91 m x 0.41 m",
         "Chat_lieu": "Nhôm đúc nguyên khối hoàn thiện đồng cổ",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 17,
         "Ma_loai_phong": "01",
@@ -987,10 +987,10 @@
         "Kich_thuoc": "1.52 m (Rộng) x 2.44 m (Dài)",
         "Chat_lieu": "100% sợi TENCEL™ Lyocell",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 42,
         "Ma_loai_phong": "01",
@@ -1007,10 +1007,10 @@
         "Kich_thuoc": "0.74 m (Rộng) x 0.91 m (Sâu) x 0.79 m (Cao)",
         "Chat_lieu": "Khung gỗ FSC & Vải bọc cao cấp",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_modern/concept_10/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_modern/concept_10/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 28,
         "Ma_loai_phong": "01",
@@ -1027,10 +1027,10 @@
         "Kich_thuoc": "1.60 m (Dài) x 0.80 m (Rộng) x 0.75 m (Cao)",
         "Chat_lieu": "MDF sơn trắng & Gỗ tự nhiên",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 50,
         "Ma_loai_phong": "03",
@@ -1047,10 +1047,10 @@
         "Kich_thuoc": "Đường kính chụp 40 cm x Cao 18 cm; Dây treo 1.2 m (điều chỉnh)",
         "Chat_lieu": "Kim loại sơn tĩnh điện & Gỗ tự nhiên",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 154,
         "Ma_loai_phong": "03",
@@ -1067,10 +1067,10 @@
         "Kich_thuoc": "0.45 m (Rộng) x 0.50 m (Sâu) x 0.82 m (Cao)",
         "Chat_lieu": "Gỗ tự nhiên & Mây đan thủ công",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 56,
         "Ma_loai_phong": "03",
@@ -1087,10 +1087,10 @@
         "Kich_thuoc": "2.00 m (Dài) x 3.00 m (Rộng)",
         "Chat_lieu": "Cotton tự nhiên & Sợi dệt gia cường",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_5/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 10,
         "Ma_loai_phong": "03",
@@ -1107,10 +1107,10 @@
         "Kich_thuoc": "0.80 m (Rộng) x 0.35–0.40 m (Sâu) x 2.00 m (Cao)",
         "Chat_lieu": "Kim loại sơn tĩnh điện & Kính cường lực",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 3,
         "Ma_loai_phong": "03",
@@ -1127,10 +1127,10 @@
         "Kich_thuoc": "Rộng 54.5 cm x Sâu 45.5 cm x Cao 77.5 cm",
         "Chat_lieu": "Gỗ tự nhiên & Mây đan thủ công",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 43,
         "Ma_loai_phong": "03",
@@ -1147,10 +1147,10 @@
         "Kich_thuoc": "Ø36 cm x Cao 65 cm",
         "Chat_lieu": "Gỗ tự nhiên & Kim loại sơn tĩnh điện",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 68,
         "Ma_loai_phong": "03",
@@ -1167,10 +1167,10 @@
         "Kich_thuoc": "1.60 m x 0.80 m x 0.75 m",
         "Chat_lieu": "Gỗ tự nhiên sấy khô phủ bảo vệ",
         "Hinh_anh": [
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh1.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh2.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh3.png",
-            "../assets/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh1.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh2.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh3.png",
+            "assets/images/product/PHONG_AN/style_scandinavian/concept_6/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 0,
         "Ma_loai_phong": "03",
@@ -1187,10 +1187,10 @@
         "Kich_thuoc": "0.39 m x 0.47 m x 0.64 m",
         "Chat_lieu": "Gỗ keo (Acacia) nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_11/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 59,
         "Ma_loai_phong": "01",
@@ -1207,10 +1207,10 @@
         "Kich_thuoc": "1.04 m x 1.97 m x 0.36 m",
         "Chat_lieu": "Gỗ tự nhiên & Gỗ công nghiệp",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 58,
         "Ma_loai_phong": "02",
@@ -1227,10 +1227,10 @@
         "Kich_thuoc": "Ø0.22 m x Cao 0.32 m",
         "Chat_lieu": "Gốm, kim loại & vải linen",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 57,
         "Ma_loai_phong": "02",
@@ -1247,10 +1247,10 @@
         "Kich_thuoc": "1.52 m (Rộng) x 0.46 m (Sâu) x 0.84 m (Cao)",
         "Chat_lieu": "Gỗ sồi veneer & Gỗ tự nhiên nguyên khối",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 56,
         "Ma_loai_phong": "02",
@@ -1267,10 +1267,10 @@
         "Kich_thuoc": "Ø0.38 m x Cao 0.52 m",
         "Chat_lieu": "Gỗ sồi veneer & Gỗ công nghiệp",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_13/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_13/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 55,
         "Ma_loai_phong": "02",
@@ -1287,10 +1287,10 @@
         "Kich_thuoc": "0.71 m (Rộng) x 0.46 m (Sâu) x 0.61 m (Cao)",
         "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp3/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp3/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp3/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp3/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 54,
         "Ma_loai_phong": "02",
@@ -1307,10 +1307,10 @@
         "Kich_thuoc": "1.70 m x 2.08 m x 1.17 m",
         "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp1/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp1/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp1/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp1/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 53,
         "Ma_loai_phong": "02",
@@ -1327,10 +1327,10 @@
         "Kich_thuoc": "1.52 m x 0.48 m x 0.85 m",
         "Chat_lieu": "Gỗ Sồi & Kim loại Đồng Đen",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp4/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp4/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp4/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp4/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 52,
         "Ma_loai_phong": "02",
@@ -1347,10 +1347,10 @@
         "Kich_thuoc": "2.74 m x 3.66 m",
         "Chat_lieu": "Len tự nhiên & Viscose",
         "Hinh_anh": [
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh1.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh2.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh3.png",
-            "../assets/product/PHONG_NGU/style_minimal/concept_14/sp2/anh4.png"
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp2/anh1.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp2/anh2.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp2/anh3.png",
+            "assets/images/product/PHONG_NGU/style_minimal/concept_14/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 51,
         "Ma_loai_phong": "02",
@@ -1367,10 +1367,10 @@
         "Kich_thuoc": "2.74 m x 2.21 m x 0.84 m",
         "Chat_lieu": "Khung gỗ tự nhiên & Gỗ kỹ thuật",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp4/anh4.png"
         ],
         "So_luong_ton_kho": 50,
         "Ma_loai_phong": "01",
@@ -1387,10 +1387,10 @@
         "Kich_thuoc": "Ø0.91 m x Cao 0.41 m",
         "Chat_lieu": "Đá cẩm thạch trắng & Kim loại",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp1/anh4.png"
         ],
         "So_luong_ton_kho": 50,
         "Ma_loai_phong": "01",
@@ -1407,10 +1407,10 @@
         "Kich_thuoc": "0.41 m x 0.71 m x 1.52 m",
         "Chat_lieu": "Thép & Vải linen",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp2/anh4.png"
         ],
         "So_luong_ton_kho": 49,
         "Ma_loai_phong": "01",
@@ -1427,10 +1427,10 @@
         "Kich_thuoc": "Chiều rộng khoảng 2.03 m",
         "Chat_lieu": "Gỗ Xoài nguyên khối (Solid Mango Wood)",
         "Hinh_anh": [
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh1.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh2.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh3.png",
-            "../assets/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh4.png"
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh1.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh2.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh3.png",
+            "assets/images/product/PHONG_KHACH/style_scandinavian/concept_12/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 48,
         "Ma_loai_phong": "02",

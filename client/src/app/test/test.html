@@ -1,15 +1,6 @@
 <div class="container-fluid p-4">
     <h1 class="mb-4 text-center">📊 Hiển thị Dữ liệu DWELLY</h1>
 
-    <!-- Debug Info -->
-    <div class="alert alert-info mb-3" *ngIf="productList.length > 0">
-        <strong>Debug Info:</strong><br>
-        Original path: {{productList[0]?.Hinh_anh[0]}}<br>
-        Fixed path: {{fixImagePath(productList[0]?.Hinh_anh[0])}}<br>
-        <img [src]="fixImagePath(productList[0]?.Hinh_anh[0])" alt="Test" style="max-width: 100px; margin-top: 10px;"
-            (load)="console.log('Image loaded successfully!')" (error)="console.log('Image failed to load!')">
-    </div>
-
     <!-- Navigation Tabs -->
     <ul class="nav nav-tabs mb-4">
         <li class="nav-item">
@@ -99,6 +90,7 @@
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
+                            <th>Avatar</th>
                             <th>Mã QTV</th>
                             <th>Họ và tên</th>
                             <th>Số điện thoại</th>
@@ -109,6 +101,11 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of adminList">
+                            <td>
+                                <img [src]="fixImagePath(item.Anh_dai_dien)" [alt]="item.Ho_va_ten"
+                                    class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;"
+                                    (error)="$event.target.src='https://via.placeholder.com/40?text=Admin'">
+                            </td>
                             <td><strong>{{item.Ma_quan_tri_vien}}</strong></td>
                             <td>{{item.Ho_va_ten}}</td>
                             <td>{{item.So_dien_thoai}}</td>
@@ -202,6 +199,7 @@
                 <table class="table table-striped">
                     <thead class="table-dark">
                         <tr>
+                            <th>Avatar</th>
                             <th>Mã KH</th>
                             <th>Họ và tên</th>
                             <th>SĐT</th>
@@ -213,6 +211,11 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of clientList">
+                            <td>
+                                <img [src]="fixImagePath(item.Anh_dai_dien)" [alt]="item.Ho_va_ten"
+                                    class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;"
+                                    (error)="$event.target.src='https://via.placeholder.com/40?text=Client'">
+                            </td>
                             <td><strong>{{item.Ma_khach_hang}}</strong></td>
                             <td>{{item.Ho_va_ten}}</td>
                             <td>{{item.So_dien_thoai}}</td>

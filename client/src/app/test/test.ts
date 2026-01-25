@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-test',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './test.css',
 })
 export class Test implements OnInit {
-  activeTab: string = 'admin';
+  activeTab: string = 'product';
   console = console; // Make console available in template
 
   adminList: any[] = [];
@@ -35,41 +35,81 @@ export class Test implements OnInit {
   }
 
   loadAllData(): void {
-    this.http.get<any[]>('assets/data/admin.json').subscribe(data => {
+    this.loadData('assets/data/admin.json', (data) => {
       this.adminList = data;
-      console.log('Admin loaded:', this.adminList.length);
+      console.log('✓ Admin loaded:', this.adminList.length);
     });
-    this.http.get<any[]>('assets/data/blog.json').subscribe(data => {
+    this.loadData('assets/data/blog.json', (data) => {
       this.blogList = data;
-      console.log('Blog loaded:', this.blogList.length);
+      console.log('✓ Blog loaded:', this.blogList.length);
     });
-    this.http.get<any[]>('assets/data/care_instruction.json').subscribe(data => this.careInstructionList = data);
-    this.http.get<any[]>('assets/data/category.json').subscribe(data => this.categoryList = data);
-    this.http.get<any[]>('assets/data/client.json').subscribe(data => this.clientList = data);
-    this.http.get<any[]>('assets/data/concept.json').subscribe(data => {
+    this.loadData('assets/data/care_instruction.json', (data) => {
+      this.careInstructionList = data;
+      console.log('✓ Care instruction loaded:', this.careInstructionList.length);
+    });
+    this.loadData('assets/data/category.json', (data) => {
+      this.categoryList = data;
+      console.log('✓ Category loaded:', this.categoryList.length);
+    });
+    this.loadData('assets/data/client.json', (data) => {
+      this.clientList = data;
+      console.log('✓ Client loaded:', this.clientList.length);
+    });
+    this.loadData('assets/data/concept.json', (data) => {
       this.conceptList = data;
-      console.log('Concept loaded:', this.conceptList.length);
-      if (this.conceptList.length > 0) {
-        console.log('First concept image:', this.conceptList[0].Hinh_anh);
-        console.log('Fixed path:', this.fixImagePath(this.conceptList[0].Hinh_anh));
-      }
+      console.log('✓ Concept loaded:', this.conceptList.length);
     });
-    this.http.get<any[]>('assets/data/contact.json').subscribe(data => this.contactList = data);
-    this.http.get<any[]>('assets/data/order.json').subscribe(data => this.orderList = data);
-    this.http.get<any[]>('assets/data/order_details.json').subscribe(data => this.orderDetailsList = data);
-    this.http.get<any[]>('assets/data/product.json').subscribe(data => {
+    this.loadData('assets/data/contact.json', (data) => {
+      this.contactList = data;
+      console.log('✓ Contact loaded:', this.contactList.length);
+    });
+    this.loadData('assets/data/order.json', (data) => {
+      this.orderList = data;
+      console.log('✓ Order loaded:', this.orderList.length);
+    });
+    this.loadData('assets/data/order_details.json', (data) => {
+      this.orderDetailsList = data;
+      console.log('✓ Order details loaded:', this.orderDetailsList.length);
+    });
+    this.loadData('assets/data/product.json', (data) => {
       this.productList = data;
-      console.log('Product loaded:', this.productList.length);
+      console.log('✓ Product loaded:', this.productList.length);
       if (this.productList.length > 0) {
         console.log('First product image:', this.productList[0].Hinh_anh[0]);
         console.log('Fixed path:', this.fixImagePath(this.productList[0].Hinh_anh[0]));
       }
     });
-    this.http.get<any[]>('assets/data/ranking.json').subscribe(data => this.rankingList = data);
-    this.http.get<any[]>('assets/data/review.json').subscribe(data => this.reviewList = data);
-    this.http.get<any[]>('assets/data/room.json').subscribe(data => this.roomList = data);
-    this.http.get<any[]>('assets/data/style.json').subscribe(data => this.styleList = data);
-    this.http.get<any[]>('assets/data/voucher.json').subscribe(data => this.voucherList = data);
+    this.loadData('assets/data/ranking.json', (data) => {
+      this.rankingList = data;
+      console.log('✓ Ranking loaded:', this.rankingList.length);
+    });
+    this.loadData('assets/data/review.json', (data) => {
+      this.reviewList = data;
+      console.log('✓ Review loaded:', this.reviewList.length);
+    });
+    this.loadData('assets/data/room.json', (data) => {
+      this.roomList = data;
+      console.log('✓ Room loaded:', this.roomList.length);
+    });
+    this.loadData('assets/data/style.json', (data) => {
+      this.styleList = data;
+      console.log('✓ Style loaded:', this.styleList.length);
+    });
+    this.loadData('assets/data/voucher.json', (data) => {
+      this.voucherList = data;
+      console.log('✓ Voucher loaded:', this.voucherList.length);
+    });
+  }
+
+  loadData(path: string, callback: (data: any[]) => void): void {
+    this.http.get<any[]>(path).subscribe(
+      (data) => {
+        callback(data);
+      },
+      (error: HttpErrorResponse) => {
+        console.error(`Error loading ${path}:`, error.message);
+      }
+    );
   }
 
   setActiveTab(tab: string): void {
@@ -83,8 +123,8 @@ export class Test implements OnInit {
   // Helper method to fix image paths
   fixImagePath(path: string): string {
     if (!path) return '';
-    // Replace ../assets/ with assets/assets/
-    // Because the file structure has assets/assets/ instead of just assets/
-    return path.replace(/^\.\.\/assets\//, 'assets/assets/');
+    // If you update all JSON files to use "assets/assets/..." paths,
+    // this function can simply return the path as-is
+    return path;
   }
 }

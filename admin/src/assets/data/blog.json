@@ -10,7 +10,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Không gian sống hiện đại với thiết kế mở và ánh sáng tự nhiên"
             },
             {
@@ -19,7 +19,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Phòng khách hiện đại với sofa đơn giản và màu sắc trung tính"
             },
             {
@@ -28,7 +28,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Phòng ngủ tối giản mang lại cảm giác yên tĩnh và dễ chịu"
             },
             {
@@ -37,7 +37,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "So sánh các phong cách nội thất phổ biến năm 2026"
             },
             {
@@ -45,7 +45,7 @@
                 "Noi_dung": "Tóm lại, thiết kế nội thất năm 2026 không chỉ tập trung vào hình thức mà còn chú trọng đến trải nghiệm sống. Việc lựa chọn phong cách phù hợp và bố trí không gian hợp lý sẽ giúp ngôi nhà trở thành nơi lý tưởng để nghỉ ngơi, sinh hoạt và tận hưởng cuộc sống."
             }
         ],
-        "Hinh_anh": "../assets/blog/thiet-ke-khong-gian-song-hien-dai-2026.jpg",
+        "Hinh_anh": "assets/images/blog/test.png",
         "Trang_thai": true,
         "Ngay_tao": "2026-01-18",
         "Ma_quan_tri_vien": "AD01"
@@ -61,7 +61,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Phòng khách nhỏ được bố trí gọn gàng và tinh tế"
             },
             {
@@ -70,7 +70,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/test.png",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Sofa thiết kế tối giản giúp tối ưu diện tích phòng khách"
             },
             {
@@ -78,7 +78,7 @@
                 "Noi_dung": "Bên cạnh đó, việc tận dụng ánh sáng tự nhiên và hạn chế trang trí rườm rà sẽ giúp phòng khách nhỏ trở nên nhẹ nhàng, hiện đại và vẫn giữ được nét sang trọng cần thiết."
             }
         ],
-        "Hinh_anh": "../assets/blog/phong-khach-nho-thumb.jpg",
+        "Hinh_anh": "assets/images/blog/test.png",
         "Trang_thai": true,
         "Ngay_tao": "2026-01-19",
         "Ma_quan_tri_vien": "AD01"
@@ -94,7 +94,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/minimal-can-ho-01.jpg",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Không gian căn hộ phong cách Minimal với tông màu trung tính"
             },
             {
@@ -103,7 +103,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/noi-that-minimal.jpg",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Nội thất Minimal tập trung vào công năng và sự gọn gàng"
             },
             {
@@ -111,7 +111,7 @@
                 "Noi_dung": "Phong cách Minimal đặc biệt phù hợp với những người yêu thích sự ngăn nắp, yên tĩnh và mong muốn một không gian sống thư giãn sau ngày dài làm việc."
             }
         ],
-        "Hinh_anh": "../assets/blog/phong-cach-minimal-thumb.jpg",
+        "Hinh_anh": "assets/images/blog/test.png",
         "Trang_thai": true,
         "Ngay_tao": "2026-01-20",
         "Ma_quan_tri_vien": "AD02"
@@ -127,7 +127,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/phong-ngu-thu-gian-01.jpg",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Phòng ngủ với ánh sáng dịu nhẹ tạo cảm giác thư giãn"
             },
             {
@@ -136,7 +136,7 @@
             },
             {
                 "Loai": "image",
-                "Url": "../assets/blog/den-ngu-phong-ngu.jpg",
+                "Url": "assets/images/blog/test.png",
                 "Mo_ta": "Đèn ngủ ánh sáng vàng giúp cải thiện chất lượng giấc ngủ"
             },
             {
@@ -144,7 +144,7 @@
                 "Noi_dung": "Ngoài ra, việc hạn chế thiết bị điện tử trong phòng ngủ và giữ không gian gọn gàng cũng là yếu tố quan trọng giúp mang lại giấc ngủ sâu và trọn vẹn hơn."
             }
         ],
-        "Hinh_anh": "../assets/blog/phong-ngu-thu-gian-thumb.jpg",
+        "Hinh_anh": "assets/images/blog/test.png",
         "Trang_thai": true,
         "Ngay_tao": "2026-01-21",
         "Ma_quan_tri_vien": "AD02"
