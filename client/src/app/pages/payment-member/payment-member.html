@@ -1,0 +1,187 @@
+<section class="py-4">
+    <div class="container-fluid px-4 checkout-page">
+
+        <h1 class="page-title">THANH TOÁN</h1>
+
+        <div class="row g-4">
+            <!-- CỘT TRÁI -->
+            <div class="col-lg-8">
+
+                <!-- ĐỊA CHỈ -->
+                <div class="card-box">
+                    <h3 class="box-title">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        Địa chỉ nhận hàng
+                    </h3>
+
+                    <div class="address-wrapper">
+                        <div class="address-box">
+                            <span class="default-badge">Mặc định</span>
+                            <div class="address-content">
+                                <div class="address-header">
+                                    <strong>Lê Thanh Như Ngọc - 0915736103</strong>
+                                </div>
+                                <p class="address-text">
+                                    Cổng sau ký túc xá khu B, Phường Linh Xuân, Thành Phố Thủ Đức, TP. Hồ Chí Minh
+                                </p>
+                            </div>
+                        </div>
+                        <button class="btn-change">Thay đổi</button>
+                    </div>
+                </div>
+
+                <!-- GHI CHÚ -->
+                <div class="card-box">
+                    <h3 class="box-title">
+                        <i class="bi bi-pencil-square"></i>
+                        Ghi chú
+                    </h3>
+                    <textarea class="note-input" placeholder="Nhập nội dung ghi chú của bạn"></textarea>
+                    <label class="invoice-checkbox">
+                        <input type="checkbox" />
+                        <span>Tôi muốn xuất hóa đơn</span>
+                    </label>
+                </div>
+
+                <!-- SẢN PHẨM -->
+                <div class="card-box">
+                    <div class="product-title-row">
+                        <h3 class="product-title-left">
+                            <i class="bi bi-house-door"></i>
+                            Sản phẩm đặt mua
+                        </h3>
+                        <div class="product-title-right">
+                            <span>Đơn giá</span>
+                            <span>Số lượng</span>
+                            <span>Thành tiền</span>
+                        </div>
+                    </div>
+
+                    <div class="product-item" *ngFor="let item of cartItems; let i = index">
+                        <div class="product-info">
+                            <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham" />
+                            <div class="product-details">
+                                <p class="product-name">{{item.product.Ten_san_pham}}</p>
+                                <span class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
+                            </div>
+                        </div>
+                        <div class="product-price">{{formatPrice(item.product.Gia_ban)}} VNĐ</div>
+                        <div class="product-qty">
+                            <button class="qty-btn" (click)="decreaseQuantity(i)">-</button>
+                            <span class="qty-number">{{item.quantity}}</span>
+                            <button class="qty-btn" (click)="increaseQuantity(i)">+</button>
+                        </div>
+                        <div class="product-total">{{formatPrice(item.product.Gia_ban * item.quantity)}} VNĐ</div>
+                    </div>
+                </div>
+
+                <!-- VẬN CHUYỂN -->
+                <div class="card-box">
+                    <h3 class="box-title">
+                        <i class="bi bi-truck"></i>
+                        Phương thức vận chuyển
+                    </h3>
+
+                    <label class="shipping-option">
+                        <input type="radio" name="ship" [checked]="shippingMethod === 'standard'"
+                            (change)="setShippingMethod('standard')" />
+                        <div class="shipping-info">
+                            <strong>Giao hàng tiêu chuẩn</strong>
+                            <p>Nhận hàng trong 3-5 ngày</p>
+                        </div>
+                        <span class="shipping-price">Miễn phí</span>
+                    </label>
+
+                    <label class="shipping-option">
+                        <input type="radio" name="ship" [checked]="shippingMethod === 'fast'"
+                            (change)="setShippingMethod('fast')" />
+                        <div class="shipping-info">
+                            <strong>Giao hàng nhanh</strong>
+                            <p>Nhận hàng trong 1-2 ngày</p>
+                        </div>
+                        <span class="shipping-price">100.000 VND</span>
+                    </label>
+                </div>
+
+            </div>
+
+            <!-- CỘT PHẢI -->
+            <div class="col-lg-4">
+                <div class="summary-box">
+
+                    <h3 class="box-title">
+                        <i class="bi bi-ticket-perforated"></i>
+                        Mã khuyến mãi
+                    </h3>
+                    <div class="voucher-input">
+                        <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
+                            [class.error]="voucherError" />
+                        <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
+                    </div>
+                    <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
+                    <p class="voucher-success" *ngIf="appliedVoucher && !voucherError">
+                        Đã áp dụng giảm {{appliedVoucher.Phan_tram_giam}}%
+                    </p>
+
+                    <div class="summary-row">
+                        <span>Tổng cộng ({{cartItems.length}} sản phẩm)</span>
+                        <span class="amount">{{formatPrice(getTotalAmount())}} VNĐ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển</span>
+                        <span class="amount">{{getShippingFee() === 0 ? 'Miễn phí' : formatPrice(getShippingFee()) + '
+                            VNĐ'}}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Giảm giá</span>
+                        <span class="amount" [class.discount]="getDiscountAmount() > 0">
+                            {{getDiscountAmount() > 0 ? '-' + formatPrice(getDiscountAmount()) : '0'}} VNĐ
+                        </span>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <div class="summary-total">
+                        <span>Tổng thanh toán</span>
+                        <span class="total-amount">{{formatPrice(getFinalTotal())}} VNĐ</span>
+                    </div>
+
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" checked />
+                            <span>Thanh toán cọc (30%)<br><span class="sub-text">{{formatPrice(getFinalTotal() * 0.3)}}
+                                    VNĐ</span></span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" />
+                            <span>Thanh toán toàn bộ (100%)<br><span class="sub-text">{{formatPrice(getFinalTotal())}}
+                                    VNĐ</span></span>
+                        </label>
+                    </div>
+
+                    <button class="btn-order">Đặt hàng</button>
+
+                    <p class="policy-text">
+                        Bằng việc đặt hàng, bạn đồng ý với <span class="policy-link">Điều khoản dịch vụ</span> của chúng
+                        tôi
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Popup xóa sản phẩm -->
+    <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <h3 class="modal-title">Xác nhận xóa sản phẩm</h3>
+            <p class="modal-message">Bạn có muốn xóa <strong>{{productToDelete?.Ten_san_pham}}</strong> khỏi giỏ hàng
+                không?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="closeDeleteModal()">Hủy</button>
+                <button class="btn-confirm" (click)="confirmDelete()">Xóa</button>
+            </div>
+        </div>
+    </div>
+</section>
