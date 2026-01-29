@@ -1,0 +1,42 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <h3 class="modal-title">QR THANH TOÁN</h3>
+
+        <div class="payment-content">
+            <!-- Left side: Payment info -->
+            <div class="payment-info">
+                <p class="modal-text">
+                    Vui lòng thanh toán để xác nhận đơn hàng
+                </p>
+
+                <p class="amount">1.150.000 VND</p>
+
+                <div class="countdown">
+                    Thời gian thanh toán còn lại
+                    <div class="time-box">{{remainingTime}}</div>
+                </div>
+
+                <p class="order-code">Mã đơn hàng: <strong>45</strong></p>
+
+                <hr />
+
+                <p class="support">
+                    Liên hệ bộ phận <strong>CSKH</strong> nếu có bất kỳ thắc mắc nào!
+                </p>
+            </div>
+
+            <!-- Right side: QR code -->
+            <div class="qr-section">
+                <h4>Thanh toán bằng QR code</h4>
+                <p>Quét QR để chuyển khoản</p>
+
+                <img src="https://img.vietqr.io/image/MB-0123456789-compact.png?amount=1150000&addInfo=Thanh toan don hang 45&accountName=MOHO FURNITURE"
+                    alt="QR THANH TOÁN" class="qr-img" />
+            </div>
+        </div>
+
+        <button class="btn-back" (click)="close()">Quay lại</button>
+
+    </div>
+</div>
