@@ -518,7 +518,8 @@
 }
 
 .btn-order:hover {
-    background-color: #7A8A6A;
+    background-color: #E5E8E3;
+    color: #6C5234;
 }
 
 .btn-order:active {

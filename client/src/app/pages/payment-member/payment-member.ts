@@ -7,10 +7,11 @@ import { Room } from '../../services/room';
 import { iRoom } from '../../interfaces/room';
 import { Voucher } from '../../services/voucher';
 import { iVoucher } from '../../interfaces/voucher';
+import { QRPayment } from '../qr-payment/qr-payment';
 
 @Component({
   selector: 'app-payment-member',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QRPayment],
   templateUrl: './payment-member.html',
   styleUrl: './payment-member.css',
 })
@@ -21,7 +22,9 @@ export class PaymentMember implements OnInit {
   showDeleteModal: boolean = false;
   productToDelete: iProduct | null = null;
   deleteIndex: number = -1;
+  showQRModal: boolean = false;
   shippingMethod: string = 'standard'; // 'standard' or 'fast'
+  paymentMethod: string = 'deposit'; // 'deposit' (30%) or 'full' (100%)
   vouchers: iVoucher[] = [];
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
@@ -99,6 +102,15 @@ export class PaymentMember implements OnInit {
     return this.getTotalAmount() + this.getShippingFee() - this.getDiscountAmount();
   }
 
+  getPaymentAmount(): number {
+    const finalTotal = this.getFinalTotal();
+    return this.paymentMethod === 'deposit' ? finalTotal * 0.3 : finalTotal;
+  }
+
+  setPaymentMethod(method: string): void {
+    this.paymentMethod = method;
+  }
+
   setShippingMethod(method: string): void {
     this.shippingMethod = method;
   }
@@ -172,6 +184,14 @@ export class PaymentMember implements OnInit {
       this.cartItems.splice(this.deleteIndex, 1);
     }
     this.closeDeleteModal();
+  }
+
+  openQRPayment(): void {
+    this.showQRModal = true;
+  }
+
+  closeQRPayment(): void {
+    this.showQRModal = false;
   }
 
   formatPrice(price: number): string {

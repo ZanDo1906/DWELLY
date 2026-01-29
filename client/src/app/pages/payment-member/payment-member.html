@@ -148,18 +148,18 @@
 
                     <div class="payment-methods">
                         <label class="payment-option">
-                            <input type="radio" name="payment" checked />
+                            <input type="radio" name="payment" value="deposit" [(ngModel)]="paymentMethod" checked />
                             <span>Thanh toán cọc (30%)<br><span class="sub-text">{{formatPrice(getFinalTotal() * 0.3)}}
                                     VNĐ</span></span>
                         </label>
                         <label class="payment-option">
-                            <input type="radio" name="payment" />
+                            <input type="radio" name="payment" value="full" [(ngModel)]="paymentMethod" />
                             <span>Thanh toán toàn bộ (100%)<br><span class="sub-text">{{formatPrice(getFinalTotal())}}
                                     VNĐ</span></span>
                         </label>
                     </div>
 
-                    <button class="btn-order">Đặt hàng</button>
+                    <button class="btn-order" (click)="openQRPayment()">Đặt hàng</button>
 
                     <p class="policy-text">
                         Bằng việc đặt hàng, bạn đồng ý với <span class="policy-link">Điều khoản dịch vụ</span> của chúng
@@ -184,4 +184,9 @@
             </div>
         </div>
     </div>
+
+    <!-- QR Payment Modal -->
+    <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length"
+        (closeModal)="closeQRPayment()">
+    </app-qr-payment>
 </section>

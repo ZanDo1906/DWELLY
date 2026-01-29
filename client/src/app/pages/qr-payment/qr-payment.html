@@ -1,4 +1,4 @@
-<div class="modal-overlay" (click)="close()">
+<div class="modal-overlay" *ngIf="!showSuccessModal" (click)="close()">
     <div class="modal-box" (click)="$event.stopPropagation()">
 
         <h3 class="modal-title">QR THANH TOÁN</h3>
@@ -10,14 +10,14 @@
                     Vui lòng thanh toán để xác nhận đơn hàng
                 </p>
 
-                <p class="amount">1.150.000 VND</p>
+                <p class="amount">{{formatPrice(totalAmount)}} VNĐ</p>
 
                 <div class="countdown">
-                    Thời gian thanh toán còn lại
+                    Thời gian thanh toán còn lại:
                     <div class="time-box">{{remainingTime}}</div>
                 </div>
 
-                <p class="order-code">Mã đơn hàng: <strong>45</strong></p>
+                <p class="order-code">Tổng cộng: <strong>{{itemCount}} sản phẩm</strong></p>
 
                 <hr />
 
@@ -31,12 +31,34 @@
                 <h4>Thanh toán bằng QR code</h4>
                 <p>Quét QR để chuyển khoản</p>
 
-                <img src="https://img.vietqr.io/image/MB-0123456789-compact.png?amount=1150000&addInfo=Thanh toan don hang 45&accountName=MOHO FURNITURE"
+                <img [src]="'https://img.vietqr.io/image/MB-0123456789-compact.png?amount=' + totalAmount + '&addInfo=Thanh toan don hang&accountName=MOHO FURNITURE'"
                     alt="QR THANH TOÁN" class="qr-img" />
             </div>
         </div>
 
-        <button class="btn-back" (click)="close()">Quay lại</button>
+        <div class="button-group">
+            <button class="btn-back" (click)="close()">Hủy</button>
+            <button class="btn-confirm" (click)="confirmPayment()" [disabled]="confirmCountdown > 0">
+                {{confirmCountdown > 0 ? 'Xác nhận đã thanh toán (' + confirmCountdown + ')' : 'Xác nhận đã thanh
+                toán'}}
+            </button>
+        </div>
 
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="success-overlay" *ngIf="showSuccessModal" (click)="closeSuccessModal()">
+    <div class="success-box" (click)="$event.stopPropagation()">
+        <h2 class="success-title">Đặt hàng thành công!</h2>
+
+        <p class="success-message">
+            Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn để xác nhận đơn hàng trong thời gian sớn nhất.
+        </p>
+
+        <div class="success-buttons">
+            <button class="btn-continue" (click)="closeSuccessModal()">Tiếp tục mua sắm</button>
+            <button class="btn-track" (click)="closeSuccessModal()">Theo dõi đơn hàng</button>
+        </div>
     </div>
 </div>

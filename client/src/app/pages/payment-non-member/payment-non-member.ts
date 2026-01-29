@@ -8,10 +8,11 @@ import { Room } from '../../services/room';
 import { iRoom } from '../../interfaces/room';
 import { Voucher } from '../../services/voucher';
 import { iVoucher } from '../../interfaces/voucher';
+import { QRPayment } from '../qr-payment/qr-payment';
 
 @Component({
   selector: 'app-payment-non-member',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QRPayment],
   templateUrl: './payment-non-member.html',
   styleUrl: './payment-non-member.css',
 })
@@ -22,7 +23,9 @@ export class PaymentNonMember implements OnInit {
   showDeleteModal: boolean = false;
   productToDelete: iProduct | null = null;
   deleteIndex: number = -1;
+  showQRModal: boolean = false;
   shippingMethod: string = 'standard'; // 'standard' or 'fast'
+  paymentMethod: string = 'deposit'; // 'deposit' (30%) or 'full' (100%)
   vouchers: iVoucher[] = [];
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
@@ -306,11 +309,32 @@ export class PaymentNonMember implements OnInit {
   }
 
   hasError(fieldName: keyof typeof this.touched): boolean {
+    if (!this.touched[fieldName]) return false;
+
+    // Email validation - chỉ check format nếu đã nhập
     if (fieldName === 'email') {
-      return this.touched.email && this.email.trim() !== '' && !this.isValidEmail(this.email);
+      return this.email.trim() !== '' && !this.isValidEmail(this.email);
     }
+
+    // Phone validation - check both empty and format
+    if (fieldName === 'phone') {
+      return this.phone.trim() === '' || !this.validatePhoneFormat(this.phone);
+    }
+
+    // Check dropdown fields
+    if (fieldName === 'city') {
+      return !this.selectedProvinceCode || this.selectedProvinceCode === '';
+    }
+    if (fieldName === 'district') {
+      return !this.selectedDistrictCode || this.selectedDistrictCode === '';
+    }
+    if (fieldName === 'ward') {
+      return !this.ward || this.ward === '';
+    }
+
+    // Other text fields
     const value = this[fieldName as keyof PaymentNonMember] as string;
-    return this.touched[fieldName] && (!value || value.trim() === '');
+    return !value || value.trim() === '';
   }
 
   isValidEmail(email: string): boolean {
@@ -389,9 +413,14 @@ export class PaymentNonMember implements OnInit {
     if (fieldName === 'email') {
       return 'Email không hợp lệ';
     }
+    if (fieldName === 'phone') {
+      if (this.phone.trim() === '') {
+        return 'Vui lòng nhập số điện thoại';
+      }
+      return 'Số điện thoại phải có 10 chữ số và bắt đầu bằng 0';
+    }
     const fieldLabels: { [key: string]: string } = {
       fullName: 'Họ và tên',
-      phone: 'Số điện thoại',
       otpCode: 'Mã OTP',
       city: 'Tỉnh/ Thành phố',
       district: 'Quận/ Huyện',
@@ -399,5 +428,82 @@ export class PaymentNonMember implements OnInit {
       specificAddress: 'Địa chỉ cụ thể'
     };
     return `Vui lòng nhập ${fieldLabels[fieldName]}`;
+  }
+
+  getPaymentAmount(): number {
+    const finalTotal = this.getFinalTotal();
+    return this.paymentMethod === 'deposit' ? finalTotal * 0.3 : finalTotal;
+  }
+
+  setPaymentMethod(method: string): void {
+    this.paymentMethod = method;
+  }
+
+  validateForm(): boolean {
+    // Đánh dấu tất cả các trường là đã chạm vào
+    this.touched.fullName = true;
+    this.touched.phone = true;
+    this.touched.otpCode = true;
+    this.touched.city = true;
+    this.touched.district = true;
+    this.touched.ward = true;
+    this.touched.specificAddress = true;
+    this.touched.email = true;
+
+    // Kiểm tra các trường bắt buộc
+    const isFullNameValid = this.fullName.trim() !== '';
+    const isPhoneValid = this.phone.trim() !== '' && this.validatePhoneFormat(this.phone);
+    const isOtpValid = this.otpCode.trim() !== '';
+    const isCityValid = this.selectedProvinceCode !== '';
+    const isDistrictValid = this.selectedDistrictCode !== '';
+    const isWardValid = this.ward !== '';
+    const isAddressValid = this.specificAddress.trim() !== '';
+
+    // Kiểm tra email nếu người dùng đã nhập
+    let isEmailValid = true;
+    if (this.email.trim() !== '') {
+      isEmailValid = this.isValidEmail(this.email);
+    }
+
+    // Debug log
+    console.log('=== VALIDATION DETAILS ===');
+    console.log('Họ và tên:', this.fullName, '→', isFullNameValid);
+    console.log('Số điện thoại:', this.phone, '→', isPhoneValid, '(phải 10 số, bắt đầu bằng 0)');
+    console.log('Mã OTP:', this.otpCode, '→', isOtpValid);
+    console.log('Tỉnh/TP:', this.selectedProvinceCode, '→', isCityValid);
+    console.log('Quận/Huyện:', this.selectedDistrictCode, '→', isDistrictValid);
+    console.log('Phường/Xã:', this.ward, '→', isWardValid);
+    console.log('Địa chỉ cụ thể:', this.specificAddress, '→', isAddressValid);
+    console.log('Email:', this.email, '→', isEmailValid);
+    console.log('=========================');
+
+    return isFullNameValid && isPhoneValid && isOtpValid && isCityValid &&
+      isDistrictValid && isWardValid && isAddressValid && isEmailValid;
+  }
+
+  validatePhoneFormat(phone: string): boolean {
+    // Số điện thoại Việt Nam: 10 chữ số, bắt đầu bằng 0
+    const phoneRegex = /^0[0-9]{9}$/;
+    return phoneRegex.test(phone.trim());
+  }
+
+  isPhoneValid(): boolean {
+    // Check if phone is valid format for enabling OTP button
+    return this.validatePhoneFormat(this.phone);
+  }
+
+  openQRPayment(): void {
+    const isValid = this.validateForm();
+    console.log('Form validation result:', isValid);
+
+    if (isValid) {
+      this.showQRModal = true;
+    } else {
+      alert('Vui lòng kiểm tra lại các thông tin đã nhập. Xem console (F12) để biết chi tiết.');
+    }
+  }
+
+  closeQRPayment(): void {
+    this.showQRModal = false;
   }
 }

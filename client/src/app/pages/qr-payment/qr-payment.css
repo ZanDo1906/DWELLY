@@ -1,3 +1,11 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
+
+/* Force Nunito Sans everywhere */
+* {
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -6,32 +14,35 @@
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    font-family: 'Nunito Sans', sans-serif;
+}
+
+.modal-box,
+.modal-box * {
+    font-family: 'Nunito Sans', sans-serif !important;
 }
 
 .modal-box {
     max-width: 700px;
     width: 90%;
-    background: #FDF8F5;
+    background: white;
     border-radius: 16px;
     padding: 24px;
     text-align: center;
-    font-family: 'Nunito Sans', sans-serif;
 }
 
 .modal-title {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 20px;
+    font-size: 32px;
     font-weight: 700;
-    color: #000000;
-    margin-bottom: 20px;
+    color: #6C5234;
+    margin-bottom: 30px;
 }
 
 .payment-content {
     display: flex;
     gap: 24px;
     align-items: flex-start;
-    text-align: left;
+    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -46,7 +57,7 @@
 
 .modal-text {
     font-size: 16px;
-    color: #666666;
+    color: black;
     margin: 0;
 }
 
@@ -59,37 +70,32 @@
 
 .countdown {
     font-size: 16px;
-    color: #666666;
+    color: black;
 }
 
 .time-box {
-    border: 2px solid #333333;
-    border-radius: 8px;
-    padding: 8px 16px;
     display: inline-block;
     margin-top: 8px;
     font-weight: 600;
     font-size: 16px;
-    background: #AFA386;
-    color: #000000;
+    color: #6C5234;
 }
 
 .order-code {
     font-size: 16px;
-    color: #666666;
+    color: black;
     margin: 0;
 }
 
 .payment-info hr {
-    width: 100%;
-    border: none;
-    border-top: 2px solid #cccccc;
-    margin: 12px 0;
+    width: 50%;
+    border-top: 2px solid #6C5234;
+    margin: 0px 0;
 }
 
 .support {
-    font-size: 16px;
-    color: #666666;
+    font-size: 12px;
+    color: black;
     margin: 0;
 }
 
@@ -126,22 +132,182 @@
     display: block;
 }
 
+.button-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .btn-back {
-    margin-top: 0;
-    padding: 10px 32px;
+    flex: 1;
+    max-width: 250px;
+    padding: 12px 32px;
     border-radius: 8px;
-    border: 2px solid #546745;
-    background: #ffffff;
-    color: #546745;
-    font-weight: 600;
+    border: none;
+    background: #C62828;
+    color: #ffffff;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
 }
 
 .btn-back:hover {
+    background: #E5E8E3;
+    color: #6C5234;
+}
+
+.btn-confirm {
+    flex: 1;
+    max-width: 250px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    border: none;
     background: #546745;
     color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-confirm:hover {
+    background: #E5E8E3;
+    color: #6C5234;
+}
+
+.btn-confirm:disabled {
+    background: #AFA386;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-confirm:disabled:hover {
+    background: #AFA386;
+    color: #ffffff;
+}
+
+.btn-back:active {
+    background: #546745;
+    color: #ffffff;
+}
+
+.btn-back:disabled {
+    background: #AFA386;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ========== SUCCESS MODAL ========== */
+
+.success-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.success-box {
+    max-width: 500px;
+    width: 90%;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.success-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #546745;
+    margin: 0 0 20px 0;
+}
+
+.success-message {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+}
+
+.success-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-continue,
+.btn-track {
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-continue {
+    background: #ffffff;
+    color: #546745;
+    border: 2px solid #546745;
+}
+
+.btn-continue:hover {
+    background: #546745;
+    color: #ffffff;
+    border: 2px solid #546745;
+}
+
+.btn-continue:active {
+    background: #ffffff;
+    color: #546745;
+    border: 2px solid #546745;
+}
+
+.btn-track {
+    background: #546745;
+    color: #ffffff;
+    border: 2px solid #546745;
+}
+
+.btn-track:hover {
+    background: #E5E8E3;
+    color: #6C5234;
+    border: 2px solid #E5E8E3;
+}
+
+.btn-track:active {
+    background: #546745;
+    color: #ffffff;
+    border: 2px solid #546745;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .success-box {
+        padding: 32px 24px;
+    }
+
+    .success-buttons {
+        flex-direction: column;
+    }
+
+    .btn-continue,
+    .btn-track {
+        width: 100%;
+    }
 }
 
 /* Responsive */
