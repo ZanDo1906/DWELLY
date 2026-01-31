@@ -1,0 +1,186 @@
+<div class="container order-detail-page">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <h2 class="title">Quản lý đơn hàng</h2>
+    <div class="back">
+      <i class="bi bi-arrow-left"></i>
+      Theo dõi trạng thái đơn
+    </div>
+  </div>
+
+  <!-- STEP TRACKING -->
+  <div class="card step-card mb-4">
+    <div class="card-body">
+
+      <div class="stepper">
+        <div class="step done">
+          <div class="circle"><i class="bi bi-check"></i></div>
+          <p>Đơn hàng đã đặt<br><small>09:30 18-01-2024</small></p>
+        </div>
+
+        <div class="line done"></div>
+
+        <div class="step done">
+          <div class="circle"><i class="bi bi-check"></i></div>
+          <p>Đơn hàng đã thanh toán<br><small>09:30 18-01-2024</small></p>
+        </div>
+
+        <div class="line done"></div>
+
+        <div class="step done">
+          <div class="circle"><i class="bi bi-check"></i></div>
+          <p>Đã giao cho ĐVVC</p>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step active">
+          <div class="circle"><i class="bi bi-check"></i></div>
+          <p>Chờ giao hàng</p>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+          <div class="circle"><i class="bi bi-check"></i></div>
+          <p>Đánh giá</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Actions -->
+      <div class="d-flex gap-3">
+        <button class="btn btn-success-custom">Đã nhận hàng</button>
+        <button class="btn btn-outline-custom">
+          Yêu cầu trả hàng/Hoàn tiền
+        </button>
+        <button class="btn btn-outline-custom">Liên hệ</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT -->
+    <div class="col-lg-7">
+
+      <!-- Address -->
+      <div class="card box">
+        <div class="box-title">
+          <i class="bi bi-geo-alt"></i> Địa chỉ nhận hàng
+          <span class="order-code">
+            Mã đơn hàng: SPXVN0485186892S1
+          </span>
+        </div>
+
+        <p class="fw-semibold mb-1">
+          Lê Thanh Như Ngọc - 0915736103
+        </p>
+        <p class="text-muted">
+          Cổng sau ký túc xá khu B, Phường Linh Xuân, TP Thủ Đức, TP.HCM
+        </p>
+      </div>
+
+      <!-- Shipping status -->
+      <div class="card box mt-4">
+        <div class="box-title">
+          <i class="bi bi-truck"></i> Trạng thái vận chuyển
+        </div>
+
+        <ul class="shipping-timeline">
+          <li class="active">
+            <span class="dot"></span>
+            <div>
+              <strong>Đã giao</strong>
+              <p>Giao hàng thành công</p>
+              <small>9:30 18-01-2024</small>
+            </div>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <div>
+              <strong>Đang vận chuyển</strong>
+              <p>Đơn hàng đã đến trạm giao hàng tại khu vực của bạn</p>
+            </div>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <div>
+              <strong>Đang vận chuyển</strong>
+              <p>Đơn vị vận chuyển đã lấy hàng thành công</p>
+            </div>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <div>
+              <strong>Đang chuẩn bị</strong>
+              <p>Người gửi đang chuẩn bị hàng</p>
+            </div>
+          </li>
+
+          <li>
+            <span class="dot"></span>
+            <div>
+              <strong>Đặt hàng thành công</strong>
+              <p>Đơn hàng đã được đặt</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-lg-5">
+
+      <!-- Products -->
+      <div class="card box">
+        <div class="box-title">
+          <i class="bi bi-shop"></i> Sản phẩm
+        </div>
+
+        <div class="product-item" >
+          <img src="https://via.placeholder.com/64" />
+          <div class="info">
+            <strong>Tủ đầu giường gỗ Sồi</strong>
+            <p>tự nhiên Anneli</p>
+            <span>x1</span>
+          </div>
+          <div class="price">18.900.000 VND</div>
+        </div>
+      </div>
+
+      <!-- Payment -->
+      <div class="card box mt-4">
+        <div class="box-title">
+          <i class="bi bi-receipt"></i> Tổng thanh toán
+        </div>
+
+        <div class="row-price">
+          <span>Tổng cộng (5 sản phẩm)</span>
+          <span>101.600.000 VND</span>
+        </div>
+        <div class="row-price">
+          <span>Phí vận chuyển</span>
+          <span>Miễn phí</span>
+        </div>
+        <div class="row-price">
+          <span>Giảm giá</span>
+          <span>0 VND</span>
+        </div>
+
+        <hr>
+
+        <div class="row-price total">
+          <strong>Tổng thanh toán</strong>
+          <strong>101.600.000 VND</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
