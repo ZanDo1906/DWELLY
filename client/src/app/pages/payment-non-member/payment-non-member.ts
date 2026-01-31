@@ -24,6 +24,7 @@ export class PaymentNonMember implements OnInit {
   productToDelete: iProduct | null = null;
   deleteIndex: number = -1;
   showQRModal: boolean = false;
+  showValidationModal: boolean = false;
   shippingMethod: string = 'standard'; // 'standard' or 'fast'
   paymentMethod: string = 'deposit'; // 'deposit' (30%) or 'full' (100%)
   vouchers: iVoucher[] = [];
@@ -499,11 +500,15 @@ export class PaymentNonMember implements OnInit {
     if (isValid) {
       this.showQRModal = true;
     } else {
-      alert('Vui lòng kiểm tra lại các thông tin đã nhập. Xem console (F12) để biết chi tiết.');
+      this.showValidationModal = true;
     }
   }
 
   closeQRPayment(): void {
     this.showQRModal = false;
+  }
+
+  closeValidationModal(): void {
+    this.showValidationModal = false;
   }
 }

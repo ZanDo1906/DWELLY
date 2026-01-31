@@ -264,6 +264,18 @@
         </div>
     </div>
 
+    <!-- Popup thông báo lỗi validation -->
+    <div class="modal-overlay" *ngIf="showValidationModal" (click)="closeValidationModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <h3 class="modal-title">Thông tin chưa đầy đủ</h3>
+            <p class="modal-message">Một số thông tin bạn nhập còn thiếu hoặc chưa hợp lệ. Vui lòng kiểm tra lại để tiếp
+                tục đặt hàng.</p>
+            <div class="modal-actions">
+                <button class="btn-confirm" (click)="closeValidationModal()">Đã hiểu</button>
+            </div>
+        </div>
+    </div>
+
     <!-- QR Payment Modal -->
     <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length"
         (closeModal)="closeQRPayment()">
