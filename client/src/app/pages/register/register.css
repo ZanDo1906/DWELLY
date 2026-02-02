@@ -1,0 +1,136 @@
+/* ===== Container form ===== */
+.container-fluid {
+  max-width: 470px;
+  margin: auto;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px 22px;
+}
+
+/* ===== Title ===== */
+.title-register {
+  color: #6c5234;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.register-subtitle{
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 18px;
+}
+
+/* ===== Input ===== */
+.form-control{
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.form-control:focus{
+  border-color: #6c5234;
+  box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.15);
+}
+
+/* ===== Button register ===== */
+.btn-register{
+  background-color: #6c5234;
+  border-color: #6c5234;
+  color: #fff;
+  padding: 10px 26px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  width: auto;          /* không kéo full */
+  display: block;
+  margin: 12px auto 0; /* căn giữa */
+}
+
+.btn-register:hover{
+  background-color: #56422A;
+  border-color: #56422A;
+}
+
+.btn-register:disabled{
+  background-color: #c2b6a8;
+  border-color: #c2b6a8;
+}
+
+/* ===== Checkbox ===== */
+.form-check-input{
+  cursor: pointer;
+}
+
+.form-check-input:checked{
+  background-color: #6c5234;
+  border-color: #6c5234;
+}
+
+.form-check-input:focus{
+  box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.25);
+}
+
+/* ===== Close button ===== */
+.btn-close{
+  font-size: 12px;
+  opacity: .6;
+}
+
+.btn-close:hover{
+  opacity: 1;
+  border-color: #56422A;
+}
+
+.btn-close:focus{
+  opacity: 1;
+  border-color: #56422A;
+}
+.btn-close:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.35);
+}
+
+
+/* ===== Error text ===== */
+.text-danger{
+  font-size: 12px;
+}
+
+/* ===== Label ===== */
+label{
+  font-size: 13px;
+  font-weight: 500;
+  color: #373737;
+  margin-bottom: 4px;
+}
+
+/* ===================== */
+/* ===== Responsive ==== */
+/* ===================== */
+
+@media (max-width: 576px){
+
+  .container-fluid{
+    max-width: 100%;
+    padding: 18px 14px;
+    border-radius: 10px;
+  }
+
+  .title-register{
+    font-size: 20px;
+  }
+
+  .register-subtitle{
+    font-size: 12px;
+  }
+
+  .form-control{
+    font-size: 13px;
+    padding: 9px 10px;
+  }
+
+  .btn-register{
+    width: 100%;     /* mobile cho full cho dễ bấm */
+    font-size: 14px;
+  }
+}
