@@ -1,0 +1,50 @@
+.header-scale-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-scale {
+  width: 1440px;
+  margin: 0 auto;
+  transform-origin: top center;
+  --scale: min(1, calc(100vw / 1440));
+  transform: scale(var(--scale));
+}
+
+.header-bg {
+  background-color: #FDF8F5;
+  position: relative;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.header-bg.over-hero {
+  background-color: transparent;
+}
+
+nav a {
+  text-decoration: none;
+  color: #6C5234;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.header-bg.over-hero nav a {
+  color: #ffffff;
+}
+
+nav i {
+  font-size: 16px;
+}
+
+.header-bg.over-hero nav i {
+  color: #ffffff;
+}

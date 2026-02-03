@@ -1,3 +1,22 @@
-<p>header works!jjjjjjjjjjjjjjjjjjjjjj
-    alo ola alo ola
-</p>
+<div class="header-scale-wrapper">
+  <div class="header-scale">
+    <section class="py-2 header-bg" [class.over-hero]="isOverHero">
+      <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+
+        <img src="assets/images/logo/logo.png" alt="Dwelly" height="40" (click)="scrollToTop()" style="cursor: pointer;">
+
+        <nav class="d-flex align-items-center gap-4">
+          <a href=""><i class="bi bi-search"></i></a>  
+          <a href="#">Giới thiệu</a>
+          <a href="#">Sản phẩm</a>
+          <a href="#">Gợi ý không gian</a>
+          <a href="#"><i class="bi bi-cart"></i></a>
+          <a href="#"><i class="bi bi-person"></i> {{ displayName }}</a>
+        </nav>
+
+      </div>
+    </section>
+  </div>
+</div>
+
+
