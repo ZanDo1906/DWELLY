@@ -1,0 +1,232 @@
+/* ===== COLOR SYSTEM (match UI 100%) ===== */
+.order-detail-page {
+  --primary: #6C5234;
+  --secondary: #AFA386;
+  --success: #546745;
+  --border: #D9D9D9;
+  --text-muted: #8B8B8B;
+}
+
+/* ===== PAGE ===== */
+.order-detail-page {
+  padding: 24px 0;
+  background: #fff;
+}
+
+.order-detail-page .title {
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.order-detail-page .back {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ===== STEP TRACKING ===== */
+.stepper {
+  display: flex;
+  align-items: center;
+}
+
+.stepper .step {
+  width: 160px;
+  text-align: center;
+  font-size: 13px;
+  color: #333;
+}
+
+.stepper .step p {
+  margin: 0;
+}
+
+.stepper .step small {
+  color: var(--text-muted);
+}
+
+.stepper .circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.stepper .step.done .circle,
+.stepper .step.active .circle {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.stepper .line {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  margin: 0 6px;
+}
+
+.stepper .line.done {
+  background: var(--success);
+}
+
+/* ===== CARD / BOX ===== */
+.box {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+
+.box + .box {
+  margin-top: 20px;
+}
+
+.box-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.box-title i {
+  margin-right: 6px;
+}
+
+.order-code {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===== BUTTONS ===== */
+.btn-success-custom {
+  background: var(--success);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+}
+
+.btn-success-custom:hover {
+  opacity: 0.9;
+}
+
+.btn-outline-custom {
+  border: 1px solid var(--success);
+  color: var(--success);
+  background: transparent;
+  padding: 10px 18px;
+  border-radius: 6px;
+}
+
+.btn-outline-custom:hover {
+  background: var(--success);
+  color: #fff;
+}
+
+/* ===== SHIPPING TIMELINE ===== */
+.shipping-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shipping-timeline li {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.shipping-timeline li:last-child {
+  margin-bottom: 0;
+}
+
+.shipping-timeline .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.shipping-timeline li.active .dot {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.shipping-timeline p {
+  margin: 0;
+  color: #444;
+}
+
+.shipping-timeline small {
+  color: var(--text-muted);
+}
+
+/* ===== PRODUCT LIST ===== */
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-item img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #eee;
+}
+
+.product-item .info {
+  flex: 1;
+}
+
+.product-item .info p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.product-item .price {
+  font-weight: 600;
+  color: var(--success);
+  white-space: nowrap;
+}
+
+/* ===== PAYMENT ===== */
+.row-price {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.row-price.total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success);
+  margin-top: 10px;
+}
+
+/* ===== HR ===== */
+.order-detail-page hr {
+  border-color: var(--border);
+}
