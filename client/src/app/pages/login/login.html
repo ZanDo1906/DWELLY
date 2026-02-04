@@ -54,12 +54,43 @@
       </div>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-register w-100"
-      [disabled]="loginForm.invalid">
-      Đăng nhập
-    </button>
+      <button
+  type="submit"
+  class="btn btn-register"
+  [disabled]="loginForm.invalid">
+
+  <i class="bi bi-arrow-right"></i>
+  <span>Đăng nhập</span>
+
+</button>
+<!-- divider -->
+<div class="login-divider">
+  <span>Hoặc đăng nhập với</span>
+</div>
+
+<!-- nút fb gg -->
+<div class="d-flex gap-3 justify-content-center mt-3">
+  <button class="btn btn-outline-secondary social-btn">
+  <img src="assets/images/icon/Facebook_Logo.png" class="social-icon" alt="Facebook logo">
+  Facebook
+</button>
+
+<button class="btn btn-outline-secondary social-btn">
+  <img src="assets/images/icon/Google__G__logo.svg.webp" class="social-icon" alt="Google logo">
+  Google
+</button>
+</div>
+
+<div class="text-center mt-3 register-link">
+  Bạn chưa có tài khoản?
+  <a
+    href="javascript:void(0)"
+    data-bs-toggle="modal"
+    data-bs-target="#registerModal"
+    (click)="onClose()">
+    Đăng ký ngay
+  </a>
+</div>
 
   </form>
 

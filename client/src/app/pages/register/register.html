@@ -135,15 +135,19 @@
   </label>
 </div>
 
-<small class="text-danger" *ngIf="regForm.get('accept')?.touched && regForm.get('accept')?.invalid">
+<div class="text-danger" *ngIf="regForm.get('accept')?.touched && regForm.get('accept')?.invalid">
   Bạn phải đồng ý điều khoản
-</small>
+</div>
+
     <button
-        type="submit"
-        class="btn btn-register w-100"
-        [disabled]="regForm.invalid">
-        Đăng ký
-    </button>
+  type="submit"
+  class="btn btn-register"
+  [disabled]="regForm.invalid">
+
+  <i class="bi bi-arrow-right"></i>
+  <span>Đăng ký</span>
+
+</button>
 
   </form>
 

@@ -1,10 +1,11 @@
-/* ===== Container form ===== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap');
+body{
+  font-family: 'Nunito Sans', sans-serif;
+}
 .container-fluid {
   max-width: 470px;
   margin: auto;
   background: #fff;
-  border-radius: 14px;
-  padding: 24px 22px;
 }
 
 /* ===== Title ===== */
@@ -12,6 +13,7 @@
   color: #6c5234;
   font-weight: 700;
   letter-spacing: 0.5px;
+  font-size: 24px;
 }
 
 .register-subtitle{
@@ -37,14 +39,17 @@
   background-color: #6c5234;
   border-color: #6c5234;
   color: #fff;
-  padding: 10px 26px;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
   font-weight: 500;
-  width: auto;          /* không kéo full */
-  display: block;
-  margin: 12px auto 0; /* căn giữa */
+  width: auto;          
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto 0 auto;
 }
+
 
 .btn-register:hover{
   background-color: #56422A;
@@ -98,39 +103,41 @@
 
 /* ===== Label ===== */
 label{
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   color: #373737;
   margin-bottom: 4px;
 }
 
+.form-control::placeholder{
+  font-size: 14px;
+}
+
 /* ===================== */
 /* ===== Responsive ==== */
 /* ===================== */
-
-@media (max-width: 576px){
+@media (min-width: 577px) and (max-width: 768px){
 
   .container-fluid{
-    max-width: 100%;
-    padding: 18px 14px;
-    border-radius: 10px;
+    max-width: 520px;
   }
 
   .title-register{
-    font-size: 20px;
+    font-size: 22px;
   }
 
-  .register-subtitle{
-    font-size: 12px;
+  label{
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px){
+
+  .container-fluid{
+    max-width: 470px;
   }
 
-  .form-control{
-    font-size: 13px;
-    padding: 9px 10px;
-  }
-
-  .btn-register{
-    width: 100%;     /* mobile cho full cho dễ bấm */
-    font-size: 14px;
+  .title-register{
+    font-size: 24px;
   }
 }
