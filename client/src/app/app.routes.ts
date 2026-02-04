@@ -14,13 +14,39 @@ import { Order } from './services/order';
 import { Returns } from './pages/profile/returns/returns';
 import { Reviews } from './pages/profile/reviews/reviews';
 import { Wishlist } from './pages/profile/wishlist/wishlist';
+import { AboutUs } from './pages/about-us/about-us';
+import { BlogDetail } from './pages/blog/blog-detail/blog-detail';
+import { BlogList } from './pages/blog/blog-list/blog-list';
+import { LoginAlertPopup } from './pages/cart/login-alert-popup/login-alert-popup';
+import { CartPage } from './pages/cart/cart-page/cart-page';
+import { VoucherPopup } from './pages/cart/voucher-popup/voucher-popup';
+import { QRPayment } from './pages/payment/qr-payment/qr-payment';
+import { Support } from './pages/policy/support/support';
+import { Terms } from './pages/policy/terms/terms';
+import { Concept } from './services/concept';
+import { ConceptDetail } from './pages/product/concept-detail/concept-detail';
+import { ConceptList } from './pages/product/concept-list/concept-list';
+import { ProductList } from './pages/product/product-list/product-list';
 
 export const routes: Routes = [
     { path: 'test', component: Test },
     { path: '', component: HomePage }, 
     { path: 'payment-member', component: PaymentMember },
     { path: 'payment-non-member', component: PaymentNonMember },
+    { path: 'qr-payment', component: QRPayment },
     { path: 'forgot-password', component: ForgotPassword },
+    { path: 'about-us', component: AboutUs },
+    { path: 'blog-detail', component: BlogDetail },
+    { path: 'blog-list', component: BlogList },
+    { path: 'cart-page', component: CartPage },
+    { path: 'login-alert-popup', component: LoginAlertPopup },
+    { path: 'voucher-popup', component: VoucherPopup },
+    { path: 'support', component: Support },
+    { path: 'terms', component: Terms },
+    { path: 'concept-list', component: ConceptList },
+    { path: 'concept-detail', component: ConceptDetail },
+    { path: 'product-list', component: ProductList },
+
     
 
     // User Layout với sidebar cố định
