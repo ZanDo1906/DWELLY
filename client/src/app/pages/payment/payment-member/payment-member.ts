@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../services/product';
-import { iProduct } from '../../interfaces/product';
-import { Room } from '../../services/room';
-import { iRoom } from '../../interfaces/room';
-import { Voucher } from '../../services/voucher';
-import { iVoucher } from '../../interfaces/voucher';
+import { Product } from '../../../services/product';
+import { iProduct } from '../../../interfaces/product';
+import { Room } from '../../../services/room';
+import { iRoom } from '../../../interfaces/room';
+import { Voucher } from '../../../services/voucher';
+import { iVoucher } from '../../../interfaces/voucher';
 import { QRPayment } from '../qr-payment/qr-payment';
 
 @Component({
