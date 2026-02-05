@@ -7,6 +7,12 @@
   flex-direction: column;
 }
 
+/* ===== GLOBAL CONTAINER FIX ===== */
+.container-fluid {
+  margin: 0 auto;
+  width: 100%;
+}
+
 /* ===== TITLE ===== */
 .title {
   font-family: 'Nunito Sans';
@@ -41,23 +47,13 @@
   align-items: center;
 }
 
-:host ::ng-deep body.homepage .site-header {
-  background-color: transparent !important;
-}
-
-:host ::ng-deep body.homepage .app-shell > div[aria-hidden="true"] {
-  display: none !important;
-}
-
 .hero-section::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background-image: url('/assets/images/banner/hero.jpg');
   background-size: cover;
@@ -69,11 +65,9 @@
 .hero-overlay {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background: rgba(80, 55, 35, 0.65); /* nâu đậm phủ ảnh */
   z-index: 1;
@@ -83,9 +77,6 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 .hero-text {
@@ -119,13 +110,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.space-content,
-.news-content,
-.consult-content {
-  position: relative;
-  z-index: 2;
 }
 
 /* ===== TITLE ===== */
@@ -223,11 +207,9 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background: url('/assets/images/banner/bg_goiykhonggian.jpeg') center/cover no-repeat;
   z-index: 0;
@@ -236,11 +218,9 @@
 .space-overlay {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background: rgba(108, 82, 52, 0.85);
   z-index: 1;
@@ -254,6 +234,10 @@
   z-index: 2;
 }
 
+.space-section .container-fluid {
+  position: relative;
+  z-index: 2;
+}
 
 .space-left img {
   width: 100%;
@@ -551,11 +535,9 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background: url('/assets/images/banner/bg_goiykhonggian.jpeg') center/cover no-repeat;
   z-index: 0;
@@ -569,6 +551,10 @@
   z-index: 2;
 }
 
+.news-section .container-fluid {
+  position: relative;
+  z-index: 2;
+}
 
 .news-section .col-lg-4 {
   flex: 0 0 30%;
@@ -578,11 +564,9 @@
 .news-overlay {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background: rgba(84, 103, 69, 0.9);
   z-index: 1;
@@ -917,11 +901,9 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  width: calc(100% - 2px);
-  max-width: 1360px;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
   height: 100%;
   background-color: #546745;
   z-index: 0;
@@ -937,6 +919,7 @@
   font-weight: 700;
   margin-bottom: 12px;
 }
+
 .consult-desc {
   font-size: 16px;
   max-width: 900px;

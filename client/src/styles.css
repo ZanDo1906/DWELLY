@@ -16,14 +16,6 @@ body {
   min-width: 320px;
 }
 
-body.homepage .app-shell > div[aria-hidden="true"] {
-  display: none !important;
-}
-
-body.homepage .site-header.over-hero {
-  background-color: transparent !important;
-}
-
 /* Shared inner wrapper for consistent max width */
 .site-inner {
   max-width: 1200px;

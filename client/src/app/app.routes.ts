@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { Test } from './test/test';
-<<<<<<< HEAD
 import { PaymentMember } from './pages/payment/payment-member/payment-member';
 import { PaymentNonMember } from './pages/payment/payment-non-member/payment-non-member';
 import { ForgotPassword } from './pages/auth/forgot-password/forgot-password';
@@ -68,13 +67,4 @@ export const routes: Routes = [
     },
     
 
-=======
-import { Login } from './pages/login/login';
-import { Register } from './pages/register/register';
-
-export const routes: Routes = [
-    { path: 'test', component: Test },
-    { path: 'login', component: Login },
-    { path: 'register', component: Register }
->>>>>>> origin/feature/quyen
 ];

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { iClient } from '../../interfaces/client';
 import { iReview } from '../../interfaces/review';
@@ -14,7 +14,7 @@ import { Blog as BlogService } from '../../services/blog';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage implements OnInit, AfterViewInit, OnDestroy {
+export class HomePage implements OnInit, AfterViewInit {
   reviews: Array<{
     content: string;
     rating: number;
@@ -41,7 +41,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    document.body.classList.add('homepage');
     window.scrollTo({ top: 0, behavior: 'instant' });
     
     setInterval(() => {
@@ -54,10 +53,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.setupScrollAnimations();
-  }
-
-  ngOnDestroy() {
-    document.body.classList.remove('homepage');
   }
 
   setupScrollAnimations() {
