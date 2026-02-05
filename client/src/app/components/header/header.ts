@@ -53,7 +53,7 @@ export class Header implements OnInit, AfterViewInit {
   }
 
   private getHeaderHeight(): number {
-    const header = document.querySelector('.header-bg') as HTMLElement | null;
-    return header?.offsetHeight ?? 0;
+    const header = document.querySelector('.header-scale') as HTMLElement | null;
+    return header ? header.getBoundingClientRect().height : 0;
   }
 }

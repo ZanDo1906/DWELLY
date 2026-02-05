@@ -1,22 +1,14 @@
-/* ===== SCALE WRAPPER ===== */
-.home-scale-wrapper {
-  width: 100%;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-.home-scale {
-  width: 1440px;
+/* ===== SITE INNER WRAPPER ===== */
+.site-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  transform-origin: top center;
-  --scale: min(1, calc(100vw / 1440));
-  transform: scale(var(--scale));
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ===== GLOBAL CONTAINER FIX ===== */
 .container-fluid {
-  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
@@ -51,18 +43,34 @@
 .hero-section {
   position: relative;
   height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background-image: url('/assets/images/banner/hero.jpg');
   background-size: cover;
   background-position: center;
-  display: flex;
-  align-items: center;
+  z-index: 0;
 }
 
 /* ===== OVERLAY ===== */
 .hero-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background: rgba(80, 55, 35, 0.65); /* nâu đậm phủ ảnh */
+  z-index: 1;
 }
 
 /* ===== CONTENT ===== */
@@ -193,19 +201,42 @@
 /* ===== BACKGROUND + OVERLAY ===== */
 .space-section {
   position: relative;
+}
+
+.space-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background: url('/assets/images/banner/bg_goiykhonggian.jpeg') center/cover no-repeat;
+  z-index: 0;
 }
 
 .space-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background: rgba(108, 82, 52, 0.85);
+  z-index: 1;
 }
 
 /* ===== HEIGHT SYNC LEFT - RIGHT ===== */
 .space-left,
 .space-right {
   height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.space-section .container-fluid {
+  position: relative;
+  z-index: 2;
 }
 
 .space-left img {
@@ -498,13 +529,31 @@
 /* ===== SECTION: NEWS ===== */
 .news-section {
   position: relative;
+}
+
+.news-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background: url('/assets/images/banner/bg_goiykhonggian.jpeg') center/cover no-repeat;
+  z-index: 0;
 }
 
 .news-section .row {
   --bs-gutter-x: 0.75rem;
   --bs-gutter-y: 0;
   justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.news-section .container-fluid {
+  position: relative;
+  z-index: 2;
 }
 
 .news-section .col-lg-4 {
@@ -514,8 +563,13 @@
 
 .news-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background: rgba(84, 103, 69, 0.9);
+  z-index: 1;
 }
 
 
@@ -645,6 +699,7 @@
   font-size: 32px;
   cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 3;
 }
 
 .news-arrow:hover {
@@ -663,6 +718,8 @@
 .news-section.animate-in .news-title-animate {
   animation: newsTitleFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   opacity: 0;
+  position: relative;
+  z-index: 3;
 }
 
 .news-section.animate-in .news-arrow-animate {
@@ -837,7 +894,24 @@
 
 /* ===== CONSULT ===== */
 .consult-section {
+  position: relative;
+}
+
+.consult-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 160px);
+  height: 100%;
   background-color: #546745;
+  z-index: 0;
+}
+
+.consult-section > * {
+  position: relative;
+  z-index: 2;
 }
 
 .consult-title {

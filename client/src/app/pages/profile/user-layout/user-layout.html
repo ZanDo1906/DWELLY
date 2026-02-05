@@ -1,12 +1,32 @@
-<section class="py-4">
+<!-- <section class="py-4 m-4">
   <div class="container-fluid px-4">
-    <div class="row">
-      <div class="col-12 col-lg-3 mb-4 mb-lg-0">
+    <div class="user-layout-inner">
+
+      <div class="sidebar">
         <app-sidebar></app-sidebar>
       </div>
-      <div class="col-12 col-lg-9">
+
+      <div class="content">
         <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </div>
+</section> -->
+
+<div class="container-fluid">
+  <div class="px-4">
+    <div class="site-inner">
+      <div class="user-body">
+        <app-sidebar></app-sidebar>
+
+        <main class="user-main">
+          <div class="user-wrapper">
+            <router-outlet></router-outlet>
+          </div>
+        </main>
       </div>
     </div>
   </div>
-</section>
+</div>
+

@@ -27,6 +27,7 @@ import { Concept } from './services/concept';
 import { ConceptDetail } from './pages/product/concept-detail/concept-detail';
 import { ConceptList } from './pages/product/concept-list/concept-list';
 import { ProductList } from './pages/product/product-list/product-list';
+import { Payment } from './pages/payment/payment/payment';
 
 export const routes: Routes = [
     { path: 'test', component: Test },
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path: 'concept-list', component: ConceptList },
     { path: 'concept-detail', component: ConceptDetail },
     { path: 'product-list', component: ProductList },
+    { path: 'payment', component: Payment },
 
     
 

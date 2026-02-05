@@ -1,22 +1,30 @@
-<div class="header-scale-wrapper">
-  <div class="header-scale">
-    <section class="py-2 header-bg" [class.over-hero]="isOverHero">
-      <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+<header class="site-header header-scale" [class.over-hero]="isOverHero">
+  <!-- nền full width -->
+  <section class="py-2">
+    <div class="container-fluid">
+      <div class="px-4">
+        <!-- inner wrapper canh giữa giống TGDD -->
+        <div class="site-inner header-inner">
+        <!-- Logo -->
+        <img
+          src="assets/images/logo/logo.png"
+          alt="Dwelly"
+          height="40"
+          (click)="scrollToTop()"
+          class="logo"
+        />
 
-        <img src="assets/images/logo/logo.png" alt="Dwelly" height="40" (click)="scrollToTop()" style="cursor: pointer;">
-
-        <nav class="d-flex align-items-center gap-4">
-          <a href=""><i class="bi bi-search"></i></a>  
+        <!-- Navigation -->
+        <nav class="header-nav">
+          <a href="#"><i class="bi bi-search"></i></a>
           <a href="#">Giới thiệu</a>
           <a href="#">Sản phẩm</a>
           <a href="#">Gợi ý không gian</a>
           <a href="#"><i class="bi bi-cart"></i></a>
           <a href="#"><i class="bi bi-person"></i> {{ displayName }}</a>
         </nav>
-
+        </div>
       </div>
-    </section>
-  </div>
-</div>
-
-
+    </div>
+  </section>
+</header>

@@ -1,22 +1,25 @@
-.footer-scale-wrapper {
+/* =========================
+   FOOTER – FULL WIDTH
+========================= */
+.site-footer {
   width: 100%;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-.footer-scale {
-  width: 1440px;
-  margin: 0 auto;
-  transform-origin: top center;
-  --scale: min(1, calc(100vw / 1440));
-  transform: scale(var(--scale));
-}
-
-.footer-bg {
   background-color: #FDF8F5;
   color: #6C5234;
   font-family: 'Nunito Sans', sans-serif;
+}
+
+/* =========================
+   INNER WRAPPER (GIỐNG HEADER)
+========================= */
+.footer-inner {
+  max-width: 1200px;      /* đồng bộ header */
+  margin: 0 auto;
+}
+
+/* =========================
+   FOOTER CONTENT
+========================= */
+.footer-bg {
   width: 100%;
 }
 
@@ -34,7 +37,22 @@
   margin-right: 6px;
 }
 
-.footer-icon {
-  font-size: 26px;
+.footer-bg ul li {
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-bg ul li:hover {
+  color: #afa386;
+}
+
+/* =========================
+   COPYRIGHT
+========================= */
+.footer-copyright {
+  border-top: 1px solid rgba(108, 82, 52, 0.15);
+  padding: 12px 0;
+  font-size: 14px;
+  color: #6C5234;
+  background-color: #FDF8F5;
 }

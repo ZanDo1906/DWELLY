@@ -1,0 +1,73 @@
+/* ===== PAGE ===== */
+.checkout-page {
+  background-color: #FDF8F5;
+  min-height: 100vh;
+}
+
+/* ===== KHÓA CONTENT (GIỐNG CELLPHONES / TGDD) ===== */
+.site-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== CARD ===== */
+.checkout-card,
+.checkout-summary {
+  background-color: #ffffff;
+  border-radius: 12px;
+  /* padding: 24px; */
+}
+
+/* ===== TITLE ===== */
+.checkout-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.checkout-subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ===== FORM ===== */
+.form-control {
+  height: 44px;
+  font-size: 14px;
+}
+
+/* ===== PAYMENT ===== */
+.payment-method label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* ===== SUMMARY ===== */
+.summary-item,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.summary-total {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ===== BUTTON ===== */
+.btn-submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 16px;
+  background-color: #6C5234;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}

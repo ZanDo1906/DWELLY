@@ -1,0 +1,39 @@
+/* .user-layout-inner {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  padding-left: 24px;
+} */
+
+.user-body {
+  display: flex;
+  width: 100%;
+  overflow: visible;   /* 🔥 BẮT BUỘC */
+}
+
+app-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.user-main {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: #f5f5f5;
+}
+
+
+/* Wrapper giống TGDD */
+.user-wrapper {
+  width: 100%;
+}
