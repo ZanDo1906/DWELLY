@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { customValidator, passwordValidator } from '../../validator/check.validator';
+import { customValidator, passwordValidator } from '../../../validator/check.validator';
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -29,40 +29,4 @@
 <!-- A grey horizontal navbar that becomes vertical on small screens -->
 <!-- <nav class="navbar navbar-expand-sm bg-light"> -->
 
-      <div class="container-fluid">
-        <!-- Links -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/test" routerLinkActive="active">Test</a>
-          </li>
-        </ul>
-
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-            Đăng ký
-          </button>
-          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-            Đăng nhập
-          </button>
-
-            </div>
-</nav>
- 
-<app-modal modalId="registerModal" title="Đăng ký" (close)="closeRegisterModal()">
-  <app-register></app-register>
-</app-modal>
-
-<app-modal modalId="loginModal" title="Đăng nhập" (close)="closeLoginModal()">
-  <app-login></app-login>
-</app-modal>
-
-
-<router-outlet></router-outlet>
-  <!-- <div class="container-fluid"> -->
-    <!-- Links -->
-    <!-- <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/test" routerLinkActive="active">Test</a>
-      </li>
-    </ul>
-  </div>
-</nav> -->
+<!-- </nav> -->

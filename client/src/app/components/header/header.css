@@ -46,7 +46,8 @@
   gap: 24px;
 }
 
-.header-nav a {
+.header-nav a,
+.header-nav .header-link {
   text-decoration: none;
   color: #6C5234;
   font-family: 'Nunito Sans', sans-serif;
@@ -58,12 +59,20 @@
   gap: 6px;
 }
 
+.header-nav .header-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .header-nav i {
   font-size: 16px;
 }
 
 /* Header trên hero */
 .site-header.over-hero .header-nav a,
+.site-header.over-hero .header-nav .header-link,
 .site-header.over-hero .header-nav i {
   color: #ffffff;
 }

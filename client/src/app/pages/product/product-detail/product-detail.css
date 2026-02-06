@@ -867,7 +867,10 @@
   box-sizing: border-box;
 }
 
-.scroll-wrapper { position: relative; height: 270px; }
+.scroll-wrapper {
+  position: relative;
+  width: 260px;
+}
 
 .scroll-row {
   display: flex;

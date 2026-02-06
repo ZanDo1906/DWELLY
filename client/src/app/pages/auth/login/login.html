@@ -56,6 +56,10 @@
   <span>Đăng nhập</span>
 
 </button>
+
+<div class="text-danger text-center mt-2" *ngIf="loginError">
+  {{ loginError }}
+</div>
 <!-- divider -->
 <div class="login-divider">
   <span>Hoặc đăng nhập với</span>

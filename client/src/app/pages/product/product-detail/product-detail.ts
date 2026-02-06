@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../../services/product';
-import { iProduct } from '../../interfaces/product';
-import { iReview } from '../../interfaces/review';
-import { ProductCard } from '../product-card/product-card';
+import { Product } from '../../../services/product';
+import { iProduct } from '../../../interfaces/product';
+import { iReview } from '../../../interfaces/review';
+import { ProductCard } from '../../../components/product-card/product-card';
 
 @Component({
   selector: 'app-product-detail',

@@ -1,24 +1,35 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Login } from '../../pages/auth/login/login';
+import { Register } from '../../pages/auth/register/register';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule, RouterLink, Login, Register, Modal],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header implements OnInit, AfterViewInit {
   displayName = 'Tài khoản';
+  isLoggedIn = false;
   isOverHero = false;
 
   ngOnInit(): void {
-    const storedName = localStorage.getItem('userName');
-    if (storedName && storedName.trim().length > 0) {
-      this.displayName = storedName.trim();
-    }
+    this.refreshDisplayName();
   }
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  closeRegisterModal(): void {
+    // Hook for modal close; add behavior if needed.
+  }
+
+  closeLoginModal(): void {
+    // Hook for modal close; add behavior if needed.
   }
 
   ngAfterViewInit(): void {
@@ -31,6 +42,16 @@ export class Header implements OnInit, AfterViewInit {
     this.updateHeroState();
   }
 
+  @HostListener('window:user-login')
+  onUserLogin(): void {
+    this.refreshDisplayName();
+  }
+
+  @HostListener('window:user-logout')
+  onUserLogout(): void {
+    this.refreshDisplayName();
+  }
+
   private updateHeroState(): void {
     const heroBottom = this.getHeroBottom();
     if (heroBottom === null) {
@@ -40,6 +61,18 @@ export class Header implements OnInit, AfterViewInit {
 
     const headerHeight = this.getHeaderHeight();
     this.isOverHero = window.scrollY + headerHeight < heroBottom;
+  }
+
+  private refreshDisplayName(): void {
+    const storedName = localStorage.getItem('userName');
+    if (storedName && storedName.trim().length > 0) {
+      this.displayName = storedName.trim();
+      this.isLoggedIn = true;
+      return;
+    }
+
+    this.displayName = 'Tài khoản';
+    this.isLoggedIn = false;
   }
 
   private getHeroBottom(): number | null {

@@ -60,7 +60,10 @@
 }
 
 
-.scroll-wrapper { position: relative; height: 270px; }
+.scroll-wrapper {
+  position: relative;
+  width: 260px;
+}
 
 .scroll-row {
   display: flex;
@@ -231,12 +234,7 @@
 }
 
 
-.scroll-wrapper { 
-  position: relative; 
-  height: 270px; 
-  width: 260px;
-  justify-content: space-between;
-}
+
 
 .card-thumb.no-hover .hover-img {
   display: none !important;
