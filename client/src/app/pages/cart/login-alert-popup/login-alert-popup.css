@@ -1,0 +1,138 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Popup container */
+.popup {
+    width: 420px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
+/* Header */
+.popup-header {
+    position: relative;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.popup-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #b33a3a;
+    font-weight: 700;
+}
+
+.close-btn {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #888;
+}
+
+/* Body */
+.popup-body {
+    padding: 24px 22px;
+    text-align: center;
+}
+
+.main-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.sub-text {
+    font-size: 15px;
+    color: #b33a3a;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Actions */
+.popup-actions {
+    padding: 0 22px 22px;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+/* Secondary Outline Buttons (Đăng nhập, Đăng ký) */
+.btn-outline {
+    flex: 1;
+    padding: 11px 0;
+    border-radius: 8px;
+    border: 2px solid #6C5234;
+    background: #fff;
+    color: #6C5234;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: #6C5234;
+    color: #fff;
+}
+
+.btn-outline:active {
+    background: #56422A;
+    border-color: #56422A;
+}
+
+.btn-outline:disabled {
+    background: #fff;
+    border-color: #C9CCC7;
+    color: #C9CCC7;
+    cursor: not-allowed;
+}
+
+/* Secondary Primary Button (Tiếp tục mua hàng) */
+.btn-primary {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    background: #6C5234;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #E5E8E3;
+    color: #6C5234;
+}
+
+.btn-primary:active {
+    background: #56422A;
+    color: #fff;
+}
+
+.btn-primary:disabled {
+    background: #C9CCC7;
+    color: #fff;
+    cursor: not-allowed;
+}
