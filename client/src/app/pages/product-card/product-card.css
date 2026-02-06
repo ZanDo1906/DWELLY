@@ -1,0 +1,142 @@
+.product-card {
+  width: 260px;           
+  border-radius: 0px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+}
+
+.card-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card-thumb .hover-img {
+  opacity: 0;
+}
+
+.card-thumb:hover .hover-img {
+  opacity: 1;
+}
+
+.card-thumb:hover .main-img {
+  opacity: 1;
+}
+
+.discount-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #A34343;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+}
+
+.product-name {
+  min-height: 40px;
+  font-size: 16px;    
+  font-weight: 600;
+  color: #373737;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.new-price {
+  font-size: 16px; 
+  font-weight: 600;
+  color: #A34343;
+}
+
+.old-price {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #999;
+}
+
+.rating-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.rating {
+  font-size: 18px;
+  color: #E8B931;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-score {
+  font-size: 14px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions i {
+  font-size: 18px;
+  color: #373737;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Heart outline khi hover */
+.actions i.bi-heart:hover {
+  color: #6c5234;
+  transform: scale(1.2);
+}
+
+/* Heart fill mặc định màu đỏ */
+.actions i.bi-heart-fill {
+  color: #A34343;
+}
+
+/* Heart fill khi hover */
+.actions i.bi-heart-fill:hover {
+  color: #d62828;
+  transform: scale(1);
+}
+
+/* Cart icon khi hover */
+.actions i.bi-cart:hover {
+  color: #6c5234;
+  transform: scale(1.2);
+}
