@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { customValidator, passwordValidator } from '../../validator/check.validator';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -12,8 +12,6 @@ import { CommonModule } from '@angular/common';
 export class Login {
 
   loginForm!: any;
-
-  @Output() close = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -37,11 +35,5 @@ export class Login {
     }
 
     console.log(this.loginForm.value);
-
-    this.close.emit();   // đóng popup sau login OK
-  }
-
-  onClose() {
-    this.close.emit();
   }
 }

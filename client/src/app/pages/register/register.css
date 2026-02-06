@@ -8,6 +8,11 @@ body{
   background: #fff;
 }
 
+
+.form{
+  padding: 0 15px 0 15px;
+  margin-bottom: 10px;
+}
 /* ===== Title ===== */
 .title-register {
   color: #6c5234;
@@ -25,7 +30,6 @@ body{
 /* ===== Input ===== */
 .form-control{
   border-radius: 8px;
-  padding: 10px 12px;
   font-size: 14px;
 }
 
@@ -74,27 +78,6 @@ body{
 .form-check-input:focus{
   box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.25);
 }
-
-/* ===== Close button ===== */
-.btn-close{
-  font-size: 12px;
-  opacity: .6;
-}
-
-.btn-close:hover{
-  opacity: 1;
-  border-color: #56422A;
-}
-
-.btn-close:focus{
-  opacity: 1;
-  border-color: #56422A;
-}
-.btn-close:focus-visible{
-  outline: none;
-  box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.35);
-}
-
 
 /* ===== Error text ===== */
 .text-danger{

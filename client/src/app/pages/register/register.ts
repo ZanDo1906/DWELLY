@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { customValidator, passwordValidator } from '../../validator/check.validator';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
+  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
-
-  @Output() close = new EventEmitter<void>();
 
   regForm: any;
 
@@ -80,12 +79,5 @@ export class Register {
     }
 
     console.log(this.regForm.value);
-
-    // đóng modal sau khi đăng ký OK
-    this.close.emit();
-  }
-
-  onClose() {
-    this.close.emit();
   }
 }

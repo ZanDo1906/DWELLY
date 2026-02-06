@@ -1,17 +1,10 @@
-<div class="container-fluid px-4 py-4">
-    <div class="d-flex justify-content-end mb-1">
-  <button
-    type="button"
-    class="btn-close float-end"
-    (click)="onClose()">
-  </button>
-  </div>
-
+<div class="form">
+  
   <form [formGroup]="loginForm" (ngSubmit)="submit()">
 
-    <h3 class="text-center text-uppercase title-register">
+    <div class="text-center text-uppercase title-register">
       Đăng nhập
-    </h3>
+    </div>
 
     <p class="text-center register-subtitle">
       Chào mừng bạn quay trở lại!
@@ -86,8 +79,7 @@
   <a
     href="javascript:void(0)"
     data-bs-toggle="modal"
-    data-bs-target="#registerModal"
-    (click)="onClose()">
+    data-bs-target="#registerModal">
     Đăng ký ngay
   </a>
 </div>
