@@ -6,13 +6,13 @@
         <!-- inner wrapper canh giữa giống TGDD -->
         <div class="site-inner header-inner">
         <!-- Logo -->
-        <img
-          src="assets/images/logo/logo.png"
-          alt="Dwelly"
-          height="40"
-          (click)="scrollToTop()"
-          class="logo"
-        />
+        <a class="logo" [routerLink]="['/']" (click)="scrollToTop()">
+          <img
+            src="assets/images/logo/logo.png"
+            alt="Dwelly"
+            height="40"
+          />
+        </a>
 
         <!-- Navigation -->
         <nav class="header-nav">
@@ -21,10 +21,32 @@
           <a routerLink="/product-list" routerLinkActive="active" >Sản phẩm</a>
           <a href="#">Gợi ý không gian</a>
           <a href="#"><i class="bi bi-cart"></i></a>
-          <a href="#"><i class="bi bi-person"></i> {{ displayName }}</a>
+          <ng-container *ngIf="isLoggedIn; else loginTrigger">
+            <a class="header-link account-link" [routerLink]="['/user-layout/info']">
+              <i class="bi bi-person"></i> {{ displayName }}
+            </a>
+          </ng-container>
+          <ng-template #loginTrigger>
+            <button
+              type="button"
+              class="header-link account-link"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              <i class="bi bi-person"></i> {{ displayName }}
+            </button>
+          </ng-template>
         </nav>
         </div>
       </div>
     </div>
   </section>
 </header>
+
+<app-modal modalId="registerModal" title="Đăng ký" (close)="closeRegisterModal()">
+  <app-register></app-register>
+</app-modal>
+
+<app-modal modalId="loginModal" title="Đăng nhập" (close)="closeLoginModal()">
+  <app-login></app-login>
+</app-modal>

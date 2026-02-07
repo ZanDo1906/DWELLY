@@ -80,40 +80,8 @@
 
             <!-- PRODUCT GRID -->
             <div class="product-grid">
-                <div class="product-card" *ngFor="let product of displayedProducts">
-
-                    <div class="discount-badge">-25%</div>
-
-                    <div class="product-img-wrapper">
-                    <img [src]="product.Hinh_anh[0]" class="product-img">
-                    </div>
-
-                    <div class="product-info">
-                    <h6 class="product-name">{{ product.Ten_san_pham }}</h6>
-
-                    <div class="product-price">
-                        <span class="price-current">
-                        {{ product.Gia_ban | number:'1.0-0' }} VND
-                        </span>
-                        <span class="price-old">
-                        {{ (product.Gia_ban * 1.33) | number:'1.0-0' }} VND
-                        </span>
-                    </div>
-
-                    <div class="product-footer">
-                        <div class="product-rating">
-                        <span class="stars"><i class="bi bi-star"></i></span>
-                        <span class="rating-text">5.0</span>
-                        </div>
-                        <div class="product-actions">
-                        <button class="btn-like"><i class="bi bi-heart"></i></button>
-                        <button class="btn-cart"><i class="bi bi-cart"></i></button>
-                        </div>
-                    </div>
-                    </div>
-
-                </div>
-                </div>
+                <app-product-card *ngFor="let product of displayedProducts" [product]="product"></app-product-card>
+            </div>
 
 
             <!-- PAGINATION -->

@@ -1,0 +1,27 @@
+.custom-close {
+  background: none;
+  border: none;
+  color: #6c5234;     
+  font-size: 20px;  
+  cursor: pointer;
+  opacity: 0.8;
+  padding: 0;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.custom-close:hover {
+  opacity: 1;
+}
+
+.custom-close:active {
+  opacity: 0.9;
+}
+
+.modal-header {
+  padding: 0;
+}
+
+.modal-body {
+  padding-top:0;
+}

@@ -1,0 +1,33 @@
+<div class="product-card">
+  <div class="card-thumb"
+       (mouseenter)="enableHover ? hover=true : null"
+       (mouseleave)="enableHover ? hover=false : null">
+
+    <img class="main-img" [src]="getMainImage()" alt="{{ product.Ten_san_pham }}">
+    <img *ngIf="enableHover" class="hover-img" [src]="getHoverImage()" alt="{{ product.Ten_san_pham }}">
+
+
+    <span class="discount-tag">-{{ getDiscountPercent() }}%</span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="product-name">{{ product.Ten_san_pham }}</h3>
+    <div class="product-meta">
+      <span class="new-price">{{ getFormattedPrice() }}</span>
+      <span class="old-price">{{ getOldPrice() }}</span>
+    </div>
+
+    <div class="rating-actions">
+      <div class="rating">
+        <i [class]="getStarIcon()"></i>
+        <span class="rating-score">{{ averageRating | number:'1.1-1' }}</span>
+      </div>
+      <div class="actions">
+        <i class="bi"
+           [ngClass]="heartActive ? 'bi-heart-fill' : 'bi-heart'"
+           (click)="toggleHeart()"></i>
+        <i class="bi bi-cart"></i>
+      </div>
+    </div>
+  </div>
+</div>
