@@ -1,1 +1,113 @@
-<p>concept-list works!</p>
+<section class="concept-section">
+  
+
+  <div class="container-fluid">
+    <div class="px-4">
+      <div class="site-inner">
+
+        <!-- BANNER -->
+  <div class="concept-banner">
+    <img src="../../../../assets/images/banner/concept-banner.jpg" alt="Phong cách sống" class="banner-img">
+    <div class="banner-overlay">
+      <h1 class="banner-text">Phong cách sống</h1>
+    </div>
+  </div>
+        <!-- FILTER SECTION -->
+        <div class="filter-section">
+          <div class="filter-header">
+            <span class="filter-label">Lọc theo:</span>
+            
+            <!-- ROOM TYPE FILTER -->
+            <div class="filter-group">
+              <button 
+                class="filter-btn" 
+                [class.active]="openRoomDropdown"
+                (click)="toggleRoomDropdown()">
+                Loại phòng
+                <i class="bi" [ngClass]="openRoomDropdown ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              </button>
+              <div class="filter-options-inline" *ngIf="openRoomDropdown">
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedRoomTypes.has('01')"
+                  (click)="selectRoom('01'); $event.stopPropagation()">
+                  Phòng khách
+                </button>
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedRoomTypes.has('02')"
+                  (click)="selectRoom('02'); $event.stopPropagation()">
+                  Phòng ngủ
+                </button>
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedRoomTypes.has('03')"
+                  (click)="selectRoom('03'); $event.stopPropagation()">
+                  Phòng ăn
+                </button>
+              </div>
+            </div>
+
+            <!-- STYLE FILTER -->
+            <div class="filter-group">
+              <button 
+                class="filter-btn" 
+                [class.active]="openStyleDropdown"
+                (click)="toggleStyleDropdown()">
+                Phong cách
+                <i class="bi" [ngClass]="openStyleDropdown ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              </button>
+              <div class="filter-options-inline" *ngIf="openStyleDropdown">
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedStyles.has('01')"
+                  (click)="selectStyle('01'); $event.stopPropagation()">
+                  Tối giản
+                </button>
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedStyles.has('02')"
+                  (click)="selectStyle('02'); $event.stopPropagation()">
+                  Hiện đại
+                </button>
+                <button 
+                  type="button"
+                  class="option-pill"
+                  [class.selected]="selectedStyles.has('03')"
+                  (click)="selectStyle('03'); $event.stopPropagation()">
+                  Bắc Âu
+                </button>
+              </div>
+            </div>
+
+            <a href="#" class="clear-filter" (click)="clearFilters(); $event.preventDefault()">Xóa tất cả</a>
+          </div>
+        </div>
+
+        <!-- CONCEPT GRID -->
+        <div class="concept-grid">
+          <div class="concept-card" *ngFor="let concept of displayedConcepts">
+            <div class="concept-img-wrapper">
+              <img [src]="concept.Hinh_anh" [alt]="concept.Ten_khong_gian" class="concept-img">
+              <div class="concept-overlay">
+                <p class="concept-name">Xem thêm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOAD MORE -->
+        <div class="pagination-wrapper">
+          <button class="btn-load-more" (click)="loadMore()" *ngIf="displayedCount < filteredConcepts.length">
+            Xem thêm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
