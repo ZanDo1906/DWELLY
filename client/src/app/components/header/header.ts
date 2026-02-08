@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
-import { Modal } from '../modal/modal';
-import { Login } from '../../pages/auth/login/login';
-import { Register } from '../../pages/auth/register/register';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, Modal, Login, Register],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -22,14 +19,6 @@ export class Header implements OnInit, AfterViewInit {
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  closeRegisterModal(): void {
-    // Hook for modal close; add behavior if needed.
-  }
-
-  closeLoginModal(): void {
-    // Hook for modal close; add behavior if needed.
   }
 
   ngAfterViewInit(): void {

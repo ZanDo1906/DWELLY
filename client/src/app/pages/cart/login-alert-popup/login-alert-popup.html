@@ -23,8 +23,24 @@
         <!-- Actions -->
         <div class="popup-actions">
             <div class="auth-buttons">
-                <button class="btn-outline" (click)="navigateToLogin()">Đăng nhập</button>
-                <button class="btn-outline" (click)="navigateToRegister()">Đăng ký</button>
+                <button
+                    type="button"
+                    class="btn-outline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    (click)="closePopup()"
+                >
+                    Đăng nhập
+                </button>
+                <button
+                    type="button"
+                    class="btn-outline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerModal"
+                    (click)="closePopup()"
+                >
+                    Đăng ký
+                </button>
             </div>
 
             <button class="btn-primary" (click)="continueShopping()">Tiếp tục mua hàng</button>
