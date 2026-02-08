@@ -1,0 +1,65 @@
+<section maintenance-modal>
+  <div class="container-fluid py-4">
+    <div class="px-4">
+      <div class="site-inner">
+        <div class="maintenance-overlay" (click)="onClose()">
+            <div class="maintenance-content" (click)="$event.stopPropagation()">
+                
+                <div class="modal-header">
+                <div class="modal-title">{{ currentVideoTitle }}</div>
+                <button class="btn-close-modal" (click)="onClose()">
+                    <i class="bi bi-x-circle-fill"></i>
+                </button>
+                </div>
+
+                <div class="video-section" *ngIf="safeVideoUrl">
+                    <iframe [src]="safeVideoUrl"></iframe>
+                </div>
+
+
+                <div class="tab-nav">
+                <div class="tab-item" [class.active]="activeTab === 'overview'" (click)="setTab('overview')">Tổng quan</div>
+                <div class="tab-item" [class.active]="activeTab === 'cleaning'" (click)="setTab('cleaning')">Vệ sinh</div>
+                <div class="tab-item" [class.active]="activeTab === 'placement'" (click)="setTab('placement')">Vị trí đặt</div>
+                <div class="tab-item" [class.active]="activeTab === 'troubleshoot'" (click)="setTab('troubleshoot')">Xử lý sự cố</div>
+                <div class="tab-item" [class.active]="activeTab === 'schedule'" (click)="setTab('schedule')">Lịch chăm sóc</div>
+                </div>
+                <div class="tab-body">
+                <div *ngIf="activeTab === 'overview'" class="content-block animate-in">
+                    <div class="title">Tại sao cần bảo dưỡng định kỳ?</div>
+                    <div class="text-content">Việc chăm sóc sản phẩm đúng cách không chỉ giữ cho bề mặt luôn mới mà còn kéo dài tuổi thọ khung gỗ và chất liệu nệm lên đến 5-10 năm.</div>
+                    <div class="note-box">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <span>Mã hướng dẫn: {{ data?.Ma_huong_dan }}</span>
+                    </div>
+                </div>
+
+                <div *ngIf="activeTab === 'cleaning'" class="content-block animate-in">
+                    <div class="title">Hướng dẫn vệ sinh</div>
+                    <div class="text-content">{{ data?.Huong_dan_ve_sinh }}</div>
+                </div>
+
+                <div *ngIf="activeTab === 'placement'" class="content-block animate-in">
+                    <div class="title">Hướng dẫn đặt sản phẩm</div>
+                    <div class="text-content">{{ data?.Huong_dan_dat_san_pham }}</div>
+                </div>
+
+                <div *ngIf="activeTab === 'troubleshoot'" class="content-block animate-in">
+                    <div class="title">Xử lý sự cố thường gặp</div>
+                    <div class="text-content">{{ data?.Xu_ly_su_co }}</div>
+                </div>
+
+                <div *ngIf="activeTab === 'schedule'" class="content-block animate-in">
+                    <div class="title">Lịch trình chăm sóc định kỳ</div>
+                    <div class="text-content">{{ data?.Lich_cham_soc }}</div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+   
+
+      </div>
+    </div>
+  </div>
+</section>

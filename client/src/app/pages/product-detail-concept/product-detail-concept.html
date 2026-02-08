@@ -1,0 +1,67 @@
+<section product-detail-concept>
+  <div class="container-fluid py-4">
+    <div class="px-4">
+      <div class="site-inner">
+
+        <!-- Breadcrumb --> 
+        <div class="breadcrumb mb-3"> 
+          <a routerLink="/" class="breadcrumb-home">
+            <i class="bi bi-house-door"></i>
+            <span>Trang chủ</span>
+          </a>
+          <i class="bi bi-chevron-right"></i>
+          <a routerLink="/concepts">{{ conceptName }}</a>
+        </div>
+
+
+         <div class="mainconcept mb-4" *ngIf="conceptImage"> 
+          <img [src]="conceptImage" alt="{{ conceptName }}" class="w-100">
+        </div>
+
+        <div class="bar">
+          <div class="bar-title">Sản phẩm thuộc concept</div>
+          <div class="concept-actions d-flex justify-content-end mt-2"> 
+            <div class="custom-dropdown" (click)="toggleDropdown()">
+              <span>{{ getLabel(sortType) }}</span>
+              <i class="bi" [ngClass]="dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              <ul *ngIf="dropdownOpen">
+                <li (click)="setSort('highest')">Giá cao</li>
+                <li (click)="setSort('lowest')">Giá thấp</li>
+              </ul>
+            </div>
+            <button class="btn-add-all ms-3"> 
+              <i class="bi bi-plus-circle"></i> 
+              <span>Thêm tất cả vào giỏ </span>
+            </button> 
+          </div>
+        </div>
+        <!-- Phần sản phẩm liên quan -->
+        <div class="related-products row">
+          <div class="col-md-3" *ngFor="let p of relatedProducts">
+            <div class="concept-card"
+                (mouseenter)="hovered=p.Ma_san_pham"
+                (mouseleave)="hovered=null">
+              <div class="scroll-wrapper">
+              <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn left" (click)="prevImage(p)">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <app-product-card 
+                [product]="p" 
+                [mainImage]="p.Hinh_anh[currentIndex[p.Ma_san_pham] || 0]" 
+                [enableHover]="false">
+              </app-product-card>
+
+              <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn right" (click)="nextImage(p)">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        
+      </div>
+    </div>
+  </div>
+</section>

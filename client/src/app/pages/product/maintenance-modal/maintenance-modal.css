@@ -1,0 +1,138 @@
+.maintenance-modal{
+  font-family: 'Nunito Sans', sans-serif;
+  color:#373737;
+  font-size:14px;
+}
+
+.maintenance-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.maintenance-content {
+  background: #fff;
+  width: 90%;
+  max-width: 500px;
+  height: 500px;
+  border-radius: 12px;
+  display: flex;
+  overflow-y: auto; 
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+.modal-header {
+  position: relative;          /* cho phép đặt nút đóng tuyệt đối */
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;     /* căn giữa nội dung */
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6c5234;
+  text-align: center;
+}
+
+.btn-close-modal {
+  position: absolute;          /* đặt nút đóng tuyệt đối */
+  right: 12px;                 /* sát bên phải */
+  top: 50%;                    /* căn giữa theo chiều dọc */
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.btn-close-modal:hover {
+  color: #6c5234;
+}
+
+.video-section { display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background: black; }
+
+.video-section iframe { 
+    width: auto; 
+    height: 200px; 
+    aspect-ratio: 16/9; 
+    border: none; }
+.tab-nav {
+  display: flex;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e1e1e1;
+  box-shadow: 0 1px 1px rgba(178, 178, 178, 0.3);
+}
+
+.tab-item {
+  padding: 8px 16.5px;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center; 
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  color: #373737;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.tab-item.active {
+  color: #6c5234;
+  border-bottom-color: #6c5234;
+  background: #fff;
+}
+
+.tab-body {
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+   padding-right: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.text-content {
+  white-space: pre-line; 
+  line-height: 1.6;
+  color: #373737;
+  font-size: 14px;
+}
+
+.title{
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.animate-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.note-box {
+  background: #fcf8e3;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-size: 13px;
+}
