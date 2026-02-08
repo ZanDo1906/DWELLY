@@ -5,6 +5,6 @@ html, body { height: 100%; }
   flex-direction: column;
 }
 .app-main{ 
-  flex: 1 0 auto;
+  flex: 0 0 auto;
 }     /* phần nội dung chiếm chỗ đẩy footer xuống đáy */
 app-footer, .tc-footer{ flex: 0 0 auto; }
