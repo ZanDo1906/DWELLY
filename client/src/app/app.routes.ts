@@ -3,7 +3,6 @@ import { Test } from './test/test';
 import { Login } from './pages/auth/login/login';
 import { Register } from './pages/auth/register/register';
 import { ProductDetail } from './pages/product/product-detail/product-detail';
-import { ProductDetailConcept } from './pages/product/product-detail-concept/product-detail-concept';
 import { PaymentMember } from './pages/payment/payment-member/payment-member';
 import { PaymentNonMember } from './pages/payment/payment-non-member/payment-non-member';
 import { ForgotPassword } from './pages/auth/forgot-password/forgot-password';
@@ -31,16 +30,12 @@ import { Concept } from './services/concept';
 import { ConceptDetail } from './pages/product/concept-detail/concept-detail';
 import { ConceptList } from './pages/product/concept-list/concept-list';
 import { ProductList } from './pages/product/product-list/product-list';
-import { Payment } from './pages/payment/payment/payment';
 
 export const routes: Routes = [
     { path: 'test', component: Test },
+    { path: '', component: HomePage }, 
     { path: 'login', component: Login },
     { path: 'register', component: Register },
-    { path: 'product', component: ProductDetail },
-    { path: 'product/:id', component: ProductDetail },
-    { path: 'product-concept', component: ProductDetailConcept },
-    { path: '', component: HomePage }, 
     { path: 'payment-member', component: PaymentMember },
     { path: 'payment-non-member', component: PaymentNonMember },
     { path: 'qr-payment', component: QRPayment },
@@ -56,8 +51,8 @@ export const routes: Routes = [
     { path: 'concept-list', component: ConceptList },
     { path: 'concept-detail', component: ConceptDetail },
     { path: 'product-list', component: ProductList },
-    { path: 'payment', component: Payment },
-
+    { path: 'product', component: ProductDetail },
+    { path: 'product/:id', component: ProductDetail }, //??
     
 
     // User Layout với sidebar cố định
