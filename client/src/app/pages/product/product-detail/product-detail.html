@@ -344,27 +344,27 @@
           <i class="bi bi-book"></i>
           <span class="care-title">SỔ TAY BẢO DƯỠNG</span>
 
-          <div class="care-nav">
-            <i class="bi bi-chevron-left"></i>
-            <span>10 video</span>
-            <i class="bi bi-chevron-right"></i>
-          </div>
-        </div>
+          <div class="care-nav" *ngIf="productCareInstruction?.Link_video?.length > 5"> <i class="bi bi-chevron-left"></i> <span>{{ productCareInstruction?.Link_video?.length }} video</span> <i class="bi bi-chevron-right"></i> </div> <div class="care-nav" *ngIf="productCareInstruction?.Link_video?.length <= 5"> <span>{{ productCareInstruction?.Link_video?.length }} video</span> </div> </div>
 
-        <div class="care-list">
-          <div class="care-item" *ngFor="let i of [1,2,3,4,5]">
+        <div class="care-list" *ngIf="productCareInstruction" #careList>
+          <div class="care-item"
+              *ngFor="let v of productCareInstruction.Link_video; let i = index"
+              (click)="openMaintenanceModal(i)">
             <div class="thumb-video">
-              <i class="bi bi-play-circle"></i>
+              <img [src]="getVideoThumbnail(v)" alt="Video thumbnail">
             </div>
-
             <div class="care-info">
-              <div class="title">3 bước vệ sinh sofa nỉ tại nhà</div>
+              <div class="title">{{ getVideoTitle(i) }}</div>
               <div class="time">
-                <i class="bi bi-clock"></i> 5 phút
+                <i class="bi bi-clock"></i> {{ getVideoDuration(i) }}
               </div>
             </div>
           </div>
         </div>
+
+
+
+
 
       </div>
     </div>
@@ -389,6 +389,12 @@
           </div>
         </div>
 
+
+        <app-maintenance-modal
+          *ngIf="isMaintenanceOpen"
+          [data]="selectedCareData"
+          (close)="closeMaintenanceModal()">
+        </app-maintenance-modal>
 
 
 
