@@ -1,1 +1,178 @@
-<p>reviews works!</p>
+<div class="reviews-page">
+  <div class="container-fluid py-4">
+    <div class="px-4">
+      <div class="site-inner">
+
+        <!-- Header -->
+        <div class="reviews-header mb-5">
+          <h2 class="reviews-title">Đánh giá đơn hàng</h2>
+          <p class="reviews-subtitle">Theo dõi đơn hàng của bạn</p>
+        </div>
+
+        <!-- Filter & Sort Section -->
+        <div class="reviews-controls mb-4">
+          
+          <!-- Filter Tabs -->
+          <div class="filter-tabs mb-4">
+            <button 
+              class="tab-btn" 
+              [class.active]="filterStatus === 'all'"
+              (click)="setFilterStatus('all')">
+              Tất cả
+              <span class="tab-badge">{{ orderWithReviews.length }}</span>
+            </button>
+            <button 
+              class="tab-btn" 
+              [class.active]="filterStatus === 'not-reviewed'"
+              (click)="setFilterStatus('not-reviewed')">
+              Chưa đánh giá
+              <span class="tab-badge">{{ notReviewedCount }}</span>
+            </button>
+            <button 
+              class="tab-btn" 
+              [class.active]="filterStatus === 'reviewed'"
+              (click)="setFilterStatus('reviewed')">
+              Đã đánh giá
+              <span class="tab-badge">{{ reviewedCount }}</span>
+            </button>
+          </div>
+
+          <!-- Rating Filter & Sort -->
+          <div class="rating-sort-wrapper">
+            <div class="rating-filter">
+              <label class="filter-label">
+                <input type="checkbox" [checked]="selectedRatingFilter === 5" (change)="toggleRatingFilter(5)">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </span>
+              </label>
+              <label class="filter-label">
+                <input type="checkbox" [checked]="selectedRatingFilter === 4" (change)="toggleRatingFilter(4)">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                </span>
+              </label>
+              <label class="filter-label">
+                <input type="checkbox" [checked]="selectedRatingFilter === 3" (change)="toggleRatingFilter(3)">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                </span>
+              </label>
+              <label class="filter-label">
+                <input type="checkbox" [checked]="selectedRatingFilter === 2" (change)="toggleRatingFilter(2)">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                </span>
+              </label>
+              <label class="filter-label">
+                <input type="checkbox" [checked]="selectedRatingFilter === 1" (change)="toggleRatingFilter(1)">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i>
+                </span>
+              </label>
+            </div>
+
+            <div class="sort-wrapper">
+              <select [(ngModel)]="sortBy" (change)="setSortBy(sortBy)" class="sort-select">
+                <option value="newest">Mới nhất</option>
+                <option value="oldest">Cũ nhất</option>
+                <option value="high-rating">Đánh giá cao</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders List -->
+        <div class="orders-list">
+          <div *ngIf="filteredOrders.length === 0" class="empty-state">
+            <p>Không có đơn hàng nào</p>
+          </div>
+
+          <div *ngFor="let orderItem of filteredOrders" class="order-card">
+            
+            <!-- Order Header with Status, Date, and ID -->
+            <div class="order-header-row">
+              <div class="order-status-tab" [ngClass]="orderItem.order.Trang_thai.toLowerCase()">
+                {{ orderItem.order.Trang_thai }}
+              </div>
+              <div class="order-meta-inline">
+                <span>{{ getOrderDate(orderItem.order.Ngay_dat) }}</span>
+                <span>{{ orderItem.order.Ma_don_mua }}</span>
+              </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="order-items">
+              <div *ngFor="let item of orderItem.items" class="order-item">
+                <div class="item-image">
+                  <img 
+                    [src]="item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
+                    alt="{{ item.product?.Ten_san_pham }}"
+                    class="product-img"
+                  />
+                </div>
+
+                <div class="item-details">
+                  <h4 class="item-name">{{ item.product?.Ten_san_pham }}</h4>
+                  <p class="item-category">{{ item.product?.Ma_danh_muc }}</p>
+                  <p class="item-quantity">Số lượng: {{ item.So_luong }}</p>
+                </div>
+
+                <div class="item-price">
+                  <p class="price-label">Giá:</p>
+                  <p class="price-value">{{ item.Don_gia | number: '1.0-0' }} đ</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Total & Review Button -->
+            <div class="order-footer">
+              <div class="order-total">
+                <span>Tổng số tiền ({{ orderItem.items.length }} sản phẩm):</span>
+                <strong>{{ getTotalPrice(orderItem.items) | number: '1.0-0' }} đ</strong>
+              </div>
+
+              <button 
+                *ngIf="!orderItem.hasReview"
+                class="btn btn-review"
+                (click)="openReviewModal(orderItem)">
+                Đánh giá
+              </button>
+
+              <div *ngIf="orderItem.hasReview" class="review-badge">
+                <div class="rating-stars">
+                  <i *ngFor="let star of getStarArray(orderItem.review?.Diem_danh_gia || 0)" 
+                     class="bi" 
+                     [ngClass]="star ? 'bi-star-fill' : 'bi-star'">
+                  </i>
+                </div>
+                <p class="review-date">{{ getOrderDate(orderItem.review!.Thoi_gian_gui) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
