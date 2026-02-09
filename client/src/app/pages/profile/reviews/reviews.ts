@@ -34,6 +34,14 @@ export class Reviews implements OnInit {
   sortBy: 'newest' | 'oldest' | 'high-rating' = 'newest';
   selectedRatingFilter: number = 0; // 0 means all ratings
 
+  // Review Modal
+  isReviewModalOpen = false;
+  currentReviewOrder: OrderItemWithReview | null = null;
+  reviewRating: number = 5;
+  reviewContent: string = '';
+  hoveringRating: number = 0;
+  reviewImages: (string | File)[] = [];
+
   constructor(
     private orderService: Order,
     private orderDetailService: Order_Details,
@@ -149,8 +157,60 @@ export class Reviews implements OnInit {
   }
 
   openReviewModal(order: OrderItemWithReview): void {
-    // TODO: Open modal to review
-    console.log('Open review modal for order:', order.order.Ma_don_mua);
+    this.currentReviewOrder = order;
+    this.reviewRating = 5;
+    this.reviewContent = '';
+    this.isReviewModalOpen = true;
+  }
+
+  closeReviewModal(): void {
+    this.isReviewModalOpen = false;
+    this.currentReviewOrder = null;
+    this.reviewRating = 5;
+    this.reviewContent = '';
+    this.reviewImages = [];
+  }
+
+  setReviewRating(rating: number): void {
+    this.reviewRating = rating;
+  }
+
+  limitReviewContent(): void {
+    if (this.reviewContent.length > 500) {
+      this.reviewContent = this.reviewContent.substring(0, 500);
+    }
+  }
+
+  onImageSelected(event: any, index: number): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.reviewImages[index] = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeImage(index: number): void {
+    this.reviewImages[index] = '';
+  }
+
+  submitReview(): void {
+    if (!this.currentReviewOrder || !this.reviewContent.trim()) {
+      alert('Vui lòng nhập nội dung đánh giá');
+      return;
+    }
+
+    // TODO: Submit review to API
+    console.log('Submit review:', {
+      orderId: this.currentReviewOrder.order.Ma_don_mua,
+      customerId: this.currentCustomerId,
+      rating: this.reviewRating,
+      content: this.reviewContent,
+    });
+
+    this.closeReviewModal();
   }
 
   getStarArray(rating: number): number[] {
