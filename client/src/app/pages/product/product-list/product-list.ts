@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
 import { ProductCard } from '../../../components/product-card/product-card';
+import { Review } from '../../../services/review';
+import { iReview } from '../../../interfaces/review';
 
 @Component({
   selector: 'app-product-list',
@@ -13,6 +15,7 @@ import { ProductCard } from '../../../components/product-card/product-card';
 })
 export class ProductList implements OnInit {
   products: iProduct[] = [];
+  reviews: iReview[] = [];
   displayedCount: number = 9;
   itemsPerPage: number = 9;
   selectedRoomTypes: Set<string> = new Set();
@@ -23,11 +26,13 @@ export class ProductList implements OnInit {
   maxPriceLimit: number = 100000000;
   searchQuery: string = '';
   currentSort: string = 'price-asc';
+  productRatings: Map<string, number> = new Map();
 
-  constructor(private productService: Product) {}
+  constructor(private productService: Product, private reviewService: Review) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadReviews();
   }
 
   loadProducts(): void {
@@ -39,6 +44,42 @@ export class ProductList implements OnInit {
         console.error('Error loading products:', error);
       }
     );
+  }
+
+  loadReviews(): void {
+    this.reviewService.getReviewData().subscribe(
+      (data: iReview[]) => {
+        this.reviews = data;
+        this.calculateProductRatings();
+      },
+      (error) => {
+        console.error('Error loading reviews:', error);
+      }
+    );
+  }
+
+  calculateProductRatings(): void {
+    this.productRatings.clear();
+    
+    this.reviews.forEach(review => {
+      if (!this.productRatings.has(review.Ma_san_pham)) {
+        this.productRatings.set(review.Ma_san_pham, 0);
+      }
+    });
+
+    // Group reviews by product and calculate average
+    const ratingGroups = new Map<string, iReview[]>();
+    this.reviews.forEach(review => {
+      if (!ratingGroups.has(review.Ma_san_pham)) {
+        ratingGroups.set(review.Ma_san_pham, []);
+      }
+      ratingGroups.get(review.Ma_san_pham)!.push(review);
+    });
+
+    ratingGroups.forEach((productReviews, productId) => {
+      const avgRating = productReviews.reduce((sum, review) => sum + review.Diem_danh_gia, 0) / productReviews.length;
+      this.productRatings.set(productId, avgRating);
+    });
   }
 
   loadMore(): void {
@@ -129,7 +170,11 @@ export class ProductList implements OnInit {
         sorted.sort((a, b) => b.Gia_ban - a.Gia_ban);
         break;
       case 'rating':
-        // If you have a rating field, add sorting here
+        sorted.sort((a, b) => {
+          const ratingA = this.productRatings.get(a.Ma_san_pham) ?? 0;
+          const ratingB = this.productRatings.get(b.Ma_san_pham) ?? 0;
+          return ratingB - ratingA; // Sort from high to low
+        });
         break;
       case 'newest':
       default:
