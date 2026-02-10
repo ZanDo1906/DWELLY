@@ -56,6 +56,7 @@ export class Login {
         localStorage.setItem('userName', matched.Ho_va_ten);
         localStorage.setItem('userEmail', matched.Email);
         localStorage.setItem('userId', matched.Ma_khach_hang);
+        localStorage.setItem('userAvatar', matched.Anh_dai_dien || 'https://i.pravatar.cc/100');
 
         this.closeLoginModal();
         window.dispatchEvent(new Event('user-login'));

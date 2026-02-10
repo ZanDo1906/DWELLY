@@ -5,13 +5,13 @@
     <div class="user-info">
       <div class="d-flex gap-3 align-items-start mb-3">
         <img
-          src="https://i.pravatar.cc/100"
+          [src]="userAvatar"
           alt="avatar"
           class="avatar"
         />
         <div class="user-details flex-grow-1">
-          <h6 class="mb-1 text-white">Your name</h6>
-          <small class="text-light d-block">yourname@gmail.com</small>
+          <h6 class="mb-1 text-white">{{ userName }}</h6>
+          <small class="text-light d-block">{{ userEmail }}</small>
           <div class="member-badge mt-2">Đồng</div>
         </div>
       </div>
@@ -19,31 +19,31 @@
 
     <!-- Menu -->
     <ul class="menu list-unstyled mt-4">
-      <li class="menu-item active">
+      <li class="menu-item" routerLink="/user-layout/info" routerLinkActive="active">
         <i class="bi bi-person"></i>
         <span>Tài khoản cá nhân</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/address" routerLinkActive="active">
         <i class="bi bi-geo-alt"></i>
         <span>Địa chỉ của tôi</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/orders" [class.active]="isOrdersActive()">
         <i class="bi bi-receipt"></i>
         <span>Quản lý đơn hàng</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/returns" routerLinkActive="active">
         <i class="bi bi-arrow-repeat"></i>
         <span>Quản lý đổi trả</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/reviews" routerLinkActive="active">
         <i class="bi bi-star"></i>
         <span>Đánh giá đơn hàng</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/wishlist" routerLinkActive="active">
         <i class="bi bi-heart"></i>
         <span>Sản phẩm yêu thích</span>
       </li>
-      <li class="menu-item">
+      <li class="menu-item" routerLink="/user-layout/notifications" routerLinkActive="active">
         <i class="bi bi-bell"></i>
         <span>Thông báo</span>
         <span class="badge">2</span>
