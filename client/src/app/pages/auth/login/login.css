@@ -3,7 +3,7 @@ body{
   font-family: 'Nunito Sans', sans-serif;
 }
 .container-fluid {
-  max-width: 470px;
+  max-width: 380px;
   margin: auto;
   background: #fff;
 }
@@ -19,26 +19,128 @@ body{
 }
 
 .form{
-  padding: 0 15px 0 15px;
+  padding: 0 25px 0 25px;
   margin-bottom: 10px;
 }
 /* ===== Input ===== */
 .form-control{
-  border-radius: 8px;
+  border: 1px solid #fff;           
+  border-bottom: 1px solid #6c5234; 
+  border-radius: 0;          
   font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .form-control:focus{
-  border-color: #6c5234;
-  box-shadow: 0 0 0 0.15rem rgba(108,82,52,0.15);
+  background-color: #fff;
+  outline: none;
+  border-bottom: 1px solid #6c5234;
+  box-shadow: none;
+}
+.form-control.ng-valid.ng-dirty {
+    background-color: #fff !important;
+}
+
+.form-control.is-invalid {
+  border: 1px solid #fff;
+  border-bottom-color: #dc3545; 
+  box-shadow: none;
+}
+
+.form-control.is-invalid {
+  background-image: none !important;
+  padding-right: 0 !important;
+} 
+
+/* Chống lại màu nền xanh khi Autofill (Nhập tự động) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  
+    -webkit-text-fill-color: #373737 !important;
+  
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-control.ng-valid, 
+.form-control.ng-dirty {
+    background-color: white !important;
+}
+.input-pos-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon-group {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.icon-group i {
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.error-icon-fixed {
+  color: #dc3545;
+  cursor: default !important; 
+}
+
+.bi-eye, .bi-eye-slash {
+  color: #888;
+}
+
+.error-area {
+  margin-top: 5px;
+  min-height: 18px;
+  flex: 1; 
+  display: flex;
+  align-items: center;
+}
+
+/* Style cho link Quên mật khẩu */
+.forgot-password {
+    margin-top: 5px;
+  font-size: 13px;
+  color: #888;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.forgot-password:hover {
+  color: #546745;
+}
+/* Container bọc lỗi và quên pass */
+.d-flex.justify-content-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  align-items: flex-start;
+  min-height: 15px; 
+  margin-top: 0px;
+}
+
+.d-flex.justify-content-between.error-area {
+  flex: 1; 
+  margin-top: 15px;
+  min-height: 18px;
 }
 
 /* ===== Button register ===== */
-.btn-register{
+.btn-login{
   background-color: #6c5234;
   border-color: #6c5234;
   color: #fff;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 5px;
   font-size: 14px;
   font-weight: 500;
@@ -46,16 +148,17 @@ body{
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 12px auto 0 auto;
+  margin: 15px auto 0 auto;
 }
 
 
-.btn-register:hover{
+.btn-login:hover{
   background-color: #56422A;
   border-color: #56422A;
+  color:#fff;
 }
 
-.btn-register:disabled{
+.btn-login:disabled{
   background-color: #c2b6a8;
   border-color: #c2b6a8;
 }
@@ -82,14 +185,14 @@ body{
 
 /* ===== Label ===== */
 label{
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: #373737;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 
 .form-control::placeholder{
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .social-btn{
@@ -133,16 +236,21 @@ label{
   height: 1px;
   background: #dcdcdc;
 }
-
-.register-link{
+.text-bottom{
   font-size: 14px;
   color: #666;
 }
 
-.register-link a{
-  color: #7a5a3a;   /* nâu giống nút đăng nhập của m */
+.register-link{
+  font-size: 14px;
+  color: #546745;
   text-decoration: none;
   font-weight: 500;
+}
+
+
+.register-link:hover{
+  font-weight: 700;
 }
 
 /* ===================== */
@@ -166,7 +274,7 @@ label{
 @media (min-width: 769px) and (max-width: 992px){
 
   .container-fluid{
-    max-width: 470px;
+    max-width: 380px;
   }
 
   .title-register{

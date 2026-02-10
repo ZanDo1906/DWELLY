@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 import { Login } from '../../pages/auth/login/login';
 import { Register } from '../../pages/auth/register/register';
 import { Modal } from '../modal/modal';
+import { VerifyAccount } from '../../pages/auth/verify-account/verify-account';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, Login, Register, Modal],
+  imports: [CommonModule, RouterLink, Login, Register, Modal, VerifyAccount],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
