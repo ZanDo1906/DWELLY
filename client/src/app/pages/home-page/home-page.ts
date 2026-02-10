@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { iClient } from '../../interfaces/client';
 import { iReview } from '../../interfaces/review';
@@ -7,14 +7,20 @@ import { iBlog } from '../../interfaces/blog';
 import { Client as ClientService } from '../../services/client';
 import { Review as ReviewService } from '../../services/review';
 import { Blog as BlogService } from '../../services/blog';
+import { Product as ProductService } from '../../services/product';
+import { ProductCard } from '../../components/product-card/product-card';
+import { iProduct } from '../../interfaces/product';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink,ProductCard],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage implements OnInit, AfterViewInit {
+export class HomePage implements OnInit, AfterViewInit, OnDestroy {
+  products: iProduct[] = [];
+  displayedCount: number = 8;
   reviews: Array<{
     content: string;
     rating: number;
@@ -38,9 +44,11 @@ export class HomePage implements OnInit, AfterViewInit {
     private reviewService: ReviewService,
     private clientService: ClientService,
     private blogService: BlogService,
+    private productService: ProductService,
   ) {}
 
   ngOnInit() {
+    document.body.classList.add('homepage');
     window.scrollTo({ top: 0, behavior: 'instant' });
     
     setInterval(() => {
@@ -49,10 +57,15 @@ export class HomePage implements OnInit, AfterViewInit {
 
     this.loadReviews();
     this.loadBlogs();
+    this.loadProducts();
   }
 
   ngAfterViewInit() {
     this.setupScrollAnimations();
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('homepage');
   }
 
   setupScrollAnimations() {
@@ -151,5 +164,46 @@ export class HomePage implements OnInit, AfterViewInit {
     this.blogService.getBlogData().subscribe((blogs: iBlog[]) => {
       this.blogs = blogs.filter((blog) => blog.Trang_thai);
     });
+  }
+
+  private loadProducts() {
+    forkJoin({
+      products: this.productService.getProductData(),
+      reviews: this.reviewService.getReviewData(),
+    }).subscribe(({ products, reviews }) => {
+      const ratingMap = new Map<string, { sum: number; count: number }>();
+      reviews.forEach((review: iReview) => {
+        const current = ratingMap.get(review.Ma_san_pham) ?? { sum: 0, count: 0 };
+        current.sum += review.Diem_danh_gia;
+        current.count += 1;
+        ratingMap.set(review.Ma_san_pham, current);
+      });
+
+      const activeProducts = products.filter((product) => product.Trang_thai);
+      const highRatedProducts = activeProducts.filter((product) => {
+        const stats = ratingMap.get(product.Ma_san_pham);
+        if (!stats || stats.count === 0) {
+          return false;
+        }
+        const average = stats.sum / stats.count;
+        return average >= 4.5;
+      });
+
+      const source = highRatedProducts.length ? highRatedProducts : activeProducts;
+      this.products = this.shuffleProducts(source);
+    });
+  }
+
+  private shuffleProducts(items: iProduct[]): iProduct[] {
+    const shuffled = [...items];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  get displayedProducts(): iProduct[] {
+    return this.products.slice(0, this.displayedCount);
   }
 }

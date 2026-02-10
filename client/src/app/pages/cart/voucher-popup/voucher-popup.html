@@ -1,1 +1,67 @@
-<p>voucher-popup works!</p>
+<!-- Modal Overlay -->
+<div class="modal-overlay" (click)="closePopup()">
+    <div class="modal-content voucher-modal" (click)="$event.stopPropagation()">
+
+        <!-- Header -->
+        <div class="modal-header">
+            <h3 class="modal-title">Khuyến mãi</h3>
+            <button class="btn-close" (click)="closePopup()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <label class="search-label">Nhập mã khuyến mãi</label>
+            <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Nhập mã khuyến mãi" [(ngModel)]="searchCode" />
+                <button class="btn-search" (click)="searchVoucher()">
+                    Tìm kiếm
+                </button>
+            </div>
+        </div>
+
+        <!-- Voucher Section -->
+        <div class="voucher-section">
+            <h4 class="section-title">Mã giảm giá</h4>
+
+            <div class="voucher-list">
+                <label class="voucher-item" *ngFor="let voucher of filteredVouchers"
+                    [class.selected]="selectedVoucher?.Ma_so === voucher.Ma_so">
+                    <div class="voucher-icon">
+                        <i class="bi bi-ticket-perforated"></i>
+                    </div>
+                    <div class="voucher-info">
+                        <p class="voucher-title">Giảm {{voucher.Phan_tram_giam}}% cho đơn hàng</p>
+                        <p class="voucher-condition">Mã: {{voucher.Ma_so}}</p>
+                        <p class="voucher-expiry">Hết hạn: {{formatDate(voucher.Ngay_het_han)}}</p>
+                    </div>
+                    <input type="radio" name="voucher" [value]="voucher.Ma_so" [(ngModel)]="selectedVoucherCode"
+                        (change)="selectVoucher(voucher)" />
+                </label>
+            </div>
+
+            <p class="no-vouchers" *ngIf="filteredVouchers.length === 0">
+                Không tìm thấy mã khuyến mãi nào
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+            <div class="footer-info">
+                <span *ngIf="selectedVoucher">1 mã đã được chọn</span>
+                <span *ngIf="selectedVoucher" class="selected-name">Giảm {{selectedVoucher.Phan_tram_giam}}% -
+                    {{selectedVoucher.Ma_so}}</span>
+            </div>
+            <div class="footer-actions">
+                <button class="btn-clear" (click)="clearSelection()">
+                    Hủy
+                </button>
+                <button class="btn-apply-voucher" (click)="applyVoucher()" [disabled]="!selectedVoucher">
+                    Chọn
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

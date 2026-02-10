@@ -1,1 +1,99 @@
-<p>product-list works!</p>
+<section class="product-list-section">
+  <div class="container-fluid">
+    <div class="px-4">
+      <div class="site-inner">
+        
+        <div class="row g-4">
+          
+          <!-- FILTER SIDEBAR -->
+          <div class="col-lg-3">
+            <div class="filter-sidebar">
+              
+              <!-- FILTER HEADER WITH CLEAR -->
+              <div class="filter-header">
+                <h5>Bộ lọc</h5>
+                <a href="#" class="clear-filter" (click)="clearFilters(); $event.preventDefault()">Xóa tất cả</a>
+              </div>
+
+              <!-- CATEGORY FILTER -->
+              <div class="filter-group">
+                <h6 class="filter-title">Loại phòng</h6>
+                <div class="filter-options">
+                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('02')" (change)="toggleRoomType('02')"> Phòng ngủ</label>
+                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('01')" (change)="toggleRoomType('01')"> Phòng khách</label>
+                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('03')" (change)="toggleRoomType('03')"> Phòng ăn</label>
+                </div>
+              </div>
+
+              <!-- PRODUCT TYPE FILTER -->
+              <div class="filter-group">
+                <h6 class="filter-title">Loại sản phẩm</h6>
+                <div class="filter-options">
+                  <label><input type="checkbox" [checked]="selectedCategories.has('01')" (change)="toggleCategory('01')"> Sofa</label>
+                  <label><input type="checkbox" [checked]="selectedCategories.has('02')" (change)="toggleCategory('02')"> Bàn trà</label>
+                  <label><input type="checkbox" [checked]="selectedCategories.has('04')" (change)="toggleCategory('04')"> Tủ trang trí</label>
+                  <label><input type="checkbox" [checked]="selectedCategories.has('03')" (change)="toggleCategory('03')"> Kệ tivi</label>
+                  <label><input type="checkbox" [checked]="selectedCategories.has('14')" (change)="toggleCategory('14')"> Thảm</label>
+                  <label><input type="checkbox" [checked]="selectedCategories.has('17')" (change)="toggleCategory('17')"> Ghế đơn</label>
+                </div>
+              </div>
+
+               <!-- STYLE FILTER -->
+              <div class="filter-group">
+                <h6 class="filter-title">Phong cách</h6>
+                <div class="filter-options">
+                  <label><input type="checkbox" [checked]="selectedStyles.has('01')" (change)="toggleStyle('01')"> Tối giản</label>
+                  <label><input type="checkbox" [checked]="selectedStyles.has('02')" (change)="toggleStyle('02')"> Hiện đại</label>
+                  <label><input type="checkbox" [checked]="selectedStyles.has('03')" (change)="toggleStyle('03')"> Bắc Âu</label>
+                </div>
+              </div>
+
+              <!-- PRICE FILTER -->
+              <div class="filter-group">
+                <h6 class="filter-title">Giá</h6>
+                <div class="price-range">
+                  <input type="range" min="0" max="100000000" [value]="maxPrice" class="slider" id="priceRange" (input)="maxPrice = +$event.target.value; onPriceChange()">
+                  <div class="price-display">{{ getPriceDisplay() }}</div>
+                </div>
+              </div>
+
+             
+
+            </div>
+          </div>
+
+          <!-- MAIN CONTENT -->
+          <div class="col-lg-9">
+            
+            <!-- TOP BAR: SEARCH & FILTER -->
+            <div class="product-top-bar">
+              <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Tìm kiếm" [(ngModel)]="searchQuery" (input)="displayedCount = 9">
+                <i class="bi bi-search"></i>
+              </div>
+              <div class="sort-options">
+                <span class="sort-btn" [ngClass]="{'active': currentSort === 'price-asc'}" (click)="setSortOption('price-asc')">Giá tăng</span>
+                <span class="sort-btn" [ngClass]="{'active': currentSort === 'price-desc'}" (click)="setSortOption('price-desc')">Giá giảm</span>
+                <span class="sort-btn" [ngClass]="{'active': currentSort === 'rating'}" (click)="setSortOption('rating')">Đánh giá cao</span>
+              </div>
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div class="product-grid">
+                <app-product-card *ngFor="let product of displayedProducts" [product]="product"></app-product-card>
+            </div>
+
+
+            <!-- PAGINATION -->
+            <div class="pagination-wrapper">
+              <button class="btn-pagination" (click)="loadMore()" *ngIf="displayedCount < filteredProducts.length">Xem thêm</button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

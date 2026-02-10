@@ -1,0 +1,17 @@
+<div class="modal fade" [id]="modalId" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header border-0 d-flex justify-content-end">
+        <button type="button" class="custom-close" (click)="closeModal()">
+          <i class="bi bi-x"></i> 
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+
+    </div>
+  </div>
+</div>

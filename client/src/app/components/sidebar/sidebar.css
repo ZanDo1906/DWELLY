@@ -3,13 +3,11 @@
 ========================= */
 .sidebar-wrapper {
   width: 280px;
-  height: 100vh;              /* full màn hình */
   position: sticky;           /* đứng yên khi scroll */
   top: 0;                     /* dính trên */
-  overflow-y: auto;           /* sidebar scroll riêng */
 
   background-color: #6c5234;
-  padding: 20px;
+  padding: 28px 20px 32px;
   box-sizing: border-box;
 }
 

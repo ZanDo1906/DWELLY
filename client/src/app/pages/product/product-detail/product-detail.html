@@ -1,0 +1,404 @@
+<section product-detail>
+  <div class="container-fluid py-4">
+    <div class="px-4">
+      <div class="site-inner">
+
+     
+    <div class="product-detail" *ngIf="product">
+      <div class="row g-4">
+
+        <!-- LEFT - gallery -->
+        <div class="col-md-7 d-flex left-col">
+
+          <div class="thumb-list me-3">
+
+            <div
+              class="thumb"
+              *ngFor="let img of product?.Hinh_anh"
+              (click)="selectedImage = img"
+            >
+              <img [src]="img" alt="thumb">
+            </div>
+
+            <div class="thumb empty" *ngFor="let _ of emptySlots()"></div>
+          </div>
+          <div class="main-image">
+            <img [src]="selectedImage" alt="">
+            <button class="btn-zoom" (click)="openModal(selectedImage)">
+              <i class="bi bi-zoom-in"></i>
+            </button>
+          </div>
+
+          <!-- Modal hiển thị ảnh lớn -->
+          <div class="image-modal" *ngIf="zoomImage" (click)="closeModal()">
+            <img [src]="zoomImage" alt="">
+          </div>
+
+
+        </div>
+
+        <!-- RIGHT - info -->
+        <div class="col-md-5 right-col">
+          <div class="right-scroll">
+          <div class="product-title">
+            {{ product.Ten_san_pham }}
+          </div>
+
+         <div class="product-top-meta">
+
+          <div class="rating-box">
+            <i class="bi bi-star-fill"></i>
+            <span class="rating-score">{{ averageRating | number:'1.1-1' }}</span>
+            <span class="rating-count">({{ productReviews.length }})</span>
+
+            <span class="divider">|</span>
+
+            <span class="sold">20 lượt mua</span>
+
+            <span class="divider">|</span>
+
+            <span class="sku">SKU: {{ product.Ma_san_pham }}</span>
+          </div>
+
+            <div class="top-actions">
+              <button class="action-btn">
+                <i class="bi bi-share"></i>
+                <span>Chia sẻ</span>
+              </button>
+
+              <button class="action-btn">
+                <i class="bi bi-heart-fill"></i>
+                <span>10</span>
+              </button>
+            </div>
+
+          </div>
+
+          <div class="price-box">
+            <span class="discount-tag">-25%</span>
+            <span class="new-price">
+              {{ product.Gia_ban | number:'1.0-0' }} VNĐ
+            </span>
+            <span class="old-price">
+              {{ getOldPrice(product) }}
+            </span>
+          </div>
+
+
+          <div class="color-row">
+            <span class="color-label">Màu tự nhiên</span>
+
+            <span class="color-dot"
+                  [style.background]="'#EDE9DF'">
+            </span>
+          </div>
+          <div class="option-row">
+              <span>Kích thước:</span>
+              <span class="ms-2">{{ product.Kich_thuoc }}</span>
+          </div>
+          <div class="option-row">
+          
+
+            <span>Chất liệu:</span>
+            <span class="ms-2">
+              {{ product.Chat_lieu }}
+            </span>
+          </div>
+
+          <div class="option-column" *ngIf="moTaKyThuat">
+            <div style="white-space: pre-line">
+              <div>Chi tiết kỹ thuật:</div>
+              {{ moTaKyThuat }}
+            </div>
+          </div>
+
+        </div>
+          <div class="right-fixed">
+            <!-- quantity -->
+            <div class="qty-box">
+              <span>Số lượng</span>
+
+              <div class="qty-control">
+                <button (click)="decrease()">-</button>
+                <span>{{ quantity }}</span>
+                <button (click)="increase()">+</button>
+              </div>
+            </div>
+
+            <!-- buttons -->
+            <div class="action-box">
+              <button 
+                class="btn-buy" 
+                [class.clicked]="buyClicked" 
+                (click)="onBuyClick()"
+                (mouseleave)="buyClicked = false">
+                MUA NGAY
+              </button>
+
+              <button class="btn-cart">THÊM VÀO GIỎ HÀNG</button>
+            </div>
+
+            <div class="service-row">
+              <div class="service-item">
+                <i class="bi bi-truck"></i>
+                <span>Miễn phí vận chuyển nội thành</span>
+              </div>
+
+              <div class="service-item">
+                <i class="bi bi-patch-check"></i>
+                <span>Bảo hành 2 năm khung gỗ</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content mt-4">
+    <div class="row g-4">
+
+    <!-- LEFT -->
+    <div class="col-lg-7">
+      <div class="tabs">
+        <div class="tab-header">
+          <div
+            class="tab"
+            [class.active]="activeTab === 'description'"
+            (click)="activeTab = 'description'">
+            Mô tả
+          </div>
+
+          <div
+            class="tab"
+            [class.active]="activeTab === 'reviews'"
+            (click)="activeTab = 'reviews'">
+            Đánh giá ({{ productReviews.length }})
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Description Tab -->
+      <div class="container tab-content" *ngIf="activeTab === 'description'">
+        <div class="product-desc">
+          <div class="desc-block">
+            <h5>Mô tả sản phẩm</h5>
+            <div class="desc-text" style="white-space: pre-line">
+              {{ moTaChinh }}
+            </div>
+            <div class="tech-text" style="white-space: pre-line" *ngIf="moTaKyThuat">
+              <div>Chi tiết kỹ thuật:</div>
+              {{ moTaKyThuat }}
+            </div>
+            <ul class="desc-list">
+              <li>
+                <span>Chất liệu</span>
+                <span>{{ product?.Chat_lieu }}</span>
+              </li>
+              <li>
+                <span>Kích thước</span>
+                <span>{{ product?.Kich_thuoc }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews Tab -->
+      <div class="container tab-content" *ngIf="activeTab === 'reviews'">
+
+        <div class="rating-summary">
+
+          <!-- Cột trái -->
+          <div class="rating-left">
+
+            <div class="avg-score">
+              {{ averageRating | number:'1.1-1' }}<span>/5</span>
+            </div>
+
+            <div class="avg-stars">
+
+              <!-- sao đầy -->
+              <i
+                class="bi bi-star-fill"
+                *ngFor="let i of [].constructor(fullStars)">
+              </i>
+
+              <!-- sao nửa -->
+              <i
+                class="bi bi-star-half"
+                *ngIf="hasHalfStar">
+              </i>
+
+              <!-- sao rỗng -->
+              <i
+                class="bi bi-star"
+                *ngFor="let i of [].constructor(5 - fullStars - (hasHalfStar ? 1 : 0))">
+              </i>
+
+            </div>
+
+            <div class="total">
+              {{ productReviews.length }} đánh giá
+            </div>
+
+          </div>
+
+          <!-- Cột phải -->
+          <div class="rating-breakdown">
+
+            <div class="rating-row" *ngFor="let star of [5,4,3,2,1]">
+
+              <div class="stars-s">
+
+                <!-- sao đầy -->
+                <i
+                  class="bi bi-star-fill"
+                  *ngFor="let i of [].constructor(star)">
+                </i>
+
+                <!-- sao nửa (thay cho sao xám) -->
+                <i
+                  class="bi bi-star"
+                  *ngFor="let i of [].constructor(5 - star)">
+                </i>
+
+              </div>
+
+
+              <div class="bar-wrap">
+                <div class="bar-fill"
+                    [style.width.%]="getPercent(star)">
+                </div>
+              </div>
+
+              <div class="count">
+                {{ getCount(star) }}
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="review-bar">
+          <div class="total-reviews">
+              {{ productReviews.length }} đánh giá
+          </div>
+          <div class="custom-dropdown" (click)="toggleDropdown()">
+            <span>{{ getLabel(sortType) }}</span>
+            <i class="bi" [ngClass]="dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+            <ul *ngIf="dropdownOpen">
+              <li (click)="setSort('newest')">Mới nhất</li>
+              <li (click)="setSort('oldest')">Cũ nhất</li>
+              <li (click)="setSort('highest')">Đánh giá cao nhất</li>
+              <li (click)="setSort('lowest')">Đánh giá thấp nhất</li>
+            </ul>
+          </div>
+
+        </div>
+        <div
+          class="review-item"
+          *ngFor="let r of productReviews">
+
+          <div class="review-left">
+            <div class="avatar"></div>
+          </div>
+          <div class="review-right">
+            <div class="review-top">
+              <b>{{ r.Ma_khach_hang }}</b>
+              <div class="stars">
+                <i
+                  class="bi bi-star-fill"
+                  *ngFor="let s of [].constructor(r.Diem_danh_gia)">
+                </i>
+              </div>
+            </div>
+            <div class="review-content">
+              {{ r.Noi_dung }}
+            </div>
+            <div class="review-time">
+              {{ r.Thoi_gian_gui | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="review-actions">
+              <span class="review-like">Thích</span>
+              <span class="review-reply">Trả lời</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- RIGHT -->
+    <div class="col-lg-5">
+      <div class="care-box">
+
+        <div class="care-header">
+          <i class="bi bi-book"></i>
+          <span class="care-title">SỔ TAY BẢO DƯỠNG</span>
+
+          <div class="care-nav" *ngIf="productCareInstruction?.Link_video?.length > 5"> <i class="bi bi-chevron-left"></i> <span>{{ productCareInstruction?.Link_video?.length }} video</span> <i class="bi bi-chevron-right"></i> </div> <div class="care-nav" *ngIf="productCareInstruction?.Link_video?.length <= 5"> <span>{{ productCareInstruction?.Link_video?.length }} video</span> </div> </div>
+
+        <div class="care-list" *ngIf="productCareInstruction" #careList>
+          <div class="care-item"
+              *ngFor="let v of productCareInstruction.Link_video; let i = index"
+              (click)="openMaintenanceModal(i)">
+            <div class="thumb-video">
+              <img [src]="getVideoThumbnail(v)" alt="Video thumbnail">
+            </div>
+            <div class="care-info">
+              <div class="title">{{ getVideoTitle(i) }}</div>
+              <div class="time">
+                <i class="bi bi-clock"></i> {{ getVideoDuration(i) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+        <div class="related-products">
+          <div class="products-title">SẢN PHẨM LIÊN QUAN</div>
+
+          <div class="scroll-wrapper">
+            <button *ngIf="relatedProducts.length > 4" class="scroll-btn left" (click)="scrollLeft()"> <i class="bi bi-chevron-left"></i> </button>
+
+            <div class="scroll-row" #scrollRow>
+              <div class="product-item" *ngFor="let p of relatedProducts">
+                <app-product-card [product]="p" [enableHover]="true"></app-product-card>
+
+              </div>
+            </div>
+
+            <button *ngIf="relatedProducts.length > 4" class="scroll-btn right" (click)="scrollRight()"> <i class="bi bi-chevron-right"></i> </button>
+          </div>
+        </div>
+
+
+        <app-maintenance-modal
+          *ngIf="isMaintenanceOpen"
+          [data]="selectedCareData"
+          (close)="closeMaintenanceModal()">
+        </app-maintenance-modal>
+
+
+
+      </div>
+    </div>
+  </div>
+</section>

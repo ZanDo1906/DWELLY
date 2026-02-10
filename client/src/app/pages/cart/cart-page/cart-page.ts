@@ -1,11 +1,249 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Product } from '../../../services/product';
+import { iProduct } from '../../../interfaces/product';
+import { Room } from '../../../services/room';
+import { iRoom } from '../../../interfaces/room';
+import { Voucher } from '../../../services/voucher';
+import { iVoucher } from '../../../interfaces/voucher';
+import { VoucherPopup } from '../voucher-popup/voucher-popup';
+
+interface CartItem {
+  product: iProduct;
+  quantity: number;
+  selected: boolean;
+}
 
 @Component({
   selector: 'app-cart-page',
-  imports: [],
+  imports: [CommonModule, FormsModule, VoucherPopup],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css',
 })
-export class CartPage {
+export class CartPage implements OnInit {
+  products: iProduct[] = [];
+  rooms: iRoom[] = [];
+  cartItems: CartItem[] = [];
+  selectAll: boolean = false;
+  showDeleteModal: boolean = false;
+  productToDelete: iProduct | null = null;
+  deleteIndex: number = -1;
+  vouchers: iVoucher[] = [];
+  voucherCode: string = '';
+  appliedVoucher: iVoucher | null = null;
+  voucherError: string = '';
+  showVoucherPopup: boolean = false;
 
+  constructor(
+    private productService: Product,
+    private roomService: Room,
+    private voucherService: Voucher,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    // Load rooms first
+    this.roomService.getRoomData().subscribe({
+      next: (roomData) => {
+        this.rooms = roomData;
+      },
+      error: (err) => {
+        console.error('Error loading rooms:', err);
+      }
+    });
+
+    // Load vouchers
+    this.voucherService.getVoucherData().subscribe({
+      next: (voucherData) => {
+        this.vouchers = voucherData;
+      },
+      error: (err) => {
+        console.error('Error loading vouchers:', err);
+      }
+    });
+
+    // Load products
+    this.productService.getProductData().subscribe({
+      next: (data) => {
+        this.products = data;
+        // Load 5 sample products for demonstration
+        this.cartItems = [
+          {
+            product: this.products[0], // Product 1
+            quantity: 1,
+            selected: true
+          },
+          {
+            product: this.products[1], // Product 2
+            quantity: 1,
+            selected: true
+          },
+          {
+            product: this.products[2], // Product 3
+            quantity: 1,
+            selected: true
+          },
+          {
+            product: this.products[3], // Product 4
+            quantity: 1,
+            selected: true
+          },
+          {
+            product: this.products[4], // Product 5
+            quantity: 1,
+            selected: true
+          }
+        ];
+        this.updateSelection();
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
+  }
+
+  getRoomName(ma_loai_phong: string): string {
+    const room = this.rooms.find(r => r.Ma_loai_phong === ma_loai_phong);
+    return room ? room.Ten_loai_phong : '';
+  }
+
+  toggleSelectAll(): void {
+    this.cartItems.forEach(item => item.selected = this.selectAll);
+  }
+
+  updateSelection(): void {
+    this.selectAll = this.cartItems.length > 0 && this.cartItems.every(item => item.selected);
+  }
+
+  getSelectedCount(): number {
+    return this.cartItems.filter(item => item.selected).length;
+  }
+
+  getSelectedTotal(): number {
+    return this.cartItems
+      .filter(item => item.selected)
+      .reduce((total, item) => total + (item.product.Gia_ban * item.quantity), 0);
+  }
+
+  getDiscountAmount(): number {
+    if (!this.appliedVoucher) return 0;
+    return (this.getSelectedTotal() * this.appliedVoucher.Phan_tram_giam) / 100;
+  }
+
+  getFinalTotal(): number {
+    return this.getSelectedTotal() - this.getDiscountAmount();
+  }
+
+  applyVoucher(): void {
+    this.voucherError = '';
+
+    if (!this.voucherCode.trim()) {
+      this.voucherError = 'Vui lòng nhập mã khuyến mãi';
+      return;
+    }
+
+    const voucher = this.vouchers.find(v =>
+      v.Ma_so.toUpperCase() === this.voucherCode.toUpperCase() && v.Trang_thai === true
+    );
+
+    if (voucher) {
+      // Check if voucher is valid (date range)
+      const today = new Date();
+      const startDate = new Date(voucher.Ngay_bat_dau);
+      const endDate = new Date(voucher.Ngay_het_han);
+
+      if (today < startDate || today > endDate) {
+        this.voucherError = 'Mã khuyến mãi đã hết hạn hoặc chưa có hiệu lực';
+        this.appliedVoucher = null;
+        return;
+      }
+
+      if (voucher.So_luong_con_lai <= 0) {
+        this.voucherError = 'Mã khuyến mãi đã hết lượt sử dụng';
+        this.appliedVoucher = null;
+        return;
+      }
+
+      this.appliedVoucher = voucher;
+      this.voucherError = '';
+    } else {
+      this.voucherError = 'Mã khuyến mãi không hợp lệ';
+      this.appliedVoucher = null;
+    }
+  }
+
+  increaseQuantity(index: number): void {
+    this.cartItems[index].quantity++;
+  }
+
+  decreaseQuantity(index: number): void {
+    if (this.cartItems[index].quantity === 1) {
+      // Show confirmation modal
+      this.openDeleteModal(index);
+    } else {
+      this.cartItems[index].quantity--;
+    }
+  }
+
+  openDeleteModal(index: number): void {
+    this.productToDelete = this.cartItems[index].product;
+    this.deleteIndex = index;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.productToDelete = null;
+    this.deleteIndex = -1;
+  }
+
+  confirmDelete(): void {
+    if (this.deleteIndex !== -1) {
+      this.cartItems.splice(this.deleteIndex, 1);
+      this.updateSelection();
+    }
+    this.closeDeleteModal();
+  }
+
+  proceedToCheckout(): void {
+    const selectedItems = this.cartItems.filter(item => item.selected);
+
+    if (selectedItems.length === 0) {
+      alert('Vui lòng chọn ít nhất một sản phẩm để mua hàng');
+      return;
+    }
+
+    // Navigate to payment page with selected items
+    // You can implement this by storing selected items in a service or local storage
+    this.router.navigate(['/payment']);
+  }
+
+  openVoucherPopup(): void {
+    this.showVoucherPopup = true;
+  }
+
+  closeVoucherPopup(): void {
+    this.showVoucherPopup = false;
+  }
+
+  handleVoucherSelected(voucher: iVoucher): void {
+    // Chỉ điền mã vào input, chưa áp dụng
+    this.voucherCode = voucher.Ma_so;
+    this.voucherError = '';
+    // Reset appliedVoucher để user phải bấm "Áp dụng"
+    this.appliedVoucher = null;
+  }
+
+  clearVoucher(): void {
+    this.voucherCode = '';
+    this.appliedVoucher = null;
+    this.voucherError = '';
+  }
+
+  formatPrice(price: number): string {
+    return price.toLocaleString('vi-VN');
+  }
 }
+

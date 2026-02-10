@@ -18,7 +18,7 @@
             mang đến sự hài hòa cho mọi không gian sống.
           </p>
 
-          <a href="#" class="hero-btn hero-animate-text" style="animation-delay: 0.8s;">
+          <a routerLink="/product-list" class="hero-btn hero-animate-text" style="animation-delay: 0.8s;">
             Khám Phá Ngay <span>→</span>
           </a>
         </div>
@@ -37,16 +37,10 @@
           <h2 class="title brown">SẢN PHẨM NỔI BẬT</h2>
           <span class="title-line brown"></span>
         </div>
-
-        <div class="row g-4">
-          <div class="col-lg-3" *ngFor="let i of [1,2,3,4]">
-            <div class="product-card">
-              <div class="product-img"></div>
-              <p>Tủ đầu giường gỗ Sồi tự nhiên Anneli</p>
-              <p>20.500.000 VND</p>
+        <!-- PRODUCT GRID -->
+            <div class="product-grid py-4">
+                <app-product-card *ngFor="let product of displayedProducts" [product]="product"></app-product-card>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -191,7 +185,7 @@
                 của mình.
               </p>
             </div>
-            <a href="#" class="about-more">
+            <a class="about-more" routerLink="/about-us">
                 XEM THÊM <span>→</span>
             </a>
           </div>
