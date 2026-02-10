@@ -76,7 +76,7 @@
 .order-card-header {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--primary);
   margin-bottom: 12px;
 }
@@ -106,19 +106,19 @@
 
 .info p {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
 .price {
   text-align: right;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--primary);
 }
 
 /* Collapse */
 .collapse-toggle {
-  font-size: 13px;
+  font-size: 14px;
   color: #777;
   margin: 10px 0;
   cursor: pointer;
