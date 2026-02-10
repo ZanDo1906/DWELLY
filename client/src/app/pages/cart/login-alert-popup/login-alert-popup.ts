@@ -12,18 +12,8 @@ export class LoginAlertPopup {
 
   constructor(private router: Router) { }
 
-  closePopup(): void {
+  closeAlert(): void {
     this.closeModal.emit();
-  }
-
-  navigateToLogin(): void {
-    this.closeModal.emit();
-    this.router.navigate(['/login']);
-  }
-
-  navigateToRegister(): void {
-    this.closeModal.emit();
-    this.router.navigate(['/register']);
   }
 
   continueShopping(): void {

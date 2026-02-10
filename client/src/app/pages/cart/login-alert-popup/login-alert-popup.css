@@ -1,55 +1,23 @@
 /* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
 
-/* Overlay */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-/* Popup container */
-.popup {
-    width: 420px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
+/* Login Alert Content */
+.login-alert-content {
     font-family: 'Nunito Sans', sans-serif !important;
 }
 
-/* Header */
-.popup-header {
-    position: relative;
-    padding: 16px 20px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-}
-
-.popup-header h2 {
-    margin: 0;
+/* Title */
+.popup-title {
+    margin: 0 0 16px 0;
     font-size: 24px;
     color: #b33a3a;
     font-weight: 700;
-}
-
-.close-btn {
-    position: absolute;
-    right: 14px;
-    top: 12px;
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #888;
+    text-align: center;
 }
 
 /* Body */
 .popup-body {
-    padding: 24px 22px;
+    padding: 0 0 24px 0;
     text-align: center;
 }
 
@@ -69,7 +37,7 @@
 
 /* Actions */
 .popup-actions {
-    padding: 0 22px 22px;
+    padding: 0;
 }
 
 .auth-buttons {
