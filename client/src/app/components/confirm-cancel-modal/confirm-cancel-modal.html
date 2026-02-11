@@ -1,0 +1,19 @@
+<div class="modal fade" [id]="modalId" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h5 class="confirm-title">Xác nhận hủy yêu cầu</h5>
+        <div class="confirm-divider"></div>
+        <p class="confirm-message">Bạn có chắc chắn muốn hủy yêu cầu<br>trả hàng/hoàn tiền?</p>
+        <div class="button-group">
+          <button type="button" class="btn btn-cancel" (click)="onCancel()">
+            Hủy
+          </button>
+          <button type="button" class="btn btn-confirm" (click)="onConfirm()">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
