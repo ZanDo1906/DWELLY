@@ -76,12 +76,8 @@ export class VoucherPopup implements OnInit {
   applyVoucher(): void {
     if (this.selectedVoucher) {
       this.voucherSelected.emit(this.selectedVoucher);
-      this.closePopup();
+      this.closeModal.emit();
     }
-  }
-
-  closePopup(): void {
-    this.closeModal.emit();
   }
 
   formatDate(date: Date): string {
