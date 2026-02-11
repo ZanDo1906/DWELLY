@@ -19,7 +19,7 @@ export class Login {
   constructor(private fb: FormBuilder, private clientService: Client) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -74,4 +74,11 @@ export class Login {
       modal.hide();
     }
   }
+  // Khai báo biến để kiểm tra ẩn/hiện cho từng ô
+showPassword = false;
+
+togglePassword(): void {
+  this.showPassword = !this.showPassword;
+
+}
 }

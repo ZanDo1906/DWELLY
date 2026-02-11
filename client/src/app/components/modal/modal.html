@@ -1,8 +1,8 @@
 <div class="modal fade" [id]="modalId" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
-      <div class="modal-header border-0 d-flex justify-content-end">
+      <div class="modal-header border-0 d-flex justify-content-end" [class.d-none]="!showHeader">
         <button type="button" class="custom-close" (click)="closeModal()">
           <i class="bi bi-x"></i> 
         </button>

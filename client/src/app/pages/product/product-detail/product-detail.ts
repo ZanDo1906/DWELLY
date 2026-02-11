@@ -23,6 +23,7 @@ export class ProductDetail implements OnInit {
   productReviews: iReview[] = [];
   activeTab: string = 'description';
 
+  clients: any[] = [];
   sortType = 'newest';
   dropdownOpen = false;
 
@@ -100,6 +101,19 @@ scrollRight() {
       },
       error: (err) => console.error('Failed to load reviews', err),
     });
+
+    this.http.get<any[]>('assets/data/client.json').subscribe({
+  next: (data) => {
+    this.clients = data;
+    this.filterReviews(); 
+  },
+  error: (err) => console.error('Failed to load clients', err),
+});
+
+}
+getClientName(maKhachHang: string): string {
+  const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
+  return client ? client.Ho_va_ten : maKhachHang; 
 }
 
 productCareInstruction: any = null;
@@ -284,11 +298,11 @@ get fullStars() {
 get hasHalfStar() {
   return this.averageRating % 1 >= 0.5;
 }
-
 getRelatedProducts(current: iProduct, all: iProduct[]): iProduct[] {
-  return all
-    .filter(p => p.Ma_danh_muc === current.Ma_danh_muc && p.Ma_san_pham !== current.Ma_san_pham)
+  return all.filter(p => String(p.Ma_danh_muc) === String(current.Ma_danh_muc)
+                      && p.Ma_san_pham !== current.Ma_san_pham);
 }
+
 relatedProducts: iProduct[] = [];
 
 buyClicked = false;

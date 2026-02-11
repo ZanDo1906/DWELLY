@@ -1,0 +1,45 @@
+<div class="verify-container text-center">
+  <div class="verify-icon">
+    <i class="bi bi-check2-circle"></i>
+  </div>
+  
+  <h4 class="title-register mb-3">Xác thực tài khoản</h4>
+  
+  <p class="register-subtitle px-3" style='color: #666'>
+  Chúng tôi đã gửi mã xác thực đến số điện thoại 
+  <strong>{{ displayPhone }}</strong>. 
+  Vui lòng nhập mã xác thực bạn đã nhận được!
+</p>
+
+  <div class="otp-inputs d-flex justify-content-center gap-2 mb-4">
+  <input type="text" class="otp-field" id="otp-0" 
+         (input)="onOtpInput(0, $event)" (keydown)="onOtpKeyDown(0, $event)">
+  <input type="text" class="otp-field" id="otp-1" 
+         (input)="onOtpInput(1, $event)" (keydown)="onOtpKeyDown(1, $event)">
+  <input type="text" class="otp-field" id="otp-2" 
+         (input)="onOtpInput(2, $event)" (keydown)="onOtpKeyDown(2, $event)">
+  <input type="text" class="otp-field" id="otp-3" 
+         (input)="onOtpInput(3, $event)" (keydown)="onOtpKeyDown(3, $event)">
+  <input type="text" class="otp-field" id="otp-4" 
+         (input)="onOtpInput(4, $event)" (keydown)="onOtpKeyDown(4, $event)">
+  <input type="text" class="otp-field" id="otp-5" 
+         (input)="onOtpInput(5, $event)" (keydown)="onOtpKeyDown(5, $event)">
+</div>
+
+
+<button class="btn btn-verify" (click)="verify()">
+  Xác thực
+</button>
+
+<div class="text-danger mt-2" *ngIf="otpError">{{ otpError }}</div>
+
+<p class="register-link">
+  <span style='color: #666'>Bạn chưa nhận được mã? </span>
+  <a href="javascript:void(0)" 
+     (click)="resendOTP()" 
+     [style.pointer-events]="resendCountdown > 0 ? 'none' : 'auto'"
+     [style.color]="resendCountdown > 0 ? '#ccc' : '#546745'">
+     {{ resendCountdown > 0 ? 'Gửi lại sau (' + resendCountdown + 's)' : 'Gửi lại mã' }}
+  </a>
+</p>
+</div>

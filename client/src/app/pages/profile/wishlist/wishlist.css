@@ -1,0 +1,136 @@
+:host {
+  --primary: #6C5234;
+  --secondary: #AFA386;
+  --success: #546745;
+  --border: #E5E5E5;
+  --text-muted: #8B8B8B;
+}
+
+.wish-list{
+  font-family: 'Nunito Sans', sans-serif;
+  color:#373737;
+  font-size:14px;
+  
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color:#6C5234;
+}
+
+.wishlist-sort {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.heart-icon { 
+    top: 12px; left: 15px; 
+    font-size: 16px; 
+    color: #A34343; 
+    border-radius: 50%;
+    width: 32px; 
+    height: 32px;
+    background: #ddd;
+    flex-shrink: 0;
+    display: inline-flex; 
+    align-items: center;  
+    justify-content: center; 
+    border-radius: 100px;  
+    padding: 6px;  } 
+
+.btn-cart {
+  border: 1px solid var(--primary);
+  background: #fff;
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.btn-cart:hover {
+  background: #56422A;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* sort buttons với icon mũi tên */
+.sort-btn {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-btn i {
+  font-size: 14px;
+  color: #999;
+}
+
+.sort-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.sort-btn:hover i {
+  color: #fff;
+}
+
+.wishlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wishlist-item {
+    position: relative;
+  background: #fff;
+  border-radius: 12px;             
+  padding: 16px;
+  border: 1px solid var(--border);  
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.wishlist-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+.wishlist-item .thumb {
+  width: 70px;
+  height: 70px;
+  background: #ddd;
+  border-radius: 6px;              /* bo tròn mềm */
+}
+
+.wishlist-item .info {
+  flex: 1;
+}
+
+.wishlist-item .info p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.wishlist-item .actions {
+  display: flex;
+  gap: 12px;
+  font-size: 20px;
+  color: var(--primary);
+  cursor: pointer;
+}

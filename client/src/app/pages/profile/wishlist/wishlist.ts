@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-wishlist',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './wishlist.css',
 })
 export class Wishlist {
+
 
 }

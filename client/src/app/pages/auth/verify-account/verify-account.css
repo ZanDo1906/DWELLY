@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap');
+body{
+  font-family: 'Nunito Sans', sans-serif;
+}
+.container-fluid {
+  max-width: 380px;
+  margin: auto;
+  background: #fff;
+  color: #666;
+}
+
+.title-register{
+   color: #6c5234;
+  font-weight: 700;
+  font-size: 32px;
+}
+/* Style cho Icon mới */
+.verify-icon i {
+    padding-top: 30px;
+  font-size: 100px;
+  color: #546745; 
+  display: block;
+  line-height: 1; 
+  margin-bottom: 5px; 
+}
+
+/* Style cho các ô nhập OTP */
+.otp-field {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #e0e0e0; /* Thêm viền nhẹ cho tinh tế */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #6c5234;
+  transition: all 0.2s ease;
+}
+
+.otp-field:focus {
+  border-color: #6c5234;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(108, 82, 52, 0.1);
+}
+
+/* ===== Style cho nút Xác thực ===== */
+.btn-verify{
+  background-color: #6c5234;
+  border-color: #6c5234;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  width: auto;          
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px auto 15px auto;
+}
+
+
+.btn-verify:hover{
+  background-color: #56422A;
+  border-color: #56422A;
+  color:#fff;
+}
+
+.btn-verify:disabled{
+  background-color: #c2b6a8;
+  border-color: #c2b6a8;
+}
+
+.register-link a {
+  text-decoration: none !important; 
+  font-weight: 500; 
+  /* transition: all 0.2s ease-in-out; */
+  color: #546745;
+}
+
+.register-link a:hover {
+  text-decoration: none !important;
+  font-weight: 700;
+  color: #546745; 
+}
+
+.register-link a[style*="pointer-events: none"]:hover {
+  font-weight: 500; 
+  cursor: default;
+}
