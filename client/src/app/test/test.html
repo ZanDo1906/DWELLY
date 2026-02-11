@@ -29,6 +29,12 @@
             </button>
         </li>
         <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'clientFavorites'"
+                (click)="setActiveTab('clientFavorites')">
+                ❤️ Yêu thích ({{clientList.length}})
+            </button>
+        </li>
+        <li class="nav-item">
             <button class="nav-link" [class.active]="activeTab === 'concept'" (click)="setActiveTab('concept')">
                 🏠 Không gian ({{conceptList.length}})
             </button>
@@ -241,6 +247,70 @@
             </div>
         </div>
 
+        <!-- Client Favorites Tab -->
+        <div *ngIf="activeTab === 'clientFavorites'" class="data-container">
+            <h2>❤️ Sản phẩm yêu thích của khách hàng</h2>
+            <div class="accordion" id="favoritesAccordion">
+                <div class="accordion-item mb-3" *ngFor="let client of clientList; let i = index">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#collapse' + i" [attr.aria-expanded]="false"
+                            [attr.aria-controls]="'collapse' + i">
+                            <img [src]="fixImagePath(client.Anh_dai_dien)" [alt]="client.Ho_va_ten"
+                                class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                            <div>
+                                <strong>{{client.Ho_va_ten}} ({{client.Ma_khach_hang}})</strong>
+                                <div class="text-muted small">
+                                    <span class="badge bg-warning me-2" *ngIf="client.Ma_phan_hang === 'DONG'">🥉
+                                        Đồng</span>
+                                    <span class="badge bg-secondary me-2" *ngIf="client.Ma_phan_hang === 'BAC'">🥈
+                                        Bạc</span>
+                                    <span class="badge bg-warning text-dark me-2"
+                                        *ngIf="client.Ma_phan_hang === 'VANG'">🥇 Vàng</span>
+                                    <span class="badge bg-primary me-2" *ngIf="client.Ma_phan_hang === 'KIMCUONG'">💎
+                                        Kim cương</span>
+                                    {{client.favorites?.length || 0}} sản phẩm yêu thích
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div [id]="'collapse' + i" class="accordion-collapse collapse"
+                        [attr.data-bs-parent]="'#favoritesAccordion'">
+                        <div class="accordion-body">
+                            <div class="row" *ngIf="client.favorites && client.favorites.length > 0; else noFavorites">
+                                <div class="col-md-3 col-sm-6 mb-3" *ngFor="let productId of client.favorites">
+                                    <div class="card h-100" *ngIf="getProductById(productId) as product">
+                                        <img [src]="fixImagePath(product.Hinh_anh?.[0])" class="card-img-top"
+                                            [alt]="product.Ten_san_pham" style="height: 200px; object-fit: cover;"
+                                            (error)="$event.target.src='https://via.placeholder.com/200x150?text=No+Image'">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{product.Ten_san_pham}}</h6>
+                                            <p class="card-text small text-muted">Mã: {{product.Ma_san_pham}}</p>
+                                            <p class="card-text">
+                                                <strong class="text-danger">{{product.Gia_ban |
+                                                    number:'1.0-0'}}₫</strong>
+                                            </p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">
+                                                    <span class="badge bg-info">{{product.Ma_danh_muc}}</span>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #noFavorites>
+                                <div class="text-center text-muted py-4">
+                                    <i class="fas fa-heart-broken fa-3x mb-3"></i>
+                                    <p>Khách hàng này chưa có sản phẩm yêu thích nào</p>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Concept Tab -->
         <div *ngIf="activeTab === 'concept'" class="data-container">
             <h2>🏠 Không gian thiết kế</h2>
@@ -327,6 +397,7 @@
                                     thành</span>
                                 <span class="badge bg-info" *ngIf="item.Trang_thai === 'Đang giao'">🚚 Đang giao</span>
                                 <span class="badge bg-danger" *ngIf="item.Trang_thai === 'Hủy đơn'">✗ Hủy đơn</span>
+                                <span class="badge bg-danger" *ngIf="item.Trang_thai === 'Trả hàng'">✗ Trả hàng</span>
                             </td>
                             <td>{{item.Ngay_dat | date:'dd/MM/yyyy'}}</td>
                         </tr>
