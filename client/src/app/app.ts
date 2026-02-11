@@ -5,10 +5,11 @@ import { Footer } from './components/footer/footer';
 import { Modal } from './components/modal/modal';
 import { Login } from './pages/auth/login/login';
 import { Register } from './pages/auth/register/register';
+import { ForgotPassword } from './pages/auth/forgot-password/forgot-password';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Modal, Login, Register],
+  imports: [RouterOutlet, Header, Footer, Modal, Login, Register, ForgotPassword],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
