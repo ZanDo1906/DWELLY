@@ -1,1 +1,143 @@
-<p>cart-page works!</p>
+<section>
+    <div class="container-fluid py-4 checkout-page">
+        <div class="px-4">
+            <div class="site-inner">
+
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">GIỎ HÀNG ({{cartItems.length}} sản phẩm)</h1>
+                    <span class="title-line"></span>
+                </div>
+
+                <div class="row g-4">
+                    <!-- CỘT TRÁI - PRODUCTS TABLE -->
+                    <div class="col-lg-8">
+                        <div class="card-box">
+
+                            <!-- Product Table Header -->
+                            <div class="product-table-header">
+                                <div class="header-cell header-product">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+                                        <span>Sản phẩm</span>
+                                    </label>
+                                </div>
+                                <div class="header-cell header-price">Đơn giá</div>
+                                <div class="header-cell header-qty">Số lượng</div>
+                                <div class="header-cell header-total">Thành tiền</div>
+                                <div class="header-cell header-action">Thao tác</div>
+                            </div>
+
+                            <!-- Store Name Section -->
+                            <div class="store-section">
+                                <i class="bi bi-shop"></i>
+                                <span class="store-name">DWELLY Furniture</span>
+                            </div>
+
+                            <!-- Product Items -->
+                            <div class="product-item" *ngFor="let item of cartItems; let i = index">
+                                <div class="item-cell item-product">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" [(ngModel)]="item.selected"
+                                            (change)="updateSelection()" />
+                                    </label>
+                                    <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham"
+                                        class="product-img" />
+                                    <div class="product-details">
+                                        <p class="product-name">{{item.product.Ten_san_pham}}</p>
+                                        <span
+                                            class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
+                                    </div>
+                                </div>
+                                <div class="item-cell item-price">{{formatPrice(item.product.Gia_ban)}} VNĐ</div>
+                                <div class="item-cell item-qty">
+                                    <button class="qty-btn" (click)="decreaseQuantity(i)">−</button>
+                                    <span class="qty-number">{{item.quantity}}</span>
+                                    <button class="qty-btn" (click)="increaseQuantity(i)">+</button>
+                                </div>
+                                <div class="item-cell item-total">{{formatPrice(item.product.Gia_ban * item.quantity)}}
+                                    VNĐ</div>
+                                <div class="item-cell item-action">
+                                    <button class="btn-delete" (click)="openDeleteModal(i)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- CỘT PHẢI - SUMMARY -->
+                    <div class="col-lg-4">
+                        <div class="summary-box">
+
+                            <h3 class="box-title">
+                                <i class="bi bi-ticket-perforated"></i>
+                                Mã khuyến mãi
+                            </h3>
+                            <div class="voucher-input">
+                                <div class="voucher-input-wrapper">
+                                    <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
+                                        [class.error]="voucherError" data-bs-toggle="modal"
+                                        data-bs-target="#voucherModal" readonly />
+                                    <button class="btn-clear-voucher" *ngIf="voucherCode" (click)="clearVoucher()">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
+                                <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
+                            </div>
+                            <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
+                            <p class="voucher-success" *ngIf="appliedVoucher && !voucherError">
+                                Đã áp dụng giảm {{appliedVoucher.Phan_tram_giam}}%
+                            </p>
+
+                            <div class="summary-row">
+                                <span>Tổng cộng ({{getSelectedCount()}} sản phẩm)</span>
+                                <span class="amount">{{formatPrice(getSelectedTotal())}} VNĐ</span>
+                            </div>
+
+                            <div class="summary-row">
+                                <span>Giảm giá</span>
+                                <span class="amount" [class.discount]="getDiscountAmount() > 0">
+                                    {{getDiscountAmount() > 0 ? '' + formatPrice(getDiscountAmount()) : '0'}} VNĐ
+                                </span>
+                            </div>
+
+                            <hr class="divider" />
+
+                            <div class="summary-total">
+                                <span>Tổng thanh toán</span>
+                                <span class="total-amount">{{formatPrice(getFinalTotal())}} VNĐ</span>
+                            </div>
+
+                            <button class="btn-order" (click)="proceedToCheckout()">Mua hàng
+                                ({{getSelectedCount()}})</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup xóa sản phẩm -->
+    <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <h3 class="modal-title">Xác nhận xóa sản phẩm</h3>
+            <p class="modal-message">
+                Bạn có muốn xóa <strong>{{productToDelete?.Ten_san_pham}}</strong> khỏi giỏ hàng không?
+            </p>
+            <div class="modal-actions">
+                <button class="btn-cancel" (click)="closeDeleteModal()">Hủy</button>
+                <button class="btn-confirm" (click)="confirmDelete()">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voucher Modal -->
+    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()">
+        <app-voucher-popup [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
+            (voucherSelected)="handleVoucherSelected($event)">
+        </app-voucher-popup>
+    </app-modal>
+</section>

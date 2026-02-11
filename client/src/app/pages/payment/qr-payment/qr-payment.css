@@ -32,7 +32,7 @@
 
 .modal-title {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: #6C5234;
     margin-bottom: 30px;
@@ -56,20 +56,20 @@
 }
 
 .modal-text {
-    font-size: 16px;
+    font-size: 14px;
     color: black;
     margin: 0;
 }
 
 .amount {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     margin: 0;
     color: #546745;
 }
 
 .countdown {
-    font-size: 16px;
+    font-size: 14px;
     color: black;
 }
 
@@ -77,12 +77,12 @@
     display: inline-block;
     margin-top: 8px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     color: #6C5234;
 }
 
 .order-code {
-    font-size: 16px;
+    font-size: 14px;
     color: black;
     margin: 0;
 }
@@ -113,14 +113,14 @@
 }
 
 .qr-section h4 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     color: #000000;
     margin: 0 0 8px 0;
 }
 
 .qr-section p {
-    font-size: 16px;
+    font-size: 14px;
     color: #666666;
     margin: 0 0 12px 0;
 }
@@ -148,7 +148,7 @@
     background: #C62828;
     color: #ffffff;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s ease;
 }
 
@@ -166,7 +166,7 @@
     background: #546745;
     color: #ffffff;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s ease;
     white-space: nowrap;
 }
@@ -202,29 +202,21 @@
 
 /* ========== SUCCESS MODAL ========== */
 
-.success-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
+#successModal .modal-body {
+    padding: 0;
 }
 
-.success-box {
-    max-width: 500px;
-    width: 90%;
-    background: #ffffff;
+#successModal .success-box {
+    background: transparent;
     border-radius: 12px;
-    padding: 40px 32px;
+    padding: 40px 44px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
 }
 
 .success-title {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: #546745;
     margin: 0 0 20px 0;
@@ -232,7 +224,7 @@
 
 .success-message {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     color: #000000;
     line-height: 1.6;
@@ -243,7 +235,11 @@
     display: flex;
     gap: 12px;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+    margin-top: 16px;
+}
+.success-buttons button {
+  flex: 1;
 }
 
 .btn-continue,
@@ -253,7 +249,7 @@
     padding: 12px 24px;
     border-radius: 8px;
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
 }

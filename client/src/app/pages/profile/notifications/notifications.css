@@ -1,0 +1,258 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
+/* Import Bootstrap Icons */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
+
+/* ===== COLOR SYSTEM (Kế thừa từ orders) ===== */
+.notifications-page {
+    --primary: #6C5234;
+    --secondary: #AFA386;
+    --success: #546745;
+    --border: #E5E5E5;
+    --text-muted: #8B8B8B;
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
+.notifications-page * {
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
+/* ===== HEADER ===== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    color: #666;
+    margin-bottom: 0;
+    font-size: 24px;
+}
+
+.btn-delete-all {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-delete-all:hover {
+    border-color: #A34343;
+    color: #A34343;
+    background: #fff5f5;
+}
+
+.btn-delete-all i {
+    font-size: 16px;
+}
+
+/* ===== TABS (Kế thừa từ orders) ===== */
+.notification-tabs {
+    display: flex;
+    gap: 28px;
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.notification-tabs .tab {
+    font-weight: 500;
+    cursor: pointer;
+    color: #333;
+}
+
+.notification-tabs .tab span {
+    margin-left: 6px;
+    color: var(--primary);
+}
+
+.notification-tabs .tab.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ===== NOTIFICATION CARD ===== */
+.notification-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.notification-card.unread {
+    background: #F9F6F3;
+    border-color: var(--primary);
+}
+
+/* Icon */
+.notification-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.notification-icon i {
+    font-size: 24px;
+}
+
+.notification-icon.success {
+    background: #E8F5E9;
+    color: var(--success);
+}
+
+.notification-icon.bell {
+    background: #FFF3E0;
+    color: #F57C00;
+}
+
+.notification-icon.promo {
+    background: #E8F5E9;
+    color: var(--success);
+}
+
+.notification-icon.processing {
+    background: #E3F2FD;
+    color: #1976D2;
+}
+
+/* Content */
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.notification-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+    flex: 1;
+}
+
+.unread-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.notification-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+}
+
+.notification-time {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .btn-delete-all {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .notification-tabs {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .notification-tabs .tab {
+        font-size: 13px;
+    }
+
+    .notification-card {
+        padding: 16px;
+    }
+
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .notification-icon i {
+        font-size: 20px;
+    }
+
+    .notification-title {
+        font-size: 15px;
+    }
+
+    .notification-text {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .notification-tabs {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .notification-tabs .tab {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 6px;
+        background: #F5F5F5;
+    }
+
+    .notification-tabs .tab.active {
+        background: var(--primary);
+        color: #fff;
+    }
+
+    .notification-tabs .tab.active .badge {
+        background: #fff;
+        color: var(--primary);
+    }
+}

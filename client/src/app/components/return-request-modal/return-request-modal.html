@@ -1,0 +1,86 @@
+<div class="modal fade" [id]="modalId" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Yêu cầu trả hàng/hoàn tiền</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Product Selection -->
+        <div class="section mb-4">
+          <h6 class="section-title">Sản phẩm</h6>
+          <div class="product-list">
+            <!-- Product 1 -->
+            <div class="product-item">
+              <div class="product-content">
+                <div class="product-img"></div>
+                <div class="product-details">
+                  <strong>Tên sản phẩm</strong>
+                  <p>Phân loại</p>
+                  <p>Giá tiền</p>
+                </div>
+                <div class="product-quantity">
+                  <p>Số lượng: 1</p>
+                  <strong class="product-total">Tổng tiền</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-item">
+              <div class="product-content">
+                <div class="product-img"></div>
+                <div class="product-details">
+                  <strong>Tên sản phẩm</strong>
+                  <p>Phân loại</p>
+                  <p>Giá tiền</p>
+                </div>
+                <div class="product-quantity">
+                  <p>Số lượng: 1</p>
+                  <strong class="product-total">Tổng tiền</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <button class="btn-view-more">Xem thêm</button>
+          </div>
+        </div>
+
+        <!-- Return Reason -->
+        <div class="section mb-4">
+          <h6 class="section-title">Lý do yêu cầu</h6>
+          <select class="form-select">
+            <option value="">Chọn lý do</option>
+            <option value="change_mind">Chọn lý do</option>
+            <option value="defective">Sản phẩm lỗi</option>
+            <option value="wrong_item">Không đúng mô tả</option>
+            <option value="other">Khác</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Hủy
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary-custom"
+          data-bs-toggle="modal" 
+          data-bs-target="#confirmCancelModal">
+          Gửi yêu cầu
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Cancel Modal -->
+<app-confirm-cancel-modal 
+  modalId="confirmCancelModal"
+  (confirmed)="handleConfirm()"
+  (cancelled)="handleCancel()">
+</app-confirm-cancel-modal>

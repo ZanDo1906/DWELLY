@@ -17,9 +17,9 @@
         <!-- Navigation -->
         <nav class="header-nav">
           <a href="#"><i class="bi bi-search"></i></a>
-          <a href="#">Giới thiệu</a>
-          <a href="#">Sản phẩm</a>
-          <a href="#">Gợi ý không gian</a>
+          <a  routerLink="/about-us" routerLinkActive="active">Giới thiệu</a>
+          <a routerLink="/product-list" routerLinkActive="active" >Sản phẩm</a>
+          <a routerLink="/concept-list">Gợi ý không gian</a>
           <a href="#"><i class="bi bi-cart"></i></a>
           <ng-container *ngIf="isLoggedIn; else loginTrigger">
             <a class="header-link account-link" [routerLink]="['/user-layout/info']">
@@ -43,21 +43,13 @@
   </section>
 </header>
 
-<app-modal modalId="registerModal" title="Đăng ký" (close)="closeRegisterModal()">
-  <app-register></app-register>
-</app-modal>
-
-<app-modal modalId="loginModal" title="Đăng nhập" (close)="closeLoginModal()">
-  <app-login></app-login>
-</app-modal>
-
-<app-modal modalId="registerModal" [showHeader]="true">
+<!-- <app-modal modalId="registerModal" [showHeader]="true">
   <app-register></app-register>
 </app-modal>
 
 <app-modal modalId="loginModal" [showHeader]="true">
   <app-login></app-login>
-</app-modal>
+</app-modal> -->
 
 <app-modal modalId="verifyModal" [showHeader]="false">
   <app-verify-account></app-verify-account>

@@ -12,7 +12,7 @@ import { Concept } from '../../../services/concept';
   selector: 'app-concept-detail',
   imports: [CommonModule, ProductCard],
   templateUrl: './concept-detail.html',
-  styleUrl: './concept-detail.css',
+  styleUrls: ['./concept-detail.css'],
 })
 export class ConceptDetail implements OnInit {
   product?: iProduct;

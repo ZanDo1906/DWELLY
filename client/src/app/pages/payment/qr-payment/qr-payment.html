@@ -48,8 +48,8 @@
 </div>
 
 <!-- Success Modal -->
-<div class="success-overlay" *ngIf="showSuccessModal" (click)="closeSuccessModal()">
-    <div class="success-box" (click)="$event.stopPropagation()">
+<app-modal modalId="successModal" [showHeader]="false">
+    <div class="success-box p-4 text-center">
         <h2 class="success-title">Đặt hàng thành công!</h2>
 
         <p class="success-message">
@@ -61,4 +61,4 @@
             <button class="btn-track" (click)="closeSuccessModal()">Theo dõi đơn hàng</button>
         </div>
     </div>
-</div>
+</app-modal>

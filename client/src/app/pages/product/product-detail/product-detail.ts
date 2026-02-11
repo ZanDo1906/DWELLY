@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { iProduct } from '../../../interfaces/product';
 import { iReview } from '../../../interfaces/review';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { MaintenanceModal } from '../maintenance-modal/maintenance-modal';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,7 @@ import { MaintenanceModal } from '../maintenance-modal/maintenance-modal';
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
-export class ProductDetail implements OnInit {
+export class ProductDetail implements OnInit, OnDestroy {
   product?: iProduct;
   selectedImage: string = '';
   quantity = 1;
@@ -30,6 +31,7 @@ export class ProductDetail implements OnInit {
   isMaintenanceOpen = false;
   selectedCareData: any = null;
   allCareInstructions: any[] = [];
+  private routeSub: Subscription | null = null;
 
   constructor(
     private productService: Product,
@@ -74,43 +76,49 @@ scrollRight() {
 }
 
   ngOnInit(): void {
-  const id = this.route.snapshot.paramMap.get('id');
-  this.productService.getProductData().subscribe({
-    next: (list) => {
-      if (!list || list.length === 0) return;
-      if (id) {
-        this.product = list.find((p) => p.Ma_san_pham === id) ?? list[0];
-      } else {
-        this.product = list[0];
-      }
-      this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
-      this.filterReviews();
+    // React to route param changes so navigating to a different /product/:id reloads
+    this.routeSub = this.route.paramMap.subscribe((pm) => {
+      const id = pm.get('id');
 
-      this.relatedProducts = this.getRelatedProducts(this.product, list);
-      this.loadCareInstructions();
-    },
-    error: (err) => console.error('Failed to load products', err),
-  });
+      this.productService.getProductData().subscribe({
+        next: (list) => {
+          if (!list || list.length === 0) return;
+          if (id) {
+            this.product = list.find((p) => p.Ma_san_pham === id) ?? list[0];
+          } else {
+            this.product = list[0];
+          }
+          this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
+          this.filterReviews();
 
- 
-  this.http.get<iReview[]>('assets/data/review.json')
-    .subscribe({
-      next: (data) => {
-        this.allReviews = data;
-        this.filterReviews();
-      },
-      error: (err) => console.error('Failed to load reviews', err),
+          this.relatedProducts = this.getRelatedProducts(this.product, list);
+          this.loadCareInstructions();
+        },
+        error: (err) => console.error('Failed to load products', err),
+      });
     });
 
-    this.http.get<any[]>('assets/data/client.json').subscribe({
-  next: (data) => {
-    this.clients = data;
-    this.filterReviews(); 
-  },
-  error: (err) => console.error('Failed to load clients', err),
-});
+    this.http.get<iReview[]>('assets/data/review.json')
+      .subscribe({
+        next: (data) => {
+          this.allReviews = data;
+          this.filterReviews();
+        },
+        error: (err) => console.error('Failed to load reviews', err),
+      });
 
-}
+    this.http.get<any[]>('assets/data/client.json').subscribe({
+      next: (data) => {
+        this.clients = data;
+        this.filterReviews();
+      },
+      error: (err) => console.error('Failed to load clients', err),
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
+  }
 getClientName(maKhachHang: string): string {
   const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
   return client ? client.Ho_va_ten : maKhachHang; 

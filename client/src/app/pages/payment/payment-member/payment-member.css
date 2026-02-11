@@ -20,15 +20,26 @@
 }
 
 /* Page Title */
+.page-title-wrapper {
+    text-align: left;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
 .page-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: #6C5234;
-    margin-bottom: 30px;
-    letter-spacing: 2px;
-    padding-bottom: 12px;
-    border-bottom: 3px solid #6C5234;
-    display: inline-block;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.title-line {
+    width: 80%;
+    height: 3px;
+    background-color: #6C5234;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Card Box */
@@ -41,7 +52,7 @@
 }
 
 .box-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #546745;
     margin-bottom: 20px;
@@ -82,7 +93,7 @@
 }
 
 .address-header strong {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #333;
 }
@@ -95,12 +106,12 @@
     color: white;
     padding: 4px 12px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
 }
 
 .address-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     margin: 0;
     line-height: 1.6;
@@ -112,7 +123,7 @@
     color: #546745;
     padding: 10px 24px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
@@ -136,7 +147,7 @@
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     resize: vertical;
     margin-bottom: 12px;
 }
@@ -151,7 +162,7 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     font-weight: 700;
 }
@@ -176,7 +187,7 @@
 }
 
 .product-title-left {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #546745;
     margin: 0;
@@ -195,7 +206,7 @@
 }
 
 .product-title-right span {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #6C5234;
     text-align: center;
@@ -233,7 +244,7 @@
 }
 
 .product-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #333;
     margin: 0 0 5px 0;
@@ -241,14 +252,14 @@
 }
 
 .product-category {
-    font-size: 16px;
+    font-size: 14px;
     color: #999;
     font-weight: 400;
 }
 
 .product-price,
 .product-total {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     font-weight: 400;
     text-align: center;
@@ -293,7 +304,7 @@
 }
 
 .qty-number {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     min-width: 30px;
     text-align: center;
@@ -330,7 +341,7 @@
 }
 
 .shipping-info strong {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #333;
     display: block;
@@ -338,13 +349,13 @@
 }
 
 .shipping-info p {
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     margin: 0;
 }
 
 .shipping-price {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #546745;
 }
@@ -370,7 +381,7 @@
     padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .voucher-input input:focus {
@@ -407,7 +418,7 @@
     border: 2px solid #546745;
     padding: 10px 24px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
@@ -428,7 +439,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
 }
 
@@ -455,13 +466,13 @@
     margin-bottom: 20px;
     padding-top: 20px;
     border-top: 2px solid #6C5234;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #333;
 }
 
 .total-amount {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #546745;
 }
@@ -492,13 +503,13 @@
 }
 
 .payment-option span {
-    font-size: 16px;
+    font-size: 14px;
     color: #6C5234;
     font-weight: 700;
 }
 
 .payment-option .sub-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #999;
     font-weight: 400;
 }
@@ -510,7 +521,7 @@
     border: none;
     padding: 16px;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -527,7 +538,7 @@
 }
 
 .policy-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     text-align: center;
     margin: 0;
@@ -575,7 +586,7 @@
     }
 
     .page-title {
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: 20px;
     }
 
@@ -669,7 +680,7 @@
 
     .product-price,
     .product-total {
-        font-size: 16px;
+        font-size: 14px;
         text-align: left;
         display: flex;
         justify-content: space-between;
@@ -715,7 +726,7 @@
 
     .qty-value {
         min-width: 40px;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     /* Shipping section */
@@ -767,7 +778,7 @@
     }
 
     .summary-total {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .total-amount {
@@ -801,7 +812,7 @@
     .btn-order {
         width: 100%;
         padding: 14px;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .policy-text {
@@ -862,7 +873,7 @@
 }
 
 .modal-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #546745;
     margin: 0 0 16px 0;
@@ -870,7 +881,7 @@
 }
 
 .modal-message {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     margin: 0 0 24px 0;
     text-align: center;
@@ -892,7 +903,7 @@
 .btn-confirm {
     padding: 12px 32px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;

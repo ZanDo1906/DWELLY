@@ -1,4 +1,5 @@
-<div class="product-card">
+<a [routerLink]="['/product', product.Ma_san_pham]" class="product-link">
+  <div class="product-card">
   <div class="card-thumb"
        (mouseenter)="enableHover ? hover=true : null"
        (mouseleave)="enableHover ? hover=false : null">
@@ -30,4 +31,5 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+</a>

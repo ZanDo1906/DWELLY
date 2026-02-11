@@ -878,7 +878,7 @@
   flex-wrap: nowrap;     
   overflow-x: auto;   
   scroll-behavior: smooth;
-  gap: 23.5px;
+  gap: 24px;
   padding: 0px 0;
   flex: 1;
   width: 100%;
@@ -899,7 +899,7 @@
 
 .scroll-btn {
   position: absolute;
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
   background: #AFA386;
   opacity: 0.6;

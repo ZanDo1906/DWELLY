@@ -1,0 +1,292 @@
+/* Modal */
+.modal-content {
+  border-radius: 12px;
+  border: none;
+}
+
+.modal-header {
+  border-bottom: 1px solid #E5E5E5;
+  padding: 20px 24px;
+}
+
+.modal-title {
+  color: #6C5234;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.modal-body {
+  padding: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  border-top: 1px solid #E5E5E5;
+  padding: 16px 24px;
+}
+
+/* Order Info */
+.order-info {
+  background: #F8F8F8;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-row .label {
+  color: #666;
+}
+
+.info-row .value {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Section */
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.required {
+  color: #dc3545;
+}
+
+/* Product List */
+.product-list {
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-item {
+  border-bottom: 1px solid #F0F0F0;
+  padding: 16px;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-content {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.product-img {
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-details strong {
+  font-size: 16px;
+  color: #333;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.product-details p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.product-quantity {
+  text-align: right;
+  min-width: 100px;
+}
+
+.product-quantity p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.product-total {
+  font-size: 16px;
+  color: #6C5234;
+  font-weight: 600;
+  display: block;
+}
+
+/* View More Button */
+.btn-view-more {
+  background: #AFA386;
+  color: #fff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-view-more:hover {
+  background: #6C5234;
+}
+
+/* Form Controls */
+.form-select,
+.form-control {
+  border: 1px solid #E5E5E5;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #6C5234;
+  box-shadow: 0 0 0 3px rgba(108, 82, 52, 0.1);
+  outline: none;
+}
+
+/* Upload Section */
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px dashed #AFA386;
+  border-radius: 8px;
+  background: #F8F8F8;
+  color: #6C5234;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: fit-content;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.upload-btn:hover {
+  background: #6C5234;
+  color: #fff;
+  border-color: #6C5234;
+}
+
+.upload-btn i {
+  font-size: 16px;
+}
+
+/* Image Preview */
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #E5E5E5;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(220, 53, 69, 0.9);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.remove-btn:hover {
+  background: #dc3545;
+}
+
+.remove-btn i {
+  font-size: 16px;
+}
+
+/* Buttons */
+.btn-outline-secondary {
+  border: 1px solid #999;
+  color: #666;
+  background: transparent;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn-outline-secondary:hover {
+  background: #666;
+  color: #fff;
+  border-color: #666;
+}
+
+.btn-primary-custom {
+  background: #6C5234;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn-primary-custom:hover {
+  background: #5a4229;
+}
+
+/* Scrollbar */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #AFA386;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #6C5234;
+}

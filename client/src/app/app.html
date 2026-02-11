@@ -24,6 +24,18 @@
   <app-footer></app-footer>
 </div>
 
+<app-modal modalId="registerModal" title="Đăng ký" (close)="closeRegisterModal()">
+  <app-register></app-register>
+</app-modal>
+
+ <app-modal modalId="loginModal" title="Đăng nhập" (close)="closeLoginModal()">
+  <app-login></app-login>
+</app-modal> 
+
+<app-modal modalId="forgotPasswordModal" title="Quên mật khẩu">
+  <app-forgot-password></app-forgot-password>
+</app-modal>
+
 <!-- TEST DATA -->
 <!-- <h3 class="bg-primary text-center text-white p-3">ANGULAR ROUTING</h3> -->
 <!-- A grey horizontal navbar that becomes vertical on small screens -->

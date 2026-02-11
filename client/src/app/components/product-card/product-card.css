@@ -6,6 +6,16 @@
   transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
 }
 
+.product-link {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-link .product-card {
+  display: block;
+}
+
 .card-thumb {
   position: relative;
   width: 100%;
