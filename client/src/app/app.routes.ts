@@ -3,7 +3,6 @@ import { Test } from './test/test';
 import { Login } from './pages/auth/login/login';
 import { Register } from './pages/auth/register/register';
 import { ProductDetail } from './pages/product/product-detail/product-detail';
-import { ProductDetailConcept } from './pages/product/product-detail-concept/product-detail-concept';
 import { PaymentMember } from './pages/payment/payment-member/payment-member';
 import { PaymentNonMember } from './pages/payment/payment-non-member/payment-non-member';
 import { ForgotPassword } from './pages/auth/forgot-password/forgot-password';
@@ -39,7 +38,6 @@ export const routes: Routes = [
     { path: 'register', component: Register },
     { path: 'product', component: ProductDetail },
     { path: 'product/:id', component: ProductDetail },
-    { path: 'product-concept', component: ProductDetailConcept },
     { path: '', component: HomePage }, 
     { path: 'payment-member', component: PaymentMember },
     { path: 'payment-non-member', component: PaymentNonMember },

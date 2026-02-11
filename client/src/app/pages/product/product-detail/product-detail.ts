@@ -141,8 +141,6 @@ openMaintenanceModal(videoIndex: number) {
   document.body.style.overflow = 'hidden';
 }
 
-
-
   closeMaintenanceModal() {
     this.isMaintenanceOpen = false;
     document.body.style.overflow = 'auto'; 

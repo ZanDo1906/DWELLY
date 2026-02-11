@@ -1,5 +1,5 @@
 .product-card {
-  width: 260px;           
+  width: 263.5px;           
   border-radius: 0px;
   overflow: hidden;
   background: #fff;
@@ -70,18 +70,18 @@
 .product-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 6px;
 }
 
 .new-price {
-  font-size: 16px; 
+  font-size: 15px; 
   font-weight: 600;
   color: #A34343;
 }
 
 .old-price {
-  font-size: 14px;
+  font-size: 13px;
   text-decoration: line-through;
   color: #999;
 }
