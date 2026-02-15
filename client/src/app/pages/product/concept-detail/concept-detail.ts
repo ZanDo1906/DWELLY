@@ -10,7 +10,6 @@ import { Concept } from '../../../services/concept';
 
 @Component({
   selector: 'app-concept-detail',
-  standalone: true,
   imports: [CommonModule, ProductCard],
   templateUrl: './concept-detail.html',
   styleUrls: ['./concept-detail.css'],
@@ -102,7 +101,7 @@ export class ConceptDetail implements OnInit {
 
   getRelatedProducts(current: iProduct, all: iProduct[]): iProduct[] {
     return all.filter(
-      p => p.Ma_khong_gian === current.Ma_khong_gian && p.Ma_san_pham !== current.Ma_san_pham
+      p => p.Ma_khong_gian === current.Ma_khong_gian
     );
   }
 

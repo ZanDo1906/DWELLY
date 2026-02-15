@@ -36,6 +36,8 @@ export const routes: Routes = [
     { path: '', component: HomePage }, 
     { path: 'login', component: Login },
     { path: 'register', component: Register },
+    { path: 'product', component: ProductDetail },
+    { path: 'product/:id', component: ProductDetail },
     { path: 'payment-member', component: PaymentMember },
     { path: 'payment-non-member', component: PaymentNonMember },
     { path: 'qr-payment', component: QRPayment },
