@@ -12,7 +12,9 @@
               <p class="page-subtitle">Quản lý địa chỉ giao hàng của bạn</p>
             </div>
 
-            <button class="btn-brown btn-add">
+            <button class="btn-brown btn-add"
+              data-bs-toggle="modal"
+              data-bs-target="#addAddressModal">
               <i class="bi bi-plus-circle"></i>
               Thêm địa chỉ mới
             </button>
@@ -97,3 +99,13 @@
     </div>
   </div>
 </section>
+
+<!-- ADD ADDRESS MODAL -->
+<app-modal
+  modalId="addAddressModal"
+  title="Địa chỉ mới"
+  [showHeader]="true"
+  [showTitleAndLine]="true"
+  [showCloseButton]="true">
+  <app-add-address-modal></app-add-address-modal>
+</app-modal>
