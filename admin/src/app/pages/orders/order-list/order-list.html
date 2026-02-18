@@ -1,70 +1,67 @@
-<section class="orders-page">
-  <div class="container-fluid py-3">
-    <div class="site-inner">
-
-      <!-- HEADER -->
-      <div class="page-header">
-        <h2 class="page-title">Quản lý đơn hàng</h2>
-
-        <button class="add-btn">
-          + Thêm đơn hàng
-        </button>
-      </div>
-
-      <!-- FILTER BAR -->
-      <div class="filter-bar">
-
-        <input type="text"
-               class="search-input"
-               placeholder="Tìm kiếm..." />
-
-        <div class="filter-group">
-          <button class="filter-btn">A-Z</button>
-          <button class="filter-btn">Mới nhất</button>
-          <button class="filter-btn">Cũ nhất</button>
-
-          <select class="status-select">
-            <option>Tất cả trạng thái</option>
-            <option>Chờ duyệt</option>
-            <option>Đã duyệt</option>
-            <option>Đã từ chối</option>
-          </select>
-        </div>
-
-      </div>
-
-      <!-- TABLE -->
-      <app-table>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner orders-page">
 
         <!-- HEADER -->
-        <ng-container table-header>
-          <th>STT</th>
-          <th>Mã đơn hàng</th>
-          <th>Khách hàng</th>
-          <th>Ngày đặt</th>
-          <th>Trạng thái duyệt</th>
-          <th>Giao hàng</th>
-          <th>Tổng tiền</th>
-        </ng-container>
+        <div class="page-header">
+          <h2 class="page-title">Quản lý đơn hàng</h2>
 
-        <!-- BODY -->
-        <ng-container table-body>
-          <tr *ngFor="let order of orders; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ order.code }}</td>
-            <td>{{ order.customer }}</td>
-            <td>{{ order.date }}</td>
-            <td>
-              <span class="status pending">Chờ duyệt</span>
-            </td>
-            <td>
-              <span class="status approved">Đã duyệt</span>
-            </td>
-            <td>{{ order.total }}</td>
-          </tr>
-        </ng-container>
+          <button class="add-btn">
+            + Thêm đơn hàng
+          </button>
+        </div>
 
-        <!-- PAGINATION -->
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+
+          <input type="text"
+                 class="search-input"
+                 placeholder="Tìm kiếm..." />
+
+          <div class="filter-group">
+            <button class="filter-btn">A-Z</button>
+            <button class="filter-btn">Mới nhất</button>
+            <button class="filter-btn">Cũ nhất</button>
+
+            <select class="status-select">
+              <option>Tất cả trạng thái</option>
+              <option>Chờ duyệt</option>
+              <option>Đã duyệt</option>
+              <option>Đã từ chối</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <app-table>
+
+          <!-- HEADER -->
+          <ng-container table-header>
+            <th>STT</th>
+            <th>Mã đơn hàng</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái duyệt</th>
+            <th>Giao hàng</th>
+            <th>Tổng tiền</th>
+          </ng-container>
+
+          <!-- BODY -->
+          <ng-container table-body>
+            <tr *ngFor="let order of pagedOrders; let i = index">
+              <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+              <td>{{ order.code }}</td>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.date }}</td>
+              <td><span class="status" [ngClass]="order.approvalStatus">{{ order.approvalStatus === 'pending' ? 'Chờ duyệt' : order.approvalStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
+              <td><span class="status" [ngClass]="order.deliveryStatus">{{ order.deliveryStatus === 'pending' ? 'Chờ duyệt' : order.deliveryStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
+              <td>{{ order.total }}</td>
+            </tr>
+          </ng-container>
+
+          <!-- PAGINATION -->
             <ng-container table-pagination>
                 <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
                 <button
@@ -76,8 +73,10 @@
                 </button>
                 <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
             </ng-container>
-      </app-table>
 
+        </app-table>
+
+      </div>
     </div>
   </div>
 </section>

@@ -12,13 +12,19 @@
   overflow: hidden;
 }
 
+.status,
+.money {
+  white-space: nowrap;
+}
+
+
 /* HEADER */
 .admin-table thead {
   background: rgba(175, 163, 134, 0.7);
 }
 
 .admin-table th {
-  padding: 15px;              /* rộng hơn */
+  padding: 12px;              /* rộng hơn */
   font-size: 18px;
   font-weight: 600;
   color: #ffffff;                  /* chữ trắng */
@@ -35,7 +41,7 @@
 
 /* BODY */
 .admin-table td {
-  padding: 15px;
+  padding: 12px;
   font-size: 16px;
   color: #373737;
   border-bottom: 1px solid #f1f1f1;

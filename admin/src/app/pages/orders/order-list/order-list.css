@@ -1,6 +1,9 @@
 .orders-page {
   font-family: 'Nunito Sans', sans-serif;
 }
+.padding-x {
+  padding-left: 1.5rem;
+}
 
 /* HEADER */
 .page-header {
