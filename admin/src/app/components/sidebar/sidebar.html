@@ -1,0 +1,79 @@
+<div class="sidebar-wrapper d-flex flex-column justify-content-between">
+  <!-- TOP -->
+  <div>
+    <!-- User info -->
+    <div class="user-info">
+      <div class="d-flex gap-3 align-items-start mb-3">
+        <img
+          [src]="userAvatar"
+          alt="avatar"
+          class="avatar"
+        />
+        <div class="user-details flex-grow-1">
+          <h6 class="mb-1 text-white">{{ userName }}</h6>
+          <small class="text-light d-block">{{ userEmail }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <ul class="menu list-unstyled mt-4">
+      <li>
+        <a class="menu-item" routerLink="/profile" routerLinkActive="active">
+          <i class="bi bi-person"></i>
+          <span>Tài khoản cá nhân</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/user-list" routerLinkActive="active">
+          <i class="bi bi-people"></i>
+          <span>Quản lý khách hàng</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/product-list" routerLinkActive="active">
+          <i class="bi bi-box-seam"></i>
+          <span>Quản lý sản phẩm</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/order-list" [class.active]="isOrdersActive()">
+          <i class="bi bi-receipt"></i>
+          <span>Quản lý đơn hàng</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/faq-list" routerLinkActive="active">
+          <i class="bi bi-question-circle"></i>
+          <span>Quản lý FAQs</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/blog-list" routerLinkActive="active">
+          <i class="bi bi-journal-text"></i>
+          <span>Quản lý Blogs</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/promotion-list" routerLinkActive="active">
+          <i class="bi bi-tag"></i>
+          <span>Quản lý khuyến mãi</span>
+        </a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/dashboard" routerLinkActive="active">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- LOGOUT -->
+  <div class="logout-wrapper">
+    <button class="btn logout-btn w-100" type="button" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-2"></i>
+      Đăng xuất
+    </button>
+  </div>
+</div>

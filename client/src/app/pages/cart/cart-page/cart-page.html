@@ -135,7 +135,7 @@
     </div>
 
     <!-- Voucher Modal -->
-    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()">
+    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()" title="Khuyến mãi">
         <app-voucher-popup [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
             (voucherSelected)="handleVoucherSelected($event)">
         </app-voucher-popup>

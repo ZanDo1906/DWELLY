@@ -1,0 +1,43 @@
+.modal-content {
+  border: 2px solid #6C5234 !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+/* HEADER */
+.custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  background: white;
+}
+
+.modal-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #6C5234;
+  margin: 0;
+}
+
+.custom-close {
+  background: #e9e3da;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #6C5234;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+.modal-dialog {
+  max-width: 700px;
+  width: calc(100% - 2rem);
+}

@@ -1,0 +1,85 @@
+<section>
+  <div class="container-fluid py-2">
+    <div class="px-0">
+      <div class="site-inner">
+
+        <div class="promotion-container">
+
+          <form class="promotion-form">
+
+            <!-- Mã khuyến mãi -->
+            <div class="form-group full">
+              <label>Mã khuyến mãi <span>*</span></label>
+              <input type="text" />
+            </div>
+
+            <!-- Mã số -->
+            <div class="form-group">
+              <label>Mã số <span>*</span></label>
+              <input type="text" />
+            </div>
+
+            <!-- Phần trăm giảm -->
+            <div class="form-group">
+              <label>Phần trăm giảm <span>*</span></label>
+              <input type="number" />
+            </div>
+
+            <!-- Ngày bắt đầu -->
+            <div class="form-group">
+              <label>Ngày bắt đầu <span>*</span></label>
+              <input type="date" />
+            </div>
+
+            <!-- Ngày kết thúc -->
+            <div class="form-group">
+              <label>Ngày kết thúc <span>*</span></label>
+              <input type="date" />
+            </div>
+
+            <!-- Phân hạng người dùng -->
+            <div class="form-group">
+              <label>Phân hạng người dùng <span>*</span></label>
+              <input type="text" />
+            </div>
+
+            <!-- Số lượng -->
+            <div class="form-group">
+              <label>Số lượng <span>*</span></label>
+              <input type="number" />
+            </div>
+
+            <!-- Mô tả -->
+            <div class="form-group full">
+              <label>Mô tả <span>*</span></label>
+              <textarea rows="3"></textarea>
+            </div>
+
+            <div class="btn-wrapper">
+              <button 
+                type="button"
+                class="save-btn"
+                (click)="openConfirm()">
+                Lưu mã khuyến mãi
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-confirm-dialog
+  *ngIf="showConfirm"
+  modalId="confirmSaveModal"
+  title="Xác nhận lưu"
+  message="Bạn có chắc muốn lưu mã khuyến mãi này?"
+  (confirm)="confirmSave()"
+  (cancel)="closeConfirm()">
+</app-confirm-dialog>
+

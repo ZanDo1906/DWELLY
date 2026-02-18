@@ -24,15 +24,15 @@
   <app-footer></app-footer>
 </div>
 
-<app-modal modalId="registerModal" title="Đăng ký" (close)="closeRegisterModal()">
+<app-modal modalId="registerModal"  [showHeader]="true" [showTitleAndLine]="false" [showCloseButton]="true" (close)="closeRegisterModal()">
   <app-register></app-register>
 </app-modal>
 
- <app-modal modalId="loginModal" title="Đăng nhập" (close)="closeLoginModal()">
+ <app-modal modalId="loginModal" (close)="closeLoginModal()" [showHeader]="true" [showTitleAndLine]="false" [showCloseButton]="true">
   <app-login></app-login>
 </app-modal> 
 
-<app-modal modalId="forgotPasswordModal" title="Quên mật khẩu">
+<app-modal modalId="forgotPasswordModal"  [showHeader]="true" [showTitleAndLine]="false" [showCloseButton]="true">
   <app-forgot-password></app-forgot-password>
 </app-modal>
 

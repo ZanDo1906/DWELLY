@@ -1,13 +1,41 @@
-<div class="modal fade" [id]="modalId" tabindex="-1">
+<!-- <div class="modal fade" [id]="modalId" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
       <div class="modal-header border-0 d-flex justify-content-end" [class.d-none]="!showHeader">
+        <h5 class="modal-title">{{ title }}</h5>
         <button type="button" class="custom-close" (click)="closeModal()">
           <i class="bi bi-x"></i> 
         </button>
       </div>
 
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+
+<div class="modal fade" [id]="modalId" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- HEADER -->
+      <div
+        class="modal-header custom-header"
+        *ngIf="showHeader && (showTitleAndLine || showCloseButton)"
+        [class.no-title-line]="!showTitleAndLine"
+        [class.only-close]="showCloseButton && !showTitleAndLine">
+        <h5 class="modal-title" *ngIf="showTitleAndLine">{{ title }}</h5>
+
+        <button type="button" class="custom-close" *ngIf="showCloseButton" (click)="closeModal()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <!-- BODY -->
       <div class="modal-body">
         <ng-content></ng-content>
       </div>

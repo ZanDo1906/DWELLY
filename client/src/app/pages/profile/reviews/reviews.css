@@ -14,19 +14,17 @@
 }
 
 .reviews-title {
-  color: var(--primary);
+  font-size: 32px;
   font-weight: 700;
-  font-size: 28px;
-  margin-bottom: 8px;
-  font-family: 'Nunito', sans-serif;
-  color: #6C5234;
+  color: var(--primary);
+  margin-bottom: 4px;
+
 }
 
 .reviews-subtitle {
-  color: #373737;
-  font-size: 14px;
+  color: #808080;
+  font-size: 16px;
   margin-bottom: 0;
-   font-family: 'Nunito', sans-serif;
 }
 
 /* ===== FILTER TABS ===== */

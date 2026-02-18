@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { iProduct } from '../../../interfaces/product';
 import { ProductCard } from '../../../components/product-card/product-card';
@@ -10,7 +10,7 @@ import { Concept } from '../../../services/concept';
 
 @Component({
   selector: 'app-concept-detail',
-  imports: [CommonModule, ProductCard],
+  imports: [CommonModule, ProductCard, RouterLink],
   templateUrl: './concept-detail.html',
   styleUrls: ['./concept-detail.css'],
 })
@@ -35,27 +35,48 @@ export class ConceptDetail implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const conceptId = this.route.snapshot.paramMap.get('id');
 
     this.productService.getProductData().subscribe({
       next: (list: iProduct[]) => {
         if (!list || list.length === 0) return;
 
-        this.product = id
-          ? list.find(p => p.Ma_san_pham === id) ?? list[0]
-          : list[0];
+        const productsByConcept = conceptId
+          ? list.filter((p) => p.Ma_khong_gian === conceptId)
+          : list;
+
+        if (productsByConcept.length === 0) {
+          this.product = undefined;
+          this.relatedProducts = [];
+
+          this.conceptService.getConceptData().subscribe({
+            next: (data: iConcept[]) => {
+              this.concepts = data;
+              const concept = conceptId
+                ? data.find((c) => c.Ma_khong_gian === conceptId)
+                : undefined;
+              this.conceptName = concept?.Ten_khong_gian ?? '';
+              this.conceptImage = concept?.Hinh_anh ?? '';
+            },
+            error: (err: unknown) => console.error('Failed to load concepts', err),
+          });
+          return;
+        }
+
+        this.product = productsByConcept[0];
 
         this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
 
         // lấy sản phẩm liên quan
-        this.relatedProducts = this.getRelatedProducts(this.product, list);
+        this.relatedProducts = this.getRelatedProducts(this.product, productsByConcept);
         this.sortProducts(); // sắp xếp ngay khi load
 
         // load concept
         this.conceptService.getConceptData().subscribe({
           next: (data: iConcept[]) => {
             this.concepts = data;
-            const cat = data.find(c => c.Ma_khong_gian === this.product?.Ma_khong_gian);
+            const resolvedConceptId = conceptId ?? this.product?.Ma_khong_gian;
+            const cat = data.find(c => c.Ma_khong_gian === resolvedConceptId);
             this.conceptName = cat?.Ten_khong_gian ?? '';
             this.conceptImage = cat?.Hinh_anh ?? '';
           },

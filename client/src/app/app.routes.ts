@@ -51,6 +51,7 @@ export const routes: Routes = [
     { path: 'support', component: Support },
     { path: 'terms', component: Terms },
     { path: 'concept-list', component: ConceptList },
+    { path: 'concept-detail/:id', component: ConceptDetail },
     { path: 'concept-detail', component: ConceptDetail },
     { path: 'product-list', component: ProductList },
     { path: 'product', component: ProductDetail },
