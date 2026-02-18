@@ -176,101 +176,26 @@
   </div>
 
   <!-- Review Modal -->
-  <div class="review-modal-overlay" *ngIf="isReviewModalOpen" (click)="closeReviewModal()">
-    <div class="review-modal" (click)="$event.stopPropagation()">
-      
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h2>Đánh giá đơn hàng</h2>
-        <button class="modal-close-btn" (click)="closeReviewModal()">
-          <i class="bi bi-x"></i>
-        </button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="modal-body">
-        
-        <!-- Product Info -->
-        <div *ngIf="currentReviewOrder" class="review-product-info">
-          <div class="review-product-image">
-            <img 
-              [src]="currentReviewOrder.items[0]?.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
-              alt="product"
-            />
-          </div>
-          <div class="review-product-text">
-            <p>
-              <span class="value">{{ currentReviewOrder.items[0]?.product?.Ten_san_pham }}</span>
-            </p>
-            <p>
-              <span class="value">Số lượng: {{ currentReviewOrder.items[0]?.So_luong }}</span>
-            </p>
-            <p>
-              <span class="value">{{ currentReviewOrder.order.Ma_don_mua }}</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Rating Selection -->
-        <div class="review-rating-section">
-          <label>Đánh giá</label>
-          <div class="rating-stars-select">
-            <span 
-              *ngFor="let i of [1, 2, 3, 4, 5]"
-              class="rating-star"
-              [ngClass]="(hoveringRating || reviewRating) >= i ? 'filled' : ''"
-              (click)="setReviewRating(i)"
-              (mouseenter)="hoveringRating = i"
-              (mouseleave)="hoveringRating = 0">
-              <i class="bi" [ngClass]="(hoveringRating || reviewRating) >= i ? 'bi-star-fill' : 'bi-star'"></i>
-            </span>
-          </div>
-        </div>
-
-        <!-- Add Images Section -->
-        <div class="review-images-section">
-          <label>Thêm hình ảnh</label>
-          <div class="images-grid">
-            <div *ngFor="let i of [0, 1, 2, 3, 4]" class="image-upload-box">
-              <input
-                type="file"
-                accept="image/*"
-                (change)="onImageSelected($event, i)"
-                #imageInput/>
-              <div class="image-preview" *ngIf="reviewImages[i]" (click)="imageInput.click()">
-                <img [src]="reviewImages[i]" alt="preview"/>
-                <button type="button" class="remove-image-btn" (click)="$event.stopPropagation(); removeImage(i)">
-                  <i class="bi bi-x"></i>
-                </button>
-              </div>
-              <div class="upload-placeholder" *ngIf="!reviewImages[i]" (click)="imageInput.click()">
-                <i class="bi bi-plus"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Review Content -->
-        <div class="review-content-section">
-          <label>Nhận xét của bạn</label>
-          <div class="textarea-wrapper">
-            <textarea
-              class="review-textarea"
-              [(ngModel)]="reviewContent"
-              (input)="limitReviewContent()"
-              maxlength="500"
-              placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này...">
-            </textarea>
-            <div class="char-counter">{{ reviewContent.length }}/500</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button class="btn-cancel" (click)="closeReviewModal()">Hủy</button>
-        <button class="btn-submit" (click)="submitReview()">Gửi đánh giá</button>
-      </div>
-    </div>
-  </div>
+  <app-modal
+    modalId="reviewModal"
+    title="Đánh giá đơn hàng"
+    [showHeader]="true"
+    [showTitleAndLine]="true"
+    [showCloseButton]="true"
+    (close)="closeReviewModal()">
+    <app-review-moda
+      [currentReviewOrder]="currentReviewOrder"
+      [reviewRating]="reviewRating"
+      [hoveringRating]="hoveringRating"
+      [reviewImages]="reviewImages"
+      [reviewContent]="reviewContent"
+      (reviewContentChange)="onReviewContentChange($event)"
+      (setReviewRating)="setReviewRating($event)"
+      (hoveringRatingChange)="setHoveringRating($event)"
+      (imageSelected)="onImageSelected($event.event, $event.index)"
+      (removeImage)="removeImage($event)"
+      (cancel)="closeReviewModal()"
+      (submit)="submitReview()">
+    </app-review-moda>
+  </app-modal>
 </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Modal } from '../../../components/modal/modal';
+import { ReviewModa } from './review-moda/review-moda';
 import { Order } from '../../../services/order';
 import { Order_Details } from '../../../services/order_details';
 import { Review } from '../../../services/review';
@@ -19,7 +21,7 @@ interface OrderItemWithReview {
 
 @Component({
   selector: 'app-reviews',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Modal, ReviewModa],
   templateUrl: './reviews.html',
   styleUrl: './reviews.css',
 })
@@ -35,7 +37,6 @@ export class Reviews implements OnInit {
   selectedRatingFilter: number = 0; // 0 means all ratings
 
   // Review Modal
-  isReviewModalOpen = false;
   currentReviewOrder: OrderItemWithReview | null = null;
   reviewRating: number = 5;
   reviewContent: string = '';
@@ -160,15 +161,29 @@ export class Reviews implements OnInit {
     this.currentReviewOrder = order;
     this.reviewRating = 5;
     this.reviewContent = '';
-    this.isReviewModalOpen = true;
+    this.reviewImages = [];
+    this.hoveringRating = 0;
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('reviewModal');
+      if (modalEl) {
+        const modal = new (window as any).bootstrap.Modal(modalEl);
+        modal.show();
+      }
+    }, 0);
   }
 
   closeReviewModal(): void {
-    this.isReviewModalOpen = false;
+    const modalEl = document.getElementById('reviewModal');
+    if (modalEl) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
     this.currentReviewOrder = null;
     this.reviewRating = 5;
     this.reviewContent = '';
     this.reviewImages = [];
+    this.hoveringRating = 0;
   }
 
   setReviewRating(rating: number): void {
@@ -179,6 +194,15 @@ export class Reviews implements OnInit {
     if (this.reviewContent.length > 500) {
       this.reviewContent = this.reviewContent.substring(0, 500);
     }
+  }
+
+  onReviewContentChange(value: string): void {
+    this.reviewContent = value;
+    this.limitReviewContent();
+  }
+
+  setHoveringRating(value: number): void {
+    this.hoveringRating = value;
   }
 
   onImageSelected(event: any, index: number): void {
