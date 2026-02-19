@@ -1,0 +1,17 @@
+<div class="table-container">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <ng-content select="[table-header]"></ng-content>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-content select="[table-body]"></ng-content>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <ng-content select="[table-pagination]"></ng-content>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { iProduct } from '../../interfaces/product';
 import { iReview } from '../../interfaces/review';
@@ -7,7 +8,7 @@ import { Review } from '../../services/review';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-card.html',
   styleUrls: ['./product-card.css'],
 })

@@ -1,0 +1,29 @@
+<div class="confirm-backdrop" (click)="onCancel()"></div>
+<div class="confirm-dialog" role="dialog" aria-modal="true" [attr.aria-label]="title">
+  <div class="confirm-modal">
+
+    <div class="custom-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button type="button" class="custom-close" (click)="onCancel()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <div class="modal-body text-center">
+      <p class="confirm-message">
+        {{ message }}
+      </p>
+
+      <div class="confirm-actions">
+        <!-- <button class="btn-cancel" (click)="onCancel()">
+          Hủy
+        </button> -->
+
+        <button class="btn-confirm" (click)="onConfirm()">
+          Xác nhận
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

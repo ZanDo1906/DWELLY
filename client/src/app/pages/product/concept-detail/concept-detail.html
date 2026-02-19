@@ -1,4 +1,4 @@
-<section product-detail-concept>
+<section concept-detail>
   <div class="container-fluid py-4">
     <div class="px-4">
       <div class="site-inner">
@@ -36,28 +36,31 @@
           </div>
         </div>
         <!-- Phần sản phẩm liên quan -->
-        <div class="related-products row">
-          <div class="col-md-3" *ngFor="let p of relatedProducts">
-            <div class="concept-card"
-                (mouseenter)="hovered=p.Ma_san_pham"
-                (mouseleave)="hovered=null">
-              <div class="scroll-wrapper">
-              <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn left" (click)="prevImage(p)">
-                <i class="bi bi-chevron-left"></i>
-              </button>
-              <app-product-card 
-                [product]="p" 
-                [mainImage]="p.Hinh_anh[currentIndex[p.Ma_san_pham] || 0]" 
-                [enableHover]="false">
-              </app-product-card>
+        <div class="related-products row g-4"> <div class="col-6 col-md-4 col-lg-3" *ngFor="let p of relatedProducts">
+    <div class="concept-card"
+         (mouseenter)="hovered=p.Ma_san_pham"
+         (mouseleave)="hovered=null">
+      
+      <div class="scroll-wrapper">
+        <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn left" (click)="prevImage(p)">
+          <i class="bi bi-chevron-left"></i>
+        </button>
 
-              <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn right" (click)="nextImage(p)">
-                <i class="bi bi-chevron-right"></i>
-              </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-product-card 
+          [product]="p" 
+          [mainImage]="p.Hinh_anh[currentIndex[p.Ma_san_pham] || 0]" 
+          [enableHover]="false">
+        </app-product-card>
+
+        <button *ngIf="hovered===p.Ma_san_pham" class="scroll-btn right" (click)="nextImage(p)">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+ 
 
 
         

@@ -202,24 +202,16 @@
 
 /* ========== SUCCESS MODAL ========== */
 
-.success-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
+#successModal .modal-body {
+    padding: 0;
 }
 
-.success-box {
-    max-width: 500px;
-    width: 90%;
-    background: #ffffff;
+#successModal .success-box {
+    background: transparent;
     border-radius: 12px;
-    padding: 40px 32px;
+    padding: 40px 44px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
 }
 
 .success-title {
@@ -243,7 +235,11 @@
     display: flex;
     gap: 12px;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+    margin-top: 16px;
+}
+.success-buttons button {
+  flex: 1;
 }
 
 .btn-continue,

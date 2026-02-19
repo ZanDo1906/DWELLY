@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Modal } from '../../../components/modal/modal';
 
 @Component({
   selector: 'app-qr-payment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Modal],
   templateUrl: './qr-payment.html',
   styleUrl: './qr-payment.css',
 })
@@ -68,11 +69,23 @@ export class QRPayment implements OnInit, OnDestroy {
         clearInterval(this.confirmTimer);
         this.confirmTimer = null;
         this.showSuccessModal = true;
+        setTimeout(() => {
+          const modalEl = document.getElementById('successModal');
+          if (modalEl && (window as any).bootstrap?.Modal) {
+            const modal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+          }
+        }, 0);
       }
     }, 1000);
   }
 
   closeSuccessModal() {
+    const modalEl = document.getElementById('successModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
     this.showSuccessModal = false;
     this.close();
   }

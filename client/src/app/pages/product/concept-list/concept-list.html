@@ -89,7 +89,7 @@
 
         <!-- CONCEPT GRID -->
         <div class="concept-grid">
-          <div class="concept-card" *ngFor="let concept of displayedConcepts">
+          <div class="concept-card" *ngFor="let concept of displayedConcepts" [routerLink]="['/concept-detail', concept.Ma_khong_gian]">
             <div class="concept-img-wrapper">
               <img [src]="concept.Hinh_anh" [alt]="concept.Ten_khong_gian" class="concept-img">
               <div class="concept-overlay">

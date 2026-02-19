@@ -1,0 +1,137 @@
+.account-page {
+  --brown: #6C5234;
+  --text-dark: #373737;
+  --text-gray: #808080;
+  --border: #E5E5E5;
+}
+
+/* ===== TITLE ===== */
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 24px;
+}
+
+/* ===== CARD ===== */
+.account-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 24px;
+  transition: all 0.25s ease;
+}
+
+.account-card:hover {
+  border-color: var(--brown);
+  box-shadow: 0 6px 16px rgba(108, 82, 52, 0.12);
+}
+
+/* ===== TOP ===== */
+.account-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  background: #ddd;
+  border-radius: 50%;
+}
+
+.user-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.user-email {
+  font-size: 16px;
+  color: var(--text-gray);
+}
+
+/* ===== FORM ===== */
+.account-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full {
+  grid-column: span 2;
+}
+
+label {
+  font-size: 16px;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+input {
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+input:disabled {
+  background: #f5f5f5;
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-gray);
+}
+
+.change-password {
+  font-size: 14px;
+  color: var(--brown);
+  margin-top: 6px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* ===== BUTTON ===== */
+.btn-brown {
+  background: var(--brown);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 18px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-update {
+  height: 38px;
+}

@@ -9,7 +9,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrl: './test.css',
 })
 export class Test implements OnInit {
-  activeTab: string = 'product';
+  activeTab: string = 'clientFavorites';
   console = console; // Make console available in template
 
   adminList: any[] = [];
@@ -118,6 +118,11 @@ export class Test implements OnInit {
 
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
+  }
+
+  // Method to get product by ID for favorites display
+  getProductById(productId: string): any {
+    return this.productList.find(product => product.Ma_san_pham === productId);
   }
 
   // Helper method to fix image paths

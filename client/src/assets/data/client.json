@@ -13,20 +13,53 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-02-14",
         "Ma_phan_hang": "KIMCUONG",
-        "Tong_diem": 124070
+        "Tong_diem": 124070,
+        "favorites": [
+            "05",
+            "12",
+            "23",
+            "31",
+            "45",
+            "52",
+            "61",
+            "09",
+            "17",
+            "28",
+            "44",
+            "56",
+            "69",
+            "07",
+            "15"
+        ]
     },
     {
         "Ma_khach_hang": "C02",
         "Ho_va_ten": "Trần Thị Thu Hà",
         "So_dien_thoai": "0912345678",
         "Email": "thuha.tran@gmail.com",
-        "Mat_khau": "ha123",
+        "Mat_khau": "ha12345",
         "Dia_chi": "45 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-17",
         "Ma_phan_hang": "VANG",
-        "Tong_diem": 63990
+        "Tong_diem": 63990,
+        "favorites": [
+            "01",
+            "08",
+            "16",
+            "24",
+            "33",
+            "47",
+            "58",
+            "62",
+            "71",
+            "03",
+            "19",
+            "26",
+            "38",
+            "49"
+        ]
     },
     {
         "Ma_khach_hang": "C03",
@@ -42,7 +75,24 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-14",
         "Ma_phan_hang": "VANG",
-        "Tong_diem": 67783
+        "Tong_diem": 67783,
+        "favorites": [
+            "11",
+            "21",
+            "34",
+            "42",
+            "54",
+            "67",
+            "72",
+            "04",
+            "18",
+            "29",
+            "35",
+            "46",
+            "59",
+            "63",
+            "70"
+        ]
     },
     {
         "Ma_khach_hang": "C04",
@@ -55,7 +105,21 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2025-01-14",
         "Ma_phan_hang": "BAC",
-        "Tong_diem": 46500
+        "Tong_diem": 46500,
+        "favorites": [
+            "02",
+            "13",
+            "25",
+            "37",
+            "48",
+            "53",
+            "64",
+            "06",
+            "20",
+            "32",
+            "41",
+            "57"
+        ]
     },
     {
         "Ma_khach_hang": "C05",
@@ -68,7 +132,24 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-06-14",
         "Ma_phan_hang": "BAC",
-        "Tong_diem": 60140
+        "Tong_diem": 60140,
+        "favorites": [
+            "10",
+            "22",
+            "36",
+            "43",
+            "51",
+            "65",
+            "68",
+            "14",
+            "27",
+            "39",
+            "50",
+            "66",
+            "72",
+            "08",
+            "16"
+        ]
     },
     {
         "Ma_khach_hang": "C06",
@@ -81,7 +162,22 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-06",
         "Ma_phan_hang": "DONG",
-        "Tong_diem": 0
+        "Tong_diem": 0,
+        "favorites": [
+            "09",
+            "17",
+            "30",
+            "40",
+            "55",
+            "60",
+            "71",
+            "01",
+            "12",
+            "24",
+            "33",
+            "47",
+            "58"
+        ]
     },
     {
         "Ma_khach_hang": "C07",
@@ -94,6 +190,23 @@
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-10",
         "Ma_phan_hang": "BAC",
-        "Tong_diem": 46463
+        "Tong_diem": 46463,
+        "favorites": [
+            "04",
+            "15",
+            "26",
+            "38",
+            "49",
+            "56",
+            "63",
+            "11",
+            "23",
+            "35",
+            "42",
+            "54",
+            "67",
+            "05",
+            "18"
+        ]
     }
 ]

@@ -1,4 +1,4 @@
-.product-detail-concept{
+.concept-detail{
   font-family: 'Nunito Sans', sans-serif;
   color:#373737;
   font-size:14px;
@@ -47,22 +47,22 @@
 .related-products {
   margin-top: 20px;
 }
+
+
 .related-products .row {
   display: flex;
-  flex-wrap: wrap;        
-  justify-content: flex-start; 
-  gap: 25px;
+  flex-wrap: wrap;
 }
 .related-products .col-md-3 {
-  flex: 1 1 25%;
-  max-width: 25%;
-  box-sizing: border-box;
+  max-width: none; 
 }
-
 
 .scroll-wrapper {
   position: relative;
-  width: 260px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .scroll-row {
@@ -70,8 +70,9 @@
   flex-wrap: nowrap;     
   overflow-x: auto;     
   scroll-behavior: smooth;
-  gap: 25px;
-  padding: 10px 0;
+  padding:5px 0;
+  width: 100%;
+
 }
 
 .scroll-row::-webkit-scrollbar {
@@ -79,27 +80,17 @@
 }
 
 .product-item {
-  flex: 0 0 auto;        
+  flex: 1;
+  min-width: calc(25% - 15px);
+  max-width: calc(25% - 15px);
 }
 
-.scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #AFA386;
-  opacity: 0.6;
-  border: none;
-  width: 30px; 
-  height: 40px; 
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  cursor: pointer;
-  font-size: 24px;
-  padding: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  z-index: 10;
+app-product-card {
+  width: 100%;
+  height: 100%;
+  flex: 1;
 }
+
 
 .scroll-wrapper i{
   color:#fff;
@@ -211,29 +202,33 @@
 
 .concept-card {
   position: relative;
-}
-.scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background:#AFA386;
-  border: none;
-  color: #fff;
-  width: 30px;
-  height: 40px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+}
+
+
+.scroll-btn{
+  position: absolute !important;
+  top: 35% !important; 
+  transform: translateY(-50%);
+  background: #AFA386;
+  opacity: 0.6;
+  border: none;
+  width: 30px; 
+  height: 40px; 
+  display: flex;
+  align-items: center; 
   justify-content: center;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  font-size: 24px;
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
 }
 
 .concept-card:hover .scroll-btn {
   opacity: 0.6;
 }
-
-
 
 
 .card-thumb.no-hover .hover-img {

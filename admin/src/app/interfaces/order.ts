@@ -9,7 +9,7 @@ export interface iOrder {
     };
     Tong_tien: number;
     Hinh_thuc_thanh_toan: string;
-    Trang_thai: string;                 // VD: "Chờ duyệt", "Đang giao", "Hoàn thành"
+    Trang_thai: string;                 // VD: "Chờ duyệt", "Đang giao", "Hoàn thành", "Trả hàng"
     Ma_khuyen_mai?: string;              // ObjectId
     Phi_van_chuyen: number;
     Ghi_chu: string;

@@ -1,0 +1,103 @@
+.orders-page {
+  font-family: 'Nunito Sans', sans-serif;
+}
+.padding-x {
+  padding-left: 1.5rem;
+}
+
+/* HEADER */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #6C5234;
+}
+
+.add-btn {
+  background: #6F5A46;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #5c4a3a;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 250px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 8px; /* theo yêu cầu */
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #ececec;
+}
+
+.status-select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  outline: none;
+}
+
+/* STATUS TAG */
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pending {
+  background: #f5c96a;
+  color: #5c4033;
+}
+
+.approved {
+  background: #6f8f5a;
+  color: white;
+}
+
+.rejected {
+  background: #c05c5c;
+  color: white;
+}

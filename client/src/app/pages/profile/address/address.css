@@ -1,0 +1,119 @@
+.address-page {
+  --brown: #6C5234;
+  --text-dark: #373737;
+  --text-gray: #808080;
+  --border: #E5E5E5;
+}
+
+/* ===== HEADER TOP ===== */
+.address-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: var(--text-gray);
+}
+
+/* ===== CARD ===== */
+.address-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  transition: all 0.25s ease;
+}
+
+.address-card:hover {
+  border-color: var(--brown);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(108, 82, 52, 0.12);
+}
+
+/* default card */
+.address-card.is-default {
+  border-color: var(--brown);
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.address-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.address-phone {
+  font-size: 16px;
+  color: var(--text-dark);
+  margin-left: 12px;
+}
+
+.address-content {
+  font-size: 16px;
+  color: var(--text-dark);
+  margin: 6px 0 10px;
+}
+
+/* ===== BADGE ===== */
+.default-badge {
+  display: inline-block;
+  font-size: 14px;
+  background: var(--brown);
+  color: #fff;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+/* ===== BUTTON ===== */
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-brown {
+  background: var(--brown);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-outline-brown {
+  background: transparent;
+  border: 1px solid var(--brown);
+  color: var(--brown);
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+}
+
+.set-default {
+  margin-top: 8px;
+}

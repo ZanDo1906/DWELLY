@@ -1,0 +1,37 @@
+<app-table>
+
+  <!-- HEADER -->
+  <ng-container table-header>
+    <th>Mã SP</th>
+    <th>Tên sản phẩm</th>
+    <th>Giá</th>
+    <th>Đánh giá</th>
+    <th>Trạng thái</th>
+  </ng-container>
+
+  <!-- BODY -->
+  <ng-container table-body>
+    <tr *ngFor="let product of pagedProducts">
+      <td>{{ product.sku }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.rating }}</td>
+      <td [style.color]="product.statusColor">{{ product.status }}</td>
+    </tr>
+  </ng-container>
+
+  <!-- PAGINATION -->
+  <ng-container table-pagination>
+    <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+    <button
+      *ngFor="let page of pages"
+      (click)="goToPage(page)"
+      [class.active]="page === currentPage"
+    >
+      {{ page }}
+    </button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+  </ng-container>
+
+
+</app-table>

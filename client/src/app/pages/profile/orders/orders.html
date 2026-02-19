@@ -74,13 +74,41 @@
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary-custom">Đánh giá</button>
+        <button class="btn btn-primary-custom"
+          data-bs-toggle="modal"
+          data-bs-target="#reviewModal">
+          Đánh giá
+        </button>
         <button class="btn btn-outline-custom">
           Trả hàng / hoàn tiền
         </button>
       </div>
     </div>
   </div>
+
+    <!-- REVIEW MODAL -->
+    <app-modal
+      modalId="reviewModal"
+      title="Đánh giá đơn hàng"
+      [showHeader]="true"
+      [showTitleAndLine]="true"
+      [showCloseButton]="true"
+      (close)="closeReviewModal()">
+      <app-review-moda
+        [currentReviewOrder]="currentReviewOrder"
+        [reviewRating]="reviewRating"
+        [hoveringRating]="hoveringRating"
+        [reviewImages]="reviewImages"
+        [reviewContent]="reviewContent"
+        (reviewContentChange)="onReviewContentChange($event)"
+        (setReviewRating)="setReviewRating($event)"
+        (hoveringRatingChange)="setHoveringRating($event)"
+        (imageSelected)="onImageSelected($event.event, $event.index)"
+        (removeImage)="removeImage($event)"
+        (cancel)="closeReviewModal()"
+        (submit)="submitReview()">
+      </app-review-moda>
+    </app-modal>
 
   <!-- ORDER CARD 2 -->
   <div class="order-card">

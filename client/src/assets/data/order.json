@@ -262,5 +262,23 @@
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-09T14:30:00Z",
         "Ma_quan_tri_vien_duyet": "AD01"
+    },
+    {
+        "Ma_don_mua": "ORD018",
+        "Ma_khach_hang": null,
+        "Thong_tin_khach_vang_lai": {
+            "Ho_ten": "Vũ Huỳnh Văn",
+            "SDT": "0966778899",
+            "Email": "van.vu@gmail.com",
+            "Dia_chi": "Số 56, Đường ĐT743, Phường Dĩ An, Thành phố Dĩ An, Tỉnh Bình Dương"
+        },
+        "Tong_tien": 20400000,
+        "Hinh_thuc_thanh_toan": "Thanh toán toàn bộ",
+        "Trang_thai": "Trả hàng",
+        "Ma_khuyen_mai": null,
+        "Phi_giao_hang": 100000,
+        "Ghi_chu": null,
+        "Ngay_dat": "2024-03-09T14:30:00Z",
+        "Ma_quan_tri_vien_duyet": "AD01"
     }
 ]

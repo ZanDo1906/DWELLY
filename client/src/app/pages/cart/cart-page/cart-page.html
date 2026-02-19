@@ -3,7 +3,10 @@
         <div class="px-4">
             <div class="site-inner">
 
-                <h1 class="page-title">GIỎ HÀNG ({{cartItems.length}} sản phẩm)</h1>
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">GIỎ HÀNG ({{cartItems.length}} sản phẩm)</h1>
+                    <span class="title-line"></span>
+                </div>
 
                 <div class="row g-4">
                     <!-- CỘT TRÁI - PRODUCTS TABLE -->
@@ -74,7 +77,8 @@
                             <div class="voucher-input">
                                 <div class="voucher-input-wrapper">
                                     <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
-                                        [class.error]="voucherError" (click)="openVoucherPopup()" readonly />
+                                        [class.error]="voucherError" data-bs-toggle="modal"
+                                        data-bs-target="#voucherModal" readonly />
                                     <button class="btn-clear-voucher" *ngIf="voucherCode" (click)="clearVoucher()">
                                         <i class="bi bi-x"></i>
                                     </button>
@@ -130,8 +134,10 @@
         </div>
     </div>
 
-    <!-- Voucher Popup -->
-    <app-voucher-popup *ngIf="showVoucherPopup" [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
-        (voucherSelected)="handleVoucherSelected($event)">
-    </app-voucher-popup>
+    <!-- Voucher Modal -->
+    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()" title="Khuyến mãi">
+        <app-voucher-popup [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
+            (voucherSelected)="handleVoucherSelected($event)">
+        </app-voucher-popup>
+    </app-modal>
 </section>

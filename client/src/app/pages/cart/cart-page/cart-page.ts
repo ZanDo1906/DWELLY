@@ -9,6 +9,7 @@ import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { VoucherPopup } from '../voucher-popup/voucher-popup';
+import { Modal } from '../../../components/modal/modal';
 
 interface CartItem {
   product: iProduct;
@@ -18,7 +19,7 @@ interface CartItem {
 
 @Component({
   selector: 'app-cart-page',
-  imports: [CommonModule, FormsModule, VoucherPopup],
+  imports: [CommonModule, FormsModule, VoucherPopup, Modal],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css',
 })
@@ -34,7 +35,6 @@ export class CartPage implements OnInit {
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
   voucherError: string = '';
-  showVoucherPopup: boolean = false;
 
   constructor(
     private productService: Product,
@@ -220,12 +220,12 @@ export class CartPage implements OnInit {
     this.router.navigate(['/payment']);
   }
 
-  openVoucherPopup(): void {
-    this.showVoucherPopup = true;
-  }
-
   closeVoucherPopup(): void {
-    this.showVoucherPopup = false;
+    const modalEl = document.getElementById('voucherModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
   }
 
   handleVoucherSelected(voucher: iVoucher): void {

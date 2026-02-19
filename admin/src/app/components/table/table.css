@@ -1,0 +1,88 @@
+.table-container {
+  width: 100%;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+/* TABLE */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.status,
+.money {
+  white-space: nowrap;
+}
+
+
+/* HEADER */
+.admin-table thead {
+  background: rgba(175, 163, 134, 0.7);
+}
+
+.admin-table th {
+  padding: 12px;              /* rộng hơn */
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;                  /* chữ trắng */
+  text-align: center;
+}
+
+/* bo góc header */
+.admin-table th:first-child {
+  border-top-left-radius: 14px;
+}
+.admin-table th:last-child {
+  border-top-right-radius: 14px;
+}
+
+/* BODY */
+.admin-table td {
+  padding: 12px;
+  font-size: 16px;
+  color: #373737;
+  border-bottom: 1px solid #f1f1f1;
+  text-align: center;
+}
+
+.admin-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background:  rgba(175, 163, 134, 0.1);
+}
+
+/* PAGINATION */
+.pagination {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  color: #373737;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination button:hover {
+  background: #ececec;
+}
+
+.pagination .active {
+  background: #6F5A46;
+  color: white;
+}

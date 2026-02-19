@@ -12,7 +12,10 @@ export class Modal {
   @Input() modalId!: string;          // id để bootstrap target
   @Input() title?: string;            // tiêu đề modal
   @Output() close = new EventEmitter<void>();
-
+  @Input() showHeader: boolean = true;
+  @Input() showTitleAndLine: boolean = true;
+  @Input() showCloseButton: boolean = true;
+  
   closeModal() {
     const modalEl = document.getElementById(this.modalId);
     if (modalEl) {

@@ -36,6 +36,8 @@ export const routes: Routes = [
     { path: '', component: HomePage }, 
     { path: 'login', component: Login },
     { path: 'register', component: Register },
+    { path: 'product', component: ProductDetail },
+    { path: 'product/:id', component: ProductDetail },
     { path: 'payment-member', component: PaymentMember },
     { path: 'payment-non-member', component: PaymentNonMember },
     { path: 'qr-payment', component: QRPayment },
@@ -49,6 +51,7 @@ export const routes: Routes = [
     { path: 'support', component: Support },
     { path: 'terms', component: Terms },
     { path: 'concept-list', component: ConceptList },
+    { path: 'concept-detail/:id', component: ConceptDetail },
     { path: 'concept-detail', component: ConceptDetail },
     { path: 'product-list', component: ProductList },
     { path: 'product', component: ProductDetail },
@@ -71,4 +74,4 @@ export const routes: Routes = [
     },
     
 
-];
+]
