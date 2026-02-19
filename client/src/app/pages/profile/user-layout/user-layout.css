@@ -27,13 +27,8 @@ app-sidebar {
 .user-main {
   flex: 1;
   min-width: 0;
-<<<<<<< HEAD
   /* height: 100vh;
   overflow-y: auto; */
-=======
-  height: auto;
-  overflow-y: auto;
->>>>>>> 86fe0c057774d578edc113cb698b03be634d60a0
   background: #f5f5f5;
   
 }
