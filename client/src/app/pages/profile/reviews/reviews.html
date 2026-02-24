@@ -141,31 +141,22 @@
                   <p class="price-label">Giá:</p>
                   <p class="price-value">{{ item.Don_gia | number: '1.0-0' }} đ</p>
                 </div>
+
+                <div class="item-action">
+                  <button 
+                    class="btn btn-review-item"
+                    (click)="openReviewModal(orderItem, item)">
+                    Đánh giá
+                  </button>
+                </div>
               </div>
             </div>
 
-            <!-- Order Total & Review Button -->
+            <!-- Order Total -->
             <div class="order-footer">
               <div class="order-total">
                 <span>Tổng số tiền ({{ orderItem.items.length }} sản phẩm):</span>
                 <strong>{{ getTotalPrice(orderItem.items) | number: '1.0-0' }} đ</strong>
-              </div>
-
-              <button 
-                *ngIf="!orderItem.hasReview"
-                class="btn btn-review"
-                (click)="openReviewModal(orderItem)">
-                Đánh giá
-              </button>
-
-              <div *ngIf="orderItem.hasReview" class="review-badge">
-                <div class="rating-stars">
-                  <i *ngFor="let star of getStarArray(orderItem.review?.Diem_danh_gia || 0)" 
-                     class="bi" 
-                     [ngClass]="star ? 'bi-star-fill' : 'bi-star'">
-                  </i>
-                </div>
-                <p class="review-date">{{ getOrderDate(orderItem.review!.Thoi_gian_gui) }}</p>
               </div>
             </div>
           </div>
@@ -178,13 +169,14 @@
   <!-- Review Modal -->
   <app-modal
     modalId="reviewModal"
-    title="Đánh giá đơn hàng"
+    title="Đánh giá sản phẩm"
     [showHeader]="true"
     [showTitleAndLine]="true"
     [showCloseButton]="true"
     (close)="closeReviewModal()">
     <app-review-moda
-      [currentReviewOrder]="currentReviewOrder"
+      [currentProduct]="currentProduct"
+      [orderInfo]="currentReviewOrder?.order"
       [reviewRating]="reviewRating"
       [hoveringRating]="hoveringRating"
       [reviewImages]="reviewImages"

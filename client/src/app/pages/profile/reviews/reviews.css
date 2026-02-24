@@ -18,6 +18,7 @@
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 4px;
+  font-family: 'Nunito', sans-serif;
 
 }
 
@@ -25,6 +26,7 @@
   color: #808080;
   font-size: 16px;
   margin-bottom: 0;
+  font-family: 'Nunito', sans-serif;
 }
 
 /* ===== FILTER TABS ===== */
@@ -179,7 +181,7 @@
 
 .order-status-tab {
   display: inline-block;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   padding: 6px 12px;
   font-size: 12px;
   font-weight: 600;
@@ -212,7 +214,7 @@
   border-bottom: 1px solid var(--border);
   gap: 20px;
   flex-wrap: wrap;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #6C5234;
   font-style: bold;
 }
@@ -222,7 +224,7 @@
   gap: 12px;
   align-items: center;
   font-size: 14px;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #6C5234;
   flex-wrap: wrap;
 }
@@ -295,7 +297,7 @@
 }
 
 .item-name {
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: var(--primary);
@@ -303,7 +305,7 @@
 }
 
 .item-category {
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 14px;
   color: #373737;
   margin-bottom: 4px;
@@ -312,7 +314,7 @@
 .item-quantity {
   font-size: 14px;
   color: #373737;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .item-price {
@@ -320,15 +322,21 @@
   text-align: right;
 }
 
+.item-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
 .price-label {
- font-family: 'nunito', sans-serif; 
+ font-family: 'Nunito', sans-serif; 
   font-size: 14px;
   color: #373737;
   margin-bottom: 4px;
 }
 
 .price-value {
-font-family: 'nunito', sans-serif;
+font-family: 'Nunito', sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: #6C5234;
@@ -353,7 +361,7 @@ font-family: 'nunito', sans-serif;
 }
 
 .order-total span {
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
     color:#373737;
 }
 
@@ -376,6 +384,23 @@ font-family: 'nunito', sans-serif;
 }
 
 .btn-review:hover {
+  background-color: #4c3b22;
+}
+
+.btn-review-item {
+  background-color: #6C5234;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-review-item:hover {
   background-color: #4c3b22;
 }
 
@@ -522,7 +547,7 @@ font-family: 'nunito', sans-serif;
 }
 
 .review-product-text p {
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
   font-size: 14px;
 }
@@ -531,7 +556,7 @@ font-family: 'nunito', sans-serif;
   color: #373737;
   margin-bottom: 4px;
     font-weight: 600;
-    font-family: 'nunito', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .review-product-text .value {
@@ -553,7 +578,7 @@ font-family: 'nunito', sans-serif;
   font-weight: 600;
   color: #373737;
   margin-bottom: 12px;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .rating-stars-select {
@@ -584,7 +609,7 @@ font-family: 'nunito', sans-serif;
   font-weight: 600;
   color: #373737;
   margin-bottom: 12px;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .images-grid {
@@ -680,7 +705,7 @@ font-family: 'nunito', sans-serif;
   font-weight: 600;
   color: #373737;
   margin-bottom: 8px;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .review-textarea {
@@ -721,7 +746,7 @@ font-family: 'nunito', sans-serif;
   font-weight: 500;
   background: white;
   padding: 2px 4px;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .modal-footer {
@@ -743,7 +768,7 @@ font-family: 'nunito', sans-serif;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .btn-cancel {
@@ -807,6 +832,16 @@ font-family: 'nunito', sans-serif;
 
   .item-price {
     text-align: left;
+  }
+
+  .item-action {
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  .btn-review-item {
+    width: 100%;
+    text-align: center;
   }
 
   .reviews-title {

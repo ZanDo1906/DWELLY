@@ -1,20 +1,20 @@
 <!-- Product Info -->
-<div *ngIf="currentReviewOrder" class="review-product-info">
+<div *ngIf="currentProduct" class="review-product-info">
 		<div class="review-product-image">
 			<img
-				[src]="currentReviewOrder.items[0]?.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
+				[src]="currentProduct.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
 				alt="product"
 			/>
 		</div>
 		<div class="review-product-text">
 			<p>
-				<span class="value">{{ currentReviewOrder.items[0]?.product?.Ten_san_pham }}</span>
+				<span class="value">{{ currentProduct.product?.Ten_san_pham }}</span>
 			</p>
 			<p>
-				<span class="value">Số lượng: {{ currentReviewOrder.items[0]?.So_luong }}</span>
+				<span class="value">Số lượng: {{ currentProduct.So_luong }}</span>
 			</p>
 			<p>
-				<span class="value">{{ currentReviewOrder.order.Ma_don_mua }}</span>
+				<span class="value">{{ orderInfo?.Ma_don_mua }}</span>
 			</p>
 		</div>
 	</div>
@@ -75,6 +75,5 @@
 
 <!-- Modal Footer -->
 <div class="modal-footer">
-	<button class="btn-cancel" (click)="cancel.emit()">Hủy</button>
 	<button class="btn-submit" (click)="submit.emit()">Gửi đánh giá</button>
 </div>
