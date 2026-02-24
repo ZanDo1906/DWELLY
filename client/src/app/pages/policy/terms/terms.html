@@ -12,10 +12,15 @@
   <!-- Policies Container -->
   <div class="policies-wrapper">
     <!-- Policy 1: Chính sách bán hàng -->
-    <div class="policy-item">
-      <div class="policy-number">1</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách bán hàng</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(1)">
+      <div class="policy-header" (click)="togglePolicy(1)">
+        <div class="policy-number">1</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách bán hàng</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(1)" [class.bi-chevron-up]="isPolicyExpanded(1)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(1)">
         <p>Website cung cấp các sản phẩm nội thất phục vụ nhu cầu cá nhân và hộ gia đình.</p>
         <p>Khách hàng có thể mua sản phẩm theo hai hình thức:</p>
         <ul>
@@ -30,10 +35,15 @@
     </div>
 
     <!-- Policy 2: Chính sách thanh toán -->
-    <div class="policy-item">
-      <div class="policy-number">2</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách thanh toán</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(2)">
+      <div class="policy-header" (click)="togglePolicy(2)">
+        <div class="policy-number">2</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách thanh toán</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(2)" [class.bi-chevron-up]="isPolicyExpanded(2)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(2)">
         <p>Khách hàng có thể lựa chọn một trong hai hình thức thanh toán:</p>
         <ul>
           <li>Đặt cọc trước một phần giá trị đơn hàng (ví dụ: 30%) để xác nhận đơn.</li>
@@ -44,10 +54,15 @@
     </div>
 
     <!-- Policy 3: Chính sách giao hàng và lắp đặt -->
-    <div class="policy-item">
-      <div class="policy-number">3</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách giao hàng và lắp đặt</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(3)">
+      <div class="policy-header" (click)="togglePolicy(3)">
+        <div class="policy-number">3</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách giao hàng và lắp đặt</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(3)" [class.bi-chevron-up]="isPolicyExpanded(3)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(3)">
         
         <h4 class="sub-title">3.1. Giao hàng</h4>
         <p>Cửa hàng trực tiếp thực hiện việc vận chuyển và giao hàng, không thông qua đơn vị vận chuyển bên thứ ba.</p>
@@ -66,10 +81,15 @@
     </div>
 
     <!-- Policy 4: Chính sách đổi trả -->
-    <div class="policy-item">
-      <div class="policy-number">4</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách đổi trả</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(4)">
+      <div class="policy-header" (click)="togglePolicy(4)">
+        <div class="policy-number">4</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách đổi trả</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(4)" [class.bi-chevron-up]="isPolicyExpanded(4)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(4)">
         <p>Sản phẩm được hỗ trợ đổi trả trong các trường hợp sau:</p>
         <ul>
           <li>Sản phẩm bị lỗi kỹ thuật do nhà sản xuất.</li>
@@ -87,10 +107,15 @@
     </div>
 
     <!-- Policy 5: Chính sách bảo hành -->
-    <div class="policy-item">
-      <div class="policy-number">5</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách bảo hành</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(5)">
+      <div class="policy-header" (click)="togglePolicy(5)">
+        <div class="policy-number">5</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách bảo hành</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(5)" [class.bi-chevron-up]="isPolicyExpanded(5)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(5)">
         <p>Các sản phẩm nội thất được bảo hành theo quy định riêng của cửa hàng.</p>
         <p>Thời gian bảo hành tùy thuộc vào từng loại sản phẩm và vật liệu sử dụng.</p>
         <p>Thông tin chi tiết về bảo hành sẽ được cung cấp khi khách hàng mua sản phẩm.</p>
@@ -99,10 +124,15 @@
     </div>
 
     <!-- Policy 6: Chính sách hỗ trợ khách hàng -->
-    <div class="policy-item">
-      <div class="policy-number">6</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách hỗ trợ khách hàng</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(6)">
+      <div class="policy-header" (click)="togglePolicy(6)">
+        <div class="policy-number">6</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách hỗ trợ khách hàng</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(6)" [class.bi-chevron-up]="isPolicyExpanded(6)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(6)">
         <p>Khách hàng có thể liên hệ cửa hàng thông qua các kênh hỗ trợ:</p>
         <ul>
           <li>Hotline</li>
@@ -116,10 +146,15 @@
     </div>
 
     <!-- Policy 7: Chính sách ưu đãi và thành viên -->
-    <div class="policy-item">
-      <div class="policy-number">7</div>
-      <div class="policy-content">
-        <h3 class="policy-title">Chính sách ưu đãi và thành viên</h3>
+    <div class="policy-item" [class.expanded]="isPolicyExpanded(7)">
+      <div class="policy-header" (click)="togglePolicy(7)">
+        <div class="policy-number">7</div>
+        <div class="policy-title-header">
+          <h3 class="policy-title">Chính sách ưu đãi và thành viên</h3>
+          <i class="bi" [class.bi-chevron-down]="!isPolicyExpanded(7)" [class.bi-chevron-up]="isPolicyExpanded(7)"></i>
+        </div>
+      </div>
+      <div class="policy-content" *ngIf="isPolicyExpanded(7)">
         <p>Website áp dụng chương trình tích điểm và phân hạng thành viên dành cho người dùng đã đăng ký tài khoản.</p>
         <p>Điểm thưởng được tích lũy sau mỗi đơn hàng thành công và đã được duyệt.</p>
         <p>Điểm thưởng được sử dụng để:</p>
