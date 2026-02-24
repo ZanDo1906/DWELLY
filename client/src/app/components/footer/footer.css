@@ -46,6 +46,17 @@
   color: #afa386;
 }
 
+.footer-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+}
+
+.footer-link:hover {
+  color: #afa386;
+}
+
 /* =========================
    COPYRIGHT
 ========================= */
