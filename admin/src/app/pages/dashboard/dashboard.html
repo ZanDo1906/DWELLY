@@ -1,1 +1,106 @@
-<p>dashboard works!</p>
+<section>
+    <div class="container-fluid py-4">
+        <div class="padding-x">
+            <div class="site-inner dashboard-page">
+                <h2 class="page-title">Dashboard</h2>
+
+                <div class="period-filter">
+                    <select class="period-select" [value]="selectedPeriod" (change)="onPeriodChange($event)">
+                        <option *ngFor="let option of periodOptions" [value]="option.key">
+                            {{ option.label }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-card summary-revenue">
+                        <p class="summary-label">Tổng doanh thu</p>
+                        <p class="summary-value">{{ dataLoaded ? formatCurrency(totalRevenue) : 'Đang tải...' }}</p>
+                    </div>
+
+                    <div class="summary-card">
+                        <p class="summary-label">Tổng đơn đặt hàng</p>
+                        <p class="summary-value">{{ dataLoaded ? totalOrders : '...' }} đơn</p>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="panel revenue-panel">
+                        <div class="panel-header">
+                            <span class="panel-title">Tổng doanh thu</span>
+                            <span class="legend-item legend-current">{{ currentPeriodLabel }}</span>
+                            <span class="legend-item legend-prev">{{ previousPeriodLabel }}</span>
+                        </div>
+
+                        <div class="line-chart-wrap">
+                            <div class="y-axis">
+                                <span *ngFor="let label of yAxisLabels">{{ label }}</span>
+                            </div>
+
+                            <div class="line-chart-body">
+                                <svg viewBox="0 0 700 220" preserveAspectRatio="none">
+                                    <polyline class="line-prev" [attr.points]="previousPolylinePoints"></polyline>
+                                    <polyline class="line-current" [attr.points]="currentPolylinePoints"></polyline>
+                                </svg>
+                                <div class="x-axis" [style.grid-template-columns]="xAxisGridTemplateColumns">
+                                    <span *ngFor="let label of chartXAxisLabels">{{ label }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel top-product-panel">
+                        <h3 class="panel-title">Top 5 sản phẩm bán chạy</h3>
+                        <div class="rank-list" *ngIf="topProducts.length; else topProductFallback">
+                            <div class="rank-item" *ngFor="let item of topProducts; let index = index">
+                                <span class="rank-index">Top {{ index + 1 }}:</span>
+                                <span class="rank-name">{{ item.name }}</span>
+                                <span class="rank-value">{{ item.quantity }}</span>
+                            </div>
+                        </div>
+                        <ng-template #topProductFallback>
+                            <p class="fallback-text">Chưa có dữ liệu</p>
+                        </ng-template>
+                    </div>
+
+                    <div class="panel status-panel">
+                        <h3 class="panel-title">Tình trạng đơn đặt hàng</h3>
+                        <div class="status-chart-wrap" *ngIf="orderStatusItems.length; else statusFallback">
+                            <div class="status-y-axis">
+                                <span *ngFor="let label of statusAxisLabels">{{ label }}</span>
+                            </div>
+
+                            <div class="status-bars">
+                                <div class="status-col" *ngFor="let item of orderStatusItems; let index = index">
+                                    <div class="status-value">{{ item.count }}</div>
+                                    <div class="status-bar" [style.height.px]="getStatusBarHeight(item.count)"></div>
+                                    <div class="status-name">{{ item.label }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #statusFallback>
+                            <p class="fallback-text">Chưa có dữ liệu</p>
+                        </ng-template>
+                    </div>
+
+                    <div class="panel ratio-panel">
+                        <h3 class="panel-title">Tỷ lệ đặt hàng theo loại sản phẩm</h3>
+                        <div class="ratio-content" *ngIf="categoryShareItems.length; else ratioFallback">
+                            <div class="donut-chart" [style.background]="donutBackground"></div>
+                            <div class="ratio-legend">
+                                <div class="ratio-item" *ngFor="let item of categoryShareItems">
+                                    <span class="ratio-dot" [style.background]="item.color"></span>
+                                    <span class="ratio-name">{{ item.name }}</span>
+                                    <span class="ratio-percent">{{ item.percent }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #ratioFallback>
+                            <p class="fallback-text">Chưa có dữ liệu</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

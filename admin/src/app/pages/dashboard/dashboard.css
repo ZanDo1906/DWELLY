@@ -1,0 +1,409 @@
+.dashboard-page {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.padding-x {
+    padding-left: 1.5rem;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #6c5234;
+    margin-bottom: 12px;
+}
+
+.period-filter {
+    margin-bottom: 12px;
+}
+
+.period-select {
+    height: 32px;
+    min-width: 116px;
+    padding: 0 10px;
+    border: 1px solid #d9d3c8;
+    border-radius: 8px;
+    background: #6f5a46;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 12px;
+    max-width: 620px;
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: #d7d2cb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    min-height: 78px;
+}
+
+.summary-revenue {
+    background: #bdb2a2;
+}
+
+.summary-label {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: #40352a;
+    font-weight: 600;
+}
+
+.summary-value {
+    margin: 0;
+    font-size: 26px;
+    color: #5d472f;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+}
+
+.panel {
+    background: #e8e4df;
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+
+.panel-title {
+    margin: 0;
+    color: #6f5a46;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+
+.legend-item {
+    font-size: 12px;
+    color: #3f3f3f;
+    position: relative;
+    padding-left: 12px;
+}
+
+.legend-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+}
+
+.legend-current::before {
+    background: #1f1f1f;
+}
+
+.legend-prev::before {
+    background: #7aa8e8;
+}
+
+.line-chart-wrap {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 5px;
+}
+
+.y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #4b4b4b;
+    padding: 4px 0 20px;
+}
+
+.line-chart-body svg {
+    width: 100%;
+    height: 168px;
+}
+
+.line-current,
+.line-prev {
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2.5;
+}
+
+.line-current {
+    stroke: #2d2d2d;
+}
+
+.line-prev {
+    stroke: #96bbe9;
+    stroke-dasharray: 6 4;
+}
+
+.x-axis {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 10px;
+    color: #4b4b4b;
+    margin-top: 2px;
+}
+
+.x-axis span {
+    text-align: center;
+}
+
+.top-product-panel {
+    min-height: 250px;
+    background: #e8e4df;
+    border-radius: 16px;
+    padding: 16px 14px;
+}
+
+.top-product-panel .panel-title {
+    color: #6a5338;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.rank-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rank-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #504a44;
+}
+
+.rank-index {
+    font-weight: 700;
+    color: #6a5338;
+    min-width: 56px;
+}
+
+.rank-name {
+    color: #5a5550;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rank-value {
+    display: none;
+}
+
+.status-panel,
+.ratio-panel {
+    min-height: 190px;
+}
+
+.ratio-panel {
+    border-radius: 16px;
+    padding: 14px 16px;
+}
+
+.ratio-panel .panel-title {
+    color: #6a5338;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.status-panel {
+    background: #e8e4df;
+    border-radius: 16px;
+    padding: 14px 14px 12px;
+}
+
+.status-panel .panel-title {
+    color: #6a5338;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.status-chart-wrap {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+}
+
+.status-y-axis {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #2f2f2f;
+    padding-top: 6px;
+}
+
+.status-bars {
+    position: relative;
+    height: 140px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    align-items: end;
+    padding: 0 8px 0;
+}
+
+.status-col {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-value {
+    display: none;
+}
+
+.status-bar {
+    width: 22px;
+    min-height: 8px;
+    border-radius: 10px;
+    background: #6fa4e8;
+}
+
+.status-col:nth-child(1) .status-bar {
+    background: #9bb9ea;
+}
+
+.status-col:nth-child(2) .status-bar {
+    background: #5fd0c6;
+}
+
+.status-col:nth-child(3) .status-bar {
+    background: #111111;
+}
+
+.status-col:nth-child(4) .status-bar {
+    background: #6fa4e8;
+}
+
+.status-name {
+    font-size: 16px;
+    color: #2f2f2f;
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.ratio-content {
+    margin-top: 14px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.donut-chart {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.donut-chart::after {
+    content: '';
+    position: absolute;
+    inset: 23px;
+    background: #e8e4df;
+    border-radius: 50%;
+}
+
+.ratio-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.ratio-item {
+    display: grid;
+    grid-template-columns: auto 1fr 56px;
+    gap: 8px;
+    align-items: center;
+    font-size: 13px;
+    color: #59544f;
+}
+
+.ratio-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+}
+
+.ratio-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ratio-percent {
+    color: #4d4d4d;
+    font-weight: 500;
+    text-align: right;
+}
+
+.fallback-text {
+    margin-top: 14px;
+    color: #7d7d7d;
+    font-size: 12px;
+    font-style: italic;
+}
+
+@media (max-width: 1200px) {
+    .summary-value {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-grid {
+        max-width: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-title {
+        font-size: 30px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-value {
+        font-size: 22px;
+    }
+
+    .panel-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}

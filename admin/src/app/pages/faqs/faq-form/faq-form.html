@@ -1,1 +1,32 @@
-<p>faq-form works!</p>
+<div class="faq-form" *ngIf="faq as selectedFaq">
+    <div class="faq-top">
+        <div class="avatar-wrap">
+            <div class="avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+        </div>
+
+        <div class="meta-block">
+            <div class="customer-name">{{ selectedFaq.customerName }}</div>
+            <div class="meta-line">Ngày đăng: {{ selectedFaq.submittedAt }}</div>
+            <div class="meta-line">
+                Trạng thái:
+                <span class="status-text" [class]="statusClass">{{ selectedFaq.statusLabel }}</span>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title">CÂU HỎI</div>
+            <div class="question-text">{{ selectedFaq.questionContent }}</div>
+        </div>
+    </div>
+
+    <div class="reply-wrap">
+        <textarea [(ngModel)]="replyContent" placeholder="Nội dung" rows="7"></textarea>
+    </div>
+
+    <div class="actions">
+        <button type="button" class="btn-outline-brown" (click)="onSaveDraft()">Lưu nháp</button>
+        <button type="button" class="btn-brown" (click)="onSendAnswer()">Gửi câu trả lời</button>
+    </div>
+</div>
