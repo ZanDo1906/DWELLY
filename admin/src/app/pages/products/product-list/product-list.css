@@ -1,0 +1,243 @@
+.products-page {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.padding-x {
+  padding-left: 1.5rem;
+}
+
+/* HEADER */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #6c5234;
+}
+
+.add-btn {
+  background: #6c5234;
+  color: #fff;
+  width: 160px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #56422a;
+}
+
+.filter-btn.active {
+  background-color: #6c5234;
+  color: #fff;
+  font-weight: 500;
+}
+
+app-table th:nth-child(1), app-table td:nth-child(1) {
+  width: 80px; 
+  text-align: center;
+}
+
+app-table th:nth-child(2), app-table td:nth-child(2) {
+  width: 280px; 
+    text-align: center;
+}
+/* FILTER BAR & BUTTONS */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 250px; 
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px; 
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c5234; 
+  font-size: 16px; 
+  z-index: 2;
+  display: block !important;
+}
+
+.search-input {
+  width: 100%;
+  height: 36px !important; 
+  padding: 0 15px 0 42px !important; 
+  border: 1px solid rgba(108, 82, 52, 0.4); 
+  border-radius: 50px; 
+  font-size: 14px; 
+  color: #333;
+  outline: none;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.search-input:focus {
+  border-color: #6c5234;
+}
+
+.search-input::placeholder {
+  color: #888;
+  font-weight: 300;
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  background: #ffffff;
+  border: 1px solid rgba(108, 82, 52, 0.4); 
+  color: #6c5234;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: rgba(108, 82, 52, 0.05);
+}
+
+.filter-btn.active, .filter-btn:active {
+  background: #6c5234 !important;
+  color: #ffffff !important;
+  border-color: #6c5234 !important;
+}
+
+
+.dropdown-wrapper {
+  position: relative;
+  width: 160px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.dropdown-selected {
+  display: flex;
+  width: 160px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  border-radius: 8px;
+  background: #fff;
+  color: #6c5234;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.dropdown-selected:hover {
+  border-color: #6c5234;
+}
+
+.dropdown-icon {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  font-size: 14px;
+  width: 160px;
+  background: #fff;
+  border: 1px solid rgba(108, 82, 52, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: block !important;
+  z-index: 2000;
+  overflow: visible;
+  animation: fadeDown 0.1s ease-in-out;
+}
+
+
+.dropdown-item {
+  padding: 10px 14px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(108, 82, 52, 0.1);
+  color: #6c5234;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+app-table th {
+  background: rgba(175, 163, 134, 0.67) !important; 
+  font-weight: 700;
+  color: #ffffff; 
+  padding: 14px 12px;
+  font-size: 16px;
+}
+
+app-table td {
+font-size: 14px;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+[table-pagination] button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  border-radius: 4px;
+  background: #fff;
+  color: #6c5234;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+[table-pagination] button.active {
+  background: #6c5234;
+  color: #fff;
+  border-color: #6c5234;
+}
+
+[table-pagination] button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
