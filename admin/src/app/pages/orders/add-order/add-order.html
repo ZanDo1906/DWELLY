@@ -1,1 +1,243 @@
-<p>add-order works!</p>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner order-detail-page">
+
+        <!-- HEADER -->
+        <div class="page-title-wrapper">
+          <h1 class="page-title">Thêm đơn hàng</h1>
+          <button class="print-btn">
+            <span class="add-icon" aria-hidden="true">+</span>
+            <span>TẠO ĐƠN HÀNG</span>
+          </button>
+        </div>
+
+        <div class="row g-2 mt-2">
+
+          <!-- CỘT TRÁI -->
+          <div class="col-lg-8">
+
+            <!-- SẢN PHẨM -->
+            <div class="card-box">
+              <h3 class="product-title-left">
+                <i class="bi bi-house-door"></i>
+                Sản phẩm đặt mua
+              </h3>
+
+                <div class="search-box">
+                <span class="search-icon" aria-hidden="true">
+                <i class="bi bi-search"></i>
+                </span>
+                <input type="text"
+                    class="search-input"
+                    placeholder="Tìm kiếm theo tên hoặc SKU"
+                    [value]="searchTerm"
+                    (input)="onSearchInput($event)" />
+                </div>
+
+              <!-- SEARCH RESULTS -->
+              <div *ngIf="searchTerm.trim() !== ''">
+                <div *ngIf="searchResults.length === 0" class="empty-state-search">
+                  <p>Không tìm thấy sản phẩm</p>
+                </div>
+                <div class="search-results-list" *ngIf="searchResults.length > 0">
+                  <div class="search-result-item" *ngFor="let product of searchResults">
+                    <div class="search-result-info">
+                      <img [src]="product.Hinh_anh[0]" [alt]="product.Ten_san_pham" class="search-result-img">
+                      <div class="search-result-details">
+                        <p class="search-result-name">{{product.Ten_san_pham}}</p>
+                        <span class="search-result-sku">SKU: {{product.Ma_san_pham}}</span>
+                        <span class="search-result-category">{{getRoomName(product.Ma_loai_phong)}}</span>
+                      </div>
+                    </div>
+                    <div class="search-result-price">{{formatPrice(product.Gia_ban)}} VNĐ</div>
+                    <button class="search-result-btn" (click)="addProductToCart(product)">Thêm</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PRODUCT LIST (when not searching) -->
+              <div *ngIf="searchTerm.trim() === ''">
+                <div *ngIf="cartItems.length === 0" class="empty-state">
+                  <p>Chưa có sản phẩm nào</p>
+                </div>
+                
+                <div *ngIf="cartItems.length > 0">
+                  <div class="product-header-row">
+                    <span class="header-product">Tên sản phẩm</span>
+                    <span>Đơn giá</span>
+                    <span>Số lượng</span>
+                    <span>Thành tiền</span>
+                    <span></span>
+                  </div>
+
+              <div class="product-item" *ngFor="let item of cartItems; let i = index">
+                <div class="product-info">
+                  <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham">
+                  <div class="product-details">
+                    <p class="product-name">
+                      {{item.product.Ten_san_pham}}
+                    </p>
+                    <span class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
+                  </div>
+                </div>
+
+                <div class="product-price">{{formatPrice(item.product.Gia_ban)}} VNĐ</div>
+                <div class="product-qty">
+                  <button class="qty-btn" (click)="decreaseQty(i)">-</button>
+                  <span class="qty-number">{{item.quantity}}</span>
+                  <button class="qty-btn" (click)="increaseQty(i)">+</button>
+                </div>
+                <div class="product-total">{{formatPrice(item.product.Gia_ban * item.quantity)}} VNĐ</div>
+                <button class="product-delete" (click)="removeProductFromCart(i)" title="Xóa sản phẩm">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GHI CHÚ -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-pencil-square"></i>
+                Ghi chú
+              </h3>
+
+              <textarea class="note-input" placeholder="Nhập ghi chú cho đơn hàng..."></textarea>
+            </div>
+
+            <!-- VẬN CHUYỂN -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-truck"></i>
+                Phương thức vận chuyển
+              </h3>
+
+              <label class="shipping-option">
+                <input
+                  type="radio"
+                  name="ship"
+                  [checked]="shippingMethod === 'standard'"
+                  (change)="setShippingMethod('standard')"
+                />
+                <div class="shipping-info">
+                  <strong>Giao hàng tiêu chuẩn</strong>
+                  <p>Nhận hàng trong 3-5 ngày</p>
+                </div>
+                <span class="shipping-price">Miễn phí</span>
+              </label>
+
+              <label class="shipping-option">
+                <input
+                  type="radio"
+                  name="ship"
+                  [checked]="shippingMethod === 'fast'"
+                  (change)="setShippingMethod('fast')"
+                />
+                <div class="shipping-info">
+                  <strong>Giao hàng nhanh</strong>
+                  <p>Nhận hàng trong 1-2 ngày</p>
+                </div>
+                <span class="shipping-price">100.000 VND</span>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- CỘT PHẢI -->
+          <div class="col-lg-4">
+            <!-- THÔNG TIN -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-geo-alt-fill"></i>
+                Thông tin giao hàng
+              </h3>
+
+              <div class="info-field">
+                <label for="customerName">Họ và tên</label>
+                <input id="customerName" type="text" class="info-input" placeholder="Nhập họ và tên" />
+              </div>
+
+              <div class="info-field">
+                <label for="customerPhone">Số điện thoại</label>
+                <input id="customerPhone" type="tel" class="info-input" placeholder="Nhập số điện thoại" />
+              </div>
+
+              <div class="info-field">
+                <label for="customerEmail">Email</label>
+                <input id="customerEmail" type="email" class="info-input" placeholder="Nhập email" />
+              </div>
+
+              <div class="info-field">
+                <label for="customerAddress">Địa chỉ</label>
+                <textarea id="customerAddress" class="info-input address-input" placeholder="Nhập địa chỉ"></textarea>
+              </div>
+            </div>
+
+            <!-- TỔNG THANH TOÁN -->
+            <div class="summary-box">
+
+              <h3 class="box-title">
+                <i class="bi bi-ticket-perforated"></i>
+                Tổng thanh toán
+              </h3>
+
+              <div class="voucher-input">
+                <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode" [class.error]="voucherError" />
+                <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
+              </div>
+              <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
+              <p class="voucher-success" *ngIf="appliedVoucher && !voucherError">
+                Đã áp dụng giảm {{appliedVoucher.Phan_tram_giam}}%
+              </p>
+
+              <div class="summary-row">
+                <span>Tổng cộng</span>
+                <span class="amount">101.600.000 VNĐ</span>
+              </div>
+
+              <div class="summary-row">
+                <span>Phí vận chuyển</span>
+                <span class="amount">Miễn phí</span>
+              </div>
+
+              <div class="summary-row">
+                <span>Giảm giá</span>
+                <span class="amount">0 VNĐ</span>
+              </div>
+
+              <hr class="divider" />
+
+              <div class="summary-total">
+                <span>Tổng thanh toán</span>
+                <span class="total-amount">101.600.000 VNĐ</span>
+              </div>
+
+              <div class="payment-methods">
+                <label class="payment-option">
+                  <input type="radio" checked />
+                  <span>
+                    Thanh toán cọc (30%)<br>
+                    <span class="sub-text">34.000.000 VNĐ</span>
+                  </span>
+                </label>
+
+                <label class="payment-option">
+                  <input type="radio" />
+                  <span>
+                    Thanh toán toàn bộ (100%)<br>
+                    <span class="sub-text">101.600.000 VNĐ</span>
+                  </span>
+                </label>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

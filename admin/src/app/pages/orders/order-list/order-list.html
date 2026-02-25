@@ -7,29 +7,52 @@
         <div class="page-header">
           <h2 class="page-title">Quản lý đơn hàng</h2>
 
-          <button class="add-btn">
-            + Thêm đơn hàng
+          <button class="add-btn" (click)="navigateToAddOrder()">
+            <span class="add-icon" aria-hidden="true">+</span>
+            <span class="add-label">Thêm đơn hàng</span>
           </button>
         </div>
 
         <!-- FILTER BAR -->
         <div class="filter-bar">
 
-          <input type="text"
-                 class="search-input"
-                 placeholder="Tìm kiếm..." />
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text"
+                   class="search-input"
+                   placeholder="Tìm kiếm..."
+                   [value]="searchTerm"
+                   (input)="onSearchInput($event)" />
+          </div>
 
           <div class="filter-group">
             <button class="filter-btn">A-Z</button>
             <button class="filter-btn">Mới nhất</button>
             <button class="filter-btn">Cũ nhất</button>
 
-            <select class="status-select">
-              <option>Tất cả trạng thái</option>
-              <option>Chờ duyệt</option>
-              <option>Đã duyệt</option>
-              <option>Đã từ chối</option>
-            </select>
+            <div class="status-select" [class.open]="isStatusOpen">
+              <button
+                type="button"
+                class="status-select-trigger"
+                (click)="toggleStatusDropdown($event)"
+              >
+                <span>{{ selectedStatus }}</span>
+                <span class="status-caret" aria-hidden="true">▾</span>
+              </button>
+
+              <ul class="status-options" *ngIf="isStatusOpen">
+                <li
+                  *ngFor="let status of statusOptions"
+                  class="status-option"
+                  [class.active]="status === selectedStatus"
+                  (click)="selectStatus(status)"
+                >
+                  {{ status }}
+                </li>
+              </ul>
+            </div>
           </div>
 
         </div>
@@ -55,8 +78,8 @@
               <td>{{ order.code }}</td>
               <td>{{ order.customer }}</td>
               <td>{{ order.date }}</td>
-              <td><span class="status" [ngClass]="order.approvalStatus">{{ order.approvalStatus === 'pending' ? 'Chờ duyệt' : order.approvalStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
-              <td><span class="status" [ngClass]="order.deliveryStatus">{{ order.deliveryStatus === 'pending' ? 'Chờ duyệt' : order.deliveryStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
+              <td><span class="status approval-status" [ngClass]="order.approvalStatus">{{ order.approvalStatus === 'pending' ? 'Chờ duyệt' : order.approvalStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
+              <td><span class="status delivery-status" [ngClass]="order.deliveryStatus">{{ order.deliveryStatus === 'shipping' ? 'Đang giao' : order.deliveryStatus === 'completed' ? 'Hoàn thành' : order.deliveryStatus === 'cancelled' ? 'Bị hủy' : 'Trả hàng' }}</span></td>
               <td>{{ order.total }}</td>
             </tr>
           </ng-container>
