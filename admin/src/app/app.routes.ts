@@ -5,6 +5,7 @@ import { ForgotPassword } from './pages/auth/forgot-password/forgot-password';
 import { ResetPassword } from './pages/auth/reset-password/reset-password';
 import { BlogList } from './pages/blogs/blog-list/blog-list';
 import { BlogForm } from './pages/blogs/blog-form/blog-form';
+import { Blog} from './pages/blogs/blog/blog';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { FaqList } from './pages/faqs/faq-list/faq-list';
 import { FaqForm } from './pages/faqs/faq-form/faq-form';
@@ -28,6 +29,7 @@ export const routes: Routes = [
     { path: 'blog-list', component: BlogList },
     { path: 'blog-form', component: BlogForm },
     { path: 'blog-form/:id', component: BlogForm },
+    { path: 'blog', component: Blog },
     { path: 'dashboard', component: Dashboard },
     { path: 'faq-list', component: FaqList },
     { path: 'faq-form', component: FaqForm },

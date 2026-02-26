@@ -1,0 +1,230 @@
+.admin-create-post,
+.blog-form-page {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #373737;
+}
+.padding-x {
+  padding-left: 1.5rem;
+}
+
+
+/* ================= HEADER ================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #6C5234;
+}
+
+.page-header .btn {
+  margin-left: 12px;
+}
+
+/* ================= GRID ================= */
+
+.page-grid {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ================= CARD ================= */
+
+.card {
+  background: #FDF8F5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #6C5234;
+  margin-bottom: 20px;
+}
+
+/* ================= FORM ================= */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #373737;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e6ded2;
+  font-size: 16px;
+  color: #373737;
+  background: #ffffff;
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6C5234;
+}
+
+input:disabled {
+  background: #f1ebe6;
+}
+
+/* ================= BLOCK ================= */
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.content-header span {
+  font-size: 14px;
+  color: #777777;
+}
+
+.content-block {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #eee2d8;
+  margin-bottom: 18px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.content-block:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.block-header {
+  background: #f6f0eb;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: #373737;
+  border-bottom: 1px solid #eee2d8;
+}
+
+.block-body {
+  padding: 16px;
+}
+
+.block-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 6px;
+  color: #373737;
+  transition: 0.2s;
+}
+
+.block-actions button:hover {
+  color: #373737;
+}
+
+.block-actions .delete {
+  color: #c25757;
+}
+
+/* ================= ADD BUTTON ================= */
+
+.add-block {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.btn-dashed {
+  flex: 1;
+  border: 2px dashed #d8cfc3;
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #373737;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn-dashed:hover {
+  background: #f6f0eb;
+  border-color: #6C5234;
+}
+
+/* ================= BUTTON ================= */
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-primary {
+  background: #6C5234;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  border: 1px solid #373737;
+  background: transparent;
+  color: #373737;
+}
+
+.btn-outline:hover {
+  background: #373737;
+  color: #fff;
+}
+
+.status-toggle span {
+  color: #777777;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #6C5234;
+  cursor: pointer;
+}

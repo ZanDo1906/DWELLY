@@ -1,0 +1,150 @@
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner blog-form-page">
+
+      <!-- HEADER -->
+      <div class="page-header">
+        <h1>Tạo bài viết mới</h1>
+        <div class="header-actions">
+          <button class="btn btn-outline">Xem trước</button>
+          <button class="btn btn-primary" (click)="savePost()">Lưu bài viết</button>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="page-grid">
+
+        <!-- ================= LEFT ================= -->
+        <div class="main-content">
+
+          <!-- Thông tin cơ bản -->
+          <div class="card">
+            <h2>Thông tin cơ bản</h2>
+
+            <div class="form-group">
+              <label>Mã bài viết</label>
+              <input [value]="maBaiViet" disabled />
+            </div>
+
+            <div class="form-group">
+              <label>Tiêu đề bài viết *</label>
+              <input [(ngModel)]="tieuDe" />
+            </div>
+
+            <div class="form-group">
+              <label>Tóm tắt</label>
+              <textarea rows="3" [(ngModel)]="tomTat"></textarea>
+            </div>
+          </div>
+
+          <!-- Nội dung -->
+          <div class="card">
+            <div class="content-header">
+              <h2>Nội dung bài viết</h2>
+              <span>{{ blocks.length }} block</span>
+            </div>
+
+            <div *ngFor="let block of blocks; let i = index" class="content-block">
+
+              <div class="block-header">
+                <span>
+                  {{ block.Loai === 'text' ? 'Đoạn văn bản' : 'Hình ảnh' }} #{{ i + 1 }}
+                </span>
+
+                <div class="block-actions">
+                  <button (click)="moveBlock(i,'up')">▲</button>
+                  <button (click)="moveBlock(i,'down')">▼</button>
+                  <button class="delete" (click)="removeBlock(i)">🗑</button>
+                </div>
+              </div>
+
+              <div class="block-body">
+
+                <textarea *ngIf="block.Loai === 'text'"
+                          rows="5"
+                          [(ngModel)]="block.Noi_dung">
+                </textarea>
+
+                <div *ngIf="block.Loai === 'image'">
+                  <div class="form-group">
+                    <label>URL hình ảnh</label>
+                    <input [(ngModel)]="block.Url" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Mô tả ảnh</label>
+                    <input [(ngModel)]="block.Mo_ta" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="add-block">
+              <button class="btn-dashed" (click)="addTextBlock()">+ Thêm đoạn văn</button>
+              <button class="btn-dashed" (click)="addImageBlock()">+ Thêm hình ảnh</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================= RIGHT SIDEBAR ================= -->
+        <div class="sidebar">
+
+          <!-- Ảnh đại diện -->
+          <div class="card">
+            <h2>Ảnh đại diện</h2>
+            <input [(ngModel)]="hinhAnh" placeholder="Nhập URL ảnh đại diện..." />
+          </div>
+
+          <!-- Xuất bản -->
+          <div class="card">
+            <h2>Xuất bản</h2>
+
+            <div class="form-row status-row">
+              <label>Trạng thái</label>
+
+              <div class="status-toggle">
+                <span>{{ trangThai ? 'Hiển thị' : 'Ẩn' }}</span>
+                <input type="checkbox" [(ngModel)]="trangThai" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Ngày tạo</label>
+              <input [value]="today" disabled />
+            </div>
+
+            <div class="form-group">
+              <label>Quản trị viên</label>
+              <input value="ADM001 – Nguyễn Văn A" disabled />
+            </div>
+          </div>
+
+          <!-- JSON Preview -->
+          <div class="card">
+            <h2>Xem trước JSON</h2>
+
+            <pre class="json-preview">
+{{ {
+  Ma_bai_viet: maBaiViet,
+  Tieu_de: tieuDe,
+  Tom_tat: tomTat,
+  Noi_dung: blocks,
+  Hinh_anh: hinhAnh,
+  Trang_thai: trangThai,
+  Ngay_tao: today,
+  Ma_quan_tri_vien: 'ADM001'
+} | json }}
+            </pre>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
