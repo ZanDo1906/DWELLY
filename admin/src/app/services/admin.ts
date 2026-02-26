@@ -3,15 +3,17 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { iAdmin } from '../interfaces/admin';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 
+const baseUrl = "http://localhost:3000";
+
 @Injectable({
   providedIn: 'root',
 })
 export class Admin {
-  url = '/assets/data/admin.json';
+  // url = '/assets/data/admin.json';
   constructor(private http: HttpClient) { }
   getAdminData(): Observable<iAdmin[]> {
     return this.http
-      .get<iAdmin[]>(this.url)
+      .get<iAdmin[]>(`${baseUrl}/admins`)
       .pipe(retry(2), catchError(this.handleError));
   }
   handleError(error: HttpErrorResponse) {

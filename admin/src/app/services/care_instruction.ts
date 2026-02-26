@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 
+const baseUrl = "http://localhost:3000";
+
 @Injectable({
   providedIn: 'root',
 })
 export class CareInstruction {
-  url = '/assets/data/care_instruction.json';
+  // url = '/assets/data/care_instruction.json';
   constructor(private http: HttpClient) { }
   getCareInstructionData(): Observable<iCareInstruction[]> {
     return this.http
-      .get<iCareInstruction[]>(this.url)
+      .get<iCareInstruction[]>(`${baseUrl}/care_instructions`)
       .pipe(retry(2), catchError(this.handleError));
   }
   handleError(error: HttpErrorResponse) {

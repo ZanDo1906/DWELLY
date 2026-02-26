@@ -8,7 +8,7 @@
 
   <!-- Tabs -->
   <div class="order-tabs mb-3">
-    <div class="tab active">Tất cả <span>6</span></div>
+    <div class="tab active">Tất cả <span>{{ orders.length }}</span></div>
     <div class="tab">Chờ xác nhận <span>1</span></div>
     <div class="tab">Chờ giao hàng <span>2</span></div>
     <div class="tab">Đã giao hàng <span>2</span></div>
@@ -25,39 +25,32 @@
     />
   </div>
 
+  <div *ngIf="isLoading" class="text-center py-4">Đang tải đơn hàng...</div>
+  <div *ngIf="!isLoading && errorMessage" class="text-center py-4">{{ errorMessage }}</div>
+  <div *ngIf="!isLoading && !errorMessage && orders.length === 0" class="text-center py-4">Chưa có đơn hàng nào.</div>
+
   <!-- ORDER CARD -->
-  <div class="order-card mb-4">
+  <div class="order-card mb-4" *ngFor="let orderView of orders; trackBy: trackByOrderId">
 
     <!-- Card header -->
     <div class="order-card-header">
-      <span>Trạng thái đơn hàng</span>
-      <span>Ngày đặt | Mã đơn đặt hàng</span>
+      <span>{{ orderView.order.Trang_thai }}</span>
+      <span>{{ orderView.order.Ngay_dat | date:'dd/MM/yyyy' }} | {{ orderView.order.Ma_don_mua }}</span>
     </div>
 
     <!-- Product item -->
-    <div class="order-product">
-      <div class="thumb"></div>
+    <div class="order-product" *ngFor="let item of orderView.items; trackBy: trackByOrderItem">
+      <div class="thumb">
+        <img [src]="item.product?.Hinh_anh?.[0] || ''" [alt]="item.product?.Ten_san_pham || 'product'" />
+      </div>
       <div class="info">
-        <strong>Tên sản phẩm 1</strong>
-        <p>Phân loại</p>
-        <p>Số lượng</p>
+        <strong>{{ item.product?.Ten_san_pham || item.detail.Ma_san_pham }}</strong>
+        <p>Phân loại: {{ item.categoryName }}</p>
+        <p>Số lượng: {{ item.detail.So_luong }}</p>
       </div>
       <div class="price">
-        <p>Số lượng:</p>
-        <strong>Giá tổng</strong>
-      </div>
-    </div>
-
-    <div class="order-product">
-      <div class="thumb"></div>
-      <div class="info">
-        <strong>Tên sản phẩm 1</strong>
-        <p>Phân loại</p>
-        <p>Số lượng</p>
-      </div>
-      <div class="price">
-        <p>Số lượng:</p>
-        <strong>Giá tổng</strong>
+        <p>Đơn giá: {{ item.detail.Don_gia | number:'1.0-0' }} đ</p>
+        <strong>{{ item.lineTotal | number:'1.0-0' }} đ</strong>
       </div>
     </div>
 
@@ -69,8 +62,8 @@
     <!-- Footer -->
     <div class="order-card-footer">
       <div class="total">
-        Tổng số tiền (2 sản phẩm):
-        <span>220.990 đ</span>
+        Tổng số tiền ({{ orderView.totalItems }} sản phẩm):
+        <span>{{ orderView.order.Tong_tien | number:'1.0-0' }} đ</span>
       </div>
 
       <div class="actions">
@@ -110,38 +103,6 @@
         (submit)="submitReview()">
       </app-review-moda>
     </app-modal>
-
-  <!-- ORDER CARD 2 -->
-  <div class="order-card">
-
-    <div class="order-card-header">
-      <span>Trạng thái đơn hàng</span>
-      <span>Ngày đặt | Mã đơn đặt hàng</span>
-    </div>
-
-    <div class="order-product">
-      <div class="thumb"></div>
-      <div class="info">
-        <strong>Tên sản phẩm 1</strong>
-        <p>Phân loại</p>
-        <p>Số lượng</p>
-      </div>
-    </div>
-
-    <div class="order-card-footer">
-      <div class="total">
-        Tổng số tiền (2 sản phẩm):
-        <span>220.990 đ</span>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-primary-custom">
-          Đã nhận hàng
-        </button>
-      </div>
-    </div>
-
-  </div>
     </div>
   </div>
 </div>
