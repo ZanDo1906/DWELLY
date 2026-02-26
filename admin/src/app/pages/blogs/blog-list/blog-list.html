@@ -1,1 +1,120 @@
-<p>blog-list works!</p>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner blogs-page">
+
+        <!-- HEADER -->
+        <div class="page-header">
+          <h2 class="page-title">Quản lý Blogs</h2>
+
+          <button class="add-btn" routerLink="/blogs/new">
+            <i class="bi bi-plus-circle"></i>
+            THÊM BÀI VIẾT
+          </button>
+        </div>
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+
+          <div class="search-wrapper">
+            <i class="bi bi-search"></i>
+            <input type="text"
+                   class="search-input"
+                   placeholder="Tìm kiếm" />
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">xxx đã chọn</span>
+            
+            <button class="filter-btn active">
+              <i class="bi bi-check2"></i>
+              A-Z
+            </button>
+            
+            <button class="filter-btn">Mới nhất</button>
+            <button class="filter-btn">Cũ nhất</button>
+
+            <select class="status-select">
+              <option>Tất cả trạng thái</option>
+              <option>Đã đăng</option>
+              <option>Nháp</option>
+              <option>Đã ẩn</option>
+            </select>
+
+            <button class="delete-btn">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <app-table>
+
+          <!-- HEADER -->
+          <ng-container table-header>
+            <th>
+              <input type="checkbox" 
+                     class="checkbox-input"
+                     (change)="toggleSelectAll($event)"
+                     [checked]="isAllSelected()" />
+            </th>
+            <th>Mã bài viết</th>
+            <th>Tiêu đề</th>
+            <th>Ngày đăng</th>
+            <th>Người viết</th>
+            <th>Trạng thái</th>
+            <th>Lượt xem</th>
+            <th>Hành động</th>
+          </ng-container>
+
+          <!-- BODY -->
+          <ng-container table-body>
+            <tr *ngFor="let blog of pagedBlogs; let i = index">
+              <td>
+                <input type="checkbox" 
+                       class="checkbox-input"
+                       [(ngModel)]="blog.selected"
+                       (change)="onCheckboxChange()" />
+              </td>
+              <td>{{ blog.code }}</td>
+              <td>{{ blog.title }}</td>
+              <td>{{ blog.date }}</td>
+              <td>{{ blog.author }}</td>
+              <td>
+                <span class="status" [ngClass]="blog.status">
+                  {{ getStatusLabel(blog.status) }}
+                </span>
+              </td>
+              <td>{{ blog.views }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="action-btn edit-btn" [routerLink]="['/blogs/edit', blog.id]" title="Chỉnh sửa">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="action-btn delete-btn" title="Xóa">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+
+          <!-- PAGINATION -->
+          <ng-container table-pagination>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+            <button
+              *ngFor="let page of pages"
+              (click)="goToPage(page)"
+              [class.active]="page === currentPage">
+              {{ page }}
+            </button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+          </ng-container>
+
+        </app-table>
+
+      </div>
+    </div>
+  </div>
+</section>
