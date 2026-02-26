@@ -372,15 +372,19 @@
 
 .voucher-input {
     display: flex;
+    align-items: center;
+    width: 100%;
     gap: 10px;
     margin-bottom: 8px;
 }
 
 .voucher-input input {
     flex: 1;
+    min-width: 0;
+    height: 48px;
     padding: 10px 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 18px;
     font-size: 14px;
 }
 
@@ -413,15 +417,19 @@
 }
 
 .btn-apply {
+    flex: 0 0 140px;
+    min-width: 140px;
+    height: 48px;
     background-color: white;
     color: #546745;
     border: 2px solid #546745;
-    padding: 10px 24px;
-    border-radius: 8px;
+    padding: 0 20px;
+    border-radius: 18px;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
+    line-height: 1;
     transition: all 0.3s ease;
 }
 

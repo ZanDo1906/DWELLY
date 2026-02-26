@@ -22,12 +22,34 @@
 .add-btn {
   background: #6F5A46;
   color: #fff;
-  padding: 10px 18px;
+  padding: 10px 16px;
   border: none;
   border-radius: 8px;
   font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
   transition: 0.2s ease;
+}
+
+.add-icon {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.add-label {
+  letter-spacing: 0.3px;
 }
 
 .add-btn:hover {
@@ -42,9 +64,23 @@
   margin-bottom: 20px;
 }
 
+.search-box {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6C5234;
+  pointer-events: none;
+  font-size: 16px;
+}
+
 .search-input {
   width: 250px;
-  padding: 8px 14px;
+  padding: 8px 14px 8px 36px;
   border-radius: 8px;
   border: 1px solid #dcdcdc;
   font-size: 14px;
@@ -53,37 +89,85 @@
 
 .filter-group {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
 .filter-btn {
   padding: 6px 14px;
-  border-radius: 8px; /* theo yêu cầu */
-  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  border: 1px solid #6C5234;
   background: #fff;
   font-size: 14px;
+  color: #6C5234;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
 .filter-btn:hover {
-  background: #ececec;
+  background: #F7F3EE;
 }
 
 .status-select {
+  position: relative;
+  min-width: 190px;
+}
+
+.status-select-trigger {
+  width: 100%;
   padding: 6px 10px;
   border-radius: 8px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #6C5234;
   font-size: 14px;
-  outline: none;
+  background: #fff;
+  color: #6C5234;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.status-caret {
+  font-size: 14px;
+  color: #6C5234;
+}
+
+.status-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  border: 1px solid #6C5234;
+  border-radius: 8px;
+  background: #fff;
+  z-index: 10;
+}
+
+.status-option {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #6C5234;
+  cursor: pointer;
+}
+
+.status-option:hover {
+  background: #F7F3EE;
+  color: #6C5234;
+}
+
+.status-option.active {
+  background: #6F5A46;
+  color: #fff;
 }
 
 /* STATUS TAG */
 .status {
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -100,4 +184,35 @@
 .rejected {
   background: #c05c5c;
   color: white;
+}
+
+.approval-status.pending {
+  background: #ECAE2E;
+  color: #fff;
+}
+
+.approval-status.approved {
+  background: #546745;
+  color: #fff;
+}
+
+.approval-status.rejected {
+  background: #A34343;
+  color: #fff;
+}
+
+.delivery-status.shipping {
+  background: #ECAE2E;
+  color: #fff;
+}
+
+.delivery-status.completed {
+  background: #546745;
+  color: #fff;
+}
+
+.delivery-status.cancelled,
+.delivery-status.returned {
+  background: #A34343;
+  color: #fff;
 }

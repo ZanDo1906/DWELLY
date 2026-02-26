@@ -1,1 +1,188 @@
-<p>order-detail works!</p>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner order-detail-page">
+
+        <!-- HEADER -->
+        <div class="page-title-wrapper">
+          <h1 class="page-title">Quản lý đơn hàng</h1>
+          <button class="print-btn">
+            <i class="bi bi-printer"></i>
+            <span>IN ĐƠN HÀNG</span>
+          </button>
+        </div>
+
+        <div class="order-info-meta">
+          <i class="bi bi-arrow-left-circle"></i>
+          <p>Chi tiết đơn hàng: DW2139021
+            <br>
+          Ngày đặt: 9:30 28-01-2025</p>
+        </div>
+
+        <div class="row g-2">
+
+          <!-- CỘT TRÁI -->
+          <div class="col-lg-8">
+
+            <!-- SẢN PHẨM -->
+            <div class="card-box">
+              <h3 class="product-title-left">
+                <i class="bi bi-house-door"></i>
+                Sản phẩm đặt mua
+              </h3>
+
+              <div class="product-header-row">
+                <span class="header-product">Tên sản phẩm</span>
+                <span>Đơn giá</span>
+                <span>Số lượng</span>
+                <span>Thành tiền</span>
+              </div>
+
+              <div class="product-item">
+                <div class="product-info">
+                  <img src="/assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh1.png">
+                  <div class="product-details">
+                    <p class="product-name">
+                      Tủ đầu giường gỗ Sồi tự nhiên Anneli
+                    </p>
+                    <span class="product-category">Phòng khách</span>
+                  </div>
+                </div>
+
+                <div class="product-price">18.900.000 VNĐ</div>
+                <div class="product-qty">
+                  <span class="qty-number">1</span>
+                </div>
+                <div class="product-total">18.900.000 VNĐ</div>
+              </div>
+              <div class="product-item">
+                <div class="product-info">
+                  <img src="/assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh1.png">
+                  <div class="product-details">
+                    <p class="product-name">
+                      Tủ đầu giường gỗ Sồi tự nhiên Anneli
+                    </p>
+                    <span class="product-category">Phòng khách</span>
+                  </div>
+                </div>
+
+                <div class="product-price">18.900.000 VNĐ</div>
+                <div class="product-qty">
+                  <span class="qty-number">1</span>
+                </div>
+                <div class="product-total">18.900.000 VNĐ</div>
+              </div>
+            </div>
+
+            <!-- GHI CHÚ -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-pencil-square"></i>
+                Ghi chú
+              </h3>
+
+              <textarea class="note-input" disabled>
+Tôi muốn giao lúc 8 giờ sáng
+              </textarea>
+            </div>
+
+          </div>
+
+          <!-- CỘT PHẢI -->
+          <div class="col-lg-4">
+
+            <!-- TRẠNG THÁI -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-list"></i>
+                Trạng thái đơn hàng
+              </h3>
+
+              <div class="d-flex gap-2 mb-3">
+                <button class="btn-approve">Duyệt đơn</button>
+                <button class="btn-reject">Từ chối đơn</button>
+              </div>
+
+              <div class="dropdown-wrapper">
+                <button class="dropdown-trigger" (click)="toggleStatusDropdown()">
+                  Cập nhật trạng thái
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu" [class.open]="showStatusDropdown">
+                  <li><a href="#">Đang giao</a></li>
+                  <li><a href="#">Hoàn thành</a></li>
+                  
+                </ul>
+              </div>
+            </div>
+
+            <!-- THÔNG TIN -->
+            <div class="card-box">
+              <h3 class="box-title">
+                <i class="bi bi-geo-alt-fill"></i>
+                Thông tin giao hàng
+              </h3>
+
+              <p><strong>Họ và tên:</strong> Lê Thanh Như Ngọc</p>
+              <p><strong>Số điện thoại:</strong> 0915736103</p>
+              <p><strong>Email:</strong> abc@gmail.com</p>
+              <p><strong>Địa chỉ:</strong> 123 Nguyễn Huệ, TPHCM</p>
+            </div>
+
+            <!-- TỔNG THANH TOÁN -->
+            <div class="summary-box">
+
+              <h3 class="box-title">
+                <i class="bi bi-ticket-perforated"></i>
+                Tổng thanh toán
+              </h3>
+
+              <div class="summary-row">
+                <span>Tổng cộng</span>
+                <span class="amount">101.600.000 VNĐ</span>
+              </div>
+
+              <div class="summary-row">
+                <span>Phí vận chuyển</span>
+                <span class="amount">Miễn phí</span>
+              </div>
+
+              <div class="summary-row">
+                <span>Giảm giá</span>
+                <span class="amount">0 VNĐ</span>
+              </div>
+
+              <hr class="divider" />
+
+              <div class="summary-total">
+                <span>Tổng thanh toán</span>
+                <span class="total-amount">101.600.000 VNĐ</span>
+              </div>
+
+              <div class="payment-methods">
+                <label class="payment-option">
+                  <input type="radio" checked />
+                  <span>
+                    Thanh toán cọc (30%)<br>
+                    <span class="sub-text">34.000.000 VNĐ</span>
+                  </span>
+                </label>
+
+                <label class="payment-option">
+                  <input type="radio" />
+                  <span>
+                    Thanh toán toàn bộ (100%)<br>
+                    <span class="sub-text">101.600.000 VNĐ</span>
+                  </span>
+                </label>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

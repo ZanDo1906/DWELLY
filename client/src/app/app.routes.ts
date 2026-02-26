@@ -44,6 +44,7 @@ export const routes: Routes = [
     { path: 'forgot-password', component: ForgotPassword },
     { path: 'about-us', component: AboutUs },
     { path: 'blog-detail', component: BlogDetail },
+    { path: 'blog-detail/:id', component: BlogDetail },
     { path: 'blog-list', component: BlogList },
     { path: 'cart-page', component: CartPage },
     { path: 'login-alert-popup', component: LoginAlertPopup },

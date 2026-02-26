@@ -1,1 +1,90 @@
-<p>blog-detail works!</p>
+<div class="blog-detail-page" *ngIf="!isLoading && blog">
+  <!-- HERO SECTION -->
+  <div class="blog-hero">
+    <img [src]="blog.Hinh_anh" [alt]="blog.Tieu_de" class="hero-image" />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <!-- CONTENT SECTION -->
+  <div class="container-fluid py-5">
+    <div class="px-4">
+      <div class="site-inner">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <!-- TITLE -->
+            <h1 class="blog-title">{{ blog.Tieu_de }}</h1>
+
+            <!-- META INFO -->
+            <div class="blog-meta">
+              <span class="meta-date">{{ blog.Ngay_tao | date: 'dd/MM/yyyy' }}</span>
+            </div>
+
+            <!-- BLOG CONTENT -->
+            <div class="blog-content">
+              <ng-container *ngFor="let item of blog.Noi_dung">
+                <!-- TEXT CONTENT -->
+                <p *ngIf="item.Loai === 'text'" class="content-text">{{ item.Noi_dung }}</p>
+
+                <!-- IMAGE CONTENT -->
+                <figure *ngIf="item.Loai === 'image'" class="content-image">
+                  <img [src]="item.Url" [alt]="item.Mo_ta" />
+                  <figcaption *ngIf="item.Mo_ta">{{ item.Mo_ta }}</figcaption>
+                </figure>
+              </ng-container>
+            </div>
+
+            <!-- AUTHOR SIGNATURE -->
+            <div class="author-signature">
+              <p>DWELLY</p>
+            </div>
+
+            <!-- SHARE BUTTONS -->
+            <div class="share-section">
+              <span class="share-label">SHARE</span>
+              <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-btn fb">
+                  <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="share-btn ig">
+                  <i class="bi bi-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED POSTS SECTION -->
+  <section class="news-section" style="padding-top: 20px; padding-bottom: 20px;">
+    <div class="news-overlay"></div>
+    <div class="container-fluid position-relative">
+      <div class="px-4">
+        <div class="site-inner">
+
+          <!-- TITLE -->
+          <div class="section-title text-center mb-5 news-title-animate">
+            <h2 class="title white">BÀI BÁO LIÊN QUAN</h2>
+            <span class="title-line white"></span>
+          </div>
+
+          <!-- RELATED CARDS -->
+          <div class="row g-4 justify-content-center">
+            <div class="col-lg-4" *ngFor="let relatedBlog of relatedBlogs; let i = index">
+              <div class="news-card news-card-animate" [style.animation-delay]="(i * 0.15) + 's'">
+                <img [src]="relatedBlog.Hinh_anh" [alt]="relatedBlog.Tieu_de" class="news-img" />
+
+                <div class="news-body">
+                  <h5>{{ relatedBlog.Tieu_de }}</h5>
+                  <p>{{ relatedBlog.Tom_tat }}</p>
+                  <a (click)="navigateToBlogDetail(relatedBlog.Ma_bai_viet)" class="news-link" style="cursor: pointer;">XEM CHI TIẾT →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
