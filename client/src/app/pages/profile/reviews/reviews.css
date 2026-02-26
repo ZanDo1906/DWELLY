@@ -6,6 +6,18 @@
   --border: #E5E5E5;
   --text-muted: #8B8B8B;
   --bg-light: #F8F8F8;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.reviews-page * {
+  font-family: 'Nunito Sans', sans-serif !important;
+}
+
+.reviews-page input,
+.reviews-page textarea,
+.reviews-page select,
+.reviews-page button {
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 /* ===== HEADER ===== */
@@ -183,8 +195,8 @@
   display: inline-block;
   font-family: 'Nunito', sans-serif;
   padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   border-radius: 4px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -216,7 +228,7 @@
   flex-wrap: wrap;
   font-family: 'Nunito', sans-serif;
   color: #6C5234;
-  font-style: bold;
+  font-weight: 700;
 }
 
 .order-meta-inline {
@@ -225,6 +237,7 @@
   align-items: center;
   font-size: 14px;
   font-family: 'Nunito', sans-serif;
+  font-weight: 700;
   color: #6C5234;
   flex-wrap: wrap;
 }
