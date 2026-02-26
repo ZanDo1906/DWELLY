@@ -10,49 +10,49 @@
             <!-- Mã khuyến mãi -->
             <div class="form-group full">
               <label>Mã khuyến mãi <span>*</span></label>
-              <input type="text" />
+              <input type="text" [value]="formValue.promotionCode" />
             </div>
 
             <!-- Mã số -->
             <div class="form-group">
               <label>Mã số <span>*</span></label>
-              <input type="text" />
+              <input type="text" [value]="formValue.code" />
             </div>
 
             <!-- Phần trăm giảm -->
             <div class="form-group">
               <label>Phần trăm giảm <span>*</span></label>
-              <input type="number" />
+              <input type="number" [value]="formValue.discountPercent" />
             </div>
 
             <!-- Ngày bắt đầu -->
             <div class="form-group">
               <label>Ngày bắt đầu <span>*</span></label>
-              <input type="date" />
+              <input type="date" [value]="formValue.startDate" />
             </div>
 
             <!-- Ngày kết thúc -->
             <div class="form-group">
               <label>Ngày kết thúc <span>*</span></label>
-              <input type="date" />
+              <input type="date" [value]="formValue.endDate" />
             </div>
 
             <!-- Phân hạng người dùng -->
             <div class="form-group">
               <label>Phân hạng người dùng <span>*</span></label>
-              <input type="text" />
+              <input type="text" [value]="formValue.minimumRank" />
             </div>
 
             <!-- Số lượng -->
             <div class="form-group">
               <label>Số lượng <span>*</span></label>
-              <input type="number" />
+              <input type="number" [value]="formValue.remaining" />
             </div>
 
             <!-- Mô tả -->
             <div class="form-group full">
               <label>Mô tả <span>*</span></label>
-              <textarea rows="3"></textarea>
+              <textarea rows="3" [value]="formValue.description"></textarea>
             </div>
 
             <div class="btn-wrapper">

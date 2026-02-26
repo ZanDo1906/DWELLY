@@ -1,0 +1,140 @@
+.faq-form {
+    font-family: 'Nunito Sans', sans-serif;
+    color: #373737;
+}
+
+.faq-top {
+    display: grid;
+    grid-template-columns: auto 1fr 280px;
+    gap: 16px;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #ececec;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f3debc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar i {
+    font-size: 22px;
+    color: #6f5a46;
+}
+
+.meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.customer-name {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.meta-line {
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.status-text {
+    margin-left: 4px;
+    font-weight: 600;
+}
+
+.status-pending {
+    color: #c28a2e;
+}
+
+.status-done {
+    color: #6f8f5a;
+}
+
+.question-box {
+    background: #f5f3f1;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.question-title {
+    color: #6c5234;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.question-text {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.reply-wrap textarea {
+    width: 100%;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    padding: 14px;
+    resize: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.reply-wrap textarea:focus {
+    border-color: #afa386;
+}
+
+.actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.btn-outline-brown,
+.btn-brown {
+    min-width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-outline-brown {
+    border: 1.5px solid #6f5a46;
+    color: #6f5a46;
+    background: #fff;
+}
+
+.btn-brown {
+    border: none;
+    background: #6f5a46;
+    color: #fff;
+}
+
+.btn-outline-brown:hover {
+    background: #f6f2ed;
+}
+
+.btn-brown:hover {
+    background: #5d4a39;
+}
+
+@media (max-width: 991px) {
+    .faq-top {
+        grid-template-columns: auto 1fr;
+    }
+
+    .question-box {
+        grid-column: span 2;
+    }
+}

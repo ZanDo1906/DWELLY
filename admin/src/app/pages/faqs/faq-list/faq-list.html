@@ -1,1 +1,105 @@
-<p>faq-list works!</p>
+<section>
+    <div class="container-fluid py-4">
+        <div class="padding-x">
+            <div class="site-inner faq-page">
+                <h2 class="page-title">Quản lý FAQs</h2>
+
+                <div class="filter-bar">
+                    <div class="search-wrap">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
+                            (input)="onSearchChange($event)" />
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="selected-text">{{ selectedCount }} đã chọn</span>
+
+                        <button class="filter-btn" [class.active]="sortType === 'az'" (click)="setSortType('az')">
+                            ✓ A-Z
+                        </button>
+
+                        <button class="filter-btn" [class.active]="sortType === 'newest'"
+                            (click)="setSortType('newest')">
+                            Mới nhất
+                        </button>
+
+                        <button class="filter-btn" [class.active]="sortType === 'oldest'"
+                            (click)="setSortType('oldest')">
+                            Cũ nhất
+                        </button>
+
+                        <select class="status-select" [value]="selectedStatus" (change)="onStatusChange($event)">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="unprocessed">Chưa xử lý</option>
+                            <option value="processed">Đã xử lý</option>
+                        </select>
+
+                        <button class="delete-selected-btn" (click)="deleteSelected()" [disabled]="!selectedCount"
+                            title="Xóa mục đã chọn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <app-table>
+                    <ng-container table-header>
+                        <th>
+                            <input type="checkbox" [checked]="isPageFullySelected"
+                                (change)="toggleSelectPage($event)" />
+                        </th>
+                        <th>Mã câu hỏi</th>
+                        <th>Tên khách hàng</th>
+                        <th>Thời gian gửi</th>
+                        <th>Nội dung câu hỏi</th>
+                        <th>Trạng thái</th>
+                        <th>Người xử lý</th>
+                        <th>Hành động</th>
+                    </ng-container>
+
+                    <ng-container table-body>
+                        <tr *ngFor="let faq of pagedFaqs">
+                            <td>
+                                <input type="checkbox" [checked]="selectedIds.has(faq.id)"
+                                    (change)="toggleSelectRow(faq.id, $event)" />
+                            </td>
+                            <td>{{ faq.questionCode }}</td>
+                            <td>{{ faq.customerName }}</td>
+                            <td>{{ faq.submittedAt }}</td>
+                            <td class="question-content">{{ faq.questionContent }}</td>
+                            <td>
+                                <span class="status" [ngClass]="faq.status">{{ faq.statusLabel }}</span>
+                            </td>
+                            <td>{{ faq.handler }}</td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="icon-btn" (click)="editFaq(faq.id)" title="Sửa"
+                                        data-bs-toggle="modal" data-bs-target="#faqAnswerModal">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="icon-btn" (click)="deleteFaq(faq.id)" title="Xóa">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                    <ng-container table-pagination>
+                        <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+                        <button *ngFor="let page of pages" (click)="goToPage(page)"
+                            [class.active]="page === currentPage">
+                            {{ page }}
+                        </button>
+                        <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+                    </ng-container>
+                </app-table>
+
+                <app-modal modalId="faqAnswerModal" [title]="faqModalTitle">
+                    <app-faq-form [faq]="selectedFaq" (saveDraft)="onSaveDraft($event)"
+                        (sendAnswer)="onSendAnswer($event)">
+                    </app-faq-form>
+                </app-modal>
+            </div>
+        </div>
+    </div>
+</section>

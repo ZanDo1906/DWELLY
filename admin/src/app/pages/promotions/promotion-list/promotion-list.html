@@ -1,15 +1,103 @@
-<p>promotion-list works!</p>
-<button 
-  class="add-btn"
-  data-bs-toggle="modal"
-  data-bs-target="#promotionModal">
-  Thêm khuyến mãi
-</button>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner promotion-page">
+        <div class="page-header">
+          <h2 class="page-title">Quản lý khuyến mãi</h2>
 
-<!-- Modal component -->
-<app-modal modalId="promotionModal" title="Khuyến mãi">
+          <button class="add-btn" data-bs-toggle="modal" data-bs-target="#promotionModal" (click)="openCreatePromotion()">
+            <i class="bi bi-plus-circle"></i>
+            <span>THÊM KHUYẾN MÃI</span>
+          </button>
+        </div>
 
-  <app-promotion-form></app-promotion-form>
+        <div class="filter-bar">
+          <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
+              (input)="onSearchChange($event)" />
+          </div>
 
+          <div class="filter-group">
+            <span class="selected-text">{{ selectedCount }} đã chọn</span>
+
+            <button class="filter-btn" [class.active]="sortType === 'az'" (click)="setSortType('az')">
+              ✓ A-Z
+            </button>
+
+            <button class="filter-btn" [class.active]="sortType === 'newest'" (click)="setSortType('newest')">
+              Mới nhất
+            </button>
+
+            <button class="filter-btn" [class.active]="sortType === 'oldest'" (click)="setSortType('oldest')">
+              Cũ nhất
+            </button>
+
+            <select class="status-select" [value]="selectedStatus" (change)="onStatusChange($event)">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="active">Kích hoạt</option>
+              <option value="paused">Tạm dừng</option>
+            </select>
+
+            <button class="delete-selected-btn" (click)="deleteSelected()" [disabled]="!selectedCount"
+              title="Xóa mục đã chọn">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <app-table>
+          <ng-container table-header>
+            <th>
+              <input type="checkbox" [checked]="isPageFullySelected" (change)="toggleSelectPage($event)" />
+            </th>
+            <th>Mã khuyến mãi</th>
+            <th>Mã số</th>
+            <th>Còn lại</th>
+            <th>Phân hạng</th>
+            <th>Bắt đầu</th>
+            <th>Kết thúc</th>
+            <th>Trạng thái</th>
+            <th>Người tạo</th>
+          </ng-container>
+
+          <ng-container table-body>
+            <tr *ngFor="let promotion of pagedPromotions" (click)="openPromotionDetail(promotion)" data-bs-toggle="modal" data-bs-target="#promotionModal">
+              <td>
+                <input type="checkbox" [checked]="selectedIds.has(promotion.id)"
+                  (click)="$event.stopPropagation()"
+                  (change)="toggleSelectRow(promotion.id, $event)" />
+              </td>
+              <td>{{ promotion.promotionCode }}</td>
+              <td>{{ promotion.code }}</td>
+              <td>{{ promotion.remaining }}</td>
+              <td>{{ promotion.rank }}</td>
+              <td>{{ promotion.startDate }}</td>
+              <td>{{ promotion.endDate }}</td>
+              <td>
+                <span class="status" [ngClass]="promotion.status">{{ promotion.statusLabel }}</span>
+              </td>
+              <td>{{ promotion.creator }}</td>
+            </tr>
+          </ng-container>
+
+          <ng-container table-pagination>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === currentPage">
+              {{ page }}
+            </button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </ng-container>
+        </app-table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-modal modalId="promotionModal" [title]="promotionModalTitle">
+  <app-promotion-form [promotion]="selectedPromotion"></app-promotion-form>
 </app-modal>
-
