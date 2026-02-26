@@ -1,1 +1,65 @@
-<p>user-form works!</p>
+<div class="user-form-container">
+  <!-- TOP SECTION: User Info + Membership + Form Fields -->
+  <div class="form-header">
+    <div class="form-content">
+      <!-- LEFT: User Avatar & Info -->
+      <div class="user-info-section">
+        <div class="user-avatar">
+          <img [src]="user.Anh_dai_dien" alt="User Avatar" />
+        </div>
+        <h3 class="user-name">{{ user.Ho_va_ten }}</h3>
+        <p class="user-meta">Tham gia: {{ user.Ngay_tao | date: 'dd/MM/yyyy' }}</p>
+        <button class="points-btn">
+          <span class="points-icon"><i class="bi bi-award"></i></span>
+          <span class="points-text">{{ user.Tong_diem }} điểm</span>
+        </button>
+      </div>
+
+      <!-- RIGHT: Membership Button + Form Fields -->
+      <div class="form-fields-section">
+        <div class="membership-btn">
+          <span class="membership-icon"><i class="bi bi-trophy"></i></span>
+          <span class="membership-text">{{ getMembershipRank(user.Ma_phan_hang) }}</span>
+        </div>
+
+        
+        <div class="form-field-row">
+          <div class="form-field">
+            <label>Trạng thái</label>
+            <span class="field-value">{{ user.Trang_thai ? 'Đang hoạt động' : 'Không hoạt động' }}</span>
+          </div>
+        </div>
+        <div class="form-field-row">
+          <div class="form-field">
+            <label>Số điện thoại</label>
+            <span class="field-value">{{ user.So_dien_thoai }}</span>
+          </div>
+        </div>
+
+        <div class="form-field-row">
+          <div class="form-field">
+            <label>Email</label>
+            <span class="field-value">{{ user.Email }}</span>
+          </div>
+        </div>
+
+        <div class="form-field-row">
+          <div class="form-field full-width">
+            <label>Địa chỉ</label>
+            <span class="field-value">{{ userForm.Dia_chi }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="form-actions">
+    <button class="btn btn-update">
+      <i class="bi bi-pencil"></i> Cập nhật
+    </button>
+    <button class="btn btn-disable" (click)="cancel.emit()">
+      <i class="bi bi-slash-circle"></i> Vô hiệu hóa
+    </button>
+  </div>
+</div>

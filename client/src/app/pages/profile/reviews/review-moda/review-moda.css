@@ -196,7 +196,6 @@
 	padding: 16px 0 4px 0;
 }
 
-.btn-cancel,
 .btn-submit {
 	min-width: 120px;
 	height: 40px;
@@ -206,20 +205,8 @@
 	border: none;
 	cursor: pointer;
 	transition: all 0.2s ease;
-}
-
-.btn-cancel {
-	background: #f1f1f1;
-	color: #6c5234;
-}
-
-.btn-submit {
 	background: #6c5234;
 	color: #fff;
-}
-
-.btn-cancel:hover {
-	background: #e6e6e6;
 }
 
 .btn-submit:hover {

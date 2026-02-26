@@ -1,1 +1,74 @@
-<p>user-list works!</p>
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner users-page">
+
+        <!-- HEADER -->
+        <div class="page-header-section">
+          <h2 class="page-title">Quản lý tài khoản</h2>
+        </div>
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+          <div class="search-wrapper">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text"
+                   class="search-input"
+                   placeholder="Tìm kiếm..."
+                   [(ngModel)]="searchTerm"
+                   (input)="onSearch()" />
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-btn" [class.active]="sortType === 'a-z'" (click)="setSortType('a-z')">A-Z</button>
+            <button class="filter-btn" [class.active]="sortType === 'newest'" (click)="setSortType('newest')">Mới nhất</button>
+            <button class="filter-btn" [class.active]="sortType === 'oldest'" (click)="setSortType('oldest')">Cũ nhất</button>
+          </div>
+        </div>
+
+        <!-- USER CARDS -->
+        <div class="users-container">
+          <div class="user-card" *ngFor="let user of pagedUsers">
+            <div class="user-info">
+              <h3 class="user-name">{{ user.Ho_va_ten }}</h3>
+              <p class="user-detail"><strong>Mã khách hàng:</strong> {{ user.Ma_khach_hang }}</p>
+              <p class="user-detail"><strong>Số điện thoại:</strong> {{ user.So_dien_thoai }}</p>
+              <p class="user-detail"><strong>Email:</strong> {{ user.Email }}</p>
+            </div>
+            <div class="user-actions">
+              <button class="action-btn edit-btn" (click)="openUserForm(user)">✎ Cập nhật</button>
+              <button class="action-btn view-btn" (click)="openUserForm(user)">👁 Xem chi tiết</button>
+              <button class="action-btn disable-btn"><i class="bi bi-slash-circle"></i> Vô hiệu hóa</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="pagination-btn" (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+          <button *ngFor="let page of pages"
+                  class="pagination-btn"
+                  (click)="goToPage(page)"
+                  [class.active]="page === currentPage">
+            {{ page }}
+          </button>
+          <button class="pagination-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- USER FORM MODAL -->
+  <app-modal
+    modalId="userFormModal"
+    [title]="'Mã khách hàng: ' + selectedUser?.Ma_khach_hang"
+    (close)="closeUserFormModal()"
+    *ngIf="showUserForm">
+    <app-user-form
+      [selectedUser]="selectedUser"
+      (cancel)="closeUserFormModal()"
+      (submit)="submitUserForm()">
+    </app-user-form>
+  </app-modal>
+</section>

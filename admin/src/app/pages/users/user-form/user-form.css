@@ -1,0 +1,224 @@
+.user-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+}
+
+:host ::ng-deep .modal {
+  z-index: 1000 !important;
+  background: transparent !important;
+}
+
+:host ::ng-deep .modal.show {
+  background: transparent !important;
+}
+
+.form-header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-content {
+  display: flex;
+  gap: 40px;
+}
+
+/* USER INFO SECTION (LEFT) */
+.user-info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 150px;
+  flex-shrink: 0;
+}
+
+.user-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #FDF8F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #373737;
+  margin: 0;
+  text-align: center;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.user-meta {
+  font-size: 14px;
+  color: #373737;
+  margin: 0;
+  text-align: center;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.points-btn {
+  border: 2px solid #6C5234;
+  background: transparent;
+  color: #373737;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+
+.points-icon {
+  font-size: 16px;
+  color: yellow;
+}
+
+.points-text {
+  font-weight: 500;
+  color:#373737;
+}
+
+/* FORM FIELDS SECTION */
+.form-fields-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.membership-btn {
+  border: 2px solid #6C5234;
+  background: transparent;
+  color: #373737;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.membership-btn:hover {
+  background: #FDF8F5;
+}
+
+.membership-icon {
+  font-size: 16px;
+  color:#6C5234;
+}
+
+.membership-text {
+  font-weight: 500;
+}
+
+.form-field-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.form-field-row.full-width {
+  grid-template-columns: 1fr;
+}
+
+.form-field {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 15px;
+  align-items: center;
+}
+
+.form-field.full-width {
+  grid-template-columns: 120px 1fr;
+}
+
+.form-field label {
+  font-size: 14px;
+  color: #6C5234;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.field-value {
+  font-size: 14px;
+  color: #373737;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* ACTION BUTTONS */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+  justify-content: center;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.btn-update {
+  background: #6F5A46;
+  color: #fff;
+}
+
+.btn-update:hover {
+  background: #5c4a3a;
+}
+
+.btn-disable {
+  background: rgba(108, 82, 52, 0.3);
+  color: #6C5234;
+  border: 1px solid #6C5234;
+}
+
+.btn-disable:hover {
+  background: rgba(108, 82, 52, 0.15);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .form-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-field-row {
+    grid-template-columns: 1fr;
+  }
+}

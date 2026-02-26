@@ -38,6 +38,7 @@ export class Reviews implements OnInit {
 
   // Review Modal
   currentReviewOrder: OrderItemWithReview | null = null;
+  currentProduct: (iOrderDetail & { product: iProduct }) | null = null;
   reviewRating: number = 5;
   reviewContent: string = '';
   hoveringRating: number = 0;
@@ -157,8 +158,9 @@ export class Reviews implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  openReviewModal(order: OrderItemWithReview): void {
+  openReviewModal(order: OrderItemWithReview, product: iOrderDetail & { product: iProduct }): void {
     this.currentReviewOrder = order;
+    this.currentProduct = product;
     this.reviewRating = 5;
     this.reviewContent = '';
     this.reviewImages = [];
@@ -180,6 +182,7 @@ export class Reviews implements OnInit {
       modal?.hide();
     }
     this.currentReviewOrder = null;
+    this.currentProduct = null;
     this.reviewRating = 5;
     this.reviewContent = '';
     this.reviewImages = [];
@@ -221,15 +224,16 @@ export class Reviews implements OnInit {
   }
 
   submitReview(): void {
-    if (!this.currentReviewOrder || !this.reviewContent.trim()) {
+    if (!this.currentProduct || !this.reviewContent.trim()) {
       alert('Vui lòng nhập nội dung đánh giá');
       return;
     }
 
     // TODO: Submit review to API
     console.log('Submit review:', {
-      orderId: this.currentReviewOrder.order.Ma_don_mua,
+      orderId: this.currentReviewOrder?.order.Ma_don_mua,
       customerId: this.currentCustomerId,
+      productId: this.currentProduct.Ma_san_pham,
       rating: this.reviewRating,
       content: this.reviewContent,
     });

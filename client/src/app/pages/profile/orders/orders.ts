@@ -10,6 +10,7 @@ import { ReviewModa } from '../reviews/review-moda/review-moda';
 })
 export class Orders {
   currentReviewOrder: any = null;
+  currentProduct: any = null;
   reviewRating = 5;
   hoveringRating = 0;
   reviewImages: (string | File)[] = [];
