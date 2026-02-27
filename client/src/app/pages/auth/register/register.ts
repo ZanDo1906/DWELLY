@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { customValidator, passwordValidator } from '../../../validator/check.validator';
 import { CommonModule } from '@angular/common';
-import { Client } from '../../../services/client';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -14,7 +13,7 @@ export class Register {
 
   regForm: any;
 registerError = '';
-  constructor(private fb: FormBuilder, private clientService: Client) {
+  constructor(private fb: FormBuilder) {
     this.regForm = this.fb.group(
       {
         name: [
@@ -84,37 +83,27 @@ registerError = '';
   }
 
   submit() {
-  if (this.regForm.invalid) {
-    this.regForm.markAllAsTouched();
-    return;
-  }
-
-  const { email, phone, name, password } = this.regForm.value;
-
-  // 1. Kiểm tra trùng lặp dữ liệu trong danh sách khách hàng
-  this.clientService.getClientData().subscribe((clients: any[]) => {
-    const isExisted = clients.some(c => c.Email === email || c.So_dien_thoai === phone);
-
-    if (isExisted) {
-      this.registerError = 'Email hoặc Số điện thoại này đã được sử dụng!';
+    if (this.regForm.invalid) {
+      this.regForm.markAllAsTouched();
       return;
     }
 
-    // 2. Tạo mã OTP giả lập (6 số)
     const mockOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    // 3. Lưu thông tin đăng ký tạm thời và mã OTP vào localStorage để VerifyComponent lấy
-    const tempUser = { ...this.regForm.value, otp: mockOTP };
+
+    const tempUser = {
+      name: this.regForm.value.name,
+      phone: this.regForm.value.phone,
+      email: this.regForm.value.email,
+      password: this.regForm.value.password,
+      otp: mockOTP
+    };
+
     localStorage.setItem('tempUser', JSON.stringify(tempUser));
 
-    // 4. Giả lập gửi mã (Hiển thị alert để bạn biết mã mà test)
     alert(`[DWELLY] Mã xác thực của bạn là: ${mockOTP}`);
-    console.log(`Đã gửi OTP ${mockOTP} tới ${email}`);
 
-    // 5. Chuyển Modal
     this.switchToVerify();
-  });
-}
+  }
 
 private switchToVerify() {
   const regModal = document.getElementById('registerModal');

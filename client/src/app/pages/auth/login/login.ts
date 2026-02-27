@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../../services/client';
-import { iClient } from '../../../interfaces/client';
 
 @Component({
   selector: 'app-login',
@@ -42,27 +41,19 @@ export class Login {
     const email = String(this.loginForm.value.email || '').trim().toLowerCase();
     const password = String(this.loginForm.value.password || '').trim();
 
-    this.clientService.getClientData().subscribe({
-      next: (clients: iClient[]) => {
-        const matched = clients.find(
-          (client) => client.Email.trim().toLowerCase() === email && client.Mat_khau === password
-        );
-
-        if (!matched) {
-          this.loginError = 'Email hoặc mật khẩu không đúng.';
-          return;
-        }
-
-        localStorage.setItem('userName', matched.Ho_va_ten);
-        localStorage.setItem('userEmail', matched.Email);
-        localStorage.setItem('userId', matched.Ma_khach_hang);
-        localStorage.setItem('userAvatar', matched.Anh_dai_dien || 'https://i.pravatar.cc/100');
+    this.clientService.login({ email, password }).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('userName', res.user.fullName);
+        localStorage.setItem('userEmail', res.user.email);
+        localStorage.setItem('userId', res.user.customerCode || res.user.id);
+        localStorage.removeItem('userAvatar');
 
         this.closeLoginModal();
         window.dispatchEvent(new Event('user-login'));
       },
-      error: () => {
-        this.loginError = 'Không thể tải dữ liệu đăng nhập. Vui lòng thử lại.';
+      error: (err) => {
+        this.loginError = err.error?.message || 'Đăng nhập thất bại';
       }
     });
   }

@@ -16,6 +16,9 @@ export class Admin {
       .get<iAdmin[]>(`${baseUrl}/admins`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  login(data: any) {
+  return this.http.post(`${baseUrl}/loginAdmin`, data);
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

@@ -16,6 +16,13 @@ export class Client {
       .get<iClient[]>(`${baseUrl}/clients`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  login(data: any) {
+  return this.http.post(`${baseUrl}/login`, data);
+  }
+  register(data: any) {
+  return this.http.post(`${baseUrl}/register`, data);
+  }
+  
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Client } from '../../../services/client';
 
 @Component({
   selector: 'app-verify-account',
@@ -14,6 +15,8 @@ export class VerifyAccount implements OnInit {
   displayPhone: string = '';
   resendCountdown: number = 0;
   timer: any;
+
+  constructor(private clientService: Client) {}
 
   ngOnInit() {
     const tempUserData = JSON.parse(localStorage.getItem('tempUser') || '{}');
@@ -33,43 +36,39 @@ export class VerifyAccount implements OnInit {
     modalInstance?.hide();
   }
 
-  // LOGIC QUAN TRỌNG: Kiểm tra OTP và giả lập Đăng nhập
   verify() {
     const enteredOtp = this.otp.join('');
-    const tempUserData = JSON.parse(localStorage.getItem('tempUser') || '{}');
+    const tempUser = JSON.parse(localStorage.getItem('tempUser') || '{}');
 
-    if (enteredOtp === tempUserData.otp) {
-      // 1. Tạo đối tượng User mới (Giả lập dữ liệu thành công)
-      const newUser = {
-        Ma_khach_hang: 'C0' + (Math.floor(Math.random() * 90) + 10),
-        Ho_va_ten: tempUserData.name,
-        So_dien_thoai: tempUserData.phone,
-        Email: tempUserData.email,
-        Trang_thai: true,
-        Ngay_tao: new Date().toISOString().split('T')[0],
-        Ma_phan_hang: "DONG",
-        Tong_diem: 0
-      };
-
-      // 2. LƯU TRẠNG THÁI ĐĂNG NHẬP (Để Header hiển thị tên)
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      // 3. Xóa dữ liệu tạm OTP
-      localStorage.removeItem('tempUser');
-
-      alert('Chúc mừng! Tài khoản DWELLY của bạn đã được kích hoạt và đăng nhập thành công.');
-
-      // 4. Đóng modal và tải lại trang để Header cập nhật giao diện mới
-      this.closeAllModals();
-      window.location.reload(); 
-
-    } else {
-      this.otpError = 'Mã xác thực không chính xác. Vui lòng thử lại!';
-      // Reset lại các ô nhập để người dùng gõ lại từ đầu
+    if (enteredOtp !== tempUser.otp) {
+      this.otpError = 'Mã xác thực không chính xác!';
       this.otp = ['', '', '', '', '', ''];
-      document.getElementById('otp-0')?.focus();
+      return;
     }
+
+    this.clientService.register({
+      name: tempUser.name,
+      phone: tempUser.phone,
+      email: tempUser.email,
+      password: tempUser.password
+    }).subscribe({
+      next: () => {
+        localStorage.removeItem('tempUser');
+
+        alert('Đăng ký thành công! Vui lòng đăng nhập.');
+
+        this.closeAllModals();
+
+        setTimeout(() => {
+          const loginModal = document.getElementById('loginModal');
+          const bModalLogin = new (window as any).bootstrap.Modal(loginModal);
+          bModalLogin.show();
+        }, 400);
+      },
+      error: (err) => {
+        this.otpError = err.error?.message || 'Đăng ký thất bại';
+      }
+    });
   }
 
   onOtpInput(index: number, event: any) {
