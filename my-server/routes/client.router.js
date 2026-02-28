@@ -25,6 +25,49 @@ router.get("/clients", async (req, res) => {
     }
 });
 
+//get client by ID
+router.get("/clients/:id", async (req, res) => {
+    try {
+        let  client = await Client.findOne({ Ma_khach_hang: req.params.id });
+        if (!client) {
+            return res.status(404).json({ message: "Khách hàng không tồn tại" });
+        }
+        res.json(client);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// update client info
+router.patch("/clients/:id", async (req, res) => {
+    try {
+        const client = await Client.findOne({ Ma_khach_hang: req.params.id });
+
+        if (!client) {
+            return res.status(404).json({ message: "Khách hàng không tồn tại" });
+        }
+
+        // Build update object with only provided fields
+        const updateData = {};
+        if (req.body.Ho_va_ten !== undefined) updateData.Ho_va_ten = req.body.Ho_va_ten;
+        if (req.body.So_dien_thoai !== undefined) updateData.So_dien_thoai = req.body.So_dien_thoai;
+        if (req.body.Email !== undefined) updateData.Email = req.body.Email;
+        if (req.body.Anh_dai_dien !== undefined) updateData.Anh_dai_dien = req.body.Anh_dai_dien;
+
+        const updatedClient = await Client.findOneAndUpdate(
+            { Ma_khach_hang: req.params.id },
+            { $set: updateData },
+            { returnDocument: 'after' }
+        );
+
+        res.json({ message: "Cập nhật thông tin thành công", client: updatedClient });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
 // ================= LOGIN =================
 router.post("/login", async (req, res) => {
   try {
@@ -123,5 +166,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
 
 module.exports = router;

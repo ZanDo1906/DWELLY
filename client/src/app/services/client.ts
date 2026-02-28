@@ -16,6 +16,16 @@ export class Client {
       .get<iClient[]>(`${baseUrl}/clients`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  getClientById(id: string): Observable<iClient> {
+    return this.http
+      .get<iClient>(`${baseUrl}/clients/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  updateClient(id: string, data: Partial<iClient>): Observable<any> {
+    return this.http
+      .patch(`${baseUrl}/clients/${id}`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
   login(data: any) {
   return this.http.post(`${baseUrl}/login`, data);
   }

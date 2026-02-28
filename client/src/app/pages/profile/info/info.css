@@ -41,11 +41,44 @@
   gap: 16px;
 }
 
+.avatar-wrapper {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
 .avatar {
   width: 64px;
   height: 64px;
   background: #ddd;
   border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-upload {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--brown);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.avatar-upload:hover {
+  background: #5a4229;
+  transform: scale(1.1);
+}
+
+.avatar-upload i {
+  color: #fff;
+  font-size: 12px;
 }
 
 .user-name {

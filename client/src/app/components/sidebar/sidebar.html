@@ -5,13 +5,13 @@
     <div class="user-info">
       <div class="d-flex gap-3 align-items-start mb-3">
         <img
-          [src]="userAvatar"
+          [src]="userInfo?.Anh_dai_dien || 'https://i.pravatar.cc/100'"
           alt="avatar"
           class="avatar"
         />
         <div class="user-details flex-grow-1">
-          <h6 class="mb-1 text-white">{{ userName }}</h6>
-          <small class="text-light d-block">{{ userEmail }}</small>
+          <h6 class="mb-1 text-white">{{ userInfo?.Ho_va_ten }}</h6>
+          <small class="text-light d-block">{{ userInfo?.Email }}</small>
           <div class="member-badge mt-2">Đồng</div>
         </div>
       </div>

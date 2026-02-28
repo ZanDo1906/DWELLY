@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { Client } from '../../services/client';
+import { iClient } from '../../interfaces/client';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,13 +12,12 @@ import { filter } from 'rxjs';
   styleUrl: './sidebar.css',
 })
 export class Sidebar implements OnInit {
-  userName = 'Your name';
-  userEmail = 'yourname@gmail.com';
-  userAvatar = 'https://i.pravatar.cc/100';
   isLoggedIn = false;
   currentUrl = '';
+  userInfo: iClient | null = null;
+  userId: string = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private clientService: Client) {
     // Track route changes
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -26,8 +27,26 @@ export class Sidebar implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshUserInfo();
+    this.userId = localStorage.getItem('userId') || '';
+    if (this.userId) {
+      this.loadUserInfo();
+    } else {
+      this.refreshUserInfo();
+    }
     this.currentUrl = this.router.url;
+  }
+
+   loadUserInfo(): void {
+    this.clientService.getClientById(this.userId).subscribe({
+      next: (data) => {
+        this.userInfo = data;
+        this.isLoggedIn = true;
+      },
+      error: (err) => {
+        console.error('Error loading user info:', err);
+        this.refreshUserInfo();
+      }
+    });
   }
 
   isOrdersActive(): boolean {
@@ -37,39 +56,25 @@ export class Sidebar implements OnInit {
 
   @HostListener('window:user-login')
   onUserLogin(): void {
-    this.refreshUserInfo();
+    this.userId = localStorage.getItem('userId') || '';
+    if (this.userId) {
+      this.loadUserInfo();
+    } else {
+      this.refreshUserInfo();
+    }
   }
 
   @HostListener('window:user-logout')
   onUserLogout(): void {
-    this.refreshUserInfo();
+    this.userInfo = null;
+    this.userId = '';
+    this.isLoggedIn = false;
   }
 
   private refreshUserInfo(): void {
-    const storedName = localStorage.getItem('userName');
-    const storedEmail = localStorage.getItem('userEmail');
-    const storedAvatar = localStorage.getItem('userAvatar');
-
-    // Debug logging
-    // console.log('=== Sidebar User Info Debug ===');
-    // console.log('storedName:', storedName);
-    // console.log('storedEmail:', storedEmail);
-    // console.log('storedAvatar:', storedAvatar);
-
-    if (storedName && storedName.trim().length > 0) {
-      this.userName = storedName.trim();
-      this.userEmail = storedEmail?.trim() || 'yourname@gmail.com';
-      this.userAvatar = storedAvatar || 'https://i.pravatar.cc/100';
-      this.isLoggedIn = true;
-      // console.log('User logged in, avatar set to:', this.userAvatar);
-      return;
-    }
-
-    this.userName = 'Your name';
-    this.userEmail = 'yourname@gmail.com';
-    this.userAvatar = 'https://i.pravatar.cc/100';
+    // Fallback to default values when no user is logged in
+    this.userInfo = null;
     this.isLoggedIn = false;
-    // console.log('No user logged in, using default avatar');
   }
 
   logout(): void {

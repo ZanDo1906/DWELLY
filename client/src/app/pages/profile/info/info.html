@@ -7,19 +7,25 @@
 
           <h2 class="page-title">Tài khoản cá nhân</h2>
 
-          <div class="account-card">
+          <div class="account-card" *ngIf="userInfo">
             <!-- TOP INFO -->
             <div class="account-top">
               <div class="user-info">
-                <div class="avatar"></div>
+                <div class="avatar-wrapper">
+                  <img class="avatar" [src]="userInfo.Anh_dai_dien || 'https://i.pravatar.cc/100'" alt="User Avatar">
+                  <label class="avatar-upload" *ngIf="isEditing">
+                    <i class="bi bi-camera-fill"></i>
+                    <input type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden>
+                  </label>
+                </div>
                 <div>
-                  <div class="user-name">Your name</div>
-                  <div class="user-email">yourname@gmail.com</div>
+                  <div class="user-name">{{ userInfo.Ho_va_ten }}</div>
+                  <div class="user-email">{{ userInfo.Email }}</div>
                 </div>
               </div>
 
-              <button class="btn-brown btn-update" (click)="toggleEdit()">
-                {{ isEditing ? 'Lưu thông tin' : 'Cập nhật thông tin' }}
+              <button class="btn-brown btn-update" (click)="toggleEdit()" [disabled]="isSaving">
+                {{ isSaving ? 'Đang lưu...' : (isEditing ? 'Lưu thông tin' : 'Cập nhật thông tin') }}
               </button>
             </div>
 
@@ -28,39 +34,39 @@
               <div class="form-group full">
                 <label>Họ tên</label>
                 <div class="input-wrapper">
-                  <input type="text" value="Fiona Nguyen" [disabled]="!isEditing" />
+                  <input type="text" [(ngModel)]="userInfo.Ho_va_ten" [disabled]="!isEditing" />
                   <i class="bi bi-x-circle" *ngIf="isEditing"></i>
                 </div>
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Giới tính</label>
                 <div class="radio-group">
-                  <label><input type="radio" name="gender" [disabled]="!isEditing" /> Nam</label>
-                  <label><input type="radio" name="gender" [disabled]="!isEditing" /> Nữ</label>
-                  <label><input type="radio" name="gender" [disabled]="!isEditing" /> Khác</label>
+                  <label><input type="radio" name="gender" [value]="'Nam'" [(ngModel)]="userInfo.Ma_khach_hang" [disabled]="!isEditing" /> Nam</label>
+                  <label><input type="radio" name="gender" [value]="'Nữ'" [(ngModel)]="userInfo.Ma_khach_hang" [disabled]="!isEditing" /> Nữ</label>
+                  <label><input type="radio" name="gender" [value]="'Khác'" [(ngModel)]="userInfo.Ma_khach_hang" [disabled]="!isEditing" /> Khác</label>
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Ngày sinh</label>
                 <div class="input-wrapper">
-                  <input type="date" [disabled]="!isEditing" />
+                  <input type="date" [(ngModel)]="userInfo.Ma_khach_hang" [disabled]="!isEditing" />
                   <i class="bi bi-pencil" *ngIf="isEditing"></i>
                 </div>
-              </div>
+              </div> -->
 
               <div class="form-group">
                 <label>Số điện thoại *</label>
                 <div class="input-wrapper">
-                  <input type="text" value="0987654321" disabled />
+                  <input type="text" [(ngModel)]="userInfo.So_dien_thoai" disabled />
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Email</label>
                 <div class="input-wrapper">
-                  <input type="email" placeholder="Nhập email" [disabled]="!isEditing" />
+                  <input type="email" [(ngModel)]="userInfo.Email" [disabled]="!isEditing" />
                   <i class="bi bi-pencil" *ngIf="isEditing"></i>
                 </div>
               </div>
@@ -68,8 +74,8 @@
               <div class="form-group full">
                 <label>Mật khẩu *</label>
                 <div class="password-field">
-                  <input type="password" value="password" disabled />
-                  <i class="bi bi-eye"></i>
+                  <input [type]="showPassword ? 'text' : 'password'" value="••••••••" disabled />
+                  <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword" (click)="togglePassword()"></i>
                 </div>
                 <a class="change-password add-btn"
                   data-bs-toggle="modal"

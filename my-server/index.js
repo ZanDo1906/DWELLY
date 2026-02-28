@@ -8,7 +8,8 @@ app.use(cors());               // PHẢI đặt trước các route
 
 //Parsing data from client
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 //Import router
 const productRoute = require('./routes/product.router');
