@@ -1,35 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { ConfirmCancelModal } from '../../../../components/confirm-cancel-modal/confirm-cancel-modal';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-return-request-modal',
-  imports: [CommonModule, ConfirmCancelModal],
+  imports: [CommonModule, FormsModule],
   templateUrl: './return-request-modal.html',
   styleUrl: './return-request-modal.css',
 })
 export class ReturnRequestModal {
-  @Input() modalId: string = 'returnRequestModal';
+  @Input() currentProduct: any = null;
+  @Input() orderInfo: any = null;
+  @Input() returnReason = '';
+  @Input() returnImages: (string | File)[] = [];
+  @Input() returnDescription = '';
 
-  handleConfirm() {
-    console.log('Return request confirmed');
-    // Close return request modal
-    const modalEl = document.getElementById(this.modalId);
-    if (modalEl) {
-      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
-      modal?.hide();
-    }
-  }
+  @Output() returnReasonChange = new EventEmitter<string>();
+  @Output() returnDescriptionChange = new EventEmitter<string>();
+  @Output() imageSelected = new EventEmitter<{ event: Event; index: number }>();
+  @Output() removeImage = new EventEmitter<number>();
+  @Output() cancel = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<void>();
 
-  handleCancel() {
-    console.log('Return request cancelled');
-  }
-
-  closeModal() {
-    const modalEl = document.getElementById(this.modalId);
-    if (modalEl) {
-      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
-      modal?.hide();
-    }
+  onImageSelected(event: Event, index: number): void {
+    this.imageSelected.emit({ event, index });
   }
 }

@@ -74,8 +74,7 @@
       <div class="actions">
         <button 
           class="btn btn-outline-custom"
-          data-bs-toggle="modal" 
-          data-bs-target="#returnRequestModal">
+          (click)="openReturnModal({product: {Ten_san_pham: 'Tên sản phẩm 1', Hinh_anh: []}, So_luong: 2}, {Ma_don_mua: 'DH001'})">
           Hủy yêu cầu
         </button>
       </div>
@@ -93,7 +92,7 @@
     <div class="return-product">
       <div class="thumb"></div>
       <div class="info">
-        <strong>Tên sản phẩm 1</strong>
+        <strong>Tên sản phẩm 2</strong>
         <p>Phân loại</p>
         <p>Số lượng</p>
       </div>
@@ -105,15 +104,14 @@
 
     <div class="return-card-footer">
       <div class="total">
-        Tổng số tiền (2 sản phẩm):
-        <span>220.990 đ</span>
+        Tổng số tiền (1 sản phẩm):
+        <span>110.990 đ</span>
       </div>
 
       <div class="actions">
         <button 
           class="btn btn-outline-custom"
-          data-bs-toggle="modal" 
-          data-bs-target="#returnRequestModal">
+          (click)="openReturnModal({product: {Ten_san_pham: 'Tên sản phẩm 2', Hinh_anh: []}, So_luong: 1}, {Ma_don_mua: 'DH002'})">
           Hủy yêu cầu
         </button>
       </div>
@@ -125,4 +123,22 @@
 </div>
 
 <!-- Return Request Modal -->
-<app-return-request-modal modalId="returnRequestModal"></app-return-request-modal>
+<app-modal
+  modalId="returnRequestModal"
+  title="Yêu cầu trả hàng/hoàn tiền"
+  (close)="handleCancelReturn()">
+  <app-return-request-modal
+    *ngIf="currentProduct"
+    [currentProduct]="currentProduct"
+    [orderInfo]="orderInfo"
+    [returnReason]="returnReason"
+    [returnImages]="returnImages"
+    [returnDescription]="returnDescription"
+    (returnReasonChange)="handleReturnReasonChange($event)"
+    (returnDescriptionChange)="handleReturnDescriptionChange($event)"
+    (imageSelected)="handleImageSelected($event)"
+    (removeImage)="handleRemoveImage($event)"
+    (cancel)="handleCancelReturn()"
+    (submit)="handleSubmitReturn()">
+  </app-return-request-modal>
+</app-modal>

@@ -1,86 +1,80 @@
-<div class="modal fade" [id]="modalId" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Yêu cầu trả hàng/hoàn tiền</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+<!-- Product Info -->
+<div *ngIf="currentProduct" class="return-product-info">
+  <div class="return-product-image">
+    <img
+      [src]="currentProduct.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
+      alt="product"
+    />
+  </div>
+  <div class="return-product-text">
+    <p>
+      <span class="value">{{ currentProduct.product?.Ten_san_pham }}</span>
+    </p>
+    <p>
+      <span class="value">Số lượng: {{ currentProduct.So_luong }}</span>
+    </p>
+    <p>
+      <span class="value">{{ orderInfo?.Ma_don_mua }}</span>
+    </p>
+  </div>
+</div>
 
-      <div class="modal-body">
-        <!-- Product Selection -->
-        <div class="section mb-4">
-          <h6 class="section-title">Sản phẩm</h6>
-          <div class="product-list">
-            <!-- Product 1 -->
-            <div class="product-item">
-              <div class="product-content">
-                <div class="product-img"></div>
-                <div class="product-details">
-                  <strong>Tên sản phẩm</strong>
-                  <p>Phân loại</p>
-                  <p>Giá tiền</p>
-                </div>
-                <div class="product-quantity">
-                  <p>Số lượng: 1</p>
-                  <strong class="product-total">Tổng tiền</strong>
-                </div>
-              </div>
-            </div>
+<!-- Return Reason -->
+<div class="return-reason-section">
+  <label>Lý do yêu cầu trả hàng</label>
+  <select 
+    class="reason-select"
+    [(ngModel)]="returnReason"
+    (ngModelChange)="returnReasonChange.emit($event)">
+    <option value="">Chọn lý do</option>
+    <option value="change_mind">Đổi ý không muốn mua</option>
+    <option value="defective">Sản phẩm bị lỗi</option>
+    <option value="wrong_item">Không đúng mô tả</option>
+    <option value="damaged">Hàng bị hư hỏng khi vận chuyển</option>
+    <option value="other">Lý do khác</option>
+  </select>
+</div>
 
-            <!-- Product 2 -->
-            <div class="product-item">
-              <div class="product-content">
-                <div class="product-img"></div>
-                <div class="product-details">
-                  <strong>Tên sản phẩm</strong>
-                  <p>Phân loại</p>
-                  <p>Giá tiền</p>
-                </div>
-                <div class="product-quantity">
-                  <p>Số lượng: 1</p>
-                  <strong class="product-total">Tổng tiền</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-center mt-3">
-            <button class="btn-view-more">Xem thêm</button>
-          </div>
-        </div>
-
-        <!-- Return Reason -->
-        <div class="section mb-4">
-          <h6 class="section-title">Lý do yêu cầu</h6>
-          <select class="form-select">
-            <option value="">Chọn lý do</option>
-            <option value="change_mind">Chọn lý do</option>
-            <option value="defective">Sản phẩm lỗi</option>
-            <option value="wrong_item">Không đúng mô tả</option>
-            <option value="other">Khác</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-          Hủy
+<!-- Add Images Section -->
+<div class="return-images-section">
+  <label>Thêm hình ảnh (nếu có)</label>
+  <div class="images-grid">
+    <div *ngFor="let i of [0, 1, 2, 3, 4]" class="image-upload-box">
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onImageSelected($event, i)"
+        #imageInput />
+      <div class="image-preview" *ngIf="returnImages[i]" (click)="imageInput.click()">
+        <img [src]="returnImages[i]" alt="preview" />
+        <button type="button" class="remove-image-btn" (click)="$event.stopPropagation(); removeImage.emit(i)">
+          <i class="bi bi-x"></i>
         </button>
-        <button 
-          type="button" 
-          class="btn btn-primary-custom"
-          data-bs-toggle="modal" 
-          data-bs-target="#confirmCancelModal">
-          Gửi yêu cầu
-        </button>
+      </div>
+      <div class="upload-placeholder" *ngIf="!returnImages[i]" (click)="imageInput.click()">
+        <i class="bi bi-plus"></i>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Confirm Cancel Modal -->
-<app-confirm-cancel-modal 
-  modalId="confirmCancelModal"
-  (confirmed)="handleConfirm()"
-  (cancelled)="handleCancel()">
-</app-confirm-cancel-modal>
+<!-- Return Description -->
+<div class="return-content-section">
+  <label>Mô tả chi tiết</label>
+  <div class="textarea-wrapper">
+    <textarea
+      class="return-textarea"
+      [(ngModel)]="returnDescription"
+      (ngModelChange)="returnDescriptionChange.emit($event)"
+      maxlength="500"
+      placeholder="Mô tả chi tiết về vấn đề của sản phẩm...">
+    </textarea>
+    <div class="char-counter">{{ returnDescription.length }}/500</div>
+  </div>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+  <button class="btn-cancel" (click)="cancel.emit()">Hủy</button>
+  <button class="btn-submit" (click)="submit.emit()">Gửi yêu cầu</button>
+</div>
