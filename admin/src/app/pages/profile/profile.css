@@ -102,6 +102,12 @@ input:disabled {
 
 .password-field {
   position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 40px;
 }
 
 .password-field i {

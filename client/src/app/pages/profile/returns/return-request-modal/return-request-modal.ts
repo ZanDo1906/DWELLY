@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ConfirmCancelModal } from '../confirm-cancel-modal/confirm-cancel-modal';
+import { ConfirmCancelModal } from '../../../../components/confirm-cancel-modal/confirm-cancel-modal';
 
 @Component({
   selector: 'app-return-request-modal',

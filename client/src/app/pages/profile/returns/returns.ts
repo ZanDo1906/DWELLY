@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReturnRequestModal } from '../../../components/return-request-modal/return-request-modal';
+import { ReturnRequestModal } from './return-request-modal/return-request-modal';
 
 @Component({
   selector: 'app-returns',
