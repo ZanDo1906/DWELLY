@@ -8,11 +8,24 @@
 
   <!-- Tabs -->
   <div class="order-tabs mb-3">
-    <div class="tab active">Tất cả <span>{{ orders.length }}</span></div>
-    <div class="tab">Chờ xác nhận <span>1</span></div>
-    <div class="tab">Chờ giao hàng <span>2</span></div>
-    <div class="tab">Đã giao hàng <span>2</span></div>
-    <div class="tab">Đã hủy <span>1</span></div>
+    <div class="tab" [class.active]="activeTab === 'Tất cả'" (click)="filterOrdersByTab('Tất cả')">
+      Tất cả <span>{{ allOrders.length }}</span>
+    </div>
+    <div class="tab" [class.active]="activeTab === 'Chờ xác nhận'" (click)="filterOrdersByTab('Chờ xác nhận')">
+      Chờ xác nhận <span>{{ getOrderCountByStatus('Chờ duyệt') }}</span>
+    </div>
+    <div class="tab" [class.active]="activeTab === 'Chờ giao hàng'" (click)="filterOrdersByTab('Chờ giao hàng')">
+      Chờ giao hàng <span>{{ getOrderCountByStatus('Đã duyệt') }}</span>
+    </div>
+    <div class="tab" [class.active]="activeTab === 'Đang giao hàng'" (click)="filterOrdersByTab('Đang giao hàng')">
+      Đang giao hàng <span>{{ getOrderCountByStatus('Đang giao') }}</span>
+    </div>
+    <div class="tab" [class.active]="activeTab === 'Đã giao hàng'" (click)="filterOrdersByTab('Đã giao hàng')">
+      Đã giao hàng <span>{{ getOrderCountByStatus('Hoàn thành') }}</span>
+    </div>
+    <div class="tab" [class.active]="activeTab === 'Đã hủy'" (click)="filterOrdersByTab('Đã hủy')">
+      Đã hủy <span>{{ getOrderCountByStatus('Hủy đơn') + getOrderCountByStatus('Trả hàng') }}</span>
+    </div>
   </div>
 
   <!-- Search -->
@@ -30,7 +43,9 @@
   <div *ngIf="!isLoading && !errorMessage && orders.length === 0" class="text-center py-4">Chưa có đơn hàng nào.</div>
 
   <!-- ORDER CARD -->
-  <div class="order-card mb-4" *ngFor="let orderView of orders; trackBy: trackByOrderId">
+  <div class="order-card mb-4" *ngFor="let orderView of orders; trackBy: trackByOrderId" 
+       (click)="goToOrderDetail(orderView.order.Ma_don_mua)"
+       style="cursor: pointer;">
 
     <!-- Card header -->
     <div class="order-card-header">
@@ -55,7 +70,7 @@
     </div>
 
     <!-- Collapse -->
-    <div class="text-center collapse-toggle">
+    <div class="text-center collapse-toggle" *ngIf="orderView.items.length > 2">
       Thu gọn <i class="bi bi-chevron-up"></i>
     </div>
 
@@ -69,10 +84,12 @@
       <div class="actions">
         <button class="btn btn-primary-custom"
           data-bs-toggle="modal"
-          data-bs-target="#reviewModal">
+          data-bs-target="#reviewModal"
+          (click)="$event.stopPropagation()">
           Đánh giá
         </button>
-        <button class="btn btn-outline-custom">
+        <button class="btn btn-outline-custom"
+          (click)="$event.stopPropagation()">
           Trả hàng / hoàn tiền
         </button>
       </div>

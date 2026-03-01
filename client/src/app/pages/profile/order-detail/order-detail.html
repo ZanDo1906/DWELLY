@@ -1,67 +1,18 @@
-<div class="container-fluid order-detail-page py-4">
+<div class="container-fluid order-detail-page py-4" *ngIf="orderInfo">
   <div class="px-4">
     <div class="site-inner">
 
   <!-- Header -->
   <div class="mb-4">
     <h2 class="title">Quản lý đơn hàng</h2>
-    <div class="back">
-      <i class="bi bi-arrow-left"></i>
-      Theo dõi trạng thái đơn
-    </div>
-  </div>
-
-  <!-- STEP TRACKING -->
-  <div class="card step-card mb-4">
-    <div class="card-body">
-
-      <div class="stepper">
-        <div class="step done">
-          <div class="circle"><i class="bi bi-check"></i></div>
-          <p>Đang chờ duyệt</p>
-        </div>
-
-        <div class="line done"></div>
-
-        <div class="step done">
-          <div class="circle"><i class="bi bi-check"></i></div>
-          <p>Chờ giao hàng</p>
-        </div>
-
-        <div class="line done"></div>
-
-        <div class="step done">
-          <div class="circle"><i class="bi bi-check"></i></div>
-          <p>Đang giao hàng</p>
-        </div>
-
-        <div class="line done"></div>
-
-        <div class="step done">
-          <div class="circle"><i class="bi bi-check"></i></div>
-          <p>Đã giao hàng</p>
-        </div>
-
-        <div class="line done"></div>
-
-        <div class="step done">
-          <div class="circle"><i class="bi bi-check"></i></div>
-          <p>Đánh giá</p>
-        </div>
-      </div>
-
-      <hr>
-
-      <!-- Actions -->
-      <div class="action-buttons">
-        <button class="btn btn-primary-action">Đã nhận hàng</button>
-        <!-- <button class="btn btn-outline-action">
-          Yêu cầu trả hàng/Hoàn tiền
-        </button> -->
-        <button class="btn btn-outline-action">Liên hệ</button>
-      </div>
-
-    </div>
+    
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+      <ol>
+        <li><a routerLink="/user-layout/orders">Quản lý đơn hàng</a></li>
+        <li>Chi tiết đơn hàng</li>
+      </ol>
+    </nav>
   </div>
 
   <div class="row g-4">
@@ -70,48 +21,56 @@
     <div class="col-lg-6">
 
       <!-- Address -->
-      <div class="card box">
-        <div class="box-title">
-          <div><i class="bi bi-geo-alt"></i> Địa chỉ nhận hàng</div>
+      <div class="card box" *ngIf="userInfo">
+        <div class="box-title" >
+          <div class="title"><i class="bi bi-geo-alt"></i> Địa chỉ nhận hàng</div>
+
+          <hr>
           
           <span class="order-code">
-            SPXVN0485186892S1
+            {{orderInfo.Ma_don_mua}}
           </span>
         </div>
 
         <p class="fw-semibold mb-1">
-          Lê Thanh Như Ngọc - 0915736103
+          {{userInfo.Ho_va_ten}} - {{userInfo.So_dien_thoai}}
         </p>
         <p class="text-muted">
-          Cổng sau ký túc xá khu B, Phường Linh Xuân, TP Thủ Đức, TP.HCM
+          {{orderInfo.Dia_chi}}
         </p>
       </div>
 
       <!-- Shipping status -->
       <div class="card box mt-4">
         <div class="box-title">
-          <div><i class="bi bi-truck"></i> Trạng thái vận chuyển</div>
+          <div class="title"><i class="bi bi-truck"></i> Trạng thái vận chuyển</div>
+          <hr>
         </div>
 
         <ul class="shipping-timeline">
-          <li class="active">
+          <!-- Giao hàng thành công - Only show when Hoàn thành -->
+          <li *ngIf="orderInfo.Trang_thai === 'Hoàn thành'" class="active">
             <span class="dot"></span>
             <div>
-              <strong>Đã giao</strong>
-              <p>Giao hàng thành công</p>
-              <small>9:30 18-01-2024</small>
+              <strong>Giao hàng thành công</strong>
+              <p>Đơn hàng đã được giao thành công</p>
+              <small>{{orderInfo.Ngay_dat | date:'HH:mm dd-MM-yyyy'}}</small>
             </div>
           </li>
 
-          <li>
+          <!-- Đang giao hàng - Show when Đang giao or Hoàn thành -->
+          <li *ngIf="orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
+              [class.active]="orderInfo.Trang_thai === 'Đang giao'">
             <span class="dot"></span>
             <div>
-              <strong>Đang vận chuyển</strong>
-              <p>Đơn hàng đã đến trạm giao hàng tại khu vực của bạn</p>
+              <strong>Đang giao hàng</strong>
+              <p>Đơn hàng đang được giao đến bạn</p>
             </div>
           </li>
 
-          <li>
+          <!-- Đang vận chuyển - Show when Đã duyệt, Đang giao, or Hoàn thành -->
+          <li *ngIf="orderInfo.Trang_thai === 'Đã duyệt' || orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
+              [class.active]="orderInfo.Trang_thai === 'Đã duyệt'">
             <span class="dot"></span>
             <div>
               <strong>Đang vận chuyển</strong>
@@ -119,19 +78,13 @@
             </div>
           </li>
 
-          <li>
-            <span class="dot"></span>
-            <div>
-              <strong>Đang chuẩn bị</strong>
-              <p>Người gửi đang chuẩn bị hàng</p>
-            </div>
-          </li>
-
-          <li>
+          <!-- Đặt hàng thành công - Always show -->
+          <li [class.active]="orderInfo.Trang_thai === 'Chờ duyệt'">
             <span class="dot"></span>
             <div>
               <strong>Đặt hàng thành công</strong>
               <p>Đơn hàng đã được đặt</p>
+              <small>{{orderInfo.Ngay_dat | date:'HH:mm dd-MM-yyyy'}}</small>
             </div>
           </li>
         </ul>
@@ -144,46 +97,58 @@
       <!-- Products -->
       <div class="card box">
         <div class="box-title">
-          <div><i class="bi bi-shop"></i> Sản phẩm</div>
+          <div class="title"><i class="bi bi-shop"></i> Sản phẩm</div>
         </div>
 
-        <div class="product-item" >
-          <img src="https://via.placeholder.com/64" />
+        <div class="product-item" *ngFor="let detail of orderDetails">
+          <img [src]="detail.productInfo?.Hinh_anh?.[0] || 'https://via.placeholder.com/64'" 
+               [alt]="detail.productInfo?.Ten_san_pham || 'Product'" />
           <div class="info">
-            <strong>Tủ đầu giường gỗ Sồi</strong>
-            <p>tự nhiên Anneli</p>
-            <span>x1</span>
+            <strong>{{ detail.productInfo?.Ten_san_pham || detail.Ma_san_pham }}</strong>
+            <p>{{ detail.productInfo?.Mo_ta_ngan }}</p>
+            <span>x{{ detail.So_luong }}</span>
           </div>
-          <div class="price">18.900.000 VND</div>
+          <div class="price">{{ detail.Don_gia | number:'1.0-0' }} VND</div>
+        </div>
+
+        <div *ngIf="orderDetails.length === 0" class="text-center py-3 text-muted">
+          Không có sản phẩm
         </div>
       </div>
 
       <!-- Payment -->
       <div class="card box mt-4">
         <div class="box-title">
-          <div><i class="bi bi-receipt"></i> Tổng thanh toán</div>
+          <div class="title"><i class="bi bi-receipt"></i> Tổng thanh toán</div>
           
         </div>
 
         <div class="row-price">
-          <span>Tổng cộng (5 sản phẩm)</span>
-          <span>101.600.000 VND</span>
+          <span>Tổng cộng ({{ getTotalProducts() }} sản phẩm)</span>
+          <span>{{ orderInfo.Tong_tien | number:'1.0-0' }} VND</span>
         </div>
         <div class="row-price">
           <span>Phí vận chuyển</span>
-          <span>Miễn phí</span>
+          <span *ngIf="orderInfo.Phi_giao_hang">{{ orderInfo.Phi_giao_hang | number:'1.0-0' }} VND</span>
+          <span *ngIf="!orderInfo.Phi_giao_hang">Miễn phí</span>
         </div>
-        <div class="row-price">
-          <span>Giảm giá</span>
-          <span>0 VND</span>
-        </div>
+
 
         <hr>
 
         <div class="row-price total">
           <strong>Tổng thanh toán</strong>
-          <strong>101.600.000 VND</strong>
+          <strong>{{ (orderInfo.Tong_tien + (orderInfo.Phi_giao_hang || 0)) | number:'1.0-0' }} VND</strong>
         </div>
+
+         <!-- Actions -->
+      <div class="action-buttons mt-4">
+        <button class="btn btn-primary-action">Đã nhận hàng</button>
+        <!-- <button class="btn btn-outline-action">
+          Yêu cầu trả hàng/Hoàn tiền
+        </button> -->
+        <button class="btn btn-outline-action">Liên hệ</button>
+      </div>
       </div>
     </div>
   </div>

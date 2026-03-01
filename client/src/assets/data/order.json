@@ -10,7 +10,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": "Giao giờ hành chính",
         "Ngay_dat": "2024-03-01T08:30:00Z",
-        "Ma_quan_tri_vien_duyet": "AD01"
+        "Ma_quan_tri_vien_duyet": "AD01",
+        "Dia_chi": "123 Đường Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD002",
@@ -41,7 +42,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-02T14:20:00Z",
-        "Ma_quan_tri_vien_duyet": "AD01"
+        "Ma_quan_tri_vien_duyet": "AD01",
+        "Dia_chi": "456 Đường Lê Lợi, Phường Bến Thành, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD004",
@@ -54,7 +56,8 @@
         "Phi_giao_hang": 100000,
         "Ghi_chu": "Giao tầng 5",
         "Ngay_dat": "2024-03-02T16:45:00Z",
-        "Ma_quan_tri_vien_duyet": "AD03"
+        "Ma_quan_tri_vien_duyet": "AD03",
+        "Dia_chi": "789 Đường Trần Hưng Đạo, Phường 5, Quận 5, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD005",
@@ -85,7 +88,8 @@
         "Phi_giao_hang": 100000,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-03T11:30:00Z",
-        "Ma_quan_tri_vien_duyet": "AD01"
+        "Ma_quan_tri_vien_duyet": "AD01",
+        "Dia_chi": "321 Đường Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD007",
@@ -97,9 +101,10 @@
         "Ma_khuyen_mai": "KM04",
         "Phi_giao_hang": null,
         "Ghi_chu": null,
-        "Ngay_dat": "2024-03-04T13:10:00Z",
-        "Ma_quan_tri_vien_duyet": "AD05"
-    },
+        "Ngay_dat": "2024-03-04T13:15:00Z",
+        "Ma_quan_tri_vien_duyet": "AD02",
+        "Dia_chi": "Số 88, Đường Nguyễn Thị Minh Khai, Phường Đa Kao, Quận 1, TP.HCM"
+    }, 
     {
         "Ma_don_mua": "ORD008",
         "Ma_khach_hang": null,
@@ -129,7 +134,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-05T08:20:00Z",
-        "Ma_quan_tri_vien_duyet": "AD03"
+        "Ma_quan_tri_vien_duyet": "AD03",
+        "Dia_chi": "Số 99, Đường Pasteur, Phường Nguyễn Thái Bình, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD010",
@@ -142,7 +148,8 @@
         "Phi_giao_hang": 100000,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-05T10:40:00Z",
-        "Ma_quan_tri_vien_duyet": "AD03"
+        "Ma_quan_tri_vien_duyet": "AD03",
+        "Dia_chi": "Số 234, Đường Cách Mạng Tháng 8, Phường 10, Quận 3, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD011",
@@ -155,7 +162,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-06T14:15:00Z",
-        "Ma_quan_tri_vien_duyet": "AD04"
+        "Ma_quan_tri_vien_duyet": "AD04",
+        "Dia_chi": "123 Đường Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD012",
@@ -186,7 +194,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-07T09:30:00Z",
-        "Ma_quan_tri_vien_duyet": "AD01"
+        "Ma_quan_tri_vien_duyet": "AD01",
+        "Dia_chi": "456 Đường Lê Lợi, Phường Bến Thành, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD014",
@@ -199,7 +208,8 @@
         "Phi_giao_hang": 100000,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-07T11:20:00Z",
-        "Ma_quan_tri_vien_duyet": "AD02"
+        "Ma_quan_tri_vien_duyet": "AD02",
+        "Dia_chi": "789 Đường Trần Hưng Đạo, Phường 5, Quận 5, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD015",
@@ -230,7 +240,8 @@
         "Phi_giao_hang": 100000,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-08T15:10:00Z",
-        "Ma_quan_tri_vien_duyet": "AD04"
+        "Ma_quan_tri_vien_duyet": "AD04",
+        "Dia_chi": "321 Đường Lý Thường Kiệt, Phường 7, Quận Tân Bình, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD017",
@@ -243,7 +254,8 @@
         "Phi_giao_hang": null,
         "Ghi_chu": null,
         "Ngay_dat": "2024-03-09T10:00:00Z",
-        "Ma_quan_tri_vien_duyet": "AD05"
+        "Ma_quan_tri_vien_duyet": "AD05",
+        "Dia_chi": "Số 88, Đường Nguyễn Thị Minh Khai, Phường Đa Kao, Quận 1, TP.HCM"
     },
     {
         "Ma_don_mua": "ORD018",

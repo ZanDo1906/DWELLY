@@ -16,13 +16,106 @@
   color: var(--primary);
   font-weight: 700;
   font-size: 32px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.breadcrumb {
+  margin: 10px 0 25px;
+  font-size: 16px;
+  color: #AFA386;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  gap: 0px;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb li {
+  color: #666;
+}
+
+.breadcrumb li a {
+  text-decoration: none;
+  color: #AFA386;
+  font-weight: 600;
+}
+
+.breadcrumb li a:hover {
+  color: #6c5234;
+  cursor: pointer;
+}
+
+.breadcrumb li::after {
+  content: "/";
+  margin: 0 5px;
+  color: #6c5234;
+}
+
+.breadcrumb li:last-child {
+  font-weight: 700;
+  color: #6c5234;
+}
+
+.breadcrumb li:last-child::after {
+  content: "";
+}
+
+.breadcrumb {
+  margin: 10px 0 25px;
+  font-size: 16px;
+  color: #AFA386;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  gap: 0px;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb li {
+  color: #666;
+}
+
+.breadcrumb li a {
+  text-decoration: none;
+  color: #AFA386;
+  font-weight: 600;
+}
+
+.breadcrumb li a:hover {
+  color: #6c5234;
+  cursor: pointer;
+}
+
+.breadcrumb li::after {
+  content: "/";
+  margin: 0 5px;
+  color: #6c5234;
+}
+
+.breadcrumb li:last-child {
+  font-weight: 700;
+  color: #6c5234;
+}
+
+.breadcrumb li:last-child::after {
+  content: "";
 }
 
 .order-detail-page .back {
   color: var(--text-muted);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+.box-title .title{
+  font-size: 20px !important;
+  color: var(--success) !important;
 }
 
 /* ===== STEP TRACKING ===== */
@@ -95,6 +188,7 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .btn-primary-action {
@@ -155,7 +249,7 @@
 }
 
 .order-code {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-muted);
   font-weight: 400;
 }

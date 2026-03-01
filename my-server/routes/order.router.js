@@ -23,6 +23,19 @@ router.get("/orders", async (req, res) => {
     }
 });
 
+//get order by ID
+router.get("/orders/:id", async (req, res) => {
+    try {
+        let  order = await Order.findOne({ Ma_don_mua: req.params.id });
+        if (!order) {
+            return res.status(404).json({ message: "Đơn hàng không tồn tại" });
+        }
+        res.json(order);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 router.get('/orders/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -42,6 +55,28 @@ router.get('/orders/user/:id', async (req, res) => {
         res.json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// Update order status
+router.patch("/orders/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const updateData = req.body;
+
+        const updatedOrder = await Order.findOneAndUpdate(
+            { Ma_don_mua: orderId },
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: "Đơn hàng không tồn tại" });
+        }
+
+        res.json(updatedOrder);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 

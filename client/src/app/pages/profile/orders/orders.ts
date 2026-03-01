@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
 import { ReviewModa } from '../reviews/review-moda/review-moda';
 import { Order as OrderService } from '../../../services/order';
@@ -34,9 +35,11 @@ interface OrderView {
 })
 export class Orders implements OnInit {
   orders: OrderView[] = [];
+  allOrders: OrderView[] = []; // Store all orders
   currentCustomerId: string = '';
   isLoading = false;
   errorMessage = '';
+  activeTab: string = 'Tất cả'; // Track active tab
 
   currentReviewOrder: any = null;
   currentProduct: any = null;
@@ -48,12 +51,44 @@ export class Orders implements OnInit {
   constructor(
     private orderService: OrderService,
     private productService: Product,
-    private categoryService: Category
+    private categoryService: Category,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.currentCustomerId = localStorage.getItem('userId') || '';
     this.getOrderData();
+  }
+
+  getOrderCountByStatus(status: string): number {
+    return this.allOrders.filter(orderView => orderView.order.Trang_thai === status).length;
+  }
+
+  filterOrdersByTab(tabName: string): void {
+    this.activeTab = tabName;
+    
+    switch(tabName) {
+      case 'Tất cả':
+        this.orders = [...this.allOrders];
+        break;
+      case 'Chờ xác nhận':
+        this.orders = this.allOrders.filter(o => o.order.Trang_thai === 'Chờ duyệt');
+        break;
+      case 'Chờ giao hàng':
+        this.orders = this.allOrders.filter(o => o.order.Trang_thai === 'Đã duyệt');
+        break;
+      case 'Đang giao hàng':
+        this.orders = this.allOrders.filter(o => o.order.Trang_thai === 'Đang giao');
+        break;
+      case 'Đã giao hàng':
+        this.orders = this.allOrders.filter(o => o.order.Trang_thai === 'Hoàn thành');
+        break;
+      case 'Đã hủy':
+        this.orders = this.allOrders.filter(o => o.order.Trang_thai === 'Hủy đơn' || o.order.Trang_thai === 'Trả hàng');
+        break;
+      default:
+        this.orders = [...this.allOrders];
+    }
   }
 
   getOrderData(): void {
@@ -72,11 +107,12 @@ export class Orders implements OnInit {
       categories: this.categoryService.getCategoryData(),
     }).subscribe({
       next: ({ orders, products, categories }) => {
-        this.orders = this.mapOrdersForCurrentCustomer(
+        this.allOrders = this.mapOrdersForCurrentCustomer(
           orders as OrderWithDetails[],
           products,
           categories
         );
+        this.orders = [...this.allOrders]; // Initialize with all orders
         this.isLoading = false;
       },
       error: (error) => {
@@ -122,6 +158,11 @@ export class Orders implements OnInit {
 
   trackByOrderItem(_: number, item: OrderProductView): string {
     return item.detail.Ma_chi_tiet;
+  }
+
+  goToOrderDetail(orderId: string): void {
+    localStorage.setItem('orderId', orderId);
+    this.router.navigate(['/user-layout/order-detail']);
   }
 
   setReviewRating(rating: number): void {

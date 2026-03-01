@@ -19,4 +19,10 @@ export class Product {
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }
+
+  getProductById(id: string): Observable<iProduct> {
+    return this.http
+      .get<iProduct>(`${baseUrl}/products/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }

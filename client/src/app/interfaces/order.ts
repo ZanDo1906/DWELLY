@@ -15,4 +15,5 @@ export interface iOrder {
     Ghi_chu: string;
     Ngay_dat: Date;
     Ma_quan_tri_vien_duyet?: string;     // ObjectId (FK)
+    Dia_chi: string
 }
