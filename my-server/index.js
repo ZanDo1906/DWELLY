@@ -11,6 +11,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+// Serve static files (uploaded images)
+app.use('/uploads', express.static('uploads'));
+
 //Import router
 const productRoute = require('./routes/product.router');
 app.use("/", productRoute);
@@ -56,6 +59,9 @@ app.use("/", styleRoute);
 
 const voucherRoute = require('./routes/voucher.router');
 app.use("/", voucherRoute);
+
+const uploadRoute = require('./routes/upload.router');
+app.use("/", uploadRoute);
 
 
 app.listen(port, () => {

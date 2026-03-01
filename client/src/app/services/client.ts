@@ -26,6 +26,11 @@ export class Client {
       .patch(`${baseUrl}/clients/${id}`, data)
       .pipe(retry(2), catchError(this.handleError));
   }
+  uploadAvatar(formData: FormData): Observable<any> {
+    return this.http
+      .post(`${baseUrl}/upload/avatar`, formData)
+      .pipe(catchError(this.handleError));
+  }
   login(data: any) {
   return this.http.post(`${baseUrl}/login`, data);
   }

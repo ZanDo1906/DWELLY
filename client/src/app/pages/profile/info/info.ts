@@ -88,15 +88,22 @@ export class Info implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      const reader = new FileReader();
       
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && e.target.result && this.userInfo) {
-          this.userInfo.Anh_dai_dien = e.target.result as string;
+      // Upload to server
+      const formData = new FormData();
+      formData.append('avatar', file);
+      
+      this.clientService.uploadAvatar(formData).subscribe({
+        next: (response: any) => {
+          if (this.userInfo && response.filePath) {
+            this.userInfo.Anh_dai_dien = response.filePath;
+          }
+        },
+        error: (err) => {
+          console.error('Error uploading avatar:', err);
+          alert('Upload ảnh thất bại!');
         }
-      };
-      
-      reader.readAsDataURL(file);
+      });
     }
   }
 }

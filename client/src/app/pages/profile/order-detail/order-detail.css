@@ -26,61 +26,112 @@
 }
 
 /* ===== STEP TRACKING ===== */
+.step-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+  padding: 24px;
+}
+
 .stepper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 .stepper .step {
-  width: 160px;
+  flex: 0 0 auto;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   color: #333;
+  position: relative;
 }
 
 .stepper .step p {
-  margin: 0;
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  max-width: 140px;
 }
 
 .stepper .step small {
   color: var(--text-muted);
+  font-size: 12px;
 }
 
 .stepper .circle {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 2px solid var(--border);
+  background: #E5E5E5;
+  border: 3px solid #E5E5E5;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 6px;
+  margin: 0 auto;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
-.stepper .step.done .circle,
-.stepper .step.active .circle {
+.stepper .step.done .circle {
   background: var(--success);
   border-color: var(--success);
 }
 
 .stepper .line {
   flex: 1;
-  height: 4px;
-  background: var(--border);
-  margin: 0 6px;
+  height: 3px;
+  background: #E5E5E5;
+  margin: 18px 8px 0 8px;
+  min-width: 60px;
 }
 
 .stepper .line.done {
   background: var(--success);
 }
 
+/* ===== ACTION BUTTONS ===== */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-action {
+  background: var(--success);
+  color: #fff;
+  border: 1px solid var(--success);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-action:hover {
+  background: #455a38;
+  border-color: #455a38;
+}
+
+.btn-outline-action {
+  border: 1px solid var(--border);
+  color: #333;
+  background: #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-action:hover {
+  border-color: var(--success);
+  color: var(--success);
+}
+
 /* ===== CARD / BOX ===== */
 .box {
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
   background: #fff;
 }
 
@@ -93,18 +144,20 @@
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
-  color: var(--success);
-  margin-bottom: 12px;
+  color: #333;
+  margin-bottom: 16px;
   font-size: 16px;
 }
 
 .box-title i {
-  margin-right: 6px;
+  margin-right: 8px;
+  color: var(--success);
 }
 
 .order-code {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* ===== BUTTONS ===== */
