@@ -57,17 +57,16 @@
               </div> -->
 
               <div class="form-group">
-                <label>Số điện thoại *</label>
+                <label>Số điện thoại</label>
                 <div class="input-wrapper">
-                  <input type="text" [(ngModel)]="userInfo.So_dien_thoai" disabled />
+                  <input type="text" [(ngModel)]="userInfo.So_dien_thoai" [disabled]="!isEditing" />
                 </div>
               </div>
 
               <div class="form-group">
-                <label>Email</label>
+                <label>Email *</label>
                 <div class="input-wrapper">
-                  <input type="email" [(ngModel)]="userInfo.Email" [disabled]="!isEditing" />
-                  <i class="bi bi-pencil" *ngIf="isEditing"></i>
+                  <input type="email" [(ngModel)]="userInfo.Email" disabled />
                 </div>
               </div>
 
@@ -75,7 +74,7 @@
                 <label>Mật khẩu *</label>
                 <div class="password-field">
                   <input [type]="showPassword ? 'text' : 'password'" value="••••••••" disabled />
-                  <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword" (click)="togglePassword()"></i>
+                  <!-- <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword" (click)="togglePassword()"></i> -->
                 </div>
                 <a class="change-password add-btn"
                   data-bs-toggle="modal"

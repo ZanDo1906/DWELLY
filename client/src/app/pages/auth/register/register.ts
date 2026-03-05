@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { customValidator, passwordValidator } from '../../../validator/check.validator';
+import { customValidator, passwordValidator, phoneValidator } from '../../../validator/check.validator';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
@@ -28,7 +28,7 @@ registerError = '';
           '',
           [
             Validators.required,
-            Validators.pattern(/^(03|05|07|08|09|01[2689])[0-9]{8}$/)
+            phoneValidator()
           ]
         ],
         email: [

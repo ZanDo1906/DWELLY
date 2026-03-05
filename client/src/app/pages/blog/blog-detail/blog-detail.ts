@@ -32,6 +32,7 @@ export class BlogDetail implements OnInit, AfterViewInit {
   relatedBlogs: Blog[] = [];
   allBlogs: Blog[] = [];
   isLoading = true;
+  isCopied = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -95,5 +96,46 @@ export class BlogDetail implements OnInit, AfterViewInit {
 
   navigateToBlogDetail(blogId: string): void {
     this.router.navigate(['/blog-detail', blogId]);
+  }
+
+  copyBlogLink(): void {
+    const currentUrl = window.location.href;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        this.showCopiedState();
+      }).catch(() => {
+        this.copyWithFallback(currentUrl);
+      });
+      return;
+    }
+
+    this.copyWithFallback(currentUrl);
+  }
+
+  private copyWithFallback(text: string): void {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      this.showCopiedState();
+    } catch {
+      alert('Không thể copy link tự động. Bạn vui lòng copy thủ công trên thanh địa chỉ.');
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  }
+
+  private showCopiedState(): void {
+    this.isCopied = true;
+    setTimeout(() => {
+      this.isCopied = false;
+    }, 1500);
   }
 }

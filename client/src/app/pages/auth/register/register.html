@@ -43,7 +43,8 @@
       </div>
       <div class="error-area" *ngIf="phone.invalid && (phone.touched || phone.dirty)">
         <small class="text-danger" *ngIf="phone.errors?.['required']">Số điện thoại không được để trống</small>
-        <small class="text-danger" *ngIf="phone.errors?.['pattern']">Số điện thoại không hợp lệ</small>
+        <small class="text-danger" *ngIf="phone.errors?.['invalidPhone']">Số điện thoại không đúng định dạng</small>
+        <small class="text-danger" *ngIf="phone.errors?.['weakPhonePattern']">Số điện thoại không được là dãy số lặp hoặc dãy số liên tiếp</small>
       </div>
     </div>
 

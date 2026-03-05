@@ -5,6 +5,7 @@ import { Modal } from '../../../components/modal/modal';
 import { ChangePasswordModal } from './change-password-modal/change-password-modal';
 import { Client } from '../../../services/client';
 import { iClient } from '../../../interfaces/client';
+import { phoneValidator } from '../../../validator/check.validator';
 
 @Component({
   selector: 'app-info',
@@ -18,6 +19,7 @@ export class Info implements OnInit {
   userInfo: iClient | null = null;
   userId: string = '';
   isSaving = false;
+  private readonly phoneControlValidator = phoneValidator();
 
   constructor(private clientService: Client) {}
 
@@ -48,9 +50,20 @@ export class Info implements OnInit {
     }
   }
 
+  isValidPhone(phone: string): boolean {
+    const validationResult = this.phoneControlValidator({ value: phone } as any);
+    return validationResult === null;
+  }
+
   saveUserInfo(): void {
     if (!this.userInfo || !this.userId) {
       console.error('No user info to save');
+      return;
+    }
+
+    const normalizedPhone = (this.userInfo.So_dien_thoai || '').trim();
+    if (!this.isValidPhone(normalizedPhone)) {
+      alert('Số điện thoại không hợp lệ hoặc là dãy số yếu (lặp/liên tiếp).');
       return;
     }
 
@@ -58,8 +71,7 @@ export class Info implements OnInit {
 
     const updateData: Partial<iClient> = {
       Ho_va_ten: this.userInfo.Ho_va_ten,
-      Email: this.userInfo.Email,
-      So_dien_thoai: this.userInfo.So_dien_thoai,
+      So_dien_thoai: normalizedPhone,
       Anh_dai_dien: this.userInfo.Anh_dai_dien,
     };
 

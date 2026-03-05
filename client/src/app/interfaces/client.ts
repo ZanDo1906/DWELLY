@@ -4,7 +4,15 @@ export interface iClient {
     So_dien_thoai: string;
     Email: string;
     Mat_khau: string;
-    Dia_chi: string[];          // Array<String>
+        Dia_chi: Array<string | {
+            FullName?: string;
+            Phone?: string;
+            Province?: string;
+            District?: string;
+            Ward?: string;
+            DetailAddress?: string;
+            IsDefault?: boolean;
+        }>;
     Trang_thai: boolean;
     Anh_dai_dien: string;
     Ngay_tao: Date;

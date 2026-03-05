@@ -40,7 +40,7 @@
 
             <!-- SHARE BUTTONS -->
             <div class="share-section">
-              <span class="share-label">SHARE</span>
+              <span class="share-label" (click)="copyBlogLink()">{{ isCopied ? 'COPIED!' : 'SHARE' }}</span>
               <div class="share-buttons">
                 <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-btn fb">
                   <i class="bi bi-facebook"></i>

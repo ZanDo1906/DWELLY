@@ -21,9 +21,50 @@ export class Client {
       .get<iClient>(`${baseUrl}/clients/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  getClientAddress(id: string): Observable<{ address: string[] }> {
+    return this.http
+      .get<{ address: string[] }>(`${baseUrl}/clients/${id}/address`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  addClientAddress(id: string, data: {
+    FullName: string;
+    Phone: string;
+    Province: string;
+    District: string;
+    Ward: string;
+    DetailAddress: string;
+    IsDefault: boolean;
+  }): Observable<any> {
+    return this.http
+      .post(`${baseUrl}/clients/${id}/address`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  updateClientAddress(id: string, index: number, data: {
+    FullName: string;
+    Phone: string;
+    Province: string;
+    District: string;
+    Ward: string;
+    DetailAddress: string;
+    IsDefault: boolean;
+  }): Observable<any> {
+    return this.http
+      .patch(`${baseUrl}/clients/${id}/address/${index}`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  deleteClientAddress(id: string, index: number): Observable<any> {
+    return this.http
+      .delete(`${baseUrl}/clients/${id}/address/${index}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
   updateClient(id: string, data: Partial<iClient>): Observable<any> {
     return this.http
       .patch(`${baseUrl}/clients/${id}`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  changePassword(id: string, data: { currentPassword: string; newPassword: string }): Observable<any> {
+    return this.http
+      .patch(`${baseUrl}/clients/${id}/change-password`, data)
       .pipe(retry(2), catchError(this.handleError));
   }
   uploadAvatar(formData: FormData): Observable<any> {
@@ -39,6 +80,6 @@ export class Client {
   }
   
   handleError(error: HttpErrorResponse) {
-    return throwError(() => new Error(error.message));
+    return throwError(() => error);
   }
 }

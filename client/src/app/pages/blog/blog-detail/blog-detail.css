@@ -121,6 +121,8 @@
   color: white;
   padding: 8px 16px;
   border-radius: 24px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .share-buttons {

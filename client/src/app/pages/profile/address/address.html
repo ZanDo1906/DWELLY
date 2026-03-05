@@ -13,6 +13,7 @@
             </div>
 
             <button class="btn-brown btn-add"
+              (click)="openAddAddressModal()"
               data-bs-toggle="modal"
               data-bs-target="#addAddressModal">
               <i class="bi bi-plus-circle"></i>
@@ -20,75 +21,36 @@
             </button>
           </div>
 
-          <!-- Card 1 -->
-          <div class="address-card is-default">
-            <div class="address-header">
-              <div>
-                <span class="address-title">Nhà riêng</span>
-                <span class="address-phone">Số điện thoại: 0987654321</span>
-              </div>
+          <div *ngIf="isLoading" class="text-center py-4">Đang tải danh sách địa chỉ...</div>
 
-              <div class="btn-group">
-                <button class="btn-brown">Cập nhật</button>
-                <button class="btn-outline-brown">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="address-content">
-              2222 nè, Phường Bến Thành, Quận 2, Thành phố Hồ Chí Minh
-            </div>
-
-            <span class="default-badge">Địa chỉ mặc định</span>
+          <div *ngIf="!isLoading && addresses.length === 0" class="text-center py-4">
+            Bạn chưa có địa chỉ giao hàng nào.
           </div>
 
-          <!-- Card 2 -->
-          <div class="address-card">
+          <div
+            *ngFor="let address of addresses; let i = index"
+            class="address-card"
+            [class.is-default]="address.isDefault">
             <div class="address-header">
               <div>
-                <span class="address-title">Văn phòng công ty</span>
-                <span class="address-phone">Số điện thoại: 0987654321</span>
+                <span class="address-title">{{ address.fullName || 'Khách hàng' }}</span>
+                <span class="address-phone" *ngIf="address.phone">Số điện thoại: {{ address.phone }}</span>
               </div>
 
               <div class="btn-group">
-                <button class="btn-brown">Cập nhật</button>
-                <button class="btn-outline-brown">
+                <button class="btn-brown" (click)="openEditAddress(address)" data-bs-toggle="modal" data-bs-target="#addAddressModal">Cập nhật</button>
+                <button class="btn-outline-brown" (click)="deleteAddress(address.sourceIndex)">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
             </div>
 
             <div class="address-content">
-              2222 nè, Phường Bến Thành, Quận 2, Thành phố Hồ Chí Minh
+              {{ address.address }}
             </div>
 
-            <button class="btn-outline-brown set-default">
-              Thiết lập mặc định
-            </button>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="address-card">
-            <div class="address-header">
-              <div>
-                <span class="address-title">Nhà bố mẹ</span>
-                <span class="address-phone">Số điện thoại: 0987654321</span>
-              </div>
-
-              <div class="btn-group">
-                <button class="btn-brown">Cập nhật</button>
-                <button class="btn-outline-brown">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="address-content">
-              2222 nè, Phường Bến Thành, Quận 2, Thành phố Hồ Chí Minh
-            </div>
-
-            <button class="btn-outline-brown set-default">
+            <span *ngIf="address.isDefault" class="default-badge">Địa chỉ mặc định</span>
+            <button *ngIf="!address.isDefault" class="btn-outline-brown set-default" (click)="setDefaultAddress(address)">
               Thiết lập mặc định
             </button>
           </div>
@@ -103,9 +65,13 @@
 <!-- ADD ADDRESS MODAL -->
 <app-modal
   modalId="addAddressModal"
-  title="Địa chỉ mới"
+  [title]="addressModalTitle"
   [showHeader]="true"
   [showTitleAndLine]="true"
   [showCloseButton]="true">
-  <app-add-address-modal></app-add-address-modal>
+  <app-add-address-modal
+    [mode]="addressModalMode"
+    [addressIndex]="editingAddressIndex"
+    [initialAddress]="editingAddressData"
+    (addressAdded)="loadAddresses()"></app-add-address-modal>
 </app-modal>
