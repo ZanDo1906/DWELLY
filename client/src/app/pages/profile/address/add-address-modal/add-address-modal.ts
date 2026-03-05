@@ -126,6 +126,16 @@ export class AddAddressModal implements OnInit, OnChanges {
     field.markAsDirty();
   }
 
+  onDefaultChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const isEditingCurrentDefault = this.mode === 'edit' && Boolean(this.initialAddress?.IsDefault);
+
+    if (isEditingCurrentDefault && !target.checked) {
+      alert('Không thể bỏ mặc định tại đây. Vui lòng đặt một địa chỉ khác làm mặc định trước.');
+      this.addressForm.patchValue({ isDefault: true }, { emitEvent: false });
+    }
+  }
+
   private applyFormModeData(): void {
     if (!this.addressForm) {
       return;

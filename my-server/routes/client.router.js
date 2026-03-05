@@ -334,7 +334,10 @@ router.post("/clients/:id/address", async (req, res) => {
 
     const mergedAddresses = [...existingStructuredAddresses, ...addressesFromOldField];
 
-    if (IsDefault) {
+    const shouldForceDefault = mergedAddresses.length === 0;
+    const nextIsDefault = shouldForceDefault ? true : Boolean(IsDefault);
+
+    if (nextIsDefault) {
       mergedAddresses.forEach((addr) => {
         addr.IsDefault = false;
       });
@@ -347,7 +350,7 @@ router.post("/clients/:id/address", async (req, res) => {
       District: String(District || '').trim(),
       Ward: String(Ward || '').trim(),
       DetailAddress: String(DetailAddress).trim(),
-      IsDefault: Boolean(IsDefault)
+      IsDefault: nextIsDefault
     };
 
     mergedAddresses.push(newAddress);
@@ -430,7 +433,18 @@ router.patch("/clients/:id/address/:index", async (req, res) => {
       return res.status(404).json({ message: "Địa chỉ không tồn tại" });
     }
 
-    if (IsDefault) {
+    const currentAddress = unifiedAddresses[addressIndex];
+    const requestedIsDefault = Boolean(IsDefault);
+    const isUnsettingCurrentDefault = Boolean(currentAddress?.IsDefault) && !requestedIsDefault;
+
+    if (isUnsettingCurrentDefault) {
+      const hasAnotherDefault = unifiedAddresses.some((addr, idx) => idx !== addressIndex && Boolean(addr?.IsDefault));
+      if (!hasAnotherDefault) {
+        return res.status(400).json({ message: "Không thể bỏ mặc định vì danh sách sẽ không còn địa chỉ mặc định" });
+      }
+    }
+
+    if (requestedIsDefault) {
       unifiedAddresses.forEach((addr) => {
         addr.IsDefault = false;
       });
@@ -443,7 +457,7 @@ router.patch("/clients/:id/address/:index", async (req, res) => {
       District: String(District || '').trim(),
       Ward: String(Ward || '').trim(),
       DetailAddress: String(DetailAddress).trim(),
-      IsDefault: Boolean(IsDefault)
+      IsDefault: requestedIsDefault
     };
 
     await Client.updateOne(
@@ -505,7 +519,16 @@ router.delete("/clients/:id/address/:index", async (req, res) => {
       return res.status(404).json({ message: "Địa chỉ không tồn tại" });
     }
 
+    const removedAddress = unifiedAddresses[addressIndex];
     unifiedAddresses.splice(addressIndex, 1);
+
+    const removedWasDefault = Boolean(removedAddress?.IsDefault);
+    if (removedWasDefault && unifiedAddresses.length > 0) {
+      const stillHasDefault = unifiedAddresses.some((addr) => Boolean(addr?.IsDefault));
+      if (!stillHasDefault) {
+        unifiedAddresses[0].IsDefault = true;
+      }
+    }
 
     await Client.updateOne(
       { Ma_khach_hang: req.params.id },
