@@ -10,56 +10,58 @@
             <!-- Mã khuyến mãi -->
             <div class="form-group full">
               <label>Mã khuyến mãi <span>*</span></label>
-              <input type="text" [value]="formValue.promotionCode" />
+              <input type="text" name="promotionCode" [(ngModel)]="formValue.promotionCode" [readonly]="isEditMode" />
             </div>
 
             <!-- Mã số -->
             <div class="form-group">
               <label>Mã số <span>*</span></label>
-              <input type="text" [value]="formValue.code" />
+              <input type="text" name="code" [(ngModel)]="formValue.code" />
             </div>
 
             <!-- Phần trăm giảm -->
             <div class="form-group">
               <label>Phần trăm giảm <span>*</span></label>
-              <input type="number" [value]="formValue.discountPercent" />
+              <input type="number" name="discountPercent" [(ngModel)]="formValue.discountPercent" />
             </div>
 
             <!-- Ngày bắt đầu -->
             <div class="form-group">
               <label>Ngày bắt đầu <span>*</span></label>
-              <input type="date" [value]="formValue.startDate" />
+              <input type="date" name="startDate" [(ngModel)]="formValue.startDate" />
             </div>
 
             <!-- Ngày kết thúc -->
             <div class="form-group">
               <label>Ngày kết thúc <span>*</span></label>
-              <input type="date" [value]="formValue.endDate" />
+              <input type="date" name="endDate" [(ngModel)]="formValue.endDate" />
             </div>
 
             <!-- Phân hạng người dùng -->
             <div class="form-group">
               <label>Phân hạng người dùng <span>*</span></label>
-              <input type="text" [value]="formValue.minimumRank" />
+              <select name="minimumRank" [(ngModel)]="formValue.minimumRank">
+                <option value="" disabled>Chọn phân hạng</option>
+                <option *ngFor="let option of rankOptions" [value]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
             </div>
 
             <!-- Số lượng -->
             <div class="form-group">
               <label>Số lượng <span>*</span></label>
-              <input type="number" [value]="formValue.remaining" />
+              <input type="number" name="remaining" [(ngModel)]="formValue.remaining" />
             </div>
 
             <!-- Mô tả -->
             <div class="form-group full">
               <label>Mô tả <span>*</span></label>
-              <textarea rows="3" [value]="formValue.description"></textarea>
+              <textarea rows="3" name="description" [(ngModel)]="formValue.description"></textarea>
             </div>
 
             <div class="btn-wrapper">
-              <button 
-                type="button"
-                class="save-btn"
-                (click)="openConfirm()">
+              <button type="button" class="save-btn" (click)="openConfirm()">
                 Lưu mã khuyến mãi
               </button>
 
@@ -74,12 +76,6 @@
   </div>
 </section>
 
-<app-confirm-dialog
-  *ngIf="showConfirm"
-  modalId="confirmSaveModal"
-  title="Xác nhận lưu"
-  message="Bạn có chắc muốn lưu mã khuyến mãi này?"
-  (confirm)="confirmSave()"
-  (cancel)="closeConfirm()">
+<app-confirm-dialog *ngIf="showConfirm" modalId="confirmSaveModal" title="Xác nhận lưu"
+  message="Bạn có chắc muốn lưu mã khuyến mãi này?" (confirm)="confirmSave()" (cancel)="closeConfirm()">
 </app-confirm-dialog>
-

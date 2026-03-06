@@ -17,6 +17,23 @@ interface CartItem {
   selected: boolean;
 }
 
+interface CheckoutItem {
+  product: iProduct;
+  quantity: number;
+}
+
+interface CheckoutPayload {
+  items: CheckoutItem[];
+  voucherCode: string;
+  appliedVoucher: iVoucher | null;
+  summary: {
+    selectedCount: number;
+    totalAmount: number;
+    discountAmount: number;
+    finalTotal: number;
+  };
+}
+
 @Component({
   selector: 'app-cart-page',
   imports: [CommonModule, FormsModule, VoucherPopup, Modal],
@@ -215,9 +232,46 @@ export class CartPage implements OnInit {
       return;
     }
 
+    this.saveCheckoutItems(selectedItems);
+
+    const isLoggedIn = !!localStorage.getItem('userId');
+    if (!isLoggedIn) {
+      this.openLoginAlertPopup();
+      return;
+    }
+
     // Navigate to payment page with selected items
     // You can implement this by storing selected items in a service or local storage
-    this.router.navigate(['/payment']);
+    this.router.navigate(['/payment-member']);
+  }
+
+  private saveCheckoutItems(selectedItems: CartItem[]): void {
+    const checkoutItems: CheckoutItem[] = selectedItems.map(item => ({
+      product: item.product,
+      quantity: item.quantity,
+    }));
+
+    const checkoutPayload: CheckoutPayload = {
+      items: checkoutItems,
+      voucherCode: this.voucherCode,
+      appliedVoucher: this.appliedVoucher,
+      summary: {
+        selectedCount: selectedItems.length,
+        totalAmount: this.getSelectedTotal(),
+        discountAmount: this.getDiscountAmount(),
+        finalTotal: this.getFinalTotal(),
+      },
+    };
+
+    localStorage.setItem('checkoutItems', JSON.stringify(checkoutPayload));
+  }
+
+  openLoginAlertPopup(): void {
+    const modalEl = document.getElementById('loginAlertModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const existingModal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+      existingModal.show();
+    }
   }
 
   closeVoucherPopup(): void {

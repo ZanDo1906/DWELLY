@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
 
 export interface PromotionFormData {
@@ -8,6 +9,8 @@ export interface PromotionFormData {
   discountPercent: number;
   startDate: string;
   endDate: string;
+  startDateRaw?: string;
+  endDateRaw?: string;
   minimumRank: string;
   remaining: number;
   description: string;
@@ -15,23 +18,26 @@ export interface PromotionFormData {
 
 @Component({
   selector: 'app-promotion-form',
-  imports: [CommonModule, ConfirmDialogComponent],
+  imports: [CommonModule, FormsModule, ConfirmDialogComponent],
   templateUrl: './promotion-form.html',
   styleUrl: './promotion-form.css',
 })
 export class PromotionForm {
   @Input() promotion: PromotionFormData | null = null;
+  @Output() saveConfirmed = new EventEmitter<PromotionFormData>();
 
-  formValue: PromotionFormData = {
-    promotionCode: '',
-    code: '',
-    discountPercent: 0,
-    startDate: '',
-    endDate: '',
-    minimumRank: '',
-    remaining: 0,
-    description: '',
-  };
+  get isEditMode(): boolean {
+    return !!this.promotion;
+  }
+
+  rankOptions: Array<{ label: string; value: string }> = [
+    { label: 'Kim Cương', value: 'KIMCUONG' },
+    { label: 'Vàng', value: 'VANG' },
+    { label: 'Bạc', value: 'BAC' },
+    { label: 'Đồng', value: 'DONG' },
+  ];
+
+  formValue: PromotionFormData = this.createEmptyFormValue();
 
   showConfirm = false;
 
@@ -41,43 +47,77 @@ export class PromotionForm {
     }
 
     if (!this.promotion) {
-      this.formValue = {
-        promotionCode: '',
-        code: '',
-        discountPercent: 0,
-        startDate: '',
-        endDate: '',
-        minimumRank: '',
-        remaining: 0,
-        description: '',
-      };
+      this.formValue = this.createEmptyFormValue();
       return;
     }
+
+    const normalizedStartDate = this.normalizeDateInput(this.promotion.startDateRaw || this.promotion.startDate);
+    const normalizedEndDate = this.normalizeDateInput(this.promotion.endDateRaw || this.promotion.endDate);
 
     this.formValue = {
       promotionCode: this.promotion.promotionCode,
       code: this.promotion.code,
       discountPercent: this.promotion.discountPercent,
-      startDate: this.promotion.startDate,
-      endDate: this.promotion.endDate,
-      minimumRank: this.promotion.minimumRank,
+      startDate: normalizedStartDate,
+      endDate: normalizedEndDate,
+      minimumRank: this.normalizeRankCode(this.promotion.minimumRank),
       remaining: this.promotion.remaining,
       description: this.promotion.description,
     };
   }
 
-openConfirm() {
-  this.showConfirm = true;
-}
+  openConfirm() {
+    this.showConfirm = true;
+  }
 
-closeConfirm() {
-  this.showConfirm = false;
-}
+  closeConfirm() {
+    this.showConfirm = false;
+  }
 
-confirmSave() {
-  console.log('Đã xác nhận lưu');
-  this.showConfirm = false;
-}
+  confirmSave() {
+    this.saveConfirmed.emit({ ...this.formValue });
+    this.showConfirm = false;
+  }
+
+  private createEmptyFormValue(): PromotionFormData {
+    return {
+      promotionCode: '',
+      code: '',
+      discountPercent: 0,
+      startDate: '',
+      endDate: '',
+      minimumRank: '',
+      remaining: 0,
+      description: '',
+    };
+  }
+
+  private normalizeDateInput(value: string): string {
+    if (!value) {
+      return '';
+    }
+
+    // Accept both yyyy-mm-dd and dd-mm-yyyy, always return yyyy-mm-dd for date input.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return value;
+    }
+
+    const match = /^(\d{2})-(\d{2})-(\d{4})$/.exec(value);
+    if (!match) {
+      return '';
+    }
+
+    const [, day, month, year] = match;
+    return `${year}-${month}-${day}`;
+  }
+
+  private normalizeRankCode(value: string): string {
+    const normalized = (value || '').trim().toUpperCase();
+    if (this.rankOptions.some((option) => option.value === normalized)) {
+      return normalized;
+    }
+    return '';
+  }
 
 
 }

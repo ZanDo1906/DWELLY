@@ -10,6 +10,8 @@ const Contact = new Scheme({
     Trang_thai: { type: String, required: true },             // VD: "Chưa xử lý", "Đã phản hồi"
     Ngay_gui: { type: Date, default: Date.now },
     Ma_quan_tri_vien_xu_ly: { type: String }, // ObjectId (FK)
+    Noi_dung_tra_loi_nhap: { type: String, default: '' },
+    Noi_dung_tra_loi: { type: String, default: '' },
 });
 
 module.exports = mongoose.model('Contact', Contact);

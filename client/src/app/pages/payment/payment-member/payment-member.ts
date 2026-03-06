@@ -1,13 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { QRPayment } from '../qr-payment/qr-payment';
+
+interface CheckoutItem {
+  product: iProduct;
+  quantity: number;
+}
+
+interface CheckoutSummary {
+  selectedCount: number;
+  totalAmount: number;
+  discountAmount: number;
+  finalTotal: number;
+}
+
+interface CheckoutPayload {
+  items: CheckoutItem[];
+  voucherCode: string;
+  appliedVoucher: iVoucher | null;
+  summary: CheckoutSummary;
+}
 
 @Component({
   selector: 'app-payment-member',
@@ -16,9 +34,9 @@ import { QRPayment } from '../qr-payment/qr-payment';
   styleUrl: './payment-member.css',
 })
 export class PaymentMember implements OnInit {
-  products: iProduct[] = [];
   rooms: iRoom[] = [];
-  cartItems: any[] = [];
+  cartItems: CheckoutItem[] = [];
+  checkoutSummaryFromCart: CheckoutSummary | null = null;
   showDeleteModal: boolean = false;
   productToDelete: iProduct | null = null;
   deleteIndex: number = -1;
@@ -31,7 +49,6 @@ export class PaymentMember implements OnInit {
   voucherError: string = '';
 
   constructor(
-    private productService: Product,
     private roomService: Room,
     private voucherService: Voucher
   ) { }
@@ -57,30 +74,42 @@ export class PaymentMember implements OnInit {
       }
     });
 
-    // Load products
-    this.productService.getProductData().subscribe({
-      next: (data) => {
-        this.products = data;
-        // Load 3 different sample products from 3 different rooms
-        this.cartItems = [
-          {
-            product: this.products[0], // Giường bọc nệm Seraph - Phòng ngủ
-            quantity: 1
-          },
-          {
-            product: this.products[16], // Bàn ăn gỗ sồi Terra - Phòng ăn
-            quantity: 1
-          },
-          {
-            product: this.products[17], // Tủ TV Seraph - Phòng khách
-            quantity: 1
-          }
-        ];
-      },
-      error: (err) => {
-        console.error('Error loading products:', err);
+    this.loadCheckoutItems();
+  }
+
+  private loadCheckoutItems(): void {
+    const rawCheckoutItems = localStorage.getItem('checkoutItems');
+    if (!rawCheckoutItems) {
+      this.cartItems = [];
+      this.checkoutSummaryFromCart = null;
+      return;
+    }
+
+    try {
+      const parsedData = JSON.parse(rawCheckoutItems) as CheckoutItem[] | CheckoutPayload;
+
+      if (Array.isArray(parsedData)) {
+        // Backward compatible: old format lưu trực tiếp mảng items.
+        this.cartItems = parsedData.filter(item =>
+          !!item && !!item.product && typeof item.quantity === 'number' && item.quantity > 0
+        );
+        this.checkoutSummaryFromCart = null;
+        return;
       }
-    });
+
+      const items = Array.isArray(parsedData.items) ? parsedData.items : [];
+      this.cartItems = items.filter(item =>
+        !!item && !!item.product && typeof item.quantity === 'number' && item.quantity > 0
+      );
+
+      this.voucherCode = parsedData.voucherCode || '';
+      this.appliedVoucher = parsedData.appliedVoucher || null;
+      this.checkoutSummaryFromCart = parsedData.summary || null;
+    } catch (error) {
+      console.error('Invalid checkoutItems data:', error);
+      this.cartItems = [];
+      this.checkoutSummaryFromCart = null;
+    }
   }
 
   getRoomName(ma_loai_phong: string): string {

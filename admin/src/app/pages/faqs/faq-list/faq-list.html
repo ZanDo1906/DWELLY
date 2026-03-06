@@ -1,12 +1,16 @@
 <section>
     <div class="container-fluid py-4">
         <div class="padding-x">
-            <div class="site-inner faq-page">
-                <h2 class="page-title">Quản lý FAQs</h2>
+            <div class="site-inner faq-page orders-page">
+                <div class="page-header">
+                    <h2 class="page-title">Quản lý FAQs</h2>
+                </div>
 
                 <div class="filter-bar">
-                    <div class="search-wrap">
-                        <i class="bi bi-search"></i>
+                    <div class="search-box">
+                        <span class="search-icon" aria-hidden="true">
+                            <i class="bi bi-search"></i>
+                        </span>
                         <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
                             (input)="onSearchChange($event)" />
                     </div>
@@ -28,11 +32,20 @@
                             Cũ nhất
                         </button>
 
-                        <select class="status-select" [value]="selectedStatus" (change)="onStatusChange($event)">
-                            <option value="all">Tất cả trạng thái</option>
-                            <option value="unprocessed">Chưa xử lý</option>
-                            <option value="processed">Đã xử lý</option>
-                        </select>
+                        <div class="status-select" [class.open]="isStatusOpen">
+                            <button type="button" class="status-select-trigger" (click)="toggleStatusDropdown($event)">
+                                <span>{{ selectedStatusLabel }}</span>
+                                <span class="status-caret" aria-hidden="true">▾</span>
+                            </button>
+
+                            <ul class="status-options" *ngIf="isStatusOpen">
+                                <li *ngFor="let status of statusOptions" class="status-option"
+                                    [class.active]="status.value === selectedStatus"
+                                    (click)="selectStatus(status.value)">
+                                    {{ status.label }}
+                                </li>
+                            </ul>
+                        </div>
 
                         <button class="delete-selected-btn" (click)="deleteSelected()" [disabled]="!selectedCount"
                             title="Xóa mục đã chọn">
@@ -67,7 +80,7 @@
                             <td>{{ faq.submittedAt }}</td>
                             <td class="question-content">{{ faq.questionContent }}</td>
                             <td>
-                                <span class="status" [ngClass]="faq.status">{{ faq.statusLabel }}</span>
+                                <span class="status approval-status" [ngClass]="faq.status">{{ faq.statusLabel }}</span>
                             </td>
                             <td>{{ faq.handler }}</td>
                             <td>

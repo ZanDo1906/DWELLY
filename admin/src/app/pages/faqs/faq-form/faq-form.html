@@ -22,11 +22,16 @@
     </div>
 
     <div class="reply-wrap">
-        <textarea [(ngModel)]="replyContent" placeholder="Nội dung" rows="7"></textarea>
+        <textarea [(ngModel)]="replyContent" placeholder="Nội dung" rows="7" [readonly]="isReplyLocked"></textarea>
+        <div class="lock-note" *ngIf="isReplyLocked">
+            Câu hỏi này đã được gửi trả lời cho khách, không thể chỉnh sửa lại.
+        </div>
     </div>
 
     <div class="actions">
-        <button type="button" class="btn-outline-brown" (click)="onSaveDraft()">Lưu nháp</button>
-        <button type="button" class="btn-brown" (click)="onSendAnswer()">Gửi câu trả lời</button>
+        <button type="button" class="btn-outline-brown" (click)="onSaveDraft()" [disabled]="isReplyLocked">Lưu
+            nháp</button>
+        <button type="button" class="btn-brown" (click)="onSendAnswer()" [disabled]="isReplyLocked">Gửi câu trả
+            lời</button>
     </div>
 </div>
