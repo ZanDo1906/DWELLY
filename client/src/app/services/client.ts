@@ -37,7 +37,33 @@ export class Client {
   register(data: any) {
   return this.http.post(`${baseUrl}/register`, data);
   }
-  
+
+  getCurrentUser() {
+  const user = localStorage.getItem('current_user');
+  return user ? JSON.parse(user) : null;
+}
+
+  saveLoginData(response: any) {
+  localStorage.setItem('auth_token', response.token);
+  localStorage.setItem('current_user', JSON.stringify(response.user));
+}
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('auth_token');
+  }
+    getFavoriteCount(productId: string): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(`${baseUrl}/clients/favorite-count/${productId}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+      
+  toggleFavorite(customerCode: string, productId: string): Observable<any> {
+  return this.http.post(`${baseUrl}/clients/toggle-favorite`, {
+    customerCode,
+    productId
+  }).pipe(
+    retry(2),
+    catchError(this.handleError)
+  );
+}
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

@@ -1,88 +1,145 @@
 const express = require('express');
 const router = express.Router();
-
-//Conect to DB
-const db = require('../config/db');
-db.connect();
-
-//Import Product model
+const fs = require('fs');
+const path = require('path');
 const Product = require('../models/Product');
+const upload = require('../upload');
 
-//Define API
-router.get("/", (req, res) => {
-    res.send("Ok");
+//GET all products
+router.get('/products', async (req, res, next) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.json(products);
+  } catch (err) {
+    next(err);
+  }
 });
 
-
-//get all products (1) -> using Promise then/catch
-router.get("/products", (req, res) => {
-    //Fetch data from MongoDB
-    Product.find({})
-    .then(data => res.json(data))
-    .catch(err => res.status(500).json({error: err.message}));
+//GET product by code
+router.get('/products/:code', async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ Ma_san_pham: req.params.code });
+    if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
 });
 
-//get all products (2) -> using async await
-router.get("/allproducts", async (req, res) => {
-    try {
-            let products = await Product.find({});
-            res.json(products);
-    }catch (err) {
-        res.json({er: err.message});
+router.post('/products/by-codes', async (req, res, next) => {
+  try {
+    const { codes } = req.body;
+
+    if (!codes || !Array.isArray(codes)) {
+      return res.status(400).json({ message: "codes phải là array" });
     }
-});
 
-//get product by id
-router.get("/products/:id", async (req, res) => {
-    try {
-        let product = await Product.findById(req.params.id);
-        res.json(product);
-    } catch (err) {
-        res.json({message: err.message});
-    }
-});
-
-
-//post product
-router.post("/product", async (req, res) => {
-    console.log(req.body);
-    const p = new Product({
-        name: req.body.name,
-        price: req.body.price,
+    const products = await Product.find({
+      Ma_san_pham: { $in: codes }
     });
 
-    try{
-        const savedProduct = await p.save();
-        res.json({ status: "Success", product: savedProduct });
-    }catch (err){
-        res.json({message: err.message});
-    }
-    
-    
+    res.json(products);
+
+  } catch (err) {
+    next(err);
+  }
 });
 
-//========UPDTAE=========
-
-router.patch('/products/:id', async (req, res) => {
-    try {
-        await Product.updateOne(
-            { _id: req.params.id },
-            { $set: { name: req.body.name, price: req.body.price } },
-        );
-        res.json({ status: "Success" });
-    } catch (err) {
-        res.json({ message: err.message });
-    }
+//POST product
+router.post('/products', async (req, res, next) => {
+  try {
+    const product = await Product.create(req.body);
+    res.status(201).json(product);
+  } catch (err) {
+    next(err);
+  }
 });
 
-//========DELETE=========
-router.delete('/products/:id', async (req, res) => {
-    try {
-        await Product.deleteOne({ _id: req.params.id });
-        res.json({ status: "Success" });
-    }catch (err) {
-        res.json({ message: err.message });
+//PATCH product
+router.patch('/products/:code', async (req, res, next) => {
+  try {
+    const product = await Product.findOneAndUpdate(
+      { Ma_san_pham: req.params.code },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//UPLOAD images 
+router.post('/products/:code/images', upload.array('images', 10), async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ Ma_san_pham: req.params.code });
+    if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+    
+    const records = (req.files || []).map(f => `/uploads/products/${f.filename}`);
+
+    product.Hinh_anh.push(...records);
+    await product.save();
+
+    res.status(201).json(product);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//DELETE 
+router.delete('/products/:code', async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ Ma_san_pham: req.params.code });
+    if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+
+    const uploadDir = process.env.UPLOAD_DIR || "uploads";
+    for (const url of product.Hinh_anh) {
+      const filename = path.basename(url); 
+      const full = path.join(process.cwd(), uploadDir, 'products', filename);
+      if (fs.existsSync(full)) fs.unlinkSync(full);
     }
+
+    await product.deleteOne();
+    res.json({ message: 'Product deleted' });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE một ảnh cụ thể của sản phẩm (xóa trong máy và xóa URL trong DB)
+router.delete('/products/:code/images/:filename', async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ Ma_san_pham: req.params.code });
+    if (!product) return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+
+    const filename = req.params.filename;
+
+    // Dùng split('/').pop() thay vì path.basename() để tránh lỗi Windows
+    const existsInDb = product.Hinh_anh.some(url => url.split('/').pop() === filename);
+    if (!existsInDb) {
+      return res.status(404).json({ message: 'Ảnh không tồn tại trong sản phẩm này' });
+    }
+
+    product.Hinh_anh = product.Hinh_anh.filter(url => url.split('/').pop() !== filename);
+
+    const uploadDir = process.env.UPLOAD_DIR || "uploads";
+    const fullPath = path.join(process.cwd(), uploadDir, 'products', filename);
+    
+    console.log('Đang xóa file:', fullPath); // log để kiểm tra path
+    
+    if (fs.existsSync(fullPath)) {
+      fs.unlinkSync(fullPath);
+      console.log('Xóa file thành công');
+    } else {
+      console.log('File không tồn tại:', fullPath);
+    }
+
+    await product.save();
+    res.json({ message: 'Ảnh đã được xóa', remainingImages: product.Hinh_anh });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

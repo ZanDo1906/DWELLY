@@ -48,7 +48,7 @@
 
         <app-product-card 
           [product]="p" 
-          [mainImage]="p.Hinh_anh[currentIndex[p.Ma_san_pham] || 0]" 
+          [mainImage]="productService.getImgUrl(p.Hinh_anh[currentIndex[p.Ma_san_pham] || 0])" 
           [enableHover]="false">
         </app-product-card>
 

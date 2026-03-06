@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const path = require('path');
 
 //Enable all CORS
 const cors = require('cors');
@@ -11,8 +12,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-// Serve static files (uploaded images)
-app.use('/uploads', express.static('uploads'));
+//Serve static files (uploaded images)
+const uploadDir = path.join(process.cwd(), process.env.UPLOAD_DIR || 'uploads');
+app.use('/uploads', express.static(uploadDir));
+
 
 //Import router
 const productRoute = require('./routes/product.router');

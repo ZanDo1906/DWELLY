@@ -39,6 +39,25 @@
   background: #56422a;
 }
 
+.delete-btn {
+  background: #6c5234;
+  border: 1px solid #6c5234;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #56422a;
+  border-color: #56422a;
+}
+
 .filter-btn.active {
   background-color: #6c5234;
   color: #fff;
@@ -46,11 +65,16 @@
 }
 
 app-table th:nth-child(1), app-table td:nth-child(1) {
-  width: 80px; 
+  width: 40px; 
   text-align: center;
 }
 
 app-table th:nth-child(2), app-table td:nth-child(2) {
+  width: 60px; 
+    text-align: center;
+}
+
+app-table th:nth-child(3), app-table td:nth-child(3) {
   width: 280px; 
     text-align: center;
 }

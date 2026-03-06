@@ -25,6 +25,52 @@ router.get("/clients", async (req, res) => {
     }
 });
 
+
+router.get("/clients/favorite-count/:productId", async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const count = await Client.countDocuments({ favorites: productId });
+        res.json({ count });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.post("/clients/toggle-favorite", async (req, res) => {
+  try {
+    const { customerCode, productId } = req.body;
+
+    const client = await Client.findOne({ Ma_khach_hang: customerCode });
+
+    if (!client) {
+      return res.status(404).json({ message: "Không tìm thấy khách hàng" });
+    }
+
+    let favorites = client.favorites || [];
+
+    if (favorites.includes(productId)) {
+      favorites = favorites.filter(p => p !== productId);
+    } else {
+      favorites.push(productId);
+    }
+
+    client.favorites = favorites;
+    await client.save();
+
+    const favoritesCount = await Client.countDocuments({
+      favorites: productId
+    });
+
+    res.json({
+      favorites,
+      favoritesCount
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 //get client by ID
 router.get("/clients/:id", async (req, res) => {
     try {
@@ -102,7 +148,9 @@ router.post("/login", async (req, res) => {
         id: user._id,
         customerCode: user.Ma_khach_hang,
         fullName: user.Ho_va_ten,
-        email: user.Email
+        email: user.Email,
+        favorites: user.favorites || []
+
       }
     });
 
@@ -166,7 +214,6 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 
 module.exports = router;

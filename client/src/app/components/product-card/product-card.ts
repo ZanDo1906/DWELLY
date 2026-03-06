@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { iProduct } from '../../interfaces/product';
 import { iReview } from '../../interfaces/review';
 import { Review } from '../../services/review';
+import { Client } from '../../services/client';
 
 @Component({
   selector: 'app-product-card',
@@ -23,8 +24,13 @@ export class ProductCard implements OnInit {
   reviews: iReview[] = [];
   averageRating = 0;
   heartActive = false;
+  
 
-  constructor(private reviewService: Review) {}
+  constructor(
+    private reviewService: Review,
+    private clientService: Client,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (this.product) {
@@ -37,6 +43,49 @@ export class ProductCard implements OnInit {
     }
   }
 
+  isFavorite(productId: string): boolean {
+
+  const user = this.clientService.getCurrentUser();
+  if (!user || !user.favorites) return false;
+
+  return user.favorites.includes(productId);
+
+}
+
+  toggleFavorite(event: Event, productId: string) {
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const user = this.clientService.getCurrentUser();
+  if (!user) return;
+
+  const maKhachHang = user.customerCode ?? user.Ma_khach_hang;
+
+  this.clientService.toggleFavorite(maKhachHang, productId)
+    .subscribe({
+
+      next: (res: any) => {
+
+        user.favorites = res.favorites;
+
+        localStorage.setItem(
+          'current_user',
+          JSON.stringify(user)
+        );
+
+      },
+
+      error: (err) => console.error(err)
+
+    });
+}
+  goToCart(event: Event) {  
+  event.preventDefault();
+  event.stopPropagation();
+  this.router.navigate(['/cart-page']);
+}
+  
   prevImage() {
     if (!this.product.Hinh_anh) return;
     this.currentImageIndex =

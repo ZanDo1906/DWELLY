@@ -5,28 +5,89 @@ import { FormsModule } from '@angular/forms';
 import { ProductForm } from '../product-form/product-form';
 import { iProduct } from '../../../interfaces/product';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../../services/product';
 
 @Component({
   selector: 'app-product-list',
   imports: [CommonModule, Table, FormsModule, ProductForm],
   templateUrl: './product-list.html',
-  styleUrl: './product-list.css',
+  styleUrls: ['./product-list.css'],
 })
 export class ProductList implements OnInit {
   pageSize = 10;
   currentPage = 1;
-  products: Array<any> = [];
-  
-  dropdownOpen = false;
-@HostListener('document:click', ['$event'])
-closeDropdown(event: Event): void {
-  const target = event.target as HTMLElement;
-  if (target.closest('.dropdown-wrapper')) {
-    return;
-  }
-  this.dropdownOpen = false;
+  selectedProducts: string[] = [];
+  products: iProduct[] = [];
+  constructor(private router: Router, private productService: Product) {}
+  ngOnInit(): void {
+  this.loadProducts();
 }
 
+  loadProducts(): void {
+    this.productService.getProductData().subscribe({
+      next: (data: iProduct[]) => {
+        this.products = data;
+      },
+      error: (err) => console.error('Lỗi khi load sản phẩm', err)
+    });
+  }
+
+    dropdownOpen = false;
+  @HostListener('document:click', ['$event'])
+  closeDropdown(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (target.closest('.dropdown-wrapper')) {
+      return;
+    }
+    this.dropdownOpen = false;
+  }
+
+  toggleSelect(id: string) {
+
+  if (this.selectedProducts.includes(id)) {
+    this.selectedProducts =
+      this.selectedProducts.filter(p => p !== id);
+  } else {
+    this.selectedProducts.push(id);
+  }
+
+}
+  isSelected(id: string): boolean {
+    return this.selectedProducts.includes(id);
+  }
+  isAllSelected(): boolean {
+  return this.pagedProducts.length > 0 &&
+         this.pagedProducts.every(p =>
+           this.selectedProducts.includes(p.Ma_san_pham)
+         );
+}
+  toggleSelectAll(event: any) {
+
+  if (event.target.checked) {
+    this.selectedProducts =
+      this.pagedProducts.map(p => p.Ma_san_pham);
+  } else {
+    this.selectedProducts = [];
+  }
+
+}
+
+  deleteSelected() {
+
+  if (!confirm("Bạn có chắc muốn xóa các sản phẩm đã chọn?")) return;
+
+  this.selectedProducts.forEach(id => {
+    this.productService.deleteProduct(id).subscribe();
+  });
+
+  this.products =
+    this.products.filter(
+      p => !this.selectedProducts.includes(p.Ma_san_pham)
+    );
+
+  this.selectedProducts = [];
+
+}
 
   toggleDropdown(event: Event): void {
   event.stopPropagation();
@@ -37,7 +98,7 @@ selectStatus(status: string, event: Event): void {
   this.statusFilter = status;
   this.dropdownOpen = false;
 }
-  constructor(private router: Router) {}
+ 
 
   goToDetail(id: string): void {
     this.router.navigate(['/product-form', id]);
@@ -78,83 +139,34 @@ selectStatus(status: string, event: Event): void {
     let list = [...this.products];
 
     if (this.statusFilter !== 'Tất cả trạng thái') {
-      list = list.filter(p => p.status === this.statusFilter);
+      const isTrading = this.statusFilter === 'Đang kinh doanh';
+      list = list.filter(p => p.Trang_thai === isTrading);
     }
-
     if (this.searchTerm.trim()) {
-      const term = this.searchTerm.toLowerCase();
-      list = list.filter(p =>
-        p.name.toLowerCase().includes(term) ||
-        p.sku.toLowerCase().includes(term)  
-      );
-    }
+    const term = this.searchTerm.toLowerCase();
+    list = list.filter(p =>
+      p.Ten_san_pham.toLowerCase().includes(term) ||
+      p.Ma_san_pham.toLowerCase().includes(term)
+    );
+  }
 
-    if (this.sortMode === 'az') { list.sort((a, b) => a.name.localeCompare(b.name)); } else if (this.sortMode === 'za') { list.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (this.sortMode === 'highest') {
-      list.sort((a, b) => {
-        const priceA = Number((a.price || '0').replace(/[^\d]/g, ''));
-        const priceB = Number((b.price || '0').replace(/[^\d]/g, ''));
-        return priceB - priceA; // cao nhất trước
-      });
-    } else if (this.sortMode === 'lowest') {
-      list.sort((a, b) => {
-        const priceA = Number((a.price || '0').replace(/[^\d]/g, ''));
-        const priceB = Number((b.price || '0').replace(/[^\d]/g, ''));
-        return priceA - priceB; // thấp nhất trước
-      });
-    }
-    return list;  }
+    if (this.sortMode === 'highest') {
+    list.sort((a, b) => (b.Gia_ban || 0) - (a.Gia_ban || 0));
+  } else if (this.sortMode === 'lowest') {
+    list.sort((a, b) => (a.Gia_ban || 0) - (b.Gia_ban || 0));
+  } else if (this.sortMode === 'az') {
+    list.sort((a, b) => a.Ten_san_pham.localeCompare(b.Ten_san_pham));
+  } else if (this.sortMode === 'za') {
+    list.sort((a, b) => b.Ten_san_pham.localeCompare(a.Ten_san_pham));
+  } else {
+    list.sort((a, b) => a.Ma_san_pham.localeCompare(b.Ma_san_pham));
+  }
 
+  return list;
+}
     toggleSort(mode: string): void {
   if (mode === 'az') { this.sortMode = this.sortMode === 'az' ? 'za' : 'az'; } else { this.sortMode = mode; } this.currentPage = 1;
 }
-
-  async ngOnInit(): Promise<void> {
-    try {
-      const [prodRes, revRes] = await Promise.all([
-        fetch('/assets/data/product.json'),
-        fetch('/assets/data/review.json')
-      ]);
-      if (!prodRes.ok) throw new Error('Failed to load product.json');
-      if (!revRes.ok) throw new Error('Failed to load review.json');
-
-      const [prodData, revData] = await Promise.all([prodRes.json(), revRes.json()]);
-
-      const reviewsByProduct = revData.reduce((map: any, r: any) => {
-        const key = r.Ma_san_pham;
-        if (!map[key]) map[key] = [];
-        map[key].push(r);
-        return map;
-      }, {});
-
-      this.products = prodData.map((p: any, idx: number) => {
-        const reviewsFor = reviewsByProduct[p.Ma_san_pham] || [];
-        const total = reviewsFor.reduce(
-          (sum: number, r: any) => sum + (Number(r.Diem_danh_gia) || 0),
-          0
-        );
-        const avg = reviewsFor.length ? total / reviewsFor.length : 0;
-
-        return {
-          sku: p.Ma_san_pham ?? (`P${String(idx + 1).padStart(2, '0')}`),
-          name: p.Ten_san_pham ?? '—',
-          price: p.Gia_ban != null
-            ? new Intl.NumberFormat('vi-VN').format(p.Gia_ban) + ' ₫'
-            : '—',
-          stock: p.So_luong_ton_kho ?? 0,
-
-          ratingValue: avg,
-          ratingCount: reviewsFor.length,
-
-          status: p.Trang_thai ? 'Đang kinh doanh' : 'Ngưng kinh doanh',
-          statusColor: p.Trang_thai ? 'green' : 'red'
-        };
-      });
-    } catch (err) {
-      console.error('Error loading products or reviews:', err);
-      this.products = [];
-    }
-  }
 
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.filteredProducts.length / this.pageSize));
@@ -169,35 +181,28 @@ get pages(): (number | string)[] {
   const current = this.currentPage;
   const maxVisible = 5;
 
-  // Nếu tổng số trang <= 5 thì hiển thị hết
   if (total <= maxVisible) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
   const pages: (number | string)[] = [];
 
-  // Trang đầu tiên
   pages.push(1);
 
-  // Nếu current > 3 thì thêm "..."
   if (current > 3) {
     pages.push('...');
   }
 
-  // Các trang xung quanh current
   const start = Math.max(2, current - 1);
   const end = Math.min(total - 1, current + 1);
 
   for (let i = start; i <= end; i++) {
     pages.push(i);
   }
-
-  // Nếu current < total - 2 thì thêm "..."
   if (current < total - 2) {
     pages.push('...');
   }
 
-  // Trang cuối cùng
   pages.push(total);
 
   return pages;

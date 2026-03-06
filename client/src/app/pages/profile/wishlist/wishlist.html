@@ -8,67 +8,49 @@
 
         <!-- Sort options -->
         <div class="wishlist-sort mb-3">
-          <button class="sort-btn ">
-            Mới nhất <i class="bi bi-arrow-down"></i>
+
+          <button class="sort-btn" (click)="sortByFavoriteOrder()">
+            {{ dateSort === 'desc' ? 'Mới nhất' : 'Cũ nhất' }}
+            <i class="bi"
+              [ngClass]="dateSort === 'desc' ? 'bi-arrow-down' : 'bi-arrow-up'">
+            </i>
           </button>
-          <button class="sort-btn">
-            Cao đến thấp  <i class="bi bi-arrow-down"></i>
+
+          <button class="sort-btn" (click)="sortByPrice()">
+            Giá 
+            <i class="bi" [ngClass]="priceSort === 'desc' ? 'bi-arrow-down' : 'bi-arrow-up'"></i>
           </button>
+
         </div>
 
         <!-- Wishlist items -->
-        <div class="wishlist-list">
-          <div class="wishlist-item">
-            <i class="bi bi-heart-fill heart-icon"></i>
-            <div class="thumb">
-            </div>
-            <div class="info">
-              <strong>Tên sản phẩm 1</strong>
-              <p>Phân loại</p>
-              <p>Đơn hàng</p>
-            </div>
-            <div class="actions">
-              <button class="btn-cart">
-                <i class="bi bi-cart"></i> 
-              </button>
-            </div>
+         <div class="wishlist-list">  
+        <div class="wishlist-item" *ngFor="let p of products">
+
+          <button class="heart-icon" (click)="toggleFavorite(p.Ma_san_pham)">
+            <i class="bi"
+              [ngClass]="isFavorite(p.Ma_san_pham) ? 'bi-heart-fill' : 'bi-heart'">
+            </i>
+          </button>
+
+          <div class="thumb">
+            <img [src]="productService.getImgUrl(p.Hinh_anh[0])" [alt]="p.Ten_san_pham">
           </div>
 
-          <div class="wishlist-item">
-            <i class="bi bi-heart-fill heart-icon"></i>
-            <div class="thumb">
-            </div>
-            <div class="info">
-              <strong>Tên sản phẩm 1</strong>
-              <p>Phân loại</p>
-              <p>Đơn hàng</p>
-            </div>
-            <div class="actions">
-              <button class="btn-cart">
-                <i class="bi bi-cart"></i> 
-              </button>
-            </div>
+          <div class="info">
+            <strong>{{ p.Ten_san_pham }}</strong>
+            <p>{{ p.Chat_lieu }}</p>
+            <p>{{ p.Gia_ban | number:'1.0-0' }} VNĐ</p>
           </div>
 
-          <div class="wishlist-item">
-            <i class="bi bi-heart-fill heart-icon"></i>
-            <div class="thumb">
-            </div>
-            <div class="info">
-              <strong>Tên sản phẩm 1</strong>
-              <p>Phân loại</p>
-              <p>Đơn hàng</p>
-            </div>
-            <div class="actions">
-              <button class="btn-cart">
-                <i class="bi bi-cart"></i> 
-              </button>
-            </div>
+          <div class="actions">
+            <button class="btn-cart" (click)="goToCart()">
+              <i class="bi bi-cart"></i>
+            </button>
           </div>
-          
+
         </div>
-
-      
+        </div>
 
       </div>
     </div>

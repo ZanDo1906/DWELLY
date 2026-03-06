@@ -25,9 +25,12 @@
       </div>
       <div class="actions">
         <i class="bi"
-           [ngClass]="heartActive ? 'bi-heart-fill' : 'bi-heart'"
-           (click)="toggleHeart()"></i>
-        <i class="bi bi-cart"></i>
+          [ngClass]="isFavorite(product.Ma_san_pham) ? 'bi-heart-fill' : 'bi-heart'"
+          (click)="toggleFavorite($event, product.Ma_san_pham)">
+        </i>
+        <i class="bi bi-cart"
+          (click)="goToCart($event)">
+        </i>
       </div>
     </div>
   </div>

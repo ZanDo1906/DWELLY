@@ -43,6 +43,7 @@ export class Login {
 
     this.clientService.login({ email, password }).subscribe({
       next: (res: any) => {
+        this.clientService.saveLoginData(res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('userName', res.user.fullName);
         localStorage.setItem('userEmail', res.user.email);

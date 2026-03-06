@@ -3,7 +3,7 @@ const Scheme = mongoose.Schema;
 
 const Care_Instruction = new Scheme({
     Ma_huong_dan: { type: String, required: true },           // ObjectId (PK)
-    Ma_danh_muc: { type: String, required: true },            // ObjectId (FK)
+    Ma_danh_muc: [{ type: String, required: true }],          // ObjectId (FK)
     Link_video: [{ type: String, required: true }],           // Array<String>
     Huong_dan_ve_sinh: { type: String, required: true },
     Huong_dan_dat_san_pham: { type: String, required: true },

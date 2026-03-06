@@ -9,13 +9,17 @@ const baseUrl = "http://localhost:3000";
   providedIn: 'root',
 })
 export class CareInstruction {
-  // url = '/assets/data/care_instruction.json';
   constructor(private http: HttpClient) { }
   getCareInstructionData(): Observable<iCareInstruction[]> {
     return this.http
       .get<iCareInstruction[]>(`${baseUrl}/care_instructions`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  getCareByCategory(categoryId: string): Observable<iCareInstruction> {
+  return this.http
+    .get<iCareInstruction>(`${baseUrl}/care_instructions/category/${categoryId}`)
+    .pipe(retry(2), catchError(this.handleError));
+}
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }
