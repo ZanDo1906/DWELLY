@@ -23,4 +23,20 @@ router.get("/blogs", async (req, res) => {
     }
 });
 
+// get blog by business id (Ma_bai_viet)
+router.get("/blogs/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const blog = await Blog.findOne({ Ma_bai_viet: id });
+
+        if (!blog) {
+            return res.status(404).json({ er: 'Blog not found' });
+        }
+
+        return res.json(blog);
+    } catch (err) {
+        return res.status(500).json({ er: err.message });
+    }
+});
+
 module.exports = router;

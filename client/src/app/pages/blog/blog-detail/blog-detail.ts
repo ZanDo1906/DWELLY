@@ -1,20 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
+import { Blog as BlogService } from '../../../services/blog';
+import { iBlog, iBlogContent } from '../../../interfaces/blog';
 
-interface BlogContent {
-  Loai: 'text' | 'image';
-  Noi_dung?: string;
-  Url?: string;
-  Mo_ta?: string;
-}
-
-interface Blog {
+interface BlogViewModel {
   Ma_bai_viet: string;
   Tieu_de: string;
   Tom_tat: string;
-  Noi_dung: BlogContent[];
+  Noi_dung: iBlogContent[];
   Hinh_anh: string;
   Trang_thai: boolean;
   Ngay_tao: string;
@@ -28,28 +23,28 @@ interface Blog {
   styleUrl: './blog-detail.css',
 })
 export class BlogDetail implements OnInit, AfterViewInit {
-  blog: Blog | null = null;
-  relatedBlogs: Blog[] = [];
-  allBlogs: Blog[] = [];
+  blog: BlogViewModel | null = null;
+  relatedBlogs: BlogViewModel[] = [];
+  allBlogs: BlogViewModel[] = [];
   isLoading = true;
   isCopied = false;
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
+    private blogService: BlogService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadBlogs();
-    
-    // Subscribe to route params to reload blog when navigating between blog posts
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const blogId = params.get('id');
-      if (blogId && this.allBlogs.length > 0) {
-        this.updateBlogContent(blogId);
-        window.scrollTo(0, 0);
+      if (!blogId) {
+        this.router.navigate(['/']);
+        return;
       }
+
+      this.loadBlogPage(blogId);
+      window.scrollTo(0, 0);
     });
   }
 
@@ -62,31 +57,55 @@ export class BlogDetail implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  private loadBlogs(): void {
-    this.http.get<Blog[]>('assets/data/blog.json').subscribe({
-      next: (blogs) => {
-        this.allBlogs = blogs.filter((b) => b.Trang_thai === true);
+  private loadBlogPage(blogId: string): void {
+    this.isLoading = true;
 
-        const blogId = this.route.snapshot.paramMap.get('id');
-        if (blogId) {
-          this.updateBlogContent(blogId);
-        }
+    forkJoin({
+      detail: this.blogService.getBlogById(blogId),
+      all: this.blogService.getBlogData(),
+    }).subscribe({
+      next: ({ detail, all }) => {
+        this.blog = this.normalizeBlog(detail);
+        this.allBlogs = all
+          .filter((b) => b.Trang_thai === true)
+          .map((b) => this.normalizeBlog(b));
+        this.loadRelatedBlogs();
         this.isLoading = false;
       },
       error: () => {
         this.isLoading = false;
+        this.router.navigate(['/']);
       },
     });
   }
 
-  private updateBlogContent(blogId: string): void {
-    const foundBlog = this.allBlogs.find((b) => b.Ma_bai_viet === blogId);
-    if (foundBlog) {
-      this.blog = foundBlog;
-      this.loadRelatedBlogs();
-    } else {
-      this.router.navigate(['/']);
+  private normalizeBlog(blog: iBlog): BlogViewModel {
+    return {
+      ...blog,
+      Ngay_tao: String(blog.Ngay_tao),
+      Noi_dung: this.normalizeContent(blog.Noi_dung),
+    };
+  }
+
+  private normalizeContent(content: iBlog['Noi_dung']): iBlogContent[] {
+    if (Array.isArray(content)) {
+      return content;
     }
+
+    if (typeof content === 'string') {
+      try {
+        const parsed = JSON.parse(content);
+        if (Array.isArray(parsed)) {
+          return parsed as iBlogContent[];
+        }
+      } catch {
+        // Keep fallback below for plain text DB values.
+      }
+
+      return [{ Loai: 'text', Noi_dung: content }];
+    }
+
+    return [];
   }
 
   private loadRelatedBlogs(): void {
