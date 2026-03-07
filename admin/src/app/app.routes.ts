@@ -23,6 +23,7 @@ import { UserList } from './pages/users/user-list/user-list';
 
 export const routes: Routes = [
     { path: 'test', component: Test },
+    // {path: '', component: Login },
     { path: 'login', component: Login },
     { path: 'forgot-password', component: ForgotPassword },
     { path: 'reset-password', component: ResetPassword },
