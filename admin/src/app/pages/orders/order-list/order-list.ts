@@ -1,13 +1,18 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { iOrder } from '../../../interfaces/order';
 import { Table } from '../../../components/table/table';
+import { Client as ClientService } from '../../../services/client';
+import { Order as OrderService } from '../../../services/order';
 
-interface Order {
+interface OrderRow {
   id: number;
   code: string;
   customer: string;
   date: string;
+  dateValue: number;
   approvalStatus: 'pending' | 'approved' | 'rejected';
   deliveryStatus: 'shipping' | 'completed' | 'cancelled' | 'returned';
   total: string;
@@ -19,49 +24,45 @@ interface Order {
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })
-export class OrderList {
+export class OrderList implements OnInit {
   pageSize = 10;
   currentPage = 1;
   searchTerm = '';
+  sortMode: '' | 'az' | 'za' | 'newest' | 'oldest' = '';
   isStatusOpen = false;
   statusOptions = ['Tất cả trạng thái', 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối', 'Đang giao', 'Hoàn thành', 'Bị hủy', 'Trả hàng'];
   selectedStatus = this.statusOptions[0];
   private readonly allStatusLabel = 'Tất cả trạng thái';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private clientService: ClientService,
+  ) {}
 
-  private readonly approvalStatusLabels: Record<Order['approvalStatus'], string> = {
+  ngOnInit(): void {
+    this.loadOrders();
+  }
+
+  private readonly approvalStatusLabels: Record<OrderRow['approvalStatus'], string> = {
     pending: 'Chờ duyệt',
     approved: 'Đã duyệt',
     rejected: 'Đã từ chối',
   };
 
-  private readonly deliveryStatusLabels: Record<Order['deliveryStatus'], string> = {
+  private readonly deliveryStatusLabels: Record<OrderRow['deliveryStatus'], string> = {
     shipping: 'Đang giao',
     completed: 'Hoàn thành',
     cancelled: 'Bị hủy',
     returned: 'Trả hàng',
   };
 
-  orders: Order[] = [
-    { id: 1, code: 'B01', customer: 'Nguyễn Văn A', date: '20/10/2026', approvalStatus: 'pending', deliveryStatus: 'shipping', total: '18.000.000 VND' },
-    { id: 2, code: 'B02', customer: 'Trần Thị B', date: '10/01/2026', approvalStatus: 'approved', deliveryStatus: 'completed', total: '12.500.000 VND' },
-    { id: 3, code: 'B03', customer: 'Lê Văn C', date: '12/02/2026', approvalStatus: 'rejected', deliveryStatus: 'cancelled', total: '9.000.000 VND' },
-    { id: 4, code: 'B04', customer: 'Phạm Văn D', date: '15/03/2026', approvalStatus: 'pending', deliveryStatus: 'completed', total: '22.000.000 VND' },
-    { id: 5, code: 'B05', customer: 'Hoàng Thị E', date: '01/04/2026', approvalStatus: 'approved', deliveryStatus: 'completed', total: '15.300.000 VND' },
-    { id: 6, code: 'B06', customer: 'Đỗ Văn F', date: '05/05/2026', approvalStatus: 'rejected', deliveryStatus: 'returned', total: '8.700.000 VND' },
-    { id: 7, code: 'B07', customer: 'Ngô Thị G', date: '20/06/2026', approvalStatus: 'pending', deliveryStatus: 'shipping', total: '30.000.000 VND' },
-    { id: 8, code: 'B08', customer: 'Võ Văn H', date: '12/07/2026', approvalStatus: 'approved', deliveryStatus: 'completed', total: '17.800.000 VND' },
-    { id: 9, code: 'B09', customer: 'Bùi Thị I', date: '25/08/2026', approvalStatus: 'rejected', deliveryStatus: 'cancelled', total: '5.400.000 VND' },
-    { id: 10, code: 'B10', customer: 'Nguyễn Văn K', date: '11/09/2026', approvalStatus: 'pending', deliveryStatus: 'shipping', total: '21.000.000 VND' },
-    { id: 11, code: 'B11', customer: 'Lý Thị L', date: '14/10/2026', approvalStatus: 'approved', deliveryStatus: 'returned', total: '19.200.000 VND' },
-    { id: 12, code: 'B12', customer: 'Trương Văn M', date: '30/10/2026', approvalStatus: 'rejected', deliveryStatus: 'cancelled', total: '11.600.000 VND' },
-  ];
+  orders: OrderRow[] = [];
 
-  get filteredOrders(): Order[] {
+  get filteredOrders(): OrderRow[] {
     const normalizedKeyword = this.searchTerm.trim().toLowerCase();
 
-    return this.orders.filter((order) => {
+    const filtered = this.orders.filter((order) => {
       const approvalLabel = this.approvalStatusLabels[order.approvalStatus];
       const deliveryLabel = this.deliveryStatusLabels[order.deliveryStatus];
       const matchesStatus =
@@ -90,6 +91,21 @@ export class OrderList {
 
       return searchable.includes(normalizedKeyword);
     });
+
+    if (this.sortMode === 'az' || this.sortMode === 'za') {
+      filtered.sort((a, b) => {
+        const compareValue = a.customer.localeCompare(b.customer, 'vi', { sensitivity: 'base' });
+        return this.sortMode === 'az' ? compareValue : -compareValue;
+      });
+    } else if (this.sortMode === 'newest' || this.sortMode === 'oldest') {
+      filtered.sort((a, b) => {
+        const aTime = a.dateValue;
+        const bTime = b.dateValue;
+        return this.sortMode === 'newest' ? bTime - aTime : aTime - bTime;
+      });
+    }
+
+    return filtered;
   }
 
   get totalPages(): number {
@@ -120,6 +136,18 @@ export class OrderList {
     this.goToPage(this.currentPage + 1);
   }
 
+  toggleSort(mode: 'az'): void {
+    if (mode === 'az') {
+      this.sortMode = this.sortMode === 'az' ? 'za' : 'az';
+      this.currentPage = 1;
+    }
+  }
+
+  setDateSort(mode: 'newest' | 'oldest'): void {
+    this.sortMode = mode;
+    this.currentPage = 1;
+  }
+
   toggleStatusDropdown(event: MouseEvent): void {
     event.stopPropagation();
     this.isStatusOpen = !this.isStatusOpen;
@@ -144,5 +172,114 @@ export class OrderList {
 
   navigateToAddOrder(): void {
     this.router.navigate(['/add-order']);
+  }
+
+  goToOrderDetail(orderId: string): void {
+    this.router.navigate(['/order-detail', orderId]);
+  }
+
+  private loadOrders(): void {
+    forkJoin({
+      orders: this.orderService.getOrderData(),
+      clients: this.clientService.getClientData(),
+    }).subscribe({
+      next: ({ orders, clients }) => {
+        const clientMap = new Map(clients.map((client) => [client.Ma_khach_hang, client.Ho_va_ten]));
+
+        this.orders = orders.map((order, index) => {
+          const dateValue = this.toTimestamp(order.Ngay_dat);
+          const normalizedStatus = this.normalizeText(order.Trang_thai || '');
+
+          return {
+            id: index + 1,
+            code: order.Ma_don_mua,
+            customer: this.getCustomerName(order, clientMap),
+            date: this.formatDate(order.Ngay_dat),
+            dateValue,
+            approvalStatus: this.mapApprovalStatus(normalizedStatus),
+            deliveryStatus: this.mapDeliveryStatus(normalizedStatus),
+            total: `${Number(order.Tong_tien || 0).toLocaleString('vi-VN')} VND`,
+          };
+        });
+
+        this.currentPage = 1;
+      },
+      error: () => {
+        this.orders = [];
+      },
+    });
+  }
+
+  private getCustomerName(order: iOrder, clientMap: Map<string, string>): string {
+    const guestInfo = order.Thong_tin_khach_vang_lai as unknown as {
+      Ho_va_ten?: string;
+      Ho_ten?: string;
+    };
+    const guestName = (guestInfo?.Ho_va_ten || guestInfo?.Ho_ten || '').trim();
+    if (guestName) {
+      return guestName;
+    }
+
+    const clientName = order.Ma_khach_hang ? clientMap.get(order.Ma_khach_hang)?.trim() : '';
+    if (clientName) {
+      return clientName;
+    }
+
+    return 'Khách hàng';
+  }
+
+  private mapApprovalStatus(status: string): 'pending' | 'approved' | 'rejected' {
+    if (status.includes('tu choi')) {
+      return 'rejected';
+    }
+
+    if (status.includes('cho duyet')) {
+      return 'pending';
+    }
+
+    return 'approved';
+  }
+
+  private mapDeliveryStatus(status: string): 'shipping' | 'completed' | 'cancelled' | 'returned' {
+    if (status.includes('hoan thanh')) {
+      return 'completed';
+    }
+
+    if (status.includes('tra hang')) {
+      return 'returned';
+    }
+
+    if (status.includes('huy') || status.includes('tu choi')) {
+      return 'cancelled';
+    }
+
+    return 'shipping';
+  }
+
+  private formatDate(value: Date | string): string {
+    const timestamp = this.toTimestamp(value);
+    if (!timestamp) {
+      return '--/--/----';
+    }
+
+    const date = new Date(timestamp);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
+  private toTimestamp(value: Date | string): number {
+    const date = new Date(value);
+    const timestamp = date.getTime();
+    return Number.isNaN(timestamp) ? 0 : timestamp;
+  }
+
+  private normalizeText(value: string): string {
+    return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
   }
 }

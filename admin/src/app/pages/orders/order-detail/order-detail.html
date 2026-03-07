@@ -8,15 +8,22 @@
           <h1 class="page-title">Quản lý đơn hàng</h1>
           <button class="print-btn">
             <i class="bi bi-printer"></i>
-            <span>IN ĐƠN HÀNG</span>
+            <span>In đơn hàng</span>
           </button>
         </div>
 
+        <nav class="breadcrumb">
+          <ol>
+            <li><a routerLink="/order-list">Quản lý đơn hàng</a></li>
+            <li>Chi tiết đơn hàng</li>
+          </ol>
+        </nav>
+
         <div class="order-info-meta">
-          <i class="bi bi-arrow-left-circle"></i>
-          <p>Chi tiết đơn hàng: DW2139021
+          <!-- <i class="bi bi-arrow-left-circle"></i> -->
+          <p>Chi tiết đơn hàng: {{ orderDisplayCode }}
             <br>
-          Ngày đặt: 9:30 28-01-2025</p>
+          Ngày đặt: {{ orderDateDisplay }}</p>
         </div>
 
         <div class="row g-2">
@@ -38,39 +45,22 @@
                 <span>Thành tiền</span>
               </div>
 
-              <div class="product-item">
+              <div class="product-item" *ngFor="let item of cartItems">
                 <div class="product-info">
-                  <img src="/assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp2/anh1.png">
+                  <img [src]="item.product.Hinh_anh[0] || 'assets/images/default-product.png'">
                   <div class="product-details">
                     <p class="product-name">
-                      Tủ đầu giường gỗ Sồi tự nhiên Anneli
+                      {{ item.product.Ten_san_pham }}
                     </p>
-                    <span class="product-category">Phòng khách</span>
+                    <span class="product-category">{{ getRoomName(item.product.Ma_loai_phong) }}</span>
                   </div>
                 </div>
 
-                <div class="product-price">18.900.000 VNĐ</div>
+                <div class="product-price">{{ formatPrice(item.unitPrice) }}</div>
                 <div class="product-qty">
-                  <span class="qty-number">1</span>
+                  <span class="qty-number">{{ item.quantity }}</span>
                 </div>
-                <div class="product-total">18.900.000 VNĐ</div>
-              </div>
-              <div class="product-item">
-                <div class="product-info">
-                  <img src="/assets/images/product/PHONG_KHACH/style_minimal/concept_7/sp1/anh1.png">
-                  <div class="product-details">
-                    <p class="product-name">
-                      Tủ đầu giường gỗ Sồi tự nhiên Anneli
-                    </p>
-                    <span class="product-category">Phòng khách</span>
-                  </div>
-                </div>
-
-                <div class="product-price">18.900.000 VNĐ</div>
-                <div class="product-qty">
-                  <span class="qty-number">1</span>
-                </div>
-                <div class="product-total">18.900.000 VNĐ</div>
+                <div class="product-total">{{ formatPrice(getLineTotal(item)) }}</div>
               </div>
             </div>
 
@@ -81,9 +71,7 @@
                 Ghi chú
               </h3>
 
-              <textarea class="note-input" disabled>
-Tôi muốn giao lúc 8 giờ sáng
-              </textarea>
+              <textarea class="note-input" disabled>{{ currentOrder?.Ghi_chu || 'Không có ghi chú' }}</textarea>
             </div>
 
           </div>
@@ -99,16 +87,16 @@ Tôi muốn giao lúc 8 giờ sáng
               </h3>
 
               <div class="d-flex gap-2 mb-3">
-                <button class="btn-approve">Duyệt đơn</button>
-                <button class="btn-reject">Từ chối đơn</button>
+                <button class="btn-approve" [disabled]="isOrderCompleted">Duyệt đơn</button>
+                <button class="btn-reject" [disabled]="isOrderCompleted">Từ chối đơn</button>
               </div>
 
               <div class="dropdown-wrapper">
-                <button class="dropdown-trigger" (click)="toggleStatusDropdown()">
+                <button class="dropdown-trigger" (click)="toggleStatusDropdown()" [disabled]="isOrderCompleted">
                   Cập nhật trạng thái
                   <i class="bi bi-chevron-down"></i>
                 </button>
-                <ul class="dropdown-menu" [class.open]="showStatusDropdown">
+                <ul class="dropdown-menu" [class.open]="showStatusDropdown && !isOrderCompleted">
                   <li><a href="#">Đang giao</a></li>
                   <li><a href="#">Hoàn thành</a></li>
                   
@@ -123,10 +111,10 @@ Tôi muốn giao lúc 8 giờ sáng
                 Thông tin giao hàng
               </h3>
 
-              <p><strong>Họ và tên:</strong> Lê Thanh Như Ngọc</p>
-              <p><strong>Số điện thoại:</strong> 0915736103</p>
-              <p><strong>Email:</strong> abc@gmail.com</p>
-              <p><strong>Địa chỉ:</strong> 123 Nguyễn Huệ, TPHCM</p>
+              <p><strong>Họ và tên:</strong> {{ customerName }}</p>
+              <p><strong>Số điện thoại:</strong> {{ customerPhone }}</p>
+              <p><strong>Email:</strong> {{ customerEmail }}</p>
+              <p><strong>Địa chỉ:</strong> {{ customerAddress }}</p>
             </div>
 
             <!-- TỔNG THANH TOÁN -->
@@ -139,40 +127,50 @@ Tôi muốn giao lúc 8 giờ sáng
 
               <div class="summary-row">
                 <span>Tổng cộng</span>
-                <span class="amount">101.600.000 VNĐ</span>
+                <span class="amount">{{ formatPrice(subtotal) }}</span>
               </div>
 
               <div class="summary-row">
                 <span>Phí vận chuyển</span>
-                <span class="amount">Miễn phí</span>
+                <span class="amount">{{ formatPrice(shippingFee) }}</span>
               </div>
 
               <div class="summary-row">
                 <span>Giảm giá</span>
-                <span class="amount">0 VNĐ</span>
+                <span class="amount">{{ formatPrice(discountAmount) }}</span>
               </div>
 
               <hr class="divider" />
 
               <div class="summary-total">
                 <span>Tổng thanh toán</span>
-                <span class="total-amount">101.600.000 VNĐ</span>
+                <span class="total-amount">{{ formatPrice(grandTotal) }}</span>
               </div>
 
               <div class="payment-methods">
                 <label class="payment-option">
-                  <input type="radio" checked />
+                  <input
+                    type="radio"
+                    name="orderPaymentMode"
+                    [checked]="selectedPaymentMode === 'deposit'"
+                    disabled
+                  />
                   <span>
                     Thanh toán cọc (30%)<br>
-                    <span class="sub-text">34.000.000 VNĐ</span>
+                    <span class="sub-text">{{ formatPrice(getDepositAmount()) }}</span>
                   </span>
                 </label>
 
                 <label class="payment-option">
-                  <input type="radio" />
+                  <input
+                    type="radio"
+                    name="orderPaymentMode"
+                    [checked]="selectedPaymentMode === 'full'"
+                    disabled
+                  />
                   <span>
                     Thanh toán toàn bộ (100%)<br>
-                    <span class="sub-text">101.600.000 VNĐ</span>
+                    <span class="sub-text">{{ formatPrice(grandTotal) }}</span>
                   </span>
                 </label>
               </div>

@@ -24,27 +24,75 @@
     margin: 0;
 }
 
+.order-detail-page .breadcrumb {
+    margin: 10px 0 10px;
+    font-size: 16px;
+    color: #AFA386;
+}
+
+.order-detail-page .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.order-detail-page .breadcrumb li {
+    color: #666;
+}
+
+.order-detail-page .breadcrumb li a {
+    text-decoration: none;
+    color: #AFA386;
+    font-weight: 600;
+}
+
+.order-detail-page .breadcrumb li a:hover {
+    color: #6C5234;
+    cursor: pointer;
+}
+
+.order-detail-page .breadcrumb li::after {
+    content: "/";
+    margin: 0 5px;
+    color: #6C5234;
+}
+
+.order-detail-page .breadcrumb li:last-child {
+    font-weight: 700;
+    color: #6C5234;
+}
+
+.order-detail-page .breadcrumb li:last-child::after {
+    content: "";
+}
+
 .order-detail-page .print-btn {
-    background: #6F5A46;
+    background: #6c5234;
     color: #fff;
+    height: 36px;
+    min-width: 152px;
     border: none;
-    padding: 10px 16px;
+    padding: 0 14px;
     border-radius: 8px;
     font-size: 14px;
-    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s ease;
+    display: inline-grid;
+    grid-auto-flow: column;
+    place-content: center;
+    column-gap: 7px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
 }
 
 .order-detail-page .print-btn:hover {
-    background: #5c4a3a;
+    background: #56422a;
 }
 
 .order-detail-page .print-btn i {
-    font-size: 16px;
+    font-size: inherit;
 }
 
 .order-detail-page .order-meta {
@@ -57,7 +105,7 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     margin-top: 8px;
 }
 
@@ -223,6 +271,12 @@
     border-color: #456638;
 }
 
+.order-detail-page .btn-approve:disabled {
+    background: #9fa89a;
+    border-color: #9fa89a;
+    cursor: not-allowed;
+}
+
 .order-detail-page .btn-reject {
     background: white;
     color: #C05C5C;
@@ -238,6 +292,13 @@
 
 .order-detail-page .btn-reject:hover {
     background: #FFF5F5;
+}
+
+.order-detail-page .btn-reject:disabled {
+    background: #f3f3f3;
+    color: #b8b8b8;
+    border-color: #d7d7d7;
+    cursor: not-allowed;
 }
 
 /* ================= SUMMARY ================= */
@@ -288,13 +349,14 @@
     align-items: flex-start;
     gap: 10px;
     margin-top: 10px;
-    cursor: pointer;
+    cursor: default;
 }
 
 .order-detail-page .payment-option input[type="radio"] {
     width: 18px;
     height: 18px;
     accent-color: #546745;
+    cursor: default;
 }
 
 .order-detail-page .payment-option span {
@@ -340,6 +402,17 @@
 .order-detail-page .dropdown-trigger:hover {
     border-color: #6C5234;
     background: #F9F7F5;
+}
+
+.order-detail-page .dropdown-trigger:disabled {
+    background: #f3f3f3;
+    color: #b8b8b8;
+    border-color: #d7d7d7;
+    cursor: not-allowed;
+}
+
+.order-detail-page .dropdown-trigger:disabled i {
+    color: #b8b8b8;
 }
 
 .order-detail-page .dropdown-trigger i {

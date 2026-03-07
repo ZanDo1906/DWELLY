@@ -324,7 +324,6 @@
   object-fit: cover;
   /* border-radius: 8px; */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
 }
 
 .space-img-small:hover {
@@ -357,7 +356,6 @@
   object-fit: cover;
   border-radius: 20px;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: pointer;
 }
 
 .space-room-img:hover {
@@ -497,7 +495,6 @@
   align-items: center;
   gap: 20px;
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .why-card:hover {
@@ -797,7 +794,6 @@
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .review-card:hover {

@@ -23,6 +23,12 @@ export class Order {
       .pipe(retry(2), catchError(this.handleError));
   }
 
+  createOrder(order: Partial<iOrder>): Observable<{ message: string; order: iOrder }> {
+    return this.http
+      .post<{ message: string; order: iOrder }>(`${baseUrl}/orders`, order)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

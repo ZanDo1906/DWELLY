@@ -8,50 +8,69 @@
           <h2 class="page-title">Quản lý đơn hàng</h2>
 
           <button class="add-btn" (click)="navigateToAddOrder()">
-            <span class="add-icon" aria-hidden="true">+</span>
-            <span class="add-label">Thêm đơn hàng</span>
+            <i class="bi bi-plus-circle"></i>
+            Thêm đơn hàng
           </button>
         </div>
 
         <!-- FILTER BAR -->
         <div class="filter-bar">
-
-          <div class="search-box">
-            <span class="search-icon" aria-hidden="true">
-              <i class="bi bi-search"></i>
-            </span>
-            <input type="text"
-                   class="search-input"
-                   placeholder="Tìm kiếm..."
-                   [value]="searchTerm"
-                   (input)="onSearchInput($event)" />
+          <div class="search-wrapper">
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Tìm kiếm"
+                [value]="searchTerm"
+                (input)="onSearchInput($event)"
+              />
+            </div>
           </div>
 
           <div class="filter-group">
-            <button class="filter-btn">A-Z</button>
-            <button class="filter-btn">Mới nhất</button>
-            <button class="filter-btn">Cũ nhất</button>
+            <button
+              class="filter-btn"
+              (click)="toggleSort('az')"
+              [class.active]="sortMode === 'az' || sortMode === 'za'"
+            >
+              <i
+                class="bi"
+                [ngClass]="sortMode === 'az' ? 'bi-arrow-down' : (sortMode === 'za' ? 'bi-arrow-up' : 'bi-arrow-down')"
+              ></i>
+               A-Z
+            </button>
+            <button
+              class="filter-btn"
+              (click)="setDateSort('newest')"
+              [class.active]="sortMode === 'newest'"
+            >
+              Mới nhất
+            </button>
+            <button
+              class="filter-btn"
+              (click)="setDateSort('oldest')"
+              [class.active]="sortMode === 'oldest'"
+            >
+              Cũ nhất
+            </button>
 
-            <div class="status-select" [class.open]="isStatusOpen">
-              <button
-                type="button"
-                class="status-select-trigger"
-                (click)="toggleStatusDropdown($event)"
-              >
+            <div class="dropdown-wrapper" [class.open]="isStatusOpen">
+              <div class="dropdown-selected" (click)="toggleStatusDropdown($event)">
                 <span>{{ selectedStatus }}</span>
-                <span class="status-caret" aria-hidden="true">▾</span>
-              </button>
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isStatusOpen"></i>
+              </div>
 
-              <ul class="status-options" *ngIf="isStatusOpen">
-                <li
+              <div class="dropdown-menu" *ngIf="isStatusOpen">
+                <div
                   *ngFor="let status of statusOptions"
-                  class="status-option"
+                  class="dropdown-item"
                   [class.active]="status === selectedStatus"
                   (click)="selectStatus(status)"
                 >
                   {{ status }}
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -73,7 +92,7 @@
 
           <!-- BODY -->
           <ng-container table-body>
-            <tr *ngFor="let order of pagedOrders; let i = index">
+            <tr *ngFor="let order of pagedOrders; let i = index" (click)="goToOrderDetail(order.code)">
               <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
               <td>{{ order.code }}</td>
               <td>{{ order.customer }}</td>

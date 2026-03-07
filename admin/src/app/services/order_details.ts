@@ -16,6 +16,26 @@ export class Order_Details {
       .get<iOrderDetail[]>(`${baseUrl}/order_details`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  createOrderDetail(
+    detail: Pick<iOrderDetail, 'Ma_don_mua' | 'Ma_san_pham' | 'Don_gia' | 'So_luong'>,
+  ): Observable<{ message: string; order_detail: iOrderDetail }> {
+    return this.http
+      .post<{ message: string; order_detail: iOrderDetail }>(`${baseUrl}/order_details`, detail)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  createOrderDetailsBulk(
+    Ma_don_mua: string,
+    details: Array<Pick<iOrderDetail, 'Ma_san_pham' | 'Don_gia' | 'So_luong'>>,
+  ): Observable<{ message: string; order_details: iOrderDetail[] }> {
+    return this.http
+      .post<{ message: string; order_details: iOrderDetail[] }>(`${baseUrl}/order_details/bulk`, {
+        Ma_don_mua,
+        details,
+      })
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Modal } from '../../../components/modal/modal';
 import { Order } from '../../../services/order';
 import { Client} from '../../../services/client';
 import { Order_Details } from '../../../services/order_details';
 import { Product } from '../../../services/product';
-import { Orders } from '../orders/orders';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { iOrder } from '../../../interfaces/order';
+import { iClient } from '../../../interfaces/client';
 
 @Component({
   selector: 'app-order-detail',
@@ -24,6 +23,9 @@ export class OrderDetail implements OnInit {
   userId: string = '';
   orderDetails: any[] = [];
   productInfo: any = null;
+  customerName = 'Khách hàng';
+  customerPhone = 'Chưa có';
+  customerAddress = 'Chưa có';
   
   constructor(
     private orderService: Order,
@@ -45,6 +47,8 @@ export class OrderDetail implements OnInit {
       next: (data) => {
         this.orderInfo = data;
         console.log('Order info:', this.orderInfo);
+
+        this.resolveCustomerInfo(this.orderInfo as iOrder, undefined);
         
         // Load customer info after order is loaded
         if (this.orderInfo.Ma_khach_hang) {
@@ -66,6 +70,9 @@ export class OrderDetail implements OnInit {
     this.clientService.getClientById(userID).subscribe({
       next: (data) => {
         this.userInfo = data;
+          if (this.orderInfo) {
+            this.resolveCustomerInfo(this.orderInfo as iOrder, this.userInfo as iClient);
+          }
       },
       error: (err) => {
         console.error('Error loading user info:', err);
@@ -128,6 +135,133 @@ export class OrderDetail implements OnInit {
 
   getTotalProducts(): number {
     return this.orderDetails.reduce((sum, item) => sum + item.So_luong, 0);
+  }
+
+  private resolveCustomerInfo(order: iOrder, client?: iClient): void {
+    const shippingInfo = order.Thong_tin_giao_hang;
+    const guestInfo = order.Thong_tin_khach_vang_lai;
+    const isGuestOrder = !order.Ma_khach_hang;
+
+    const shippingName = (shippingInfo?.Ho_ten_nguoi_nhan || '').trim();
+    const shippingPhone = (shippingInfo?.So_dien_thoai_nguoi_nhan || '').trim();
+
+    const guestName = (guestInfo?.Ho_va_ten || '').trim();
+    const guestPhone = (guestInfo?.So_dien_thoai || '').trim();
+
+    const shippingAddress = this.composeAddressFrom4Parts(
+      shippingInfo?.Dia_chi_cu_the,
+      shippingInfo?.Phuong_xa,
+      shippingInfo?.Quan_huyen,
+      shippingInfo?.Tinh_thanh,
+    );
+
+    const guestAddress = this.composeAddressFrom4Parts(
+      guestInfo?.Dia_chi_cu_the,
+      guestInfo?.Phuong_xa,
+      guestInfo?.Quan_huyen,
+      guestInfo?.Tinh_thanh,
+    );
+
+    const clientAddress = this.resolveAddress(client?.Dia_chi);
+    const finalAddress = this.resolveAddress(
+      shippingAddress,
+      guestAddress,
+      order.Dia_chi,
+      clientAddress,
+    );
+
+    if (isGuestOrder && (guestName || guestPhone || finalAddress)) {
+      this.customerName = guestName || shippingName || 'Khách hàng';
+      this.customerPhone = guestPhone || shippingPhone || 'Chưa có';
+      this.customerAddress = finalAddress || 'Chưa có';
+      return;
+    }
+
+    if (shippingName || shippingPhone || finalAddress) {
+      this.customerName = shippingName || client?.Ho_va_ten || 'Khách hàng';
+      this.customerPhone = shippingPhone || client?.So_dien_thoai || 'Chưa có';
+      this.customerAddress = finalAddress || 'Chưa có';
+      return;
+    }
+
+    if (client) {
+      this.customerName = client.Ho_va_ten || 'Khách hàng';
+      this.customerPhone = client.So_dien_thoai || 'Chưa có';
+      this.customerAddress = finalAddress || 'Chưa có';
+      return;
+    }
+
+    this.customerName = guestName || 'Khách hàng';
+    this.customerPhone = guestPhone || 'Chưa có';
+    this.customerAddress = finalAddress || 'Chưa có';
+  }
+
+  private composeAddressFrom4Parts(
+    detail?: string,
+    ward?: string,
+    district?: string,
+    province?: string,
+  ): string {
+    return [detail, ward, district, province]
+      .map((part) => (part || '').trim())
+      .filter((part) => part.length > 0)
+      .join(', ');
+  }
+
+  private resolveAddress(...candidates: unknown[]): string {
+    for (const candidate of candidates) {
+      const resolved = this.stringifyAddress(candidate);
+      if (resolved) {
+        return resolved;
+      }
+    }
+    return '';
+  }
+
+  private stringifyAddress(value: unknown): string {
+    if (!value) {
+      return '';
+    }
+
+    if (typeof value === 'string') {
+      return value.trim();
+    }
+
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        const resolved = this.stringifyAddress(item);
+        if (resolved) {
+          return resolved;
+        }
+      }
+      return '';
+    }
+
+    if (typeof value === 'object') {
+      const record = value as Record<string, unknown>;
+      const direct =
+        this.stringifyAddress(record['Dia_chi']) ||
+        this.stringifyAddress(record['Dia_chi_cu_the']) ||
+        this.stringifyAddress(record['DetailAddress']) ||
+        this.stringifyAddress(record['address']);
+
+      if (direct) {
+        return direct;
+      }
+
+      const composed = [
+        this.stringifyAddress(record['DetailAddress']),
+        this.stringifyAddress(record['Ward']),
+        this.stringifyAddress(record['District']),
+        this.stringifyAddress(record['Province']),
+      ].filter(Boolean);
+
+      if (composed.length > 0) {
+        return composed.join(', ');
+      }
+    }
+
+    return '';
   }
 
   confirmReceived(): void {

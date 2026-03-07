@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Login } from '../../pages/auth/login/login';
 import { Register } from '../../pages/auth/register/register';
 import { Modal } from '../modal/modal';
@@ -12,10 +14,13 @@ import { VerifyAccount } from '../../pages/auth/verify-account/verify-account';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header implements OnInit, AfterViewInit {
+export class Header implements OnInit, AfterViewInit, OnDestroy {
   displayName = 'Tài khoản';
   isLoggedIn = false;
   isOverHero = false;
+  private routeSubscription?: Subscription;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.refreshDisplayName();
@@ -26,12 +31,25 @@ export class Header implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.updateHeroState());
+    this.scheduleHeroStateUpdate();
+
+    this.routeSubscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => this.scheduleHeroStateUpdate());
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
   }
 
   @HostListener('window:scroll')
   @HostListener('window:resize')
   onWindowChange(): void {
+    this.updateHeroState();
+  }
+
+  @HostListener('window:load')
+  onWindowLoad(): void {
     this.updateHeroState();
   }
 
@@ -46,6 +64,11 @@ export class Header implements OnInit, AfterViewInit {
   }
 
   private updateHeroState(): void {
+    if (!document.body.classList.contains('homepage')) {
+      this.isOverHero = false;
+      return;
+    }
+
     const heroBottom = this.getHeroBottom();
     if (heroBottom === null) {
       this.isOverHero = false;
@@ -81,5 +104,10 @@ export class Header implements OnInit, AfterViewInit {
   private getHeaderHeight(): number {
     const header = document.querySelector('.header-scale') as HTMLElement | null;
     return header ? header.getBoundingClientRect().height : 0;
+  }
+
+  private scheduleHeroStateUpdate(): void {
+    requestAnimationFrame(() => this.updateHeroState());
+    setTimeout(() => this.updateHeroState(), 0);
   }
 }

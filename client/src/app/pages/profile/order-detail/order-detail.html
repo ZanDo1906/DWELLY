@@ -21,7 +21,7 @@
     <div class="col-lg-6">
 
       <!-- Address -->
-      <div class="card box" *ngIf="userInfo">
+      <div class="card box">
         <div class="box-title" >
           <div class="title"><i class="bi bi-geo-alt"></i> Địa chỉ nhận hàng</div>
 
@@ -33,10 +33,10 @@
         </div>
 
         <p class="fw-semibold mb-1">
-          {{userInfo.Ho_va_ten}} - {{userInfo.So_dien_thoai}}
+          {{ customerName }} - {{ customerPhone }}
         </p>
         <p class="text-muted">
-          {{orderInfo.Dia_chi}}
+          {{ customerAddress }}
         </p>
       </div>
 

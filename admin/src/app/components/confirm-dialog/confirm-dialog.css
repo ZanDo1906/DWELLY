@@ -53,17 +53,23 @@
 }
 
 /* BODY */
+.confirm-modal .modal-body {
+  padding: 20px 24px 24px;
+}
+
 .confirm-message {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 16px;
   color: #373737;
-  margin-bottom: 30px;
+  margin: 0 0 18px;
 }
 
 .confirm-actions {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 /* BUTTONS */
@@ -81,7 +87,8 @@
 }
 
 .btn-confirm {
-  padding: 8px 22px;
+  min-width: 140px;
+  padding: 9px 22px;
   border-radius: 8px;
   border: none;
   background: #6F5A46;

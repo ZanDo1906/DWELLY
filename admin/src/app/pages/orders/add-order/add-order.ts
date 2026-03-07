@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HostListener } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
+import { Order as OrderService } from '../../../services/order';
+import { Order_Details as OrderDetailsService } from '../../../services/order_details';
+import { forkJoin } from 'rxjs';
 
 interface Room {
   Ma_loai_phong: string;
@@ -40,9 +45,26 @@ interface Voucher {
   Trang_thai: boolean;
 }
 
+interface WardUnit {
+  code: number;
+  name: string;
+}
+
+interface DistrictUnit {
+  code: number;
+  name: string;
+  wards: WardUnit[];
+}
+
+interface ProvinceUnit {
+  code: number;
+  name: string;
+  districts: DistrictUnit[];
+}
+
 @Component({
   selector: 'app-add-order',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink, ConfirmDialogComponent],
   templateUrl: './add-order.html',
   styleUrl: './add-order.css',
 })
@@ -58,11 +80,69 @@ export class AddOrder implements OnInit {
   private products: Product[] = [];
   private vouchers: Voucher[] = [];
   showStatusDropdown = false;
+  paymentMode: 'deposit' | 'full' = 'deposit';
+  isLoadingLocations = false;
+  provinces: ProvinceUnit[] = [];
+  districts: DistrictUnit[] = [];
+  wards: WardUnit[] = [];
+  selectedProvinceCode = '';
+  selectedDistrictCode = '';
+  selectedWardCode = '';
+  customerName = '';
+  customerPhone = '';
+  customerEmail = '';
+  shippingDetailAddress = '';
+  orderNote = '';
+  showCreateConfirm = false;
+  isSavingOrder = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private orderService: OrderService,
+    private orderDetailsService: OrderDetailsService,
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
+    this.loadAdministrativeData();
+  }
+
+  private loadAdministrativeData(): void {
+    this.isLoadingLocations = true;
+
+    this.http.get<ProvinceUnit[]>('https://provinces.open-api.vn/api/?depth=3').subscribe({
+      next: (response) => {
+        this.provinces = [...response].sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+        this.isLoadingLocations = false;
+      },
+      error: (err) => {
+        console.error('Error loading administrative data:', err);
+        this.provinces = [];
+        this.districts = [];
+        this.wards = [];
+        this.isLoadingLocations = false;
+      }
+    });
+  }
+
+  onProvinceChange(): void {
+    const selectedProvince = this.provinces.find(
+      (item) => String(item.code) === String(this.selectedProvinceCode)
+    );
+
+    this.districts = selectedProvince?.districts || [];
+    this.selectedDistrictCode = '';
+    this.selectedWardCode = '';
+    this.wards = [];
+  }
+
+  onDistrictChange(): void {
+    const selectedDistrict = this.districts.find(
+      (item) => String(item.code) === String(this.selectedDistrictCode)
+    );
+
+    this.wards = selectedDistrict?.wards || [];
+    this.selectedWardCode = '';
   }
 
   private loadData(): void {
@@ -204,6 +284,181 @@ export class AddOrder implements OnInit {
     }
 
     this.appliedVoucher = matchedVoucher;
+  }
+
+  getSubtotal(): number {
+    return this.cartItems.reduce((sum, item) => {
+      const price = Number(item.product?.Gia_ban || 0);
+      const qty = Number(item.quantity || 0);
+      return sum + price * qty;
+    }, 0);
+  }
+
+  getShippingFee(): number {
+    return this.shippingMethod === 'fast' ? 100000 : 0;
+  }
+
+  getDiscountPercent(): number {
+    return Number(this.appliedVoucher?.Phan_tram_giam || 0);
+  }
+
+  getDiscountAmount(): number {
+    const subtotal = this.getSubtotal();
+    const percent = this.getDiscountPercent();
+    return Math.round((subtotal * percent) / 100);
+  }
+
+  getGrandTotal(): number {
+    const total = this.getSubtotal() + this.getShippingFee() - this.getDiscountAmount();
+    return Math.max(0, Math.round(total));
+  }
+
+  getDepositAmount(): number {
+    return Math.round(this.getGrandTotal() * 0.3);
+  }
+
+  getTotalProducts(): number {
+    return this.cartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+  }
+
+  canCreateOrder(): boolean {
+    const hasProducts = this.cartItems.length > 0;
+    const hasName = this.customerName.trim().length >= 2;
+    const hasValidPhone = this.isValidPhone(this.customerPhone);
+    const hasValidEmail = this.isValidEmail(this.customerEmail);
+    const hasFullAddress =
+      this.selectedProvinceCode !== '' &&
+      this.selectedDistrictCode !== '' &&
+      this.selectedWardCode !== '' &&
+      this.shippingDetailAddress.trim().length > 0;
+
+    return hasProducts && hasName && hasValidPhone && hasValidEmail && hasFullAddress;
+  }
+
+  openCreateConfirm(): void {
+    if (!this.canCreateOrder()) {
+      alert('Vui lòng chọn sản phẩm và nhập đầy đủ thông tin giao hàng hợp lệ trước khi tạo đơn hàng.');
+      return;
+    }
+
+    this.showCreateConfirm = true;
+  }
+
+  closeCreateConfirm(): void {
+    this.showCreateConfirm = false;
+  }
+
+  onConfirmCreateOrder(): void {
+    if (!this.canCreateOrder() || this.isSavingOrder) {
+      this.showCreateConfirm = false;
+      return;
+    }
+
+    this.isSavingOrder = true;
+
+    const provinceName = this.provinces.find(
+      (item) => String(item.code) === String(this.selectedProvinceCode)
+    )?.name || '';
+    const districtName = this.districts.find(
+      (item) => String(item.code) === String(this.selectedDistrictCode)
+    )?.name || '';
+    const wardName = this.wards.find(
+      (item) => String(item.code) === String(this.selectedWardCode)
+    )?.name || '';
+
+    const orderPayload = {
+      Ma_khach_hang: undefined,
+      Thong_tin_giao_hang: undefined,
+      Thong_tin_khach_vang_lai: {
+        Ho_va_ten: this.customerName.trim(),
+        So_dien_thoai: this.customerPhone.trim(),
+        Email: this.customerEmail.trim(),
+        Tinh_thanh: provinceName,
+        Quan_huyen: districtName,
+        Phuong_xa: wardName,
+        Dia_chi_cu_the: this.shippingDetailAddress.trim(),
+      },
+      Tong_tien: this.getGrandTotal(),
+      Hinh_thuc_thanh_toan: this.paymentMode === 'deposit' ? 'Đặt cọc' : 'Thanh toán toàn bộ',
+      Trang_thai: 'Chờ duyệt',
+      Ma_khuyen_mai: this.appliedVoucher?.Ma_so || undefined,
+      Phi_van_chuyen: this.getShippingFee(),
+      Ghi_chu: this.orderNote.trim(),
+      Ngay_dat: new Date(),
+    };
+
+    this.orderService.createOrder(orderPayload).subscribe({
+      next: (orderResponse) => {
+        const orderCode = orderResponse?.order?.Ma_don_mua;
+        if (!orderCode) {
+          this.isSavingOrder = false;
+          this.showCreateConfirm = false;
+          alert('Không nhận được mã đơn hàng sau khi tạo.');
+          return;
+        }
+
+        const detailPayload = this.cartItems
+          .filter((item) => item.product?.Ma_san_pham && Number(item.quantity || 0) > 0)
+          .map((item) => ({
+          Ma_san_pham: item.product.Ma_san_pham,
+          Don_gia: Number(item.product.Gia_ban || 0),
+          So_luong: Number(item.quantity || 0),
+        }));
+
+        if (detailPayload.length === 0) {
+          this.isSavingOrder = false;
+          this.showCreateConfirm = false;
+          alert('Đơn hàng đã tạo nhưng chưa có sản phẩm hợp lệ để lưu chi tiết đơn hàng.');
+          return;
+        }
+
+        this.orderDetailsService.createOrderDetailsBulk(orderCode, detailPayload).subscribe({
+          next: () => {
+            this.isSavingOrder = false;
+            this.showCreateConfirm = false;
+            alert(`Tạo đơn hàng ${orderCode} thành công.`);
+          },
+          error: () => {
+            const fallbackRequests = detailPayload.map((detail) =>
+              this.orderDetailsService.createOrderDetail({
+                Ma_don_mua: orderCode,
+                Ma_san_pham: detail.Ma_san_pham,
+                Don_gia: detail.Don_gia,
+                So_luong: detail.So_luong,
+              })
+            );
+
+            forkJoin(fallbackRequests).subscribe({
+              next: () => {
+                this.isSavingOrder = false;
+                this.showCreateConfirm = false;
+                alert(`Tạo đơn hàng ${orderCode} thành công.`);
+              },
+              error: (fallbackErr) => {
+                this.isSavingOrder = false;
+                this.showCreateConfirm = false;
+                alert(fallbackErr?.error?.message || fallbackErr?.message || 'Tạo chi tiết đơn hàng thất bại');
+              }
+            });
+          }
+        });
+      },
+      error: (err) => {
+        this.isSavingOrder = false;
+        this.showCreateConfirm = false;
+        alert(err?.error?.message || err?.message || 'Tạo đơn hàng thất bại');
+      }
+    });
+  }
+
+  private isValidPhone(value: string): boolean {
+    const phone = String(value || '').trim().replace(/\s+/g, '');
+    return /^(0|\+84)(3|5|7|8|9)\d{8}$/.test(phone);
+  }
+
+  private isValidEmail(value: string): boolean {
+    const email = String(value || '').trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
   toggleStatusDropdown(): void {
