@@ -6,8 +6,24 @@
         "Email": "khoi.nguyen@gmail.com",
         "Mat_khau": "$2b$10$IdlzkDbTkhsIwM3Uc0wQQ.T4dIsw89kvBgkvT.jxju/OasLmX1CPy",
         "Dia_chi": [
-            "123 Nguyễn Trãi, Quận 5, TP. Hồ Chí Minh",
-            "456 Trần Hưng Đạo, Quận 1, TP. Hồ Chí Minh"
+            {
+                "FullName": "Nguyễn Minh Khôi",
+                "Phone": "0987654321",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận 5",
+                "Ward": "Phường 2",
+                "DetailAddress": "123 Nguyễn Trãi",
+                "IsDefault": true
+            },
+            {
+                "FullName": "Nguyễn Minh Khôi",
+                "Phone": "0987654321",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận 1",
+                "Ward": "Phường Cầu Ông Lãnh",
+                "DetailAddress": "456 Trần Hưng Đạo",
+                "IsDefault": false
+            }
         ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
@@ -38,7 +54,35 @@
         "So_dien_thoai": "0912345678",
         "Email": "thuha.tran@gmail.com",
         "Mat_khau": "$2b$10$AAJB0U6CSreD7pUAvN5DLu3gfoDdE/BKd8D7.OLiigrJJLF8J1TM.",
-        "Dia_chi": "45 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
+        "Dia_chi": [
+            {
+                "FullName": "Trần Thị Thu Hà",
+                "Phone": "0912345678",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận 1",
+                "Ward": "Phường Bến Nghé",
+                "DetailAddress": "45 Lê Lợi",
+                "IsDefault": true
+            },
+            {
+                "FullName": "Bé heo",
+                "Phone": "0925762389",
+                "Province": "Tỉnh Tây Ninh",
+                "District": "Huyện Tân Biên",
+                "Ward": "Thị trấn Tân Biên",
+                "DetailAddress": "60, khu phố 5",
+                "IsDefault": false
+            },
+            {
+                "FullName": "Ngọc",
+                "Phone": "0912547823",
+                "Province": "Tỉnh Bến Tre",
+                "District": "Huyện Mỏ Cày Nam",
+                "Ward": "Xã Tân Trung",
+                "DetailAddress": "69, ấp 2",
+                "IsDefault": false
+            }
+        ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-17",
@@ -68,8 +112,24 @@
         "Email": "quocbao.pham@gmail.com",
         "Mat_khau": "$2b$10$qcrR7N6NsZfa1crf7vebc.XGs9Utz62j3Tq0omMRL4gioaEPb8Xl2",
         "Dia_chi": [
-            "78 Hai Bà Trưng, Quận 3, TP. Hồ Chí Minh",
-            "90 Phố Huế, Quận Hoàn Kiếm, Hà Nội"
+            {
+                "FullName": "Phạm Quốc Bảo",
+                "Phone": "0934567890",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận 3",
+                "Ward": "Phường Võ Thị Sáu",
+                "DetailAddress": "78 Hai Bà Trưng",
+                "IsDefault": true
+            },
+            {
+                "FullName": "Phạm Quốc Bảo",
+                "Phone": "0934567890",
+                "Province": "Hà Nội",
+                "District": "Quận Hoàn Kiếm",
+                "Ward": "Phường Trần Hưng Đạo",
+                "DetailAddress": "90 Phố Huế",
+                "IsDefault": false
+            }
         ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
@@ -100,7 +160,17 @@
         "So_dien_thoai": "0909988776",
         "Email": "ngocanh.le@gmail.com",
         "Mat_khau": "$2b$10$NoDKg/Lniagri./fwTQnSu7EcWh6hH8xk6V3wbxInyIFRxOb4Kbpe",
-        "Dia_chi": "12 Phan Văn Trị, Quận Bình Thạnh, TP. Hồ Chí Minh",
+        "Dia_chi": [
+            {
+                "FullName": "Lê Ngọc Anh",
+                "Phone": "0909988776",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận Bình Thạnh",
+                "Ward": "Phường 11",
+                "DetailAddress": "12 Phan Văn Trị",
+                "IsDefault": true
+            }
+        ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2025-01-14",
@@ -127,7 +197,17 @@
         "So_dien_thoai": "0978123456",
         "Email": "thanhdat.vo@gmail.com",
         "Mat_khau": "$2b$10$QtDZkNdFpMvy6M2qizOv2u6mpqzjy2SWq.Cf7evEBRpPPSqbC2BG2",
-        "Dia_chi": "99 Võ Văn Tần, Quận 3, TP. Hồ Chí Minh",
+        "Dia_chi": [
+            {
+                "FullName": "Võ Thành Đạt",
+                "Phone": "0978123456",
+                "Province": "Thành phố Hồ Chí Minh",
+                "District": "Quận 3",
+                "Ward": "Phường Võ Thị Sáu",
+                "DetailAddress": "99 Võ Văn Tần",
+                "IsDefault": true
+            }
+        ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-06-14",
@@ -157,7 +237,17 @@
         "So_dien_thoai": "0963456789",
         "Email": "bichngoc.nguyen@gmail.com",
         "Mat_khau": "$2b$10$oYFt9pWw3T37O/zR7drNeu.AyvhId9UJG7za9uZ4R6Lw/gmXijyeG",
-        "Dia_chi": "56 Lý Thường Kiệt, Quận Hải Châu, Cần Thơ",
+        "Dia_chi": [
+            {
+                "FullName": "Nguyễn Thị Bích Ngọc",
+                "Phone": "0963456789",
+                "Province": "Đà Nẵng",
+                "District": "Quận Hải Châu",
+                "Ward": "Phường Thạch Thang",
+                "DetailAddress": "56 Lý Thường Kiệt",
+                "IsDefault": true
+            }
+        ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-06",
@@ -185,7 +275,17 @@
         "So_dien_thoai": "0976543210",
         "Email": "vanhung.tran@gmail.com",
         "Mat_khau": "$2b$10$8pETrx.Bb67XzIz0z1ifgus7mc473CNA0VwOtW0KQvepZ/OhZ575m",
-        "Dia_chi": "102 Nguyễn Văn Linh, Quận Hải Châu, Đà Nẵng",
+        "Dia_chi": [
+            {
+                "FullName": "Trần Văn Hùng",
+                "Phone": "0976543210",
+                "Province": "Đà Nẵng",
+                "District": "Quận Hải Châu",
+                "Ward": "Phường Bình Hiên",
+                "DetailAddress": "102 Nguyễn Văn Linh",
+                "IsDefault": true
+            }
+        ],
         "Trang_thai": true,
         "Anh_dai_dien": "assets/images/avt/avt_client.png",
         "Ngay_tao": "2026-01-10",
