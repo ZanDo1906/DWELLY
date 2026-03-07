@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Table } from '../../../components/table/table';
+import { Blog as BlogService } from '../../../services/blog';
+import { iBlog } from '../../../interfaces/blog';
 
 interface Blog {
-  id: number;
+  id: string;
   code: string;
   title: string;
   date: string;
   author: string;
-  status: 'published' | 'draft' | 'hidden';
+  status: 'published' | 'draft';
   views: number;
   selected?: boolean;
+  _id?: string;
 }
 
 @Component({
@@ -21,21 +24,38 @@ interface Blog {
   templateUrl: './blog-list.html',
   styleUrl: './blog-list.css',
 })
-export class BlogList {
+export class BlogList implements OnInit {
   pageSize = 10;
   currentPage = 1;
 
-  blogs: Blog[] = [
-    { id: 1, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/10/2026', author: 'Quyen Nguyen', status: 'published', views: 1820, selected: false },
-    { id: 2, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '10/01/2026', author: 'Quyen Nguyen', status: 'draft', views: 1820, selected: false },
-    { id: 3, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '10/01/2026', author: 'Quyen Nguyen', status: 'draft', views: 1820, selected: true },
-    { id: 4, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '10/01/2026', author: 'Quyen Nguyen', status: 'draft', views: 1820, selected: false },
-    { id: 5, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/01/2026', author: 'Quyen Nguyen', status: 'draft', views: 1820, selected: true },
-    { id: 6, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/01/2026', author: 'Quyen Nguyen', status: 'hidden', views: 568, selected: false },
-    { id: 7, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/01/2026', author: 'Quyen Nguyen', status: 'published', views: 112, selected: false },
-    { id: 8, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/01/2026', author: 'Quyen Nguyen', status: 'hidden', views: 1200, selected: false },
-    { id: 9, code: 'B01', title: '3 cách vệ sinh sofa nỉ tại nhà', date: '20/01/2026', author: 'Quyen Nguyen', status: 'published', views: 180, selected: true },
-  ];
+  blogs: Blog[] = [];
+
+  constructor(private blogService: BlogService) {}
+
+  ngOnInit(): void {
+    this.loadBlogs();
+  }
+
+  loadBlogs(): void {
+    this.blogService.getBlogData().subscribe({
+      next: (data: iBlog[]) => {
+        this.blogs = data.map(blog => ({
+          id: blog.Ma_bai_viet,
+          _id: (blog as any)._id,
+          code: blog.Ma_bai_viet,
+          title: blog.Tieu_de,
+          date: new Date(blog.Ngay_tao).toLocaleDateString('vi-VN'),
+          author: blog.Ma_quan_tri_vien,
+          status: blog.Trang_thai ? 'published' : 'draft',
+          views: 0, 
+          selected: false
+        }));
+      },
+      error: (err) => {
+        console.error('Error loading blogs:', err);
+      }
+    });
+  }
 
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.blogs.length / this.pageSize));
@@ -57,8 +77,7 @@ export class BlogList {
   getStatusLabel(status: string): string {
     const labels: {[key: string]: string} = {
       'published': 'Đã đăng',
-      'draft': 'Nháp',
-      'hidden': 'Đã ẩn'
+      'draft': 'Nháp'
     };
     return labels[status] || status;
   }

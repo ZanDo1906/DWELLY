@@ -7,7 +7,7 @@
         <div class="page-header">
           <h2 class="page-title">Quản lý Blogs</h2>
 
-          <button class="add-btn" routerLink="/blogs/new">
+          <button class="add-btn" routerLink="/blog">
             <i class="bi bi-plus-circle"></i>
             THÊM BÀI VIẾT
           </button>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="filter-group">
-            <span class="filter-label">xxx đã chọn</span>
+            <span class="filter-label">{{ selectedCount }} đã chọn</span>
             
             <button class="filter-btn active">
               <i class="bi bi-check2"></i>
@@ -38,7 +38,6 @@
               <option>Tất cả trạng thái</option>
               <option>Đã đăng</option>
               <option>Nháp</option>
-              <option>Đã ẩn</option>
             </select>
 
             <button class="delete-btn">
@@ -89,7 +88,7 @@
               <td>{{ blog.views }}</td>
               <td>
                 <div class="action-buttons">
-                  <button class="action-btn edit-btn" [routerLink]="['/blogs/edit', blog.id]" title="Chỉnh sửa">
+                  <button class="action-btn edit-btn" [routerLink]="['/blog', blog.code]" title="Chỉnh sửa">
                     <i class="bi bi-pencil"></i>
                   </button>
                   <button class="action-btn delete-btn" title="Xóa">

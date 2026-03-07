@@ -1,199 +1,57 @@
-<section>
-  <div class="container-fluid py-4">
-    <div class="padding-x">
-      <div class="site-inner blog-form-page">
+<div class="blog-detail-page" *ngIf="!isLoading && blog">
+  <!-- BACK TO EDIT BUTTON -->
+  <div class="back-to-edit">
+    <button class="btn-back-edit" (click)="backToEdit()">
+      <i class="bi bi-pencil-square"></i> Quay lại chỉnh sửa
+    </button>
+  </div>
 
-        <!-- HEADER -->
-        <div class="page-header">
-          <div class="header-content">
-            <h2 class="page-title">Quản lý Blogs</h2>
-            <div class="breadcrumb">
-              <a routerLink="/blogs" class="breadcrumb-link">Tất cả bài viết</a>
-              <span class="separator">/</span>
-              <span class="current">{{ isEditMode ? 'Chỉnh sửa bài viết' : 'Chi tiết bài viết' }}</span>
+  <!-- HERO SECTION -->
+  <div class="blog-hero">
+    <img [src]="blog.Hinh_anh" [alt]="blog.Tieu_de" class="hero-image" />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <!-- CONTENT SECTION -->
+  <div class="container-fluid py-5">
+    <div class="px-4">
+      <div class="site-inner">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <!-- TITLE -->
+            <h1 class="blog-title">{{ blog.Tieu_de }}</h1>
+
+            <!-- META INFO -->
+            <div class="blog-meta">
+              <span class="meta-date">{{ blog.Ngay_tao | date: 'dd/MM/yyyy' }}</span>
             </div>
-          </div>
-          <button class="add-btn" routerLink="/blogs/new" *ngIf="isEditMode">
-            <i class="bi bi-plus-circle"></i>
-            THÊM BÀI VIẾT
-          </button>
-        </div>
 
-        <div class="form-container">
+            <!-- BLOG CONTENT -->
+            <div class="blog-content">
+              <ng-container *ngFor="let item of blog.Noi_dung">
+                <!-- TEXT CONTENT -->
+                <p *ngIf="item.Loai === 'text'" class="content-text">{{ item.Noi_dung }}</p>
+
+                <!-- IMAGE CONTENT -->
+                <figure *ngIf="item.Loai === 'image'" class="content-image">
+                  <img [src]="item.Url" [alt]="item.Mo_ta" />
+                  <figcaption *ngIf="item.Mo_ta">{{ item.Mo_ta }}</figcaption>
+                </figure>
+              </ng-container>
+            </div>
+
+            <!-- AUTHOR SIGNATURE -->
+            <div class="author-signature">
+              <p>DWELLY</p>
+            </div>
+
           
-          <!-- Single Form Box -->
-          <div class="form-box">
-            
-            <!-- Top Header Section -->
-            <div class="top-header">
-              <div class="author-section">
-                <img [src]="authorAvatar" alt="Author" class="author-avatar" />
-                <div class="author-info">
-                  <h3 class="author-name">{{ authorName }}</h3>
-                  <div class="info-text">Ngày đăng: {{ publishDate }}</div>
-                  <div class="info-text">Trạng thái: <span class="status-badge" [ngClass]="status">{{ getStatusLabel(status) }}</span></div>
-                </div>
-              </div>
-
-              <div class="right-section">
-                <button class="save-btn" (click)="saveBlog()">
-                  Lưu
-                </button>
-                <div class="blog-id-text">
-                  Mã bài viết: <strong>{{ blogCode }}</strong>
-                </div>
-              </div>
-            </div>
-
-          <!-- Form Fields -->
-          <div class="form-section">
-            
-            <!-- Tiêu đề -->
-            <div class="form-group">
-              <label class="form-label">Tiêu đề</label>
-              
-              <div class="editor-wrapper">
-                <div class="editor-toolbar">
-                  <button type="button" class="toolbar-btn add-media-btn" (click)="addMedia('title')" title="Add Media">
-                    <i class="bi bi-image"></i> Add Media
-                  </button>
-                  <div class="toolbar-spacer"></div>
-                  <button type="button" 
-                          class="toolbar-tab" 
-                          [class.active]="titleEditorMode === 'text'"
-                          (click)="titleEditorMode = 'text'">Text</button>
-                  <button type="button" 
-                          class="toolbar-tab" 
-                          [class.active]="titleEditorMode === 'visual'"
-                          (click)="titleEditorMode = 'visual'">Visual</button>
-                </div>
-                
-                <div class="editor-box">
-                  <!-- Text Mode - Input HTML/Content -->
-                  <div *ngIf="titleEditorMode === 'text'" class="text-editor">
-                    <div class="editor-controls">
-                      <div class="control-group">
-                        <label class="control-label">Format:</label>
-                        <button type="button" class="quick-btn" (click)="quickInsert('b', 'title')" title="In đậm"><i class="bi bi-type-bold"></i> Đậm</button>
-                        <button type="button" class="quick-btn" (click)="quickInsert('i', 'title')" title="In nghiêng"><i class="bi bi-type-italic"></i> Nghiêng</button>
-                      </div>
-                    </div>
-                    <textarea 
-                      class="editor-textarea"
-                      [(ngModel)]="titleContent"
-                      (ngModelChange)="updatePreview('title')"
-                      placeholder="Nhập tiêu đề blog của bạn...&#10;&#10;Dùng nút Đậm/Nghiêng để format chữ nếu cần."
-                      rows="4"></textarea>
-                    <div class="helper-text">
-                      <i class="bi bi-info-circle"></i>
-                      Nhập tiêu đề trực tiếp. Chọn text và dùng nút <strong>Đậm</strong> hoặc <strong>Nghiêng</strong> để làm nổi bật.
-                    </div>
-                  </div>
-                  
-                  <!-- Visual Mode - Preview as Client Blog -->
-                  <div *ngIf="titleEditorMode === 'visual'" class="visual-preview">
-                    <div class="preview-label">
-                      <i class="bi bi-eye"></i> Preview - Hiển thị như blog khách hàng
-                    </div>
-                    <div class="blog-preview" [innerHTML]="titleContentHtml | sanitizeHtml"></div>
-                  </div>
-                  
-                  <div class="editor-footer">
-                    <span class="word-count">Word count: {{ getWordCount(titleContent) }}</span>
-                    <span class="last-edited">Last edited on {{ lastEditedDate }}</span>
-                  </div>
-                  
-                  <button type="button" class="fullscreen-btn" (click)="toggleFullscreen('title')" title="Fullscreen">
-                    <i class="bi bi-arrows-fullscreen"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Nội dung -->
-            <div class="form-group">
-              <label class="form-label">Nội dung</label>
-              
-              <div class="editor-wrapper">
-                <div class="editor-toolbar">
-                  <button type="button" class="toolbar-btn add-media-btn" (click)="addMedia('content')" title="Add Media">
-                    <i class="bi bi-image"></i> Add Media
-                  </button>
-                  <div class="toolbar-spacer"></div>
-                  <button type="button" 
-                          class="toolbar-tab" 
-                          [class.active]="contentEditorMode === 'text'"
-                          (click)="contentEditorMode = 'text'">Text</button>
-                  <button type="button" 
-                          class="toolbar-tab" 
-                          [class.active]="contentEditorMode === 'visual'"
-                          (click)="contentEditorMode = 'visual'">Visual</button>
-                </div>
-                
-                <div class="editor-box content-editor">
-                  <!-- Text Mode - Input HTML/Content -->
-                  <div *ngIf="contentEditorMode === 'text'" class="text-editor">
-                    <div class="editor-controls">
-                      <div class="control-group">
-                        <label class="control-label">Định dạng:</label>
-                        <button type="button" class="quick-btn" (click)="quickInsert('p', 'content')" title="Đoạn văn"><i class="bi bi-text-paragraph"></i> Đoạn văn</button>
-                        <button type="button" class="quick-btn" (click)="quickInsert('b', 'content')" title="In đậm"><i class="bi bi-type-bold"></i> Đậm</button>
-                        <button type="button" class="quick-btn" (click)="quickInsert('i', 'content')" title="In nghiêng"><i class="bi bi-type-italic"></i> Nghiêng</button>
-                      </div>
-                      <div class="toolbar-divider"></div>
-                      <div class="control-group">
-                        <label class="control-label">Danh sách:</label>
-                        <button type="button" class="quick-btn" (click)="quickInsert('ul', 'content')" title="Danh sách gạch đầu dòng"><i class="bi bi-list-ul"></i> Dấu đầu</button>
-                        <button type="button" class="quick-btn" (click)="quickInsert('ol', 'content')" title="Danh sách số thứ tự"><i class="bi bi-list-ol"></i> Số</button>
-                      </div>
-                      <div class="toolbar-divider"></div>
-                      <button type="button" class="quick-btn" (click)="quickInsertLink('content')" title="Thêm link"><i class="bi bi-link-45deg"></i> Link</button>
-                    </div>
-                    <textarea 
-                      class="editor-textarea content-textarea"
-                      [(ngModel)]="contentText"
-                      (ngModelChange)="updatePreview('content')"
-                      placeholder="Viết nội dung blog của bạn...&#10;&#10;Mẹo: Sử dụng các nút bên trên để:&#10;- Tạo đoạn văn mới&#10;- Định dạng chữ (đậm, nghiêng)&#10;- Thêm danh sách&#10;- Thêm link&#10;&#10;Dùng nút 'Add Media' ở trên để thêm hình ảnh!"
-                      rows="12"></textarea>
-                    <div class="helper-text">
-                      <i class="bi bi-lightbulb"></i>
-                      <strong>Hướng dẫn:</strong>
-                      <ol class="helper-steps">
-                        <li>Nhập nội dung trực tiếp vào khung text</li>
-                        <li>Chọn text và nhấn "Đậm" hoặc "Nghiêng" để format</li>
-                        <li>Nhấn "Đoạn văn" để tạo đoạn mới với khoảng cách đẹp</li>
-                        <li>Chuyển sang tab "Visual" để xem kết quả!</li>
-                      </ol>
-                    </div>
-                  </div>
-                  
-                  <!-- Visual Mode - Preview as Client Blog -->
-                  <div *ngIf="contentEditorMode === 'visual'" class="visual-preview">
-                    <div class="preview-label">
-                      <i class="bi bi-eye"></i> Preview - Hiển thị như blog khách hàng
-                    </div>
-                    <div class="blog-preview blog-content" [innerHTML]="contentTextHtml | sanitizeHtml"></div>
-                  </div>
-                  
-                  <div class="editor-footer">
-                    <span class="word-count">Word count: {{ getWordCount(contentText) }}</span>
-                    <span class="last-edited">Last edited on {{ lastEditedDate }}</span>
-                  </div>
-                  
-                  <button type="button" class="fullscreen-btn" (click)="toggleFullscreen('content')" title="Fullscreen">
-                    <i class="bi bi-arrows-fullscreen"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
           </div>
-
-          </div><!-- .form-box -->
-
         </div>
-
       </div>
     </div>
   </div>
-</section>
+
+  <!-- RELATED POSTS SECTION -->
+
+</div>
