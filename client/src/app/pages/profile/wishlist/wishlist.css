@@ -94,6 +94,15 @@
   color: #fff;
 }
 
+.sort-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.sort-btn.active i {
+  color: #fff;
+}
+
 .wishlist-list {
   display: flex;
   flex-direction: column;

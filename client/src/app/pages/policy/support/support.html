@@ -229,13 +229,28 @@
               <input type="text"
                     formControlName="fullName"
                     placeholder="Nhập họ và tên">
+              <div class="form-error" *ngIf="fullName.touched && fullName.invalid">
+                <small *ngIf="fullName.errors?.['required']">Vui lòng nhập họ và tên</small>
+              </div>
             </div>
-
+            <div class="form-group">
+               <label>Số điện thoại</label>
+              <input type="text"
+                    formControlName="phone"
+                    placeholder="Nhập số điện thoại">
+              <div class="form-error" *ngIf="phone.touched && phone.invalid">
+                <small *ngIf="phone.errors?.['pattern']">Số điện thoại không hợp lệ</small>
+              </div>
+            </div>
             <div class="form-group">
               <label>Email</label>
               <input type="email"
                     formControlName="email"
                     placeholder="Nhập email">
+              <div class="form-error" *ngIf="email.touched && email.invalid">
+                <small *ngIf="email.errors?.['required']">Vui lòng nhập email</small>
+                <small *ngIf="email.errors?.['email']">Email không hợp lệ</small>
+              </div>
             </div>
 
             <div class="form-group">
@@ -243,6 +258,9 @@
               <textarea rows="4"
                         formControlName="content"
                         placeholder="Nhập nội dung"></textarea>
+              <div class="form-error" *ngIf="content.touched && content.invalid">
+                <small *ngIf="content.errors?.['required']">Vui lòng nhập nội dung</small>
+              </div>
             </div>
 
             <button class="btn-send" type="submit">

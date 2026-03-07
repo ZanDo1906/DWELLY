@@ -1,11 +1,18 @@
-import { Component, ViewChildren, QueryList, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ViewChildren, QueryList, ElementRef, Input, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { iProduct } from '../../../interfaces/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../services/product';
-import Swal from 'sweetalert2';
+import { Category } from '../../../services/category';
+import { Room } from '../../../services/room';
+import { Style } from '../../../services/style';
+import { Concept } from '../../../services/concept';
+import { iCategory } from '../../../interfaces/category';
+import { iRoom } from '../../../interfaces/room';
+import { iStyle } from '../../../interfaces/style';
+import { iConcept } from '../../../interfaces/concept';
 
 @Component({
   selector: 'app-product-form',
@@ -21,7 +28,11 @@ export class ProductForm implements OnInit {
   constructor(
   private route: ActivatedRoute,
   private router: Router,
-  public productService: Product
+  public productService: Product,
+  private categoryService: Category,
+  private roomService: Room,
+  private styleService: Style,
+  private conceptService: Concept
 ) {}
   product: iProduct = {
     Ma_san_pham: '',
@@ -41,14 +52,22 @@ export class ProductForm implements OnInit {
   selectedFiles: File[] = [];
   isEditMode: boolean = false;
   images: (string | null)[] = [null, null, null, null];
+  categories: iCategory[] = [];
+  rooms: iRoom[] = [];
+  styles: iStyle[] = [];
+  concepts: iConcept[] = [];
+  openDropdown: 'category' | 'room' | 'style' | 'concept' | null = null;
 
   async ngOnInit() {
+  this.loadClassificationData();
+
   const id = this.route.snapshot.paramMap.get('id');
   if (id) {
     this.isEditMode = true; 
     this.productService.getProductByCode(id).subscribe({
       next: (data) => {
         this.product = { ...data };
+        this.product.Ma_khong_gian = this.product.Ma_khong_gian || '';
         this.images = this.product.Hinh_anh.length
           ? [...this.product.Hinh_anh]
           : [null, null, null, null];
@@ -61,25 +80,108 @@ export class ProductForm implements OnInit {
     }
   }
 
+  private loadClassificationData(): void {
+    this.categoryService.getCategoryData().subscribe({
+      next: (data) => {
+        this.categories = data || [];
+      },
+      error: (err) => console.error('Lỗi load danh mục', err)
+    });
 
+    this.roomService.getRoomData().subscribe({
+      next: (data) => {
+        this.rooms = data || [];
+      },
+      error: (err) => console.error('Lỗi load loại phòng', err)
+    });
 
-showSuccess(msg: string) {
-  Swal.fire({
-    icon: 'success',
-    title: 'Thành công',
-    text: msg,
-    showConfirmButton: false,
-    timer: 1500
-  });
-}
+    this.styleService.getStyleData().subscribe({
+      next: (data) => {
+        this.styles = data || [];
+      },
+      error: (err) => console.error('Lỗi load phong cách', err)
+    });
 
-showError(msg: string) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Thất bại',
-    text: msg
-  });
-}
+    this.conceptService.getConceptData().subscribe({
+      next: (data) => {
+        this.concepts = data || [];
+      },
+      error: (err) => console.error('Lỗi load concept', err)
+    });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.custom-select')) {
+      this.openDropdown = null;
+    }
+  }
+
+  toggleDropdown(type: 'category' | 'room' | 'style' | 'concept', event: Event): void {
+    event.stopPropagation();
+    this.openDropdown = this.openDropdown === type ? null : type;
+  }
+
+  isDropdownOpen(type: 'category' | 'room' | 'style' | 'concept'): boolean {
+    return this.openDropdown === type;
+  }
+
+  selectCategory(value: string, event: Event): void {
+    event.stopPropagation();
+    this.product.Ma_danh_muc = value;
+    this.openDropdown = null;
+  }
+
+  selectRoom(value: string, event: Event): void {
+    event.stopPropagation();
+    this.product.Ma_loai_phong = value;
+    this.openDropdown = null;
+  }
+
+  selectStyle(value: string, event: Event): void {
+    event.stopPropagation();
+    this.product.Ma_phong_cach = value;
+    this.openDropdown = null;
+  }
+
+  selectConcept(value: string, event: Event): void {
+    event.stopPropagation();
+    this.product.Ma_khong_gian = value;
+    this.openDropdown = null;
+  }
+
+  getCategoryText(): string {
+    if (!this.product.Ma_danh_muc) return 'Chọn mã danh mục';
+    const item = this.categories.find(c => c.Ma_danh_muc === this.product.Ma_danh_muc);
+    return item ? `${item.Ma_danh_muc} - ${item.Ten_danh_muc}` : this.product.Ma_danh_muc;
+  }
+
+  getRoomText(): string {
+    if (!this.product.Ma_loai_phong) return 'Chọn mã loại phòng';
+    const item = this.rooms.find(r => r.Ma_loai_phong === this.product.Ma_loai_phong);
+    return item ? `${item.Ma_loai_phong} - ${item.Ten_loai_phong}` : this.product.Ma_loai_phong;
+  }
+
+  getStyleText(): string {
+    if (!this.product.Ma_phong_cach) return 'Chọn mã phong cách';
+    const item = this.styles.find(s => s.Ma_phong_cach === this.product.Ma_phong_cach);
+    return item ? `${item.Ma_phong_cach} - ${item.Ten_phong_cach}` : this.product.Ma_phong_cach;
+  }
+
+  getConceptText(): string {
+    if (!this.product.Ma_khong_gian) return 'Không concept';
+    const item = this.concepts.find(c => c.Ma_khong_gian === this.product.Ma_khong_gian);
+    return item ? `${item.Ma_khong_gian} - ${item.Ten_khong_gian}` : this.product.Ma_khong_gian;
+  }
+
+  showSuccess(msg: string): void {
+    alert(msg);
+  }
+
+  showError(msg: string): void {
+    alert(msg);
+  }
   
   uploadImages(id: string): void {
   const formData = new FormData();
@@ -172,22 +274,9 @@ removeImage(index: number, event: Event): void {
     return;
   }
 
-  if (!confirm('Bạn có chắc muốn xóa ảnh này?')) return;
-
-  const filename = img.split('/').pop();
-  if (!filename) return;
-
-  this.productService.deleteImage(this.product.Ma_san_pham, filename).subscribe({
-    next: (res) => {
-      this.images.splice(index, 1);
-      this.product.Hinh_anh = res.remainingImages;
-      this.checkAndAddNewPlaceholder();
-    },
-    error: (err) => {
-      console.error(err);
-      this.showError('Lỗi khi xóa ảnh trên server!');
-    }
-  });
+  this.images.splice(index, 1);
+  this.checkAndAddNewPlaceholder();
+  this.showSuccess('Bấm "Lưu sản phẩm" để cập nhật thay đổi!');
 }
 
 
@@ -257,9 +346,6 @@ removeImage(index: number, event: Event): void {
     if (!this.product.Ma_loai_phong)
       missingFields.push('Loại phòng');
 
-    if (!this.product.Ma_khong_gian)
-      missingFields.push('Không gian');
-
     const hasImage = this.images.some(img => img !== null);
     if (!hasImage)
       missingFields.push('Ít nhất 1 hình minh họa');
@@ -280,10 +366,15 @@ removeImage(index: number, event: Event): void {
     this.product.Hinh_anh = this.images
   .filter(img => img && !img.startsWith('data:')) as string[];
 
+    const payload: any = {
+      ...this.product,
+      Ma_khong_gian: this.product.Ma_khong_gian || null
+    };
+
     const idFromUrl = this.route.snapshot.paramMap.get('id');
 
     if (idFromUrl) {
-      this.productService.updateProduct(idFromUrl, this.product).subscribe({
+      this.productService.updateProduct(idFromUrl, payload).subscribe({
         next: () => {
           if (hasNewFiles) {
             this.uploadAfterSave(idFromUrl, formData);
@@ -295,7 +386,7 @@ removeImage(index: number, event: Event): void {
         error: (err) => this.showError('Lỗi cập nhật: ' + err.message)
       });
     } else {
-      this.productService.addProduct(this.product).subscribe({
+      this.productService.addProduct(payload).subscribe({
         next: (res) => {
           const newCode = res.Ma_san_pham; 
           if (hasNewFiles) {
@@ -315,10 +406,8 @@ removeImage(index: number, event: Event): void {
     next: () => {
       this.showSuccess('Lưu sản phẩm và tải ảnh thành công!');
       localStorage.removeItem('dwelly_product_draft');
-      // this.router.navigate(['/product-list']);
-    this.selectedFiles = []; // clear files đã upload
+    this.selectedFiles = []; 
       
-      // Reload lại product để images cập nhật thành path thật
       this.productService.getProductByCode(code).subscribe({
         next: (data) => {
           this.product = { ...data };

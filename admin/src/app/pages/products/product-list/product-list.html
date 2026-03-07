@@ -14,7 +14,12 @@
           <div class="search-wrapper">
             <div class="search-container">
               <i class="bi bi-search search-icon"></i>
-              <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Tìm kiếm" />
+              <input
+                type="text"
+                class="search-input"
+                [value]="searchTerm"
+                (input)="onSearchInput($event)"
+                placeholder="Tìm kiếm" />
             </div>
           </div>
 

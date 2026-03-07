@@ -5,7 +5,7 @@ const Contact = new Scheme({
     Ma_lien_he: { type: String, required: true },              // ObjectId (PK)
     Ho_ten: { type: String, required: true },
     Email: { type: String, required: true },
-    So_dien_thoai: { type: Number, required: true },
+    So_dien_thoai: { type: String },
     Noi_dung: { type: String, required: true },
     Trang_thai: { type: String, required: true },             // VD: "Chưa xử lý", "Đã phản hồi"
     Ngay_gui: { type: Date, default: Date.now },

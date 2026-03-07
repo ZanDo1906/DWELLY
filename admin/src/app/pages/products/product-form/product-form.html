@@ -82,21 +82,85 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Mã danh mục</label>
-                <input type="text" placeholder="Nhập mã danh mục" [(ngModel)]="product.Ma_danh_muc" />
+                <div class="custom-select" [class.open]="isDropdownOpen('category')">
+                  <button type="button" class="custom-select-trigger" (click)="toggleDropdown('category', $event)">
+                    <span class="custom-select-value">{{ getCategoryText() }}</span>
+                    <i class="bi bi-chevron-down custom-select-icon"></i>
+                  </button>
+                  <ul class="custom-select-menu" *ngIf="isDropdownOpen('category')">
+                    <li class="custom-option" [class.active]="!product.Ma_danh_muc" (click)="selectCategory('', $event)">
+                      Chọn mã danh mục
+                    </li>
+                    <li class="custom-option"
+                        *ngFor="let c of categories"
+                        [class.active]="product.Ma_danh_muc === c.Ma_danh_muc"
+                        (click)="selectCategory(c.Ma_danh_muc, $event)">
+                      {{ c.Ma_danh_muc }} - {{ c.Ten_danh_muc }}
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="form-group">
                 <label>Mã loại phòng</label>
-                <input type="text" placeholder="Nhập mã loại phòng" [(ngModel)]="product.Ma_loai_phong" />
+                <div class="custom-select" [class.open]="isDropdownOpen('room')">
+                  <button type="button" class="custom-select-trigger" (click)="toggleDropdown('room', $event)">
+                    <span class="custom-select-value">{{ getRoomText() }}</span>
+                    <i class="bi bi-chevron-down custom-select-icon"></i>
+                  </button>
+                  <ul class="custom-select-menu" *ngIf="isDropdownOpen('room')">
+                    <li class="custom-option" [class.active]="!product.Ma_loai_phong" (click)="selectRoom('', $event)">
+                      Chọn mã loại phòng
+                    </li>
+                    <li class="custom-option"
+                        *ngFor="let r of rooms"
+                        [class.active]="product.Ma_loai_phong === r.Ma_loai_phong"
+                        (click)="selectRoom(r.Ma_loai_phong, $event)">
+                      {{ r.Ma_loai_phong }} - {{ r.Ten_loai_phong }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label>Mã phong cách</label>
-                <input type="text" placeholder="Nhập mã phong cách" [(ngModel)]="product.Ma_phong_cach" />
+                <div class="custom-select" [class.open]="isDropdownOpen('style')">
+                  <button type="button" class="custom-select-trigger" (click)="toggleDropdown('style', $event)">
+                    <span class="custom-select-value">{{ getStyleText() }}</span>
+                    <i class="bi bi-chevron-down custom-select-icon"></i>
+                  </button>
+                  <ul class="custom-select-menu" *ngIf="isDropdownOpen('style')">
+                    <li class="custom-option" [class.active]="!product.Ma_phong_cach" (click)="selectStyle('', $event)">
+                      Chọn mã phong cách
+                    </li>
+                    <li class="custom-option"
+                        *ngFor="let s of styles"
+                        [class.active]="product.Ma_phong_cach === s.Ma_phong_cach"
+                        (click)="selectStyle(s.Ma_phong_cach, $event)">
+                      {{ s.Ma_phong_cach }} - {{ s.Ten_phong_cach }}
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="form-group">
                 <label>Mã không gian</label>
-                <input type="text" placeholder="Nhập mã không gian" [(ngModel)]="product.Ma_khong_gian" />
+                <div class="custom-select" [class.open]="isDropdownOpen('concept')">
+                  <button type="button" class="custom-select-trigger" (click)="toggleDropdown('concept', $event)">
+                    <span class="custom-select-value">{{ getConceptText() }}</span>
+                    <i class="bi bi-chevron-down custom-select-icon"></i>
+                  </button>
+                  <ul class="custom-select-menu" *ngIf="isDropdownOpen('concept')">
+                    <li class="custom-option" [class.active]="!product.Ma_khong_gian" (click)="selectConcept('', $event)">
+                      Không concept
+                    </li>
+                    <li class="custom-option"
+                        *ngFor="let cp of concepts"
+                        [class.active]="product.Ma_khong_gian === cp.Ma_khong_gian"
+                        (click)="selectConcept(cp.Ma_khong_gian, $event)">
+                      {{ cp.Ma_khong_gian }} - {{ cp.Ten_khong_gian }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
