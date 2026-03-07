@@ -13,13 +13,16 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
-//get all reviews (2) -> using async await
 router.get("/reviews", async (req, res) => {
     try {
-            let reviews = await Review.find({});
-            res.json(reviews);
-    }catch (err) {
-        res.json({er: err.message});
+        const { productId } = req.query;
+        let query = {};
+        if (productId) query.Ma_san_pham = productId;
+        
+        let reviews = await Review.find(query);
+        res.json(reviews);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 

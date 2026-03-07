@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -22,17 +22,23 @@ export class ConceptDetail implements OnInit {
   conceptName = '';
   conceptImage = '';
 
-  // thêm biến cho dropdown
   sortType: string = 'newest';
   dropdownOpen: boolean = false;
 
 
   constructor(
-    private productService: Product,
+    public productService: Product,
     private conceptService: Concept,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private eRef: ElementRef
   ) {}
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.dropdownOpen = false;
+    }
+  }
 
   ngOnInit(): void {
     const conceptId = this.route.snapshot.paramMap.get('id');
@@ -67,11 +73,9 @@ export class ConceptDetail implements OnInit {
 
         this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
 
-        // lấy sản phẩm liên quan
         this.relatedProducts = this.getRelatedProducts(this.product, productsByConcept);
-        this.sortProducts(); // sắp xếp ngay khi load
+        this.sortProducts(); 
 
-        // load concept
         this.conceptService.getConceptData().subscribe({
           next: (data: iConcept[]) => {
             this.concepts = data;
@@ -87,7 +91,6 @@ export class ConceptDetail implements OnInit {
     });
   }
 
-  // logic lọc/sắp xếp
   sortLabels: Record<string, string> = {
     newest: 'Mới nhất',
     oldest: 'Cũ nhất',
@@ -96,6 +99,7 @@ export class ConceptDetail implements OnInit {
   };
 
   toggleDropdown() {
+    
     this.dropdownOpen = !this.dropdownOpen;
   }
 
@@ -127,20 +131,20 @@ export class ConceptDetail implements OnInit {
   }
 
   hovered: string|null = null;
-currentIndex: Record<string, number> = {};
+  currentIndex: Record<string, number> = {};
 
-prevImage(p: iProduct) {
-  const len = p.Hinh_anh?.length || 0;
-  if (!len) return;
-  const idx = this.currentIndex[p.Ma_san_pham] ?? 0;
-  this.currentIndex[p.Ma_san_pham] = (idx - 1 + len) % len;
-}
+  prevImage(p: iProduct) {
+    const len = p.Hinh_anh?.length || 0;
+    if (!len) return;
+    const idx = this.currentIndex[p.Ma_san_pham] ?? 0;
+    this.currentIndex[p.Ma_san_pham] = (idx - 1 + len) % len;
+  }
 
-nextImage(p: iProduct) {
-  const len = p.Hinh_anh?.length || 0;
-  if (!len) return;
-  const idx = this.currentIndex[p.Ma_san_pham] ?? 0;
-  this.currentIndex[p.Ma_san_pham] = (idx + 1) % len;
-}
+  nextImage(p: iProduct) {
+    const len = p.Hinh_anh?.length || 0;
+    if (!len) return;
+    const idx = this.currentIndex[p.Ma_san_pham] ?? 0;
+    this.currentIndex[p.Ma_san_pham] = (idx + 1) % len;
+  }
 
-}
+  }

@@ -16,6 +16,12 @@ export class Contact {
       .get<iContact[]>(`${baseUrl}/contacts`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  addContact(data: iContact): Observable<iContact> {
+    return this.http
+      .post<iContact>(`${baseUrl}/contacts`, data)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

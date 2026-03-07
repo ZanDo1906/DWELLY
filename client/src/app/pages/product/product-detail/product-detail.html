@@ -17,21 +17,20 @@
               *ngFor="let img of product?.Hinh_anh"
               (click)="selectedImage = img"
             >
-              <img [src]="img" alt="thumb">
+              <img [src]="productService.getImgUrl(img)" alt="thumb">
             </div>
 
             <div class="thumb empty" *ngFor="let _ of emptySlots()"></div>
           </div>
           <div class="main-image">
-            <img [src]="selectedImage" alt="">
+            <img [src]="productService.getImgUrl(selectedImage)" alt="">
             <button class="btn-zoom" (click)="openModal(selectedImage)">
               <i class="bi bi-zoom-in"></i>
             </button>
           </div>
 
-          <!-- Modal hiển thị ảnh lớn -->
           <div class="image-modal" *ngIf="zoomImage" (click)="closeModal()">
-            <img [src]="zoomImage" alt="">
+            <img [src]="productService.getImgUrl(zoomImage)" alt="">
           </div>
 
 
@@ -57,7 +56,7 @@
 
             <span class="divider">|</span>
 
-            <span class="sku">SKU: {{ product.Ma_san_pham }}</span>
+            <span class="sku">SKU: {{ product?.Ma_san_pham }}</span>
           </div>
 
             <div class="top-actions">
@@ -66,9 +65,11 @@
                 <span>Chia sẻ</span>
               </button>
 
-              <button class="action-btn">
-                <i class="bi bi-heart-fill"></i>
-                <span>10</span>
+              <button class="action-btn" (click)="toggleLike()">
+                <i class="bi" 
+                  [ngClass]="isFavorite ? 'bi-heart-fill heart-active' : 'bi-heart'">
+                </i>
+                <span>{{ totalFavorites }}</span>
               </button>
             </div>
 
@@ -77,7 +78,7 @@
           <div class="price-box">
             <span class="discount-tag">-25%</span>
             <span class="new-price">
-              {{ product.Gia_ban | number:'1.0-0' }} VNĐ
+              {{ product?.Gia_ban | number:'1.0-0' }} VNĐ
             </span>
             <span class="old-price">
               {{ getOldPrice(product) }}
@@ -94,14 +95,14 @@
           </div>
           <div class="option-row">
               <span>Kích thước:</span>
-              <span class="ms-2">{{ product.Kich_thuoc }}</span>
+              <span class="ms-2">{{ product?.Kich_thuoc }}</span>
           </div>
           <div class="option-row">
           
 
             <span>Chất liệu:</span>
             <span class="ms-2">
-              {{ product.Chat_lieu }}
+              {{ product?.Chat_lieu }}
             </span>
           </div>
 
@@ -135,7 +136,9 @@
                 MUA NGAY
               </button>
 
-              <button class="btn-cart">THÊM VÀO GIỎ HÀNG</button>
+              <button class="btn-cart" (click)="goToCart()">
+                THÊM VÀO GIỎ HÀNG
+              </button>
             </div>
 
             <div class="service-row">
@@ -293,10 +296,10 @@
             <span>{{ getLabel(sortType) }}</span>
             <i class="bi" [ngClass]="dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
             <ul *ngIf="dropdownOpen">
-              <li (click)="setSort('newest')">Mới nhất</li>
-              <li (click)="setSort('oldest')">Cũ nhất</li>
-              <li (click)="setSort('highest')">Đánh giá cao nhất</li>
-              <li (click)="setSort('lowest')">Đánh giá thấp nhất</li>
+              <li (click)="setSort('newest'); $event.stopPropagation()">Mới nhất</li>
+              <li (click)="setSort('oldest'); $event.stopPropagation()">Cũ nhất</li>
+              <li (click)="setSort('highest'); $event.stopPropagation()">Đánh giá cao nhất</li>
+              <li (click)="setSort('lowest'); $event.stopPropagation()">Đánh giá thấp nhất</li>
             </ul>
           </div>
 

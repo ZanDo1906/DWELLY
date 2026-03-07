@@ -9,11 +9,15 @@ const baseUrl = "http://localhost:3000";
 })
 export class Review {
 
-  // url = '/assets/data/review.json';
   constructor(private http: HttpClient) { }
   getReviewData(): Observable<iReview[]> {
     return this.http
       .get<iReview[]>(`${baseUrl}/reviews`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getReviewsByProduct(productId: string): Observable<iReview[]> {
+    return this.http
+      .get<iReview[]>(`${baseUrl}/reviews?productId=${productId}`)
       .pipe(retry(2), catchError(this.handleError));
   }
   handleError(error: HttpErrorResponse) {

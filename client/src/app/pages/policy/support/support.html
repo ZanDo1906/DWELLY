@@ -1,414 +1,209 @@
 <section class="support-page">
-
   <div class="container">
-
     <div class="site-inner">
-
       <h2 class="support-title">HỖ TRỢ KHÁCH HÀNG</h2>
-
       <div class="title-underline"></div>
-
       <p class="support-subtitle">
-
         Kiến tạo không gian sống mơ ước chưa bao giờ dễ dàng đến thế. <br class="d-none d-md-block">Hãy để chúng tôi giải đáp mọi thắc mắc và hỗ trợ bạn trong suốt hành trình mua sắm.
-
       </p>
-
-
-
       <div class="support-list">
-
        
-
         <div class="faq-large-card" [class.active]="isFAQVisible">
-
           <div class="support-item main-faq" (click)="toggleFAQList()">
-
             <div class="item-left">
-
               <div class="icon-box"><i class="bi bi-question-circle"></i></div>
-
               <span class="item-text">Câu hỏi thường gặp</span>
-
             </div>
-
             <div class="btn-expand">
-
               <i class="bi" [ngClass]="isFAQVisible ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-
             </div>
-
           </div>
-
           <div class="faq-items-container" *ngIf="isFAQVisible">
-
  
-
   <div class="faq-sub-item" (click)="toggleFAQ(1)">
-
     <div class="faq-question-header" [class.open]="faqOpen[1]">
-
       <span>Hình ảnh trên website có giống thực tế không?</span>
-
       <i class="bi" [class.bi-plus-lg]="!faqOpen[1]" [class.bi-dash-lg]="faqOpen[1]"></i>
-
     </div>
-
     <div class="faq-answer-body" *ngIf="faqOpen[1]">
-
       Hình ảnh trên website được chụp thực tế tại showroom, tuy nhiên màu sắc có thể chênh lệch nhẹ (khoảng 5-10%) do ánh sáng môi trường và độ phân giải của màn hình hiển thị.
-
     </div>
-
   </div>
-
-
 
   <div class="faq-sub-item" (click)="toggleFAQ(2)">
-
     <div class="faq-question-header" [class.open]="faqOpen[2]">
-
       <span>Tôi có thể đặt sản phẩm theo kích thước/màu sắc riêng không?</span>
-
       <i class="bi" [class.bi-plus-lg]="!faqOpen[2]" [class.bi-dash-lg]="faqOpen[2]"></i>
-
     </div>
-
     <div class="faq-answer-body" *ngIf="faqOpen[2]">
-
       Có. Với các sản phẩm như Sofa, Giường, Tủ quần áo, DWELLY nhận đặt đóng theo yêu cầu để phù hợp với diện tích nhà bạn. Thời gian sản xuất hàng đặt riêng thường từ 7-10 ngày làm việc.
-
     </div>
-
   </div>
-
-
 
   <div class="faq-sub-item" (click)="toggleFAQ(3)">
-
     <div class="faq-question-header" [class.open]="faqOpen[3]">
-
       <span>Nhà tôi ở chung cư thì vận chuyển thế nào?</span>
-
       <i class="bi" [class.bi-plus-lg]="!faqOpen[3]" [class.bi-dash-lg]="faqOpen[3]"></i>
-
     </div>
-
     <div class="faq-answer-body" *ngIf="faqOpen[3]">
-
       Dwelly có kinh nghiệm vận chuyển chung cư dày dặn. Chúng tôi hỗ trợ bốc xếp qua thang máy hoặc thang bộ (nếu vừa). Đội ngũ sẽ lắp đặt hoàn thiện tại phòng cho bạn mà không gây ảnh hưởng đến không gian chung.
-
     </div>
-
   </div>
-
-
 
   <div class="faq-sub-item" (click)="toggleFAQ(4)">
-
     <div class="faq-question-header" [class.open]="faqOpen[4]">
-
       <span>Phí vận chuyển được tính như thế nào?</span>
-
       <i class="bi" [class.bi-plus-lg]="!faqOpen[4]" [class.bi-dash-lg]="faqOpen[4]"></i>
-
     </div>
-
     <div class="faq-answer-body" *ngIf="faqOpen[4]">
-
       Chúng tôi <b>miễn phí vận chuyển</b> cho đơn hàng trên 10 triệu đồng tại nội thành TP.HCM. Với các khu vực khác, phí sẽ được tính dựa trên khoảng cách và kích thước kiện hàng. Nhân viên sẽ báo giá chính xác khi xác nhận đơn.
-
     </div>
-
   </div>
-
-
 
   <div class="faq-sub-item" (click)="toggleFAQ(5)">
-
     <div class="faq-question-header" [class.open]="faqOpen[5]">
-
       <span>Sản phẩm được bảo hành bao lâu?</span>
-
       <i class="bi" [class.bi-plus-lg]="!faqOpen[5]" [class.bi-dash-lg]="faqOpen[5]"></i>
-
     </div>
-
     <div class="faq-answer-body" *ngIf="faqOpen[5]">
-
-      Tất cả sản phẩm tại Dwelly đều được bảo hành <b>12 tháng</b> đối với các lỗi kỹ thuật từ nhà sản xuất (khung sườn, mối nối, bề mặt sơn).
-
+      Tất cả sản phẩm tại Dwelly đều được bảo hành <b>12 tháng</b> đối với các lỗi kỹ thuật từ nhà sản xuất (khung sườn, mối nối, bề mặt sơn)
     </div>
-
   </div>
 
-
-
 </div>
-
 </div>
-
-
 
         <div class="faq-large-card" [class.active]="isOrderGuideVisible">
-
   <div class="support-item main-faq" (click)="isOrderGuideVisible = !isOrderGuideVisible">
-
     <div class="item-left">
-
       <div class="icon-box"><i class="bi bi-book"></i></div>
-
       <span class="item-text">Hướng dẫn đặt hàng</span>
-
     </div>
-
     <div class="btn-expand">
-
       <i class="bi" [class.bi-chevron-up]="isOrderGuideVisible" [class.bi-chevron-down]="!isOrderGuideVisible"></i>
-
     </div>
-
   </div>
-
-
 
   <div class="faq-items-container" *ngIf="isOrderGuideVisible">
-
     <div class="order-steps">
-
       <!-- Bước 1 -->
-
        <div class="step-wrapper">
-
       <div class="step-item">
-
         <div class="step-number">01</div>
-
         <div class="step-content">
-
           <h4>Chọn sản phẩm yêu thích và đo kích thước</h4>
-
           <p>Lướt xem mẫu mã và chọn màu sắc, chất liệu bạn thích. Lưu ý quan trọng: Hãy đo kỹ diện tích phòng và cửa ra vào để chắc chắn món đồ vừa vặn khi mang về nhà.</p>
-
         </div>
-
       </div>
-
       </div>
-
       <!-- Bước 2 -->
-
        <div class="step-wrapper">
-
       <div class="step-item">
-
         <div class="step-number">02</div>
-
         <div class="step-content">
-
           <h4>Xem giỏ hàng</h4>
-
           <p>Vào giỏ hàng để xem lại các sản phẩm đã chọn. Nếu bạn có mã giảm giá (Voucher) của shop, hãy nhập ngay vào ô "Mã khuyến mãi" để được trừ tiền nhé.</p>
-
         </div>
-
       </div>
-
       </div>
-
       <!-- Bước 3 -->
-
        <div class="step-wrapper">
-
       <div class="step-item">
-
         <div class="step-number">03</div>
-
         <div class="step-content">
-
           <h4>Điền địa chỉ & Đặt cọc</h4>
-
           <p>Nhập chính xác địa chỉ và số điện thoại người nhận. Với các món đồ lớn hoặc hàng đặt làm riêng, bạn có thể cần thanh toán trước một phần (cọc), phần còn lại sẽ trả khi nhận hàng.</p>
-
         </div>
-
       </div>
-
       </div>
-
       <!-- Bước 4 -->
-
        <div class="step-wrapper">
-
       <div class="step-item">
-
         <div class="step-number">04</div>
-
         <div class="step-content">
-
           <h4>Nhận lịch hẹn giao hàng</h4>
-
           <p>Sau khi đặt đơn, nhân viên sẽ gọi điện để chốt lịch giao hàng cụ thể. Bạn cứ yên tâm chờ, đội ngũ kỹ thuật sẽ mang đến tận nơi và lắp đặt hoàn thiện cho bạn.</p>
-
         </div>
-
       </div>
-
        </div>
-
     </div>
-
   </div>
-
 </div>
-
-
-
 
 
         <div class="faq-large-card" [class.active]="isReturnGuideVisible">
-
     <div class="support-item main-faq" (click)="isReturnGuideVisible = !isReturnGuideVisible">
-
         <div class="item-left">
-
         <div class="icon-box"><i class="bi bi-arrow-repeat"></i></div>
-
         <span class="item-text">Hướng dẫn đổi trả</span>
-
         </div>
-
         <div class="btn-expand">
-
         <i class="bi" [ngClass]="isReturnGuideVisible ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-
         </div>
-
     </div>
-
-
 
     <div class="faq-items-container" *ngIf="isReturnGuideVisible">
-
         <div class="return-guide-content">
-
        
-
         <div class="guide-section">
-
             <h5 class="section-title">| Điều kiện đổi trả</h5>
-
             <p class="sub-text">Áp dụng <b>1 ĐỔI 1 trong vòng 7 ngày</b> nếu sản phẩm gặp các lỗi sau:</p>
-
             <ul class="custom-list">
-
                
-
             <li>Sản phẩm không đúng chủng loại, mẫu mã như đã đặt.</li>
-
             <li>Bị gãy, nứt, trầy xước nặng, rách vải do vận chuyển.</li>
-
             <li>Lỗi kỹ thuật từ nhà sản xuất (cong vênh, lung lay, thiếu vít).</li>
-
             </ul>
-
         </div>
 
 
-
         <div class="guide-section">
-
             <h5 class="section-title">| Quy trình gửi yêu cầu</h5>
-
             <div class="order-steps-mini">
-
             <div class="mini-step">
-
                 <span class="num">01</span>
-
                 <p><b>Chụp ảnh/quay video: </b>Chụp lại ngay vị trí bị lỗi hoặc quay video tình trạng sản phẩm để làm bằng chứng.</p>
-
             </div>
-
             <div class="mini-step">
-
                 <span class="num">02</span>
-
                 <p><b>Liên hệ hỗ trợ: </b>Gọi hotline 0123 456 789 hoặc email hotro.dwelli@gmail.com trong vòng 24h kể từ lúc nhận hàng.</p>
-
             </div>
-
             <div class="mini-step">
-
                 <span class="num">03</span>
-
                 <p><b>Chờ xác nhận: </b>Nhân viên sẽ kiểm tra và xác nhận phương án đổi mới hoặc hoàn tiền trong vòng 2 giờ làm việc.</p>
-
             </div>
-
             <div class="mini-step">
-
                 <span class="num">04</span>
-
                 <p><b>Thu hồi tận nơi: </b>Khách hàng không cần tự mang đi gửi. Xe của shop sẽ đến tận nhà để thu hồi hàng lỗi và giao hàng mới.</p>
-
             </div>
-
             </div>
-
         </div>
-
 
 
         <div class="guide-section">
-
             <h5 class="section-title">| Thời gian xử lý</h5>
-
             <ul class="custom-list">
-
                 <li>Xác nhận: Trong 2 giờ.</li>
-
                 <li>Thu hồi:  24 - 48 giờ (tùy tuyến đường).</li>
-
                 <li>Hoàn tiền: 3 - 5 ngày sau khi shop đã thu hồi được hàng lỗi.</li>
-
             </ul>
-
         </div>
-
          
-
             <div class="step-wrapper">
-
             <div class="step-item note-box">
-
             <div class="note-title">
-
             Lưu ý quan trọng</div>
-
             <ul class="custom-list note-list">
-
                 <li>Kiểm tra ngay khi nhận: Quý khách vui lòng mở hộp và kiểm tra kỹ bề mặt gỗ/vải cùng nhân viên giao hàng. Shop từ chối bảo hành các lỗi trầy xước/rách vải nếu khách đã ký xác nhận "Đủ hàng, nguyên vẹn" rồi mới báo lại sau.</li>
-
                 <li>Giữ nguyên hiện trạng: Trong thời gian chờ đổi, vui lòng không sử dụng hoặc tự ý sửa chữa sản phẩm.</li>
-
                 <li>Chi phí vận chuyển đổi trả do DWELLI chịu (nếu lỗi từ phía chúng tôi).</li>
-
                 <li>Hoàn tiền qua cùng phương thức thanh toán ban đầu.
-
                 </li>
-
             </ul>
 
             </div>
 
             </div>
-
-           
-
-       
-
-
 
         </div>
 
@@ -417,111 +212,72 @@
     </div>
 
     </div>
-
-
 
       <div class="contact-main-card">
-
         <div class="contact-content">
-
           <div class="contact-left-side">
-
             <div class="contact-header-inner">
-
               <h2 class="contact-subtitle-inner">Cần thêm hỗ trợ?</h2>
-
               <p class="contact-title-inner">Liên hệ với chúng tôi</p>
+            </div>
+            <form class="contact-form"
+                [formGroup]="contactForm"
+                (ngSubmit)="onSubmit()">
 
+            <div class="form-group">
+              <label>Họ và tên</label>
+              <input type="text"
+                    formControlName="fullName"
+                    placeholder="Nhập họ và tên">
             </div>
 
-            <div class="contact-form">
-
-              <div class="form-group">
-
-                <label>Họ và tên</label>
-
-                <input type="text" placeholder="Nhập họ và tên">
-
-              </div>
-
-              <div class="form-group">
-
-                <label>Email</label>
-
-                <input type="email" placeholder="Nhập email">
-
-              </div>
-
-              <div class="form-group">
-
-                <label>Nội dung</label>
-
-                <textarea rows="4" placeholder="Nhập nội dung"></textarea>
-
-              </div>
-
-              <div class="text-center">
-
-                <button class="btn-send" (click)="onSubmit()">
-
-                    GỬI NGAY
-
-                </button>
-
-                </div>
-
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email"
+                    formControlName="email"
+                    placeholder="Nhập email">
             </div>
 
+            <div class="form-group">
+              <label>Nội dung</label>
+              <textarea rows="4"
+                        formControlName="content"
+                        placeholder="Nhập nội dung"></textarea>
+            </div>
+
+            <button class="btn-send" type="submit">
+              GỬI NGAY
+            </button>
+
+          </form>
           </div>
-
 
 
           <div class="contact-info-panel">
-
             <h3 class="info-title">Thông tin liên hệ</h3>
-
             <div class="info-list-vertical">
-
               <div class="info-box-item">
-
                 <div class="icon-circle"><i class="bi bi-headphones"></i></div>
-
                 <div class="info-text">Hotline: <b>1900 999 888</b></div>
-
               </div>
-
               <div class="info-box-item">
-
                 <div class="icon-circle"><i class="bi bi-envelope"></i></div>
-
                 <div class="info-text">Email: <b>hotro.dwelly@gmail.com</b></div>
-
               </div>
 
               <div class="info-box-item">
-
                 <div class="icon-circle"><i class="bi bi-clock"></i></div>
-
                 <div class="info-text">Thời gian: <b>8h - 21h (T2-CN)</b></div>
-
               </div>
 
               <div class="info-box-item">
-
                 <div class="icon-circle"><i class="bi bi-geo-alt"></i></div>
-
                 <div class="info-text">Địa chỉ: <b>669 Quốc lộ 1, Khu phố 3, Phường Linh Xuân, TP Thủ Đức</b></div>
-
               </div>
-
             </div>
 
           </div>
-
         </div>
-
       </div>
-
-
 
     </div> </div> </section>

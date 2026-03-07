@@ -9,17 +9,18 @@ db.connect();
 const Care_Instruction = require('../models/Care_Instruction');
 
 //Define API
-router.get("/", (req, res) => {
-    res.send("Ok");
-});
 
-//get all care instructions (2) -> using async await
-router.get("/care_instructions", async (req, res) => {
+router.get("/care_instructions/category/:categoryId", async (req, res) => {
     try {
-            let care_instructions = await Care_Instruction.find({});
-            res.json(care_instructions);
-    }catch (err) {
-        res.json({er: err.message});
+        const instruction = await Care_Instruction.findOne({ 
+            Ma_danh_muc: { $in: [req.params.categoryId] }  
+        });
+        if (!instruction) {
+            return res.status(404).json({ message: "Không tìm thấy hướng dẫn cho danh mục này" });
+        }
+        res.json(instruction);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 

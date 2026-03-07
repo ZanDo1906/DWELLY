@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-support',
@@ -10,8 +11,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 })
 export class Support implements OnInit {
   contactForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit() {
     this.contactForm = this.fb.group({
@@ -47,10 +47,29 @@ export class Support implements OnInit {
   }
 
   onSubmit() {
-    if (this.contactForm.valid) {
-      alert('Gửi thành công! Dwelly sẽ phản hồi bạn sớm nhất.');
-      console.log(this.contactForm.value);
-      this.contactForm.reset();
-    }
+
+  if (this.contactForm.valid) {
+
+    const data = {
+      Ho_ten: this.contactForm.value.fullName,
+      Email: this.contactForm.value.email,
+      So_dien_thoai: '000000000',
+      Noi_dung: this.contactForm.value.content
+    };
+
+    this.http.post('http://localhost:3000/contacts', data)
+      .subscribe({
+        next: () => {
+          alert('Gửi thành công! Dwelly sẽ phản hồi bạn sớm nhất.');
+          this.contactForm.reset();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Gửi thất bại');
+        }
+      });
+
   }
+
+}
 }

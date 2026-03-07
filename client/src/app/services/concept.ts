@@ -9,7 +9,6 @@ const baseUrl = "http://localhost:3000";
   providedIn: 'root',
 })
 export class Concept {
-  // url = '/assets/data/concept.json';
   constructor(private http: HttpClient) { }
   getConceptData(): Observable<iConcept[]> {
     return this.http

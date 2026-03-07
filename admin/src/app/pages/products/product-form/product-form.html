@@ -22,7 +22,19 @@
 
           <!-- Thông tin chung -->
           <div class="form-section">
+            <div class="section-header-flex">
             <h4 class="section-title">Thông tin chung</h4>
+            <div class="status-toggle">
+              <span class="status-text"
+                    [ngClass]="product.Trang_thai ? 'status-on' : 'status-off'">
+                {{ product.Trang_thai ? 'Đang kinh doanh' : 'Ngưng kinh doanh' }}
+              </span>
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="product.Trang_thai">
+                <span class="slider"></span>
+              </label>
+            </div>
+            </div>
             <div class="form-row">
               <div class="form-group">
                 <label>Mã sản phẩm</label>
@@ -95,11 +107,16 @@
             <div class="image-upload-grid">
                 <div *ngFor="let img of images; let i = index" 
                     class="image-placeholder"
-                    [style.backgroundImage]="img ? 'url(' + img + ')' : ''"
+                    [style.backgroundImage]="img ? 'url(' + productService.getImgUrl(img) + ')' : ''"
                     (click)="triggerFileInput(i)">
+                    <button *ngIf="img"
+              class="btn-remove-img"
+              (click)="removeImage(i, $event)">
+                        Xóa ảnh
+                    </button>
                 <span *ngIf="!img">+</span>
-                <input #fileInput type="file" accept="image/*" hidden 
-                        (change)="previewImage($event, i)" />
+                <input #fileInput type="file" accept="image/*" multiple hidden 
+       (change)="previewImage($event, i)" />
                 </div>
             </div>
             </div>
@@ -107,6 +124,7 @@
 
             <!-- Nút hành động -->
             <div class="form-actions">
+                <button *ngIf="isEditMode" class="btn-delete-product" (click)="deleteProduct()">Xóa sản phẩm</button>
                 <button class="btn-cancel" (click)="cancelForm()">Hủy</button>
                 <button class="btn-save" (click)="saveProduct()">Lưu sản phẩm</button>
                 <button class="btn-draft" (click)="saveDraft()">Lưu nháp</button>

@@ -1,19 +1,30 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../../services/product';
+import { Client } from '../../../services/client';
+import { CareInstruction } from '../../../services/care_instruction';
+import { Review } from '../../../services/review';
 import { iProduct } from '../../../interfaces/product';
 import { iReview } from '../../../interfaces/review';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { MaintenanceModal } from '../maintenance-modal/maintenance-modal';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, ProductCard, MaintenanceModal],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    DecimalPipe, 
+    DatePipe, 
+    ProductCard, 
+    MaintenanceModal
+  ],
   templateUrl: './product-detail.html',
-  styleUrl: './product-detail.css',
+  styleUrls: ['./product-detail.css'],
 })
 export class ProductDetail implements OnInit, OnDestroy {
   product?: iProduct;
@@ -27,17 +38,23 @@ export class ProductDetail implements OnInit, OnDestroy {
   clients: any[] = [];
   sortType = 'newest';
   dropdownOpen = false;
-
+  totalFavorites: number = 0;
+  isFavorite: boolean = false;
   isMaintenanceOpen = false;
   selectedCareData: any = null;
   allCareInstructions: any[] = [];
+  productCareInstruction: any = null;
   private routeSub: Subscription | null = null;
 
   constructor(
-    private productService: Product,
+    public productService: Product,
+    private reviewService: Review, 
+    private careService: CareInstruction,     
+    private clientService: Client, 
     private route: ActivatedRoute,
     private http: HttpClient,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    private router: Router 
   ) {}
 
  @ViewChild('scrollRow') scrollRow!: ElementRef<HTMLDivElement>;
@@ -75,73 +92,113 @@ scrollRight() {
   this.scrollRow.nativeElement.scrollBy({ left: cardWidth, behavior: 'smooth' });
 }
 
-  ngOnInit(): void {
-    // React to route param changes so navigating to a different /product/:id reloads
+ ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((pm) => {
-      const id = pm.get('id');
+      const code = pm.get('id'); 
 
-      this.productService.getProductData().subscribe({
-        next: (list) => {
-          if (!list || list.length === 0) return;
-          if (id) {
-            this.product = list.find((p) => p.Ma_san_pham === id) ?? list[0];
-          } else {
-            this.product = list[0];
-          }
-          this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
-          this.filterReviews();
-
-          this.relatedProducts = this.getRelatedProducts(this.product, list);
-          this.loadCareInstructions();
-        },
-        error: (err) => console.error('Failed to load products', err),
-      });
-    });
-
-    this.http.get<iReview[]>('assets/data/review.json')
-      .subscribe({
-        next: (data) => {
-          this.allReviews = data;
-          this.filterReviews();
-        },
-        error: (err) => console.error('Failed to load reviews', err),
-      });
-
-    this.http.get<any[]>('assets/data/client.json').subscribe({
-      next: (data) => {
-        this.clients = data;
-        this.filterReviews();
-      },
-      error: (err) => console.error('Failed to load clients', err),
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSub?.unsubscribe();
-  }
-getClientName(maKhachHang: string): string {
-  const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
-  return client ? client.Ho_va_ten : maKhachHang; 
-}
-
-productCareInstruction: any = null;
-loadCareInstructions() {
-  this.http.get<any[]>('assets/data/care_instruction.json').subscribe({
-    next: (data) => {
-      if (this.product) {
-        this.productCareInstruction = data.find(item =>
-          item.Ma_danh_muc.includes(this.product!.Ma_danh_muc)
-        );
-
-        if (this.productCareInstruction?.Link_video) {
-          this.productCareInstruction.Link_video.forEach((v: string, i: number) => {
-          });
-        }
+      if (code) {
+        // Gọi API lấy trực tiếp sản phẩm theo mã
+        this.productService.getProductByCode(code).subscribe({
+          next: (data) => {
+            this.product = data;
+            this.selectedImage = this.product.Hinh_anh?.[0] ?? '';
+            this.checkIfFavorite();
+            this.loadExtraData();
+          },
+          error: (err) => console.error('Không tìm thấy sản phẩm này!', err),
+        });
       }
-    },
-    error: (err) => console.error('Failed to load care instructions', err)
-  });
+    });
+    this.loadClientsFromDB();
+  }
+
+  loadClientsFromDB() {
+    this.clientService.getClientData().subscribe({
+      next: (data) => (this.clients = data),
+      error: (err) => console.error('Lỗi load danh sách khách hàng', err),
+    });
+  }
+
+    loadExtraData() {
+    if (!this.product) return;
+
+    this.clientService.getFavoriteCount(this.product.Ma_san_pham).subscribe({
+      next: (res) => {
+        this.totalFavorites = res.count;
+      },
+      error: (err) => (this.totalFavorites = 0)
+    });
+
+    this.reviewService.getReviewsByProduct(this.product.Ma_san_pham).subscribe({
+      next: (data) => {
+        this.productReviews = data;
+        this.sortReviews();
+        this.calcAverage();
+      }
+    });
+
+    this.careService.getCareByCategory(this.product.Ma_danh_muc).subscribe({
+      next: (data) => {
+        this.productCareInstruction = data;
+      },
+      error: (err) => console.error('Lỗi load bảo dưỡng', err)
+    });
+
+    this.productService.getProductData().subscribe({
+      next: (list) => {
+        this.relatedProducts = this.getRelatedProducts(this.product!, list);
+      }
+    });
+  }
+  checkIfFavorite() {
+  if (!this.product) return;
+
+  const user = this.clientService.getCurrentUser();
+
+  if (!user || !user.favorites) {
+    this.isFavorite = false;
+    return;
+  }
+
+  this.isFavorite = user.favorites.includes(this.product.Ma_san_pham);
 }
+
+  toggleLike() {
+
+  if (!this.clientService.isLoggedIn()) {
+    alert('Vui lòng đăng nhập để yêu thích sản phẩm!');
+    return;
+  }
+
+  if (!this.product) return;
+
+  const user = this.clientService.getCurrentUser();
+  const maKhachHang = user?.customerCode;
+
+  if (!maKhachHang) {
+    console.error("Không tìm thấy mã khách hàng");
+    return;
+  }
+
+  this.clientService.toggleFavorite(maKhachHang, this.product.Ma_san_pham)
+    .subscribe({
+      next: (res: any) => {
+
+        user.favorites = res.favorites;
+
+        this.isFavorite = user.favorites.includes(this.product!.Ma_san_pham);
+
+        this.totalFavorites = res.favoritesCount ?? this.totalFavorites;
+
+        localStorage.setItem('current_user', JSON.stringify(user));
+      },
+      error: (err) => console.error('Lỗi khi yêu thích:', err)
+    });
+}
+  getClientName(maKhachHang: string): string {
+    const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
+    return client ? client.Ho_va_ten : maKhachHang;
+  }
 
 openMaintenanceModal(videoIndex: number) {
   this.selectedCareData = { ...this.productCareInstruction, selectedVideoIndex: videoIndex };
@@ -180,7 +237,7 @@ getVideoTitle(index: number): string {
     'HD05': ['2 phút', '5 phút']
   };
   return durationsMap[this.productCareInstruction?.Ma_huong_dan]?.[index] || '5 phút';
-}
+  }
 
 
   thumbImage(i: number): string | null {
@@ -207,15 +264,31 @@ getVideoTitle(index: number): string {
     if (this.quantity > 1) this.quantity--;
   }
 
-  sortLabels: Record<string, string> = { newest: 'Mới nhất', oldest: 'Cũ nhất', highest: 'Đánh giá cao nhất', lowest: 'Đánh giá thấp nhất' }; toggleDropdown() { this.dropdownOpen = !this.dropdownOpen; } getLabel(type: string): string { return this.sortLabels[type] || ''; } setSort(type: string) { this.sortType = type; this.sortReviews(); this.dropdownOpen = false; }
-
+  sortLabels: Record<string, string> = { newest: 'Mới nhất', oldest: 'Cũ nhất', highest: 'Đánh giá cao nhất', lowest: 'Đánh giá thấp nhất' }; 
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+  getLabel(type: string) {
+  switch (type) {
+    case 'newest': return 'Mới nhất';
+    case 'oldest': return 'Cũ nhất';
+    case 'highest': return 'Đánh giá cao nhất';
+    case 'lowest': return 'Đánh giá thấp nhất';
+    default: return 'Mới nhất';
+  }
+}
+  setSort(type: string) {
+  this.sortType = type;
+  this.sortReviews();
+  this.dropdownOpen = false;
+}
   get moTaChinh(): string {
   const text = this.product?.Mo_ta || '';
   const key = 'Chi tiết kỹ thuật:';
   const index = text.indexOf(key);
   if (index === -1) return text;
   return text.substring(0, index).trim();
-}
+  }
 
   get moTaKyThuat(): string {
     const text = this.product?.Mo_ta || '';
@@ -224,45 +297,44 @@ getVideoTitle(index: number): string {
     if (index === -1) return '';
     return text.substring(index + key.length).trim();
   }
-filterReviews() {
-  if (!this.product || !this.allReviews.length) return;
+  filterReviews() {
+    if (!this.product || !this.allReviews.length) return;
 
-  this.productReviews = this.allReviews
-    .filter(r => r.Ma_san_pham === this.product?.Ma_san_pham);
+    this.productReviews = this.allReviews
+      .filter(r => r.Ma_san_pham === this.product?.Ma_san_pham);
 
-  this.sortReviews();
-  this.calcAverage();
-}
+    this.sortReviews();
+    this.calcAverage();
+  }
 
   sortReviews() {
-    if (this.sortType === 'newest') {
-      this.productReviews.sort(
-        (a, b) =>
-          new Date(b.Thoi_gian_gui).getTime()
-        - new Date(a.Thoi_gian_gui).getTime()
-      );
-    }
+  switch (this.sortType) {
 
-    if (this.sortType === 'oldest') {
+    case 'newest':
       this.productReviews.sort(
-        (a, b) =>
-          new Date(a.Thoi_gian_gui).getTime()
-        - new Date(b.Thoi_gian_gui).getTime()
+        (a, b) => new Date(b.Thoi_gian_gui).getTime() - new Date(a.Thoi_gian_gui).getTime()
       );
-    }
+      break;
 
-    if (this.sortType === 'highest') {
+    case 'oldest':
+      this.productReviews.sort(
+        (a, b) => new Date(a.Thoi_gian_gui).getTime() - new Date(b.Thoi_gian_gui).getTime()
+      );
+      break;
+
+    case 'highest':
       this.productReviews.sort(
         (a, b) => b.Diem_danh_gia - a.Diem_danh_gia
       );
-    }
+      break;
 
-    if (this.sortType === 'lowest') {
+    case 'lowest':
       this.productReviews.sort(
         (a, b) => a.Diem_danh_gia - b.Diem_danh_gia
       );
-    }
+      break;
   }
+}
 
   getCount(star: number): number {
     return this.productReviews.filter(r => r.Diem_danh_gia === star).length;
@@ -284,48 +356,61 @@ filterReviews() {
   averageRating = 0;
   Math = Math;
 
-calcAverage() {
-  if (!this.productReviews.length) {
-    this.averageRating = 0;
-    return;
+  calcAverage() {
+    if (!this.productReviews.length) {
+      this.averageRating = 0;
+      return;
+    }
+
+    const total = this.productReviews.reduce(
+      (sum, r) => sum + r.Diem_danh_gia, 0
+    );
+
+    this.averageRating = total / this.productReviews.length;
   }
 
-  const total = this.productReviews.reduce(
-    (sum, r) => sum + r.Diem_danh_gia, 0
-  );
+  get fullStars() {
+    return Math.floor(this.averageRating);
+  }
 
-  this.averageRating = total / this.productReviews.length;
-}
+  get hasHalfStar() {
+    return this.averageRating % 1 >= 0.5;
+  }
+  getRelatedProducts(current: iProduct, all: iProduct[]): iProduct[] {
+    return all.filter(p => String(p.Ma_danh_muc) === String(current.Ma_danh_muc)
+                        && p.Ma_san_pham !== current.Ma_san_pham);
+  }
 
-get fullStars() {
-  return Math.floor(this.averageRating);
-}
+  relatedProducts: iProduct[] = [];
 
-get hasHalfStar() {
-  return this.averageRating % 1 >= 0.5;
-}
-getRelatedProducts(current: iProduct, all: iProduct[]): iProduct[] {
-  return all.filter(p => String(p.Ma_danh_muc) === String(current.Ma_danh_muc)
-                      && p.Ma_san_pham !== current.Ma_san_pham);
-}
+  buyClicked = false;
 
-relatedProducts: iProduct[] = [];
-
-buyClicked = false;
-
-onBuyClick() {
+  onBuyClick() {
   this.buyClicked = true;
+
+  this.router.navigate(['/payment-member'], {
+    queryParams: {
+      product: this.product?.Ma_san_pham,
+      qty: this.quantity
+    }
+  });
+}
+goToCart() {
+  this.router.navigate(['/cart-page']);
 }
 
-zoomImage: string | null = null;
+  zoomImage: string | null = null;
 
-openModal(img: string) {
-  this.zoomImage = img;
-}
+  openModal(img: string) {
+    this.zoomImage = img;
+  }
 
-closeModal() {
-  this.zoomImage = null;
-}
+  closeModal() {
+    this.zoomImage = null;
+  }
 
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
+  }
 }
 

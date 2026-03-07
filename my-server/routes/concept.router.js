@@ -13,14 +13,24 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
-//get all concepts (2) -> using async await
 router.get("/concepts", async (req, res) => {
-    try {
-            let concepts = await Concept.find({});
-            res.json(concepts);
-    }catch (err) {
-        res.json({er: err.message});
-    }
+  try {
+    const concepts = await Concept.find(); // Lấy tất cả concept từ DB
+    res.json(concepts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+router.get("/concepts/:id", async (req, res) => {
+  try {
+    const concept = await Concept.findOne({ Ma_khong_gian: req.params.id });
+    if (!concept) return res.status(404).json({ message: "Không tìm thấy concept" });
+    res.json(concept);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 module.exports = router;

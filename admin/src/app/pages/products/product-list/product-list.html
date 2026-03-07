@@ -3,117 +3,101 @@
     <div class="padding-x">
       <div class="site-inner products-page">
 
-        <!-- HEADER -->
         <div class="page-header">
           <h2 class="page-title">Quản lý sản phẩm</h2>
-
           <button class="add-btn" (click)="goToAdd()">
             <i class="bi bi-plus-circle"></i> Thêm sản phẩm
           </button>
-
         </div>
-        
 
-        <!-- FILTER BAR -->
-         <div class="filter-bar">
-        <div class="search-wrapper">
-  
-          <div class="search-container">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Tìm kiếm" />
+        <div class="filter-bar">
+          <div class="search-wrapper">
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Tìm kiếm" />
+            </div>
           </div>
-              </div>
+
           <div class="filter-group">
-          <button class="filter-btn" (click)="toggleSort('az')" 
-        [class.active]="sortMode==='az' || sortMode==='za'">
-  <i class="bi" [ngClass]="sortMode==='az' ? 'bi-arrow-down' : (sortMode==='za' ? 'bi-arrow-up' : 'bi-arrow-down')"></i>
-  A-Z
-</button>
+            <button class="filter-btn" (click)="toggleSort('az')" 
+                    [class.active]="sortMode==='az' || sortMode==='za'">
+              <i class="bi" [ngClass]="sortMode==='az' ? 'bi-arrow-down' : (sortMode==='za' ? 'bi-arrow-up' : 'bi-arrow-down')"></i>
+              A-Z
+            </button>
 
-          <button class="filter-btn" (click)="sortMode='highest'" [class.active]="sortMode==='highest'">Giá cao nhất</button>
-          <button class="filter-btn" (click)="sortMode='lowest'" [class.active]="sortMode==='lowest'">Giá thấp nhất</button>
+            <button class="filter-btn" (click)="sortMode='highest'" [class.active]="sortMode==='highest'">Giá cao</button>
+            <button class="filter-btn" (click)="sortMode='lowest'" [class.active]="sortMode==='lowest'">Giá thấp</button>
 
-          <div class="dropdown-wrapper">
-  <div class="dropdown-selected"
-       (click)="toggleDropdown($event)">
-    {{ statusFilter }}
-    <i class="bi bi-chevron-down dropdown-icon"
-       [class.rotate]="dropdownOpen"></i>
-  </div>
+            <div class="dropdown-wrapper">
+              <div class="dropdown-selected" (click)="toggleDropdown($event)">
+                {{ statusFilter }}
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="dropdownOpen"></i>
+              </div>
+              <div class="dropdown-menu" *ngIf="dropdownOpen">
+                <div class="dropdown-item" (click)="selectStatus('Tất cả trạng thái', $event)">Tất cả trạng thái</div>
+                <div class="dropdown-item" (click)="selectStatus('Đang kinh doanh', $event)">Đang kinh doanh</div>
+                <div class="dropdown-item" (click)="selectStatus('Ngưng kinh doanh', $event)">Ngưng kinh doanh</div>
+              </div>
+            </div>
+            <button class="delete-btn" 
+                    [disabled]="selectedProducts.length === 0"
+                    (click)="deleteSelected()">
+              <i class="bi bi-trash"></i>
+            </button>
 
-  <div class="dropdown-menu" *ngIf="dropdownOpen">
-    <div class="dropdown-item"
-         (click)="selectStatus('Tất cả trạng thái', $event)">
-      Tất cả trạng thái
-    </div>
-
-    <div class="dropdown-item"
-         (click)="selectStatus('Đang kinh doanh', $event)">
-      Đang kinh doanh
-    </div>
-
-    <div class="dropdown-item"
-         (click)="selectStatus('Ngưng kinh doanh', $event)">
-      Ngưng kinh doanh
-    </div>
-  </div>
+          </div>
         </div>
-        </div>
-
-        </div>
-    
 
         <app-table>
-
-          <!-- HEADER -->
           <ng-container table-header>
-            <th>Mã SP</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Tồn kho</th>
-            <th>Đánh giá</th>
-            <th>Trạng thái</th>
-          </ng-container>
+          <th>
+            <input type="checkbox"
+                  (change)="toggleSelectAll($event)"
+                  [checked]="isAllSelected()">
+                    </th>
+                    <th>Mã SP</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th>Trạng thái</th>
+                  </ng-container>
 
-          <!-- BODY -->
           <ng-container table-body>
-            <tr *ngFor="let product of pagedProducts" (click)="goToDetail(product.sku)">
-              <td>{{ product.sku }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.stock }}</td>
-              <td>
-              <ng-container *ngIf="product.ratingCount > 0; else noRating">
-                <i class="bi text-warning" [ngClass]="getStarIcon(product.ratingValue)"></i>
-                <span class="rating-score">{{ product.ratingValue | number:'1.1-1' }}</span>
-                ({{ product.ratingCount }})
-              </ng-container>
+          <tr *ngFor="let product of pagedProducts">
 
-              <ng-template #noRating>
-                —
-              </ng-template>
+            <td>
+              <input type="checkbox"
+                    [checked]="isSelected(product.Ma_san_pham)"
+                    (click)="$event.stopPropagation()"
+                    (change)="toggleSelect(product.Ma_san_pham)">
             </td>
-              <td [style.color]="product.statusColor">{{ product.status }}</td>
-            </tr>
+
+            <td (click)="goToDetail(product.Ma_san_pham)">{{ product.Ma_san_pham }}</td>
+            <td (click)="goToDetail(product.Ma_san_pham)">{{ product.Ten_san_pham }}</td>
+            <td (click)="goToDetail(product.Ma_san_pham)">
+              {{ product.Gia_ban | number:'1.0-0' }} vnđ
+            </td>
+            <td (click)="goToDetail(product.Ma_san_pham)">{{ product.So_luong_ton_kho }}</td>
+
+            <td
+              [style.color]="product.Trang_thai ? 'green' : 'red'"
+              (click)="goToDetail(product.Ma_san_pham)">
+              {{ product.Trang_thai ? 'Đang kinh doanh' : 'Ngưng kinh doanh' }}
+            </td>
+
+          </tr>
           </ng-container>
 
-          <!-- PAGINATION -->
           <ng-container table-pagination>
             <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
-            <button
-              *ngFor="let page of pages"
-              (click)="goToPage(page)"
-              [class.active]="page === currentPage"
-            >
+            <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === currentPage">
               {{ page }}
             </button>
             <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
           </ng-container>
-
-
         </app-table>
 
-         </div>
+      </div>
     </div>
   </div>
 </section>
