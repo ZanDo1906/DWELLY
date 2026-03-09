@@ -1,0 +1,25 @@
+[
+  {
+    "Ma_khach_hang": "C01",
+    "San_pham": [
+      { "Ma_san_pham": "01", "So_luong": 1 },
+      { "Ma_san_pham": "05", "So_luong": 2 }
+    ]
+  },
+  {
+    "Ma_khach_hang": "C02",
+    "San_pham": [
+      { "Ma_san_pham": "03", "So_luong": 1 },
+      { "Ma_san_pham": "08", "So_luong": 1 },
+      { "Ma_san_pham": "16", "So_luong": 2 }
+    ]
+  },
+  {
+    "Ma_khach_hang": "C03",
+    "San_pham": [
+      { "Ma_san_pham": "02", "So_luong": 1 },
+      { "Ma_san_pham": "07", "So_luong": 1 },
+      { "Ma_san_pham": "10", "So_luong": 3 }
+    ]
+  }
+]

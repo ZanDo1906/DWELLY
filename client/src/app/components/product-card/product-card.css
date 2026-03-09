@@ -1,4 +1,5 @@
 .product-card {
+  position: relative;
   width: 263.5px;           
   border-radius: 0px;
   overflow: hidden;
@@ -149,4 +150,28 @@
 .actions i.bi-cart:hover {
   color: #6c5234;
   transform: scale(1.2);
+}
+
+/* Cart notification */
+.cart-notification {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6c5234;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+  animation: fadeInOut 1.5s ease;
+  z-index: 10;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
 }

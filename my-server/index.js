@@ -66,6 +66,9 @@ app.use("/", voucherRoute);
 const uploadRoute = require('./routes/upload.router');
 app.use("/", uploadRoute);
 
+const cartRoute = require('./routes/cart.router');
+app.use("/", cartRoute);
+
 
 app.listen(port, () => {
   console.log(`My server listening on port: ${port}`);

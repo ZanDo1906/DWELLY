@@ -5,6 +5,7 @@ import { iProduct } from '../../interfaces/product';
 import { iReview } from '../../interfaces/review';
 import { Review } from '../../services/review';
 import { Client } from '../../services/client';
+import { Cart } from '../../services/cart';
 
 @Component({
   selector: 'app-product-card',
@@ -26,9 +27,12 @@ export class ProductCard implements OnInit {
   heartActive = false;
   
 
+  showCartNotification = false;
+
   constructor(
     private reviewService: Review,
     private clientService: Client,
+    private cartService: Cart,
     private router: Router
   ) {}
 
@@ -80,10 +84,12 @@ export class ProductCard implements OnInit {
 
     });
 }
-  goToCart(event: Event) {  
+  goToCart(event: Event) {
   event.preventDefault();
   event.stopPropagation();
-  this.router.navigate(['/cart-page']);
+  this.cartService.addItem(this.product.Ma_san_pham);
+  this.showCartNotification = true;
+  setTimeout(() => this.showCartNotification = false, 1500);
 }
   
   prevImage() {

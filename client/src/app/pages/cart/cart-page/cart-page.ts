@@ -10,6 +10,7 @@ import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { VoucherPopup } from '../voucher-popup/voucher-popup';
 import { Modal } from '../../../components/modal/modal';
+import { Cart, CartItem as StoredCartItem } from '../../../services/cart';
 
 interface CartItem {
   product: iProduct;
@@ -40,6 +41,7 @@ export class CartPage implements OnInit {
     private productService: Product,
     private roomService: Room,
     private voucherService: Voucher,
+    private cartService: Cart,
     private router: Router
   ) { }
 
@@ -64,39 +66,21 @@ export class CartPage implements OnInit {
       }
     });
 
-    // Load products
+    // Load products and build cart from MongoDB
+    this.cartService.loadCart();
     this.productService.getProductData().subscribe({
       next: (data) => {
         this.products = data;
-        // Load 5 sample products for demonstration
-        this.cartItems = [
-          {
-            product: this.products[0], // Product 1
-            quantity: 1,
-            selected: true
-          },
-          {
-            product: this.products[1], // Product 2
-            quantity: 1,
-            selected: true
-          },
-          {
-            product: this.products[2], // Product 3
-            quantity: 1,
-            selected: true
-          },
-          {
-            product: this.products[3], // Product 4
-            quantity: 1,
-            selected: true
-          },
-          {
-            product: this.products[4], // Product 5
-            quantity: 1,
-            selected: true
-          }
-        ];
-        this.updateSelection();
+        this.cartService.cart$.subscribe(storedItems => {
+          this.cartItems = storedItems
+            .map(item => {
+              const product = this.products.find(p => p.Ma_san_pham === item.productId);
+              if (!product) return null;
+              return { product, quantity: item.quantity, selected: item.selected };
+            })
+            .filter(item => item !== null) as CartItem[];
+          this.updateSelection();
+        });
       },
       error: (err) => {
         console.error('Error loading products:', err);
@@ -111,10 +95,12 @@ export class CartPage implements OnInit {
 
   toggleSelectAll(): void {
     this.cartItems.forEach(item => item.selected = this.selectAll);
+    this.syncCart();
   }
 
   updateSelection(): void {
     this.selectAll = this.cartItems.length > 0 && this.cartItems.every(item => item.selected);
+    this.syncCart();
   }
 
   getSelectedCount(): number {
@@ -176,15 +162,31 @@ export class CartPage implements OnInit {
 
   increaseQuantity(index: number): void {
     this.cartItems[index].quantity++;
+    this.cartService.updateQuantity(
+      this.cartItems[index].product.Ma_san_pham,
+      this.cartItems[index].quantity
+    );
   }
 
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity === 1) {
-      // Show confirmation modal
       this.openDeleteModal(index);
     } else {
       this.cartItems[index].quantity--;
+      this.cartService.updateQuantity(
+        this.cartItems[index].product.Ma_san_pham,
+        this.cartItems[index].quantity
+      );
     }
+  }
+
+  private syncCart(): void {
+    const items: StoredCartItem[] = this.cartItems.map(ci => ({
+      productId: ci.product.Ma_san_pham,
+      quantity: ci.quantity,
+      selected: ci.selected
+    }));
+    localStorage.setItem('cart_items', JSON.stringify(items));
   }
 
   openDeleteModal(index: number): void {
@@ -201,7 +203,10 @@ export class CartPage implements OnInit {
 
   confirmDelete(): void {
     if (this.deleteIndex !== -1) {
-      this.cartItems.splice(this.deleteIndex, 1);
+      const removed = this.cartItems.splice(this.deleteIndex, 1);
+      if (removed.length) {
+        this.cartService.removeItem(removed[0].product.Ma_san_pham);
+      }
       this.updateSelection();
     }
     this.closeDeleteModal();
