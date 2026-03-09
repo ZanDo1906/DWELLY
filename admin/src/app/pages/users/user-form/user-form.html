@@ -46,7 +46,7 @@
         <div class="form-field-row">
           <div class="form-field full-width">
             <label>Địa chỉ</label>
-            <span class="field-value">{{ userForm.Dia_chi }}</span>
+            <span class="field-value">{{ displayAddress }}</span>
           </div>
         </div>
       </div>
@@ -55,11 +55,9 @@
 
   <!-- ACTION BUTTONS -->
   <div class="form-actions">
-    <button class="btn btn-update">
-      <i class="bi bi-pencil"></i> Cập nhật
-    </button>
-    <button class="btn btn-disable" (click)="cancel.emit()">
-      <i class="bi bi-slash-circle"></i> Vô hiệu hóa
+    <button class="btn btn-disable" (click)="disableUser()">
+      <i class="bi" [ngClass]="user.Trang_thai ? 'bi-slash-circle' : 'bi-arrow-counterclockwise'"></i>
+      {{ user.Trang_thai ? 'Vô hiệu hóa' : 'Khôi phục tài khoản' }}
     </button>
   </div>
 </div>

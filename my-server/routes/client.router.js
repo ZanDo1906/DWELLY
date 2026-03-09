@@ -142,6 +142,14 @@ router.patch("/clients/:id", async (req, res) => {
       updateData.So_dien_thoai = normalizedPhone;
     }
 
+    if (req.body.Email !== undefined) {
+      updateData.Email = String(req.body.Email).trim();
+    }
+
+    if (req.body.Trang_thai !== undefined) {
+      updateData.Trang_thai = Boolean(req.body.Trang_thai);
+    }
+
     if (req.body.Anh_dai_dien !== undefined) updateData.Anh_dai_dien = req.body.Anh_dai_dien;
 
     const shouldSyncAddressOwnerInfo =
@@ -605,6 +613,12 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(400).json({
         message: "Email không tồn tại"
+      });
+    }
+
+    if (user.Trang_thai === false) {
+      return res.status(403).json({
+        message: "Tài khoản đã bị vô hiệu hóa"
       });
     }
 

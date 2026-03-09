@@ -36,9 +36,11 @@
               <p class="user-detail"><strong>Email:</strong> {{ user.Email }}</p>
             </div>
             <div class="user-actions">
-              <button class="action-btn edit-btn" (click)="openUserForm(user)">✎ Cập nhật</button>
               <button class="action-btn view-btn" (click)="openUserForm(user)">👁 Xem chi tiết</button>
-              <button class="action-btn disable-btn"><i class="bi bi-slash-circle"></i> Vô hiệu hóa</button>
+              <button class="action-btn disable-btn" (click)="toggleUserStatus(user)">
+                <i class="bi" [ngClass]="user.Trang_thai ? 'bi-slash-circle' : 'bi-arrow-counterclockwise'"></i>
+                {{ user.Trang_thai ? 'Vô hiệu hóa' : 'Khôi phục tài khoản' }}
+              </button>
             </div>
           </div>
         </div>
@@ -68,7 +70,7 @@
     <app-user-form
       [selectedUser]="selectedUser"
       (cancel)="closeUserFormModal()"
-      (submit)="submitUserForm()">
+      (disable)="selectedUser && toggleUserStatus(selectedUser)">
     </app-user-form>
   </app-modal>
 </section>

@@ -1,22 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { UserForm } from '../user-form/user-form';
 import { Modal } from '../../../components/modal/modal';
-
-interface User {
-  Ma_khach_hang: string;
-  Ho_va_ten: string;
-  So_dien_thoai: string;
-  Email: string;
-  Dia_chi: string[];
-  Trang_thai: boolean;
-  Anh_dai_dien: string;
-  Ngay_tao: Date;
-  Ma_phan_hang: string;
-  Tong_diem: number;
-}
+import { Client } from '../../../services/client';
+import { iClient } from '../../../interfaces/client';
 
 @Component({
   selector: 'app-user-list',
@@ -29,12 +17,12 @@ export class UserList implements OnInit, AfterViewInit {
   currentPage = 1;
   searchTerm = '';
   sortType: 'a-z' | 'newest' | 'oldest' = 'a-z';
-  filteredUsers: User[] = [];
-  users: User[] = [];
+  filteredUsers: iClient[] = [];
+  users: iClient[] = [];
   showUserForm = false;
-  selectedUser: User | null = null;
+  selectedUser: iClient | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private clientService: Client) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -45,7 +33,7 @@ export class UserList implements OnInit, AfterViewInit {
   }
 
   private loadUsers(): void {
-    this.http.get<any[]>('assets/data/client.json').subscribe({
+    this.clientService.getClientData().subscribe({
       next: (data) => {
         this.users = data.map(user => ({
           ...user,
@@ -59,7 +47,7 @@ export class UserList implements OnInit, AfterViewInit {
     });
   }
 
-  get sortedUsers(): User[] {
+  get sortedUsers(): iClient[] {
     let sorted = [...this.filteredUsers];
     
     if (this.sortType === 'a-z') {
@@ -77,7 +65,7 @@ export class UserList implements OnInit, AfterViewInit {
     return Math.max(1, Math.ceil(this.sortedUsers.length / this.pageSize));
   }
 
-  get pagedUsers(): User[] {
+  get pagedUsers(): iClient[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.sortedUsers.slice(startIndex, startIndex + this.pageSize);
   }
@@ -122,7 +110,7 @@ export class UserList implements OnInit, AfterViewInit {
     this.goToPage(this.currentPage + 1);
   }
 
-  openUserForm(user: User): void {
+  openUserForm(user: iClient): void {
     this.selectedUser = user;
     this.showUserForm = true;
     setTimeout(() => {
@@ -156,8 +144,23 @@ export class UserList implements OnInit, AfterViewInit {
     this.selectedUser = null;
   }
 
-  submitUserForm(): void {
-    console.log('Update user:', this.selectedUser);
-    this.closeUserFormModal();
+  toggleUserStatus(user: iClient): void {
+    const nextStatus = !user.Trang_thai;
+
+    this.clientService.updateClient(user.Ma_khach_hang, { Trang_thai: nextStatus }).subscribe({
+      next: (response) => {
+        const updatedUser = response.client;
+        this.users = this.users.map(item =>
+          item.Ma_khach_hang === updatedUser.Ma_khach_hang
+            ? { ...updatedUser, Ngay_tao: new Date(updatedUser.Ngay_tao) }
+            : item
+        );
+        this.applyFilters();
+        this.closeUserFormModal();
+      },
+      error: (error) => {
+        console.error('Error disabling user:', error);
+      }
+    });
   }
 }
