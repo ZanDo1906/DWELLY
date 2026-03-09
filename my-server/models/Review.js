@@ -5,9 +5,10 @@ const Review = new Scheme({
     Ma_danh_gia: { type: String, required: true },      // ObjectId (PK)
     Ma_khach_hang: { type: String, required: true },    // ObjectId (FK)
     Ma_san_pham: { type: String, required: true },      // ObjectId (FK)
+    Ma_don_mua: { type: String, required: true },       // ObjectId (FK) - Order ID
     Diem_danh_gia: { type: Number, required: true },    // VD: 1–5
     Noi_dung: { type: String, required: true },
-    Hinh_anh: [{ type: String }],   // thêm dòng này
+    Hinh_anh: [{ type: String }],                        // Array of image URLs
     Thoi_gian_gui: { type: Date, default: Date.now },
 
     updatedAt: { type: Date, default: Date.now }

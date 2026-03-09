@@ -151,9 +151,12 @@
       <div class="actions">
         <button 
           class="btn btn-primary-custom"
-          (click)="openReviewModal(orderItem, orderItem.items[0])">
+          *ngIf="!orderItem.hasReview && orderItem.canReview"
+          (click)="openReviewModal(orderItem)">
           Đánh giá
         </button>
+        <span *ngIf="orderItem.hasReview" class="badge bg-success">Đã đánh giá</span>
+        <span *ngIf="!orderItem.canReview && !orderItem.hasReview" class="badge bg-secondary">Không thể đánh giá</span>
       </div>
     </div>
   </div>
@@ -165,24 +168,113 @@
 <!-- Review Modal -->
 <app-modal
   modalId="reviewModal"
-  title="Đánh giá sản phẩm"
+  [title]="modalView === 'list' ? 'Chọn sản phẩm để đánh giá' : 'Đánh giá sản phẩm'"
   [showHeader]="true"
   [showTitleAndLine]="true"
   [showCloseButton]="true"
   (close)="closeReviewModal()">
-  <app-review-moda
-    [currentProduct]="currentProduct"
-    [orderInfo]="currentReviewOrder?.order"
-    [reviewRating]="reviewRating"
-    [hoveringRating]="hoveringRating"
-    [reviewImages]="reviewImages"
-    [reviewContent]="reviewContent"
-    (reviewContentChange)="onReviewContentChange($event)"
-    (setReviewRating)="setReviewRating($event)"
-    (hoveringRatingChange)="setHoveringRating($event)"
-    (imageSelected)="onImageSelected($event.event, $event.index)"
-    (removeImage)="removeImage($event)"
-    (cancel)="closeReviewModal()"
-    (submit)="submitReview()">
-  </app-review-moda>
+
+  <!-- LIST VIEW: Product Selection -->
+  <div *ngIf="modalView === 'list'" class="review-product-selection">
+    <div class="products-list">
+      <div *ngFor="let item of currentReviewOrder?.items" 
+           class="product-item"
+           [class.reviewed]="reviewedProductIds.has(item.Ma_san_pham)">
+        
+        <div class="product-image">
+          <img [src]="item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
+               [alt]="item.product?.Ten_san_pham" />
+        </div>
+        
+        <div class="product-details">
+          <h6>{{ item.product?.Ten_san_pham }}</h6>
+          <p>Số lượng: {{ item.So_luong }}</p>
+          <p class="price">{{ (item.Don_gia * item.So_luong) | number: '1.0-0' }} đ</p>
+        </div>
+        
+        <div class="product-action">
+          <button *ngIf="!reviewedProductIds.has(item.Ma_san_pham)"
+                  class="btn btn-sm btn-primary-custom"
+                  (click)="selectProductForReview(item)">
+            Đánh giá
+          </button>
+          <span *ngIf="reviewedProductIds.has(item.Ma_san_pham)" 
+                class="badge bg-success">
+            Đã đánh giá
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM VIEW: Review Form -->
+  <div *ngIf="modalView === 'form' && currentSelectedProduct" class="review-form-view">
+    <div class="product-info-selected">
+      <img [src]="currentSelectedProduct.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
+           [alt]="currentSelectedProduct.product?.Ten_san_pham" />
+      <div>
+        <h6>{{ currentSelectedProduct.product?.Ten_san_pham }}</h6>
+        <p>Số lượng: {{ currentSelectedProduct.So_luong }}</p>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- Rating -->
+    <div class="review-rating-section">
+      <label>Cấp độ đánh giá <span class="text-danger">*</span></label>
+      <div class="rating-stars-select">
+        <span *ngFor="let i of [1, 2, 3, 4, 5]"
+              class="rating-star"
+              [ngClass]="(hoveringRating || reviewRating) >= i ? 'filled' : ''"
+              (click)="setReviewRating(i)"
+              (mouseenter)="setHoveringRating(i)"
+              (mouseleave)="setHoveringRating(0)">
+          <i class="bi" [ngClass]="(hoveringRating || reviewRating) >= i ? 'bi-star-fill' : 'bi-star'"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="review-images-section">
+      <label>Thêm hình ảnh (tối đa 5)</label>
+      <div class="images-grid">
+        <div *ngFor="let i of [0, 1, 2, 3, 4]" class="image-upload-box">
+          <input type="file" accept="image/*" (change)="onImageSelected($event, i)" #imageInput />
+          <div class="image-preview" *ngIf="reviewImages[i]" (click)="imageInput.click()">
+            <img [src]="reviewImages[i]" alt="preview" />
+            <button type="button" class="remove-image-btn" (click)="$event.stopPropagation(); removeImage(i)">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <div class="upload-placeholder" *ngIf="!reviewImages[i]" (click)="imageInput.click()">
+            <i class="bi bi-plus"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="review-content-section">
+      <label>Nhận xét của bạn <span class="text-danger">*</span></label>
+      <div class="textarea-wrapper">
+        <textarea class="review-textarea"
+                  [(ngModel)]="reviewContent"
+                  (ngModelChange)="onReviewContentChange($event)"
+                  maxlength="500"
+                  placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này...">
+        </textarea>
+        <div class="char-counter">{{ reviewContent.length }}/500</div>
+      </div>
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="backToProductList()">Quay lại</button>
+      <button class="btn btn-submit" (click)="submitReview()" [disabled]="isSubmittingReview">
+        {{ isSubmittingReview ? 'Đang gửi...' : 'Gửi đánh giá' }}
+      </button>
+    </div>
+  </div>
+
 </app-modal>

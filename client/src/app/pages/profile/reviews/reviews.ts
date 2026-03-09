@@ -15,8 +15,8 @@ import { iProduct } from '../../../interfaces/product';
 interface OrderItemWithReview {
   order: iOrder;
   items: (iOrderDetail & { product: iProduct })[];
-  review?: iReview;
   hasReview: boolean;
+  canReview: boolean; // Order completed and within 7 days
 }
 
 @Component({
@@ -38,11 +38,15 @@ export class Reviews implements OnInit {
 
   // Review Modal
   currentReviewOrder: OrderItemWithReview | null = null;
-  currentProduct: (iOrderDetail & { product: iProduct }) | null = null;
+  currentSelectedProduct: (iOrderDetail & { product: iProduct }) | null = null;
+  reviewedProductIds: Set<string> = new Set(); // Track reviewed products
+  modalView: 'list' | 'form' = 'list'; // Which view to show in modal
+  
   reviewRating: number = 5;
   reviewContent: string = '';
   hoveringRating: number = 0;
   reviewImages: (string | File)[] = [];
+  isSubmittingReview: boolean = false;
 
   constructor(
     private orderService: Order,
@@ -89,24 +93,38 @@ export class Reviews implements OnInit {
           };
         });
 
-      // Get review for this order (first product's review)
-      let review: iReview | undefined;
-      if (items.length > 0) {
-        review = reviews.find(
-          r => r.Ma_khach_hang === this.currentCustomerId &&
-               r.Ma_san_pham === items[0].Ma_san_pham
-        );
-      }
+      // Check if ALL products in the order have been reviewed
+      const hasReview = items.length > 0 && items.every(item =>
+        reviews.some(r => r.Ma_don_mua === order.Ma_don_mua && r.Ma_san_pham === item.Ma_san_pham)
+      );
+
+      // Check if order can be reviewed: status is "Hoàn thành" and within 7 days
+      const canReview = this.isOrderEligibleForReview(order);
 
       return {
         order,
         items,
-        review,
-        hasReview: !!review,
+        hasReview,
+        canReview,
       };
     });
 
     this.applyFiltersAndSort();
+  }
+
+  private isOrderEligibleForReview(order: iOrder): boolean {
+    // Check if order status is "Hoàn thành" (Completed)
+    if (order.Trang_thai !== 'Hoàn thành') {
+      return false;
+    }
+
+    // Check if order is within 7 days
+    const orderDate = new Date(order.Ngay_dat);
+    const today = new Date();
+    const diffTime = today.getTime() - orderDate.getTime();
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+    return diffDays <= 7;
   }
 
   applyFiltersAndSort(): void {
@@ -119,9 +137,9 @@ export class Reviews implements OnInit {
       filtered = filtered.filter(o => !o.hasReview);
     }
 
-    // Filter by rating
+    // Filter by rating - Not applicable for this view since we show all products
     if (this.selectedRatingFilter > 0) {
-      filtered = filtered.filter(o => o.review?.Diem_danh_gia === this.selectedRatingFilter);
+      // Can be implemented later if needed
     }
 
     // Sort
@@ -132,9 +150,7 @@ export class Reviews implements OnInit {
         case 'oldest':
           return new Date(a.order.Ngay_dat).getTime() - new Date(b.order.Ngay_dat).getTime();
         case 'high-rating':
-          const ratingA = a.review?.Diem_danh_gia || 0;
-          const ratingB = b.review?.Diem_danh_gia || 0;
-          return ratingB - ratingA;
+          return 0; // Not applicable for this view
         default:
           return 0;
       }
@@ -158,13 +174,21 @@ export class Reviews implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  openReviewModal(order: OrderItemWithReview, product: iOrderDetail & { product: iProduct }): void {
+  openReviewModal(order: OrderItemWithReview): void {
+    // Open modal with list of products to review
     this.currentReviewOrder = order;
-    this.currentProduct = product;
-    this.reviewRating = 5;
-    this.reviewContent = '';
-    this.reviewImages = [];
-    this.hoveringRating = 0;
+    this.currentSelectedProduct = null;
+    this.modalView = 'list';
+    this.reviewedProductIds = new Set();
+    
+    // Mark products as reviewed if they already have reviews
+    const existingReviews = this.reviewService.getReviewData().toPromise().then(reviews => {
+      reviews?.forEach(review => {
+        if (review.Ma_don_mua === order.order.Ma_don_mua) {
+          this.reviewedProductIds.add(review.Ma_san_pham);
+        }
+      });
+    });
 
     setTimeout(() => {
       const modalEl = document.getElementById('reviewModal');
@@ -175,6 +199,29 @@ export class Reviews implements OnInit {
     }, 0);
   }
 
+  selectProductForReview(product: iOrderDetail & { product: iProduct }): void {
+    if (this.reviewedProductIds.has(product.Ma_san_pham)) {
+      alert('Sản phẩm này đã được đánh giá');
+      return;
+    }
+    
+    this.currentSelectedProduct = product;
+    this.modalView = 'form';
+    this.reviewRating = 5;
+    this.reviewContent = '';
+    this.reviewImages = [];
+    this.hoveringRating = 0;
+  }
+
+  backToProductList(): void {
+    this.currentSelectedProduct = null;
+    this.modalView = 'list';
+    this.reviewRating = 5;
+    this.reviewContent = '';
+    this.reviewImages = [];
+    this.hoveringRating = 0;
+  }
+
   closeReviewModal(): void {
     const modalEl = document.getElementById('reviewModal');
     if (modalEl) {
@@ -182,11 +229,14 @@ export class Reviews implements OnInit {
       modal?.hide();
     }
     this.currentReviewOrder = null;
-    this.currentProduct = null;
+    this.currentSelectedProduct = null;
+    this.modalView = 'list';
+    this.reviewedProductIds.clear();
     this.reviewRating = 5;
     this.reviewContent = '';
     this.reviewImages = [];
     this.hoveringRating = 0;
+    this.isSubmittingReview = false;
   }
 
   setReviewRating(rating: number): void {
@@ -224,21 +274,58 @@ export class Reviews implements OnInit {
   }
 
   submitReview(): void {
-    if (!this.currentProduct || !this.reviewContent.trim()) {
+    if (!this.currentSelectedProduct || !this.reviewContent.trim()) {
       alert('Vui lòng nhập nội dung đánh giá');
       return;
     }
 
-    // TODO: Submit review to API
-    console.log('Submit review:', {
-      orderId: this.currentReviewOrder?.order.Ma_don_mua,
-      customerId: this.currentCustomerId,
-      productId: this.currentProduct.Ma_san_pham,
-      rating: this.reviewRating,
-      content: this.reviewContent,
-    });
+    if (!this.currentReviewOrder) {
+      alert('Không tìm thấy đơn hàng');
+      return;
+    }
 
-    this.closeReviewModal();
+    this.isSubmittingReview = true;
+
+    // Create review for the selected product only
+    const review: iReview = {
+      Ma_danh_gia: '', // Will be generated by server
+      Ma_khach_hang: this.currentCustomerId,
+      Ma_san_pham: this.currentSelectedProduct.Ma_san_pham,
+      Ma_don_mua: this.currentReviewOrder.order.Ma_don_mua,
+      Diem_danh_gia: this.reviewRating,
+      Noi_dung: this.reviewContent,
+      Hinh_anh: this.reviewImages.filter(img => img !== '')
+        .map(img => typeof img === 'string' ? img : ''),
+      Thoi_gian_gui: new Date(),
+    };
+
+    this.reviewService.createReview(review).toPromise()
+      .then(() => {
+        // Mark product as reviewed
+        this.reviewedProductIds.add(this.currentSelectedProduct!.Ma_san_pham);
+        alert('Cảm ơn bạn đã đánh giá sản phẩm này!');
+        
+        // Get unreviewd products
+        const unreviwedProducts = this.currentReviewOrder!.items.filter(
+          item => !this.reviewedProductIds.has(item.Ma_san_pham)
+        );
+        
+        if (unreviwedProducts.length > 0) {
+          // Continue to next product
+          this.backToProductList();
+        } else {
+          // All products reviewed, close modal
+          this.closeReviewModal();
+          this.loadData(); // Reload to update UI
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting review:', error);
+        alert('Lỗi khi gửi đánh giá. Vui lòng thử lại.');
+      })
+      .finally(() => {
+        this.isSubmittingReview = false;
+      });
   }
 
   getStarArray(rating: number): number[] {
@@ -253,8 +340,17 @@ export class Reviews implements OnInit {
     return items.reduce((sum, item) => sum + (item.Don_gia * item.So_luong), 0);
   }
 
+  getDaysUntilExpiration(order: iOrder): number {
+    const orderDate = new Date(order.Ngay_dat);
+    const expiryDate = new Date(orderDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const today = new Date();
+    const diffTime = expiryDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
+  }
+
   get notReviewedCount(): number {
-    return this.orderWithReviews.filter(o => !o.hasReview).length;
+    return this.orderWithReviews.filter(o => !o.hasReview && o.canReview).length;
   }
 
   get reviewedCount(): number {

@@ -42,7 +42,6 @@ export class Orders implements OnInit {
   activeTab: string = 'Tất cả'; // Track active tab
 
   currentReviewOrder: any = null;
-  currentProduct: any = null;
   reviewRating = 5;
   hoveringRating = 0;
   reviewImages: (string | File)[] = [];

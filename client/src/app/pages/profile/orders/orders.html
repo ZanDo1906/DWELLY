@@ -105,8 +105,7 @@
       [showCloseButton]="true"
       (close)="closeReviewModal()">
       <app-review-moda
-        [currentProduct]="currentProduct"
-        [orderInfo]="currentReviewOrder"
+        [orderInfo]="currentReviewOrder?.items"
         [reviewRating]="reviewRating"
         [hoveringRating]="hoveringRating"
         [reviewImages]="reviewImages"

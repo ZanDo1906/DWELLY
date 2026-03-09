@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './review-moda.css',
 })
 export class ReviewModa {
-  @Input() currentProduct: any = null;
-  @Input() orderInfo: any = null;
+  @Input() orderInfo: any = null; // Array of order details with products
   @Input() reviewRating = 5;
   @Input() hoveringRating = 0;
   @Input() reviewImages: (string | File)[] = [];
   @Input() reviewContent = '';
+  @Input() isSubmitting = false;
 
   @Output() reviewContentChange = new EventEmitter<string>();
   @Output() setReviewRating = new EventEmitter<number>();
@@ -28,3 +28,4 @@ export class ReviewModa {
     this.imageSelected.emit({ event, index });
   }
 }
+
