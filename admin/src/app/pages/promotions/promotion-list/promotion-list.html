@@ -1,19 +1,22 @@
 <section>
   <div class="container-fluid py-4">
     <div class="padding-x">
-      <div class="site-inner promotion-page">
+      <div class="site-inner promotion-page orders-page">
         <div class="page-header">
           <h2 class="page-title">Quản lý khuyến mãi</h2>
 
-          <button class="add-btn" data-bs-toggle="modal" data-bs-target="#promotionModal" (click)="openCreatePromotion()">
-            <i class="bi bi-plus-circle"></i>
-            <span>THÊM KHUYẾN MÃI</span>
+          <button class="add-btn" data-bs-toggle="modal" data-bs-target="#promotionModal"
+            (click)="openCreatePromotion()">
+            <span class="add-icon" aria-hidden="true">+</span>
+            <span class="add-label">Thêm khuyến mãi</span>
           </button>
         </div>
 
         <div class="filter-bar">
-          <div class="search-wrap">
-            <i class="bi bi-search"></i>
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">
+              <i class="bi bi-search"></i>
+            </span>
             <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
               (input)="onSearchChange($event)" />
           </div>
@@ -33,13 +36,21 @@
               Cũ nhất
             </button>
 
-            <select class="status-select" [value]="selectedStatus" (change)="onStatusChange($event)">
-              <option value="all">Tất cả trạng thái</option>
-              <option value="active">Kích hoạt</option>
-              <option value="paused">Tạm dừng</option>
-            </select>
+            <div class="status-select" [class.open]="isStatusOpen">
+              <button type="button" class="status-select-trigger" (click)="toggleStatusDropdown($event)">
+                <span>{{ selectedStatusLabel }}</span>
+                <span class="status-caret" aria-hidden="true">▾</span>
+              </button>
 
-            <button class="delete-selected-btn" (click)="deleteSelected()" [disabled]="!selectedCount"
+              <ul class="status-options" *ngIf="isStatusOpen">
+                <li *ngFor="let status of statusOptions" class="status-option"
+                  [class.active]="status.value === selectedStatus" (click)="selectStatus(status.value)">
+                  {{ status.label }}
+                </li>
+              </ul>
+            </div>
+
+            <button class="delete-selected-btn" (click)="requestDeleteSelected()" [disabled]="!selectedCount"
               title="Xóa mục đã chọn">
               <i class="bi bi-trash"></i>
             </button>
@@ -62,10 +73,9 @@
           </ng-container>
 
           <ng-container table-body>
-            <tr *ngFor="let promotion of pagedPromotions" (click)="openPromotionDetail(promotion)" data-bs-toggle="modal" data-bs-target="#promotionModal">
-              <td>
-                <input type="checkbox" [checked]="selectedIds.has(promotion.id)"
-                  (click)="$event.stopPropagation()"
+            <tr *ngFor="let promotion of pagedPromotions" (click)="openPromotionDetail(promotion)">
+              <td (click)="$event.stopPropagation()">
+                <input type="checkbox" [checked]="selectedIds.has(promotion.id)" (click)="$event.stopPropagation()"
                   (change)="toggleSelectRow(promotion.id, $event)" />
               </td>
               <td>{{ promotion.promotionCode }}</td>
@@ -75,7 +85,10 @@
               <td>{{ promotion.startDate }}</td>
               <td>{{ promotion.endDate }}</td>
               <td>
-                <span class="status" [ngClass]="promotion.status">{{ promotion.statusLabel }}</span>
+                <span class="admin-status-badge" [ngClass]="{
+                  'admin-status-success': promotion.status === 'active',
+                  'admin-status-warning': promotion.status === 'paused'
+                }">{{ promotion.statusLabel }}</span>
               </td>
               <td>{{ promotion.creator }}</td>
             </tr>
@@ -99,5 +112,19 @@
 </section>
 
 <app-modal modalId="promotionModal" [title]="promotionModalTitle">
-  <app-promotion-form [promotion]="selectedPromotion"></app-promotion-form>
+  <app-promotion-form [promotion]="selectedPromotion" (saveConfirmed)="onPromotionSave($event)"></app-promotion-form>
+</app-modal>
+
+<app-confirm-dialog *ngIf="showDeleteConfirm" modalId="promotionDeleteConfirmModal" title="Xác nhận xóa"
+  [message]="deleteConfirmMessage" (confirm)="confirmDeleteSelected()" (cancel)="cancelDeleteSelected()">
+</app-confirm-dialog>
+
+<app-modal modalId="promotionResultModal" [title]="resultModalTitle">
+  <div class="result-modal-body" [ngClass]="resultModalType">
+    <div class="result-icon">
+      <i class="bi" [ngClass]="resultModalType === 'success' ? 'bi-check-circle' : 'bi-x-circle'"></i>
+    </div>
+    <p class="result-message">{{ resultModalMessage }}</p>
+    <button type="button" class="result-close-btn" (click)="hideResultModal()">Đóng</button>
+  </div>
 </app-modal>

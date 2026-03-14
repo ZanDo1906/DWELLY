@@ -37,6 +37,7 @@ label span {
 
 /* INPUT */
 input,
+select,
 textarea {
   padding: 12px 16px;
   border: 1px solid #dcdcdc;
@@ -48,6 +49,7 @@ textarea {
 }
 
 input:focus,
+select:focus,
 textarea:focus {
   border-color: #AFA386;
 }

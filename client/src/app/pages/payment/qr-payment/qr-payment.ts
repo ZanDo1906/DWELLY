@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Modal } from '../../../components/modal/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qr-payment',
@@ -24,6 +25,8 @@ export class QRPayment implements OnInit, OnDestroy {
   private confirmTimer: any;
 
   @Output() closeModal = new EventEmitter<void>();
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.startCountdown();
@@ -88,6 +91,11 @@ export class QRPayment implements OnInit, OnDestroy {
     }
     this.showSuccessModal = false;
     this.close();
+  }
+
+  continueShopping(): void {
+    this.closeSuccessModal();
+    this.router.navigate(['/']);
   }
 
   formatPrice(price: number): string {

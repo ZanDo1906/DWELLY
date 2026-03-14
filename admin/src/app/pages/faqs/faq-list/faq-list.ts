@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { Table } from '../../../components/table/table';
 import { Contact } from '../../../services/contact';
 import { Modal } from '../../../components/modal/modal';
 import { FaqForm, FaqFormData, FaqReplyPayload } from '../faq-form/faq-form';
 
 interface FaqItem {
-  id: number;
+  id: string;
   questionCode: string;
   customerName: string;
   submittedAt: string;
@@ -15,6 +16,8 @@ interface FaqItem {
   status: 'unprocessed' | 'processed';
   statusLabel: string;
   handler: string;
+  draftReplyContent?: string;
+  finalReplyContent?: string;
 }
 
 @Component({
@@ -29,9 +32,16 @@ export class FaqList implements OnInit {
 
   searchText = '';
   selectedStatus: 'all' | 'unprocessed' | 'processed' = 'all';
+  isStatusOpen = false;
   sortType: 'az' | 'newest' | 'oldest' = 'az';
 
-  selectedIds = new Set<number>();
+  statusOptions: Array<{ label: string; value: 'all' | 'unprocessed' | 'processed' }> = [
+    { label: 'Tất cả trạng thái', value: 'all' },
+    { label: 'Chưa xử lý', value: 'unprocessed' },
+    { label: 'Đã xử lý', value: 'processed' },
+  ];
+
+  selectedIds = new Set<string>();
   selectedFaq: FaqFormData | null = null;
 
   faqs: FaqItem[] = [];
@@ -39,12 +49,16 @@ export class FaqList implements OnInit {
   constructor(private contactService: Contact) { }
 
   ngOnInit(): void {
+    this.loadFaqs();
+  }
+
+  private loadFaqs(): void {
     this.contactService.getContactData().subscribe({
       next: (contacts) => {
-        this.faqs = contacts.map((contact, index) => {
+        this.faqs = contacts.map((contact) => {
           const date = new Date(contact.Ngay_gui);
           return {
-            id: index + 1,
+            id: contact._id ?? contact.Ma_lien_he,
             questionCode: contact.Ma_lien_he,
             customerName: contact.Ho_ten,
             submittedAt: this.formatDate(date),
@@ -53,6 +67,8 @@ export class FaqList implements OnInit {
             status: this.normalizeStatus(contact.Trang_thai),
             statusLabel: contact.Trang_thai,
             handler: contact.Ma_quan_tri_vien_xu_ly || '-',
+            draftReplyContent: contact.Noi_dung_tra_loi_nhap || '',
+            finalReplyContent: contact.Noi_dung_tra_loi || '',
           };
         });
       },
@@ -119,10 +135,24 @@ export class FaqList implements OnInit {
     this.currentPage = 1;
   }
 
-  onStatusChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedStatus = target.value as 'all' | 'unprocessed' | 'processed';
+  toggleStatusDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isStatusOpen = !this.isStatusOpen;
+  }
+
+  selectStatus(status: 'all' | 'unprocessed' | 'processed'): void {
+    this.selectedStatus = status;
     this.currentPage = 1;
+    this.isStatusOpen = false;
+  }
+
+  get selectedStatusLabel(): string {
+    return this.statusOptions.find((option) => option.value === this.selectedStatus)?.label || 'Tất cả trạng thái';
+  }
+
+  @HostListener('document:click')
+  closeStatusDropdown(): void {
+    this.isStatusOpen = false;
   }
 
   setSortType(type: 'az' | 'newest' | 'oldest'): void {
@@ -141,7 +171,7 @@ export class FaqList implements OnInit {
     });
   }
 
-  toggleSelectRow(id: number, event: Event): void {
+  toggleSelectRow(id: string, event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.checked) {
       this.selectedIds.add(id);
@@ -155,18 +185,30 @@ export class FaqList implements OnInit {
       return;
     }
 
-    this.faqs = this.faqs.filter((faq) => !this.selectedIds.has(faq.id));
-    this.selectedIds.clear();
-    this.currentPage = Math.min(this.currentPage, this.totalPages);
+    const idsToDelete = Array.from(this.selectedIds);
+
+    forkJoin(idsToDelete.map((id) => this.contactService.deleteContact(id))).subscribe({
+      next: () => {
+        this.removeFaqsFromView(idsToDelete);
+      },
+      error: (error) => {
+        console.error('Xoa FAQ that bai:', error);
+      },
+    });
   }
 
-  deleteFaq(id: number): void {
-    this.faqs = this.faqs.filter((faq) => faq.id !== id);
-    this.selectedIds.delete(id);
-    this.currentPage = Math.min(this.currentPage, this.totalPages);
+  deleteFaq(id: string): void {
+    this.contactService.deleteContact(id).subscribe({
+      next: () => {
+        this.removeFaqsFromView([id]);
+      },
+      error: (error) => {
+        console.error('Xoa FAQ that bai:', error);
+      },
+    });
   }
 
-  editFaq(id: number): void {
+  editFaq(id: string): void {
     const faq = this.faqs.find((item) => item.id === id);
     if (!faq) {
       return;
@@ -179,32 +221,87 @@ export class FaqList implements OnInit {
       submittedAt: faq.submittedAt,
       questionContent: faq.questionContent,
       statusLabel: faq.statusLabel,
+      draftReplyContent: faq.draftReplyContent,
+      finalReplyContent: faq.finalReplyContent,
     };
   }
 
   onSaveDraft(payload: FaqReplyPayload): void {
-    console.log('Lưu nháp FAQ:', payload);
+    this.contactService.saveContactDraft(payload.id, payload.replyContent).subscribe({
+      next: (updatedContact) => {
+        const draftStatusLabel = updatedContact.Trang_thai || 'Đang lưu nháp';
+        const draftContent = updatedContact.Noi_dung_tra_loi_nhap || payload.replyContent;
+
+        this.faqs = this.faqs.map((faq) => {
+          if (faq.id !== payload.id) {
+            return faq;
+          }
+
+          return {
+            ...faq,
+            status: this.normalizeStatus(draftStatusLabel),
+            statusLabel: draftStatusLabel,
+            draftReplyContent: draftContent,
+            finalReplyContent: faq.finalReplyContent,
+          };
+        });
+
+        if (this.selectedFaq && this.selectedFaq.id === payload.id) {
+          this.selectedFaq = {
+            ...this.selectedFaq,
+            statusLabel: draftStatusLabel,
+            draftReplyContent: draftContent,
+            finalReplyContent: this.selectedFaq.finalReplyContent,
+          };
+        }
+      },
+      error: (error) => {
+        console.error('Luu nhap FAQ that bai:', error);
+      },
+    });
   }
 
   onSendAnswer(payload: FaqReplyPayload): void {
-    this.faqs = this.faqs.map((faq) => {
-      if (faq.id !== payload.id) {
-        return faq;
-      }
+    const shouldSend = window.confirm(
+      'Bạn có chắc chắn muốn gửi câu trả lời cho khách không? Sau khi gửi, bạn sẽ không thể chỉnh sửa lại nội dung này.',
+    );
 
-      return {
-        ...faq,
-        status: 'processed',
-        statusLabel: 'Đã xử lý',
-      };
-    });
-
-    if (this.selectedFaq && this.selectedFaq.id === payload.id) {
-      this.selectedFaq = {
-        ...this.selectedFaq,
-        statusLabel: 'Đã xử lý',
-      };
+    if (!shouldSend) {
+      return;
     }
+
+    this.contactService.sendContactReply(payload.id, payload.replyContent).subscribe({
+      next: (updatedContact) => {
+        const replyStatusLabel = updatedContact.Trang_thai || 'Đã xử lý';
+        const finalReplyContent = updatedContact.Noi_dung_tra_loi || payload.replyContent;
+
+        this.faqs = this.faqs.map((faq) => {
+          if (faq.id !== payload.id) {
+            return faq;
+          }
+
+          return {
+            ...faq,
+            status: this.normalizeStatus(replyStatusLabel),
+            statusLabel: replyStatusLabel,
+            draftReplyContent: '',
+            finalReplyContent,
+          };
+        });
+
+        if (this.selectedFaq && this.selectedFaq.id === payload.id) {
+          this.selectedFaq = {
+            ...this.selectedFaq,
+            statusLabel: replyStatusLabel,
+            draftReplyContent: '',
+            finalReplyContent,
+          };
+        }
+      },
+      error: (error) => {
+        console.error('Gui cau tra loi FAQ that bai:', error);
+      },
+    });
   }
 
   get faqModalTitle(): string {
@@ -230,8 +327,23 @@ export class FaqList implements OnInit {
     this.goToPage(this.currentPage + 1);
   }
 
+  private removeFaqsFromView(ids: string[]): void {
+    const idsToRemove = new Set(ids);
+    this.faqs = this.faqs.filter((faq) => !idsToRemove.has(faq.id));
+    ids.forEach((id) => this.selectedIds.delete(id));
+
+    if (this.selectedFaq && idsToRemove.has(this.selectedFaq.id)) {
+      this.selectedFaq = null;
+    }
+
+    this.currentPage = Math.min(this.currentPage, this.totalPages);
+  }
+
   private normalizeStatus(status: string): 'unprocessed' | 'processed' {
-    return status.trim().toLowerCase().includes('chưa') ? 'unprocessed' : 'processed';
+    const normalizedStatus = status.trim().toLowerCase();
+    return normalizedStatus.includes('chưa') || normalizedStatus.includes('nháp')
+      ? 'unprocessed'
+      : 'processed';
   }
 
   private formatDate(date: Date): string {

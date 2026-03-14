@@ -91,6 +91,18 @@
     border-color: #afa386;
 }
 
+.reply-wrap textarea[readonly] {
+    background: #f3f3f3;
+    color: #6f6f6f;
+    cursor: not-allowed;
+}
+
+.lock-note {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #8a6b3e;
+}
+
 .actions {
     margin-top: 16px;
     display: flex;
@@ -127,6 +139,12 @@
 
 .btn-brown:hover {
     background: #5d4a39;
+}
+
+.btn-outline-brown:disabled,
+.btn-brown:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
 }
 
 @media (max-width: 991px) {

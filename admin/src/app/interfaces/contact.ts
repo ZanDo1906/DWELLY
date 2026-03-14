@@ -1,4 +1,5 @@
 export interface iContact {
+    _id?: string;
     Ma_lien_he: string;              // ObjectId (PK)
     Ho_ten: string;
     Email: string;
@@ -7,4 +8,6 @@ export interface iContact {
     Trang_thai: string;             // VD: "Chưa xử lý", "Đã phản hồi"
     Ngay_gui: Date;
     Ma_quan_tri_vien_xu_ly?: string; // ObjectId (FK)
+    Noi_dung_tra_loi_nhap?: string;
+    Noi_dung_tra_loi?: string;
 }
