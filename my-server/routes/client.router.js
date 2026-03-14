@@ -9,6 +9,7 @@ db.connect();
 
 //Import Client model
 const Client = require('../models/Client');
+const Product = require('../models/Product');
 
 function normalizePhone(phone) {
   return String(phone || '').trim().replace(/\s+/g, '');
@@ -96,6 +97,29 @@ router.post("/clients/toggle-favorite", async (req, res) => {
 });
 
 //get client by ID
+// Get wishlist (products) for a client by customer code
+router.get("/clients/:id/wishlist", async (req, res) => {
+  try {
+    const client = await Client.findOne({ Ma_khach_hang: req.params.id });
+    if (!client) return res.status(404).json({ message: "Khách hàng không tồn tại" });
+
+    const favorites = client.favorites || [];
+    if (favorites.length === 0) return res.json([]);
+
+    const products = await Product.find({ Ma_san_pham: { $in: favorites } });
+
+    // Preserve the order of favorites
+    const productMap = new Map();
+    products.forEach(p => productMap.set(p.Ma_san_pham, p));
+
+    const ordered = favorites.map(code => productMap.get(code)).filter(Boolean);
+
+    res.json(ordered);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 router.get("/clients/:id", async (req, res) => {
     try {
         let  client = await Client.findOne({ Ma_khach_hang: req.params.id });

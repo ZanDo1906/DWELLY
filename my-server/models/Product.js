@@ -13,9 +13,8 @@ const Product = new Scheme({
     Ma_loai_phong: { type: String, required: true },
     Ma_phong_cach: { type: String, required: true },
     Ma_danh_muc: { type: String, required: true },
-    Ma_khong_gian: { type: String, required: true },
+    Ma_khong_gian: { type: String },
     Trang_thai: { type: Boolean, default: true },
-
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });

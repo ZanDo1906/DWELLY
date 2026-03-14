@@ -9,15 +9,15 @@
         <!-- Sort options -->
         <div class="wishlist-sort mb-3">
 
-          <button class="sort-btn" (click)="sortByFavoriteOrder()">
+          <button class="sort-btn" (click)="sortByFavoriteOrder()" [class.active]="currentSort === 'date'">
             {{ dateSort === 'desc' ? 'Mới nhất' : 'Cũ nhất' }}
             <i class="bi"
               [ngClass]="dateSort === 'desc' ? 'bi-arrow-down' : 'bi-arrow-up'">
             </i>
           </button>
 
-          <button class="sort-btn" (click)="sortByPrice()">
-            Giá 
+          <button class="sort-btn" (click)="sortByPrice()" [class.active]="currentSort === 'price'"> 
+            {{ priceSort === 'desc' ? 'Giá cao' : 'Giá thấp' }}
             <i class="bi" [ngClass]="priceSort === 'desc' ? 'bi-arrow-down' : 'bi-arrow-up'"></i>
           </button>
 

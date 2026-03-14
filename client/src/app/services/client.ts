@@ -1,4 +1,5 @@
 import { iClient } from './../interfaces/client';
+import { iProduct } from './../interfaces/product';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
@@ -83,6 +84,12 @@ export class Client {
   const user = localStorage.getItem('current_user');
   return user ? JSON.parse(user) : null;
 }
+
+  getWishlist(customerCode: string) {
+    return this.http
+      .get<iProduct[]>(`${baseUrl}/clients/${customerCode}/wishlist`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
   saveLoginData(response: any) {
   localStorage.setItem('auth_token', response.token);

@@ -117,6 +117,15 @@ selectStatus(status: string, event: Event): void {
     this.currentPage = 1; 
   }
 
+  onSearchTermChange(value: string): void {
+    this.searchTerm = value;
+  }
+
+  onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchTerm = target.value;
+  }
+
   private _statusFilter: string = 'Tất cả trạng thái';
   get statusFilter(): string {
     return this._statusFilter;

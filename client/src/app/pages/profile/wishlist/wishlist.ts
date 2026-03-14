@@ -18,6 +18,7 @@ export class Wishlist implements OnInit {
   favorites: string[] = [];   
   priceSort: 'asc' | 'desc' = 'desc';
   dateSort: 'asc' | 'desc' = 'desc';
+  currentSort: 'date' | 'price' | null = null;
   constructor(
     public productService: Product,
     private clientService: Client,
@@ -29,23 +30,38 @@ export class Wishlist implements OnInit {
   }
 
   loadWishlist() {
+    const user = this.clientService.getCurrentUser();
 
-    const user = JSON.parse(localStorage.getItem("current_user") || "{}");
-
-    if (!user.favorites || user.favorites.length === 0) {
+    if (!user) {
       this.products = [];
       return;
     }
 
-    this.favorites = user.favorites;
+    const maKhachHang = user.customerCode ?? user.Ma_khach_hang;
 
-    this.productService.getProductsByCodes(user.favorites)
-      .subscribe({
-        next: (data) => {
-          this.products = data;
-        },
-        error: (err) => console.log(err)
-      });
+    this.clientService.getWishlist(maKhachHang).subscribe({
+      next: (data: any) => {
+        this.products = data;
+        this.favorites = data.map((p: any) => p.Ma_san_pham);
+        user.favorites = this.favorites;
+        localStorage.setItem('current_user', JSON.stringify(user));
+      },
+      error: (err) => {
+        console.log(err);
+        if (!user.favorites || user.favorites.length === 0) {
+          this.products = [];
+          return;
+        }
+        this.favorites = user.favorites;
+        this.productService.getProductsByCodes(user.favorites)
+          .subscribe({
+            next: (data) => {
+              this.products = data;
+            },
+            error: (err) => console.log(err)
+          });
+      }
+    });
   }
 
   isFavorite(productId: string): boolean {
@@ -90,6 +106,7 @@ export class Wishlist implements OnInit {
   }
 
   sortByPrice() {
+  this.currentSort = 'price';
 
   this.priceSort = this.priceSort === 'desc' ? 'asc' : 'desc';
 
@@ -100,6 +117,8 @@ export class Wishlist implements OnInit {
   });
   }
   sortByFavoriteOrder() {
+
+  this.currentSort = 'date';
 
   this.dateSort = this.dateSort === 'desc' ? 'asc' : 'desc';
 

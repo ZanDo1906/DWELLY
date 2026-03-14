@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,11 +16,15 @@ export class Support implements OnInit {
   ngOnInit() {
     this.contactForm = this.fb.group({
       fullName: ['', [Validators.required]],
+      phone: ['', [Validators.pattern(/^\d{7,15}$/)]],
       email: ['', [Validators.required, Validators.email]],
       content: ['', [Validators.required]]
     });
   }
 
+  get phone() {
+  return this.contactForm.get('phone')!;
+}
   get fullName() {
     return this.contactForm.get('fullName')!;
   }
@@ -47,13 +51,15 @@ export class Support implements OnInit {
   }
 
   onSubmit() {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
 
-  if (this.contactForm.valid) {
-
-    const data = {
+    const data: any = {
       Ho_ten: this.contactForm.value.fullName,
-      Email: this.contactForm.value.email,
-      So_dien_thoai: '000000000',
+      Email: this.contactForm.value.email || null,
+      So_dien_thoai: this.contactForm.value.phone || null,
       Noi_dung: this.contactForm.value.content
     };
 
@@ -65,11 +71,9 @@ export class Support implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          alert('Gửi thất bại');
+          const msg = err?.error?.error || 'Gửi thất bại';
+          alert(msg);
         }
       });
-
   }
-
-}
 }

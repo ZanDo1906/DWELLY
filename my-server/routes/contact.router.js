@@ -138,7 +138,10 @@ router.delete('/contacts/:id', async (req, res) => {
 router.post("/contacts", async (req, res) => {
   try {
 
-    // tìm contact có mã lớn nhất
+    if (!req.body.Ho_ten || !req.body.Noi_dung || !req.body.Email) {
+  return res.status(400).json({ error: 'Vui lòng nhập đầy đủ họ tên, email và nội dung' });
+}
+
     const lastContact = await Contact
       .findOne({})
       .sort({ Ma_lien_he: -1 });
@@ -153,8 +156,8 @@ router.post("/contacts", async (req, res) => {
     const newContact = new Contact({
       Ma_lien_he: newId,
       Ho_ten: req.body.Ho_ten,
-      Email: req.body.Email,
-      So_dien_thoai: req.body.So_dien_thoai,
+      Email: req.body.Email || null,
+      So_dien_thoai: req.body.So_dien_thoai || null,
       Noi_dung: req.body.Noi_dung,
       Trang_thai: "Chưa xử lý",
       Ma_quan_tri_vien_xu_ly: null
@@ -165,7 +168,7 @@ router.post("/contacts", async (req, res) => {
     res.json(newContact);
 
   } catch (err) {
-    res.json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 module.exports = router;
