@@ -25,6 +25,31 @@ router.get("/admins", async (req, res) => {
     }
 });
 
+// Get admin by ID (Ma_quan_tri_vien or _id)
+router.get("/admins/:id", async (req, res) => {
+    try {
+        let admin;
+        
+        // Try to find by Ma_quan_tri_vien first
+        admin = await Admin.findOne({ Ma_quan_tri_vien: req.params.id });
+        
+        // If not found, try to find by _id (MongoDB ObjectId)
+        if (!admin) {
+            admin = await Admin.findById(req.params.id);
+        }
+        
+        if (!admin) {
+            return res.status(404).json({ message: "Quản trị viên không tồn tại" });
+        }
+        
+        // Return admin info without password
+        const { Mat_khau, ...adminInfo } = admin.toObject();
+        res.json(adminInfo);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // ================= ADMIN LOGIN =================
 router.post("/loginAdmin", async (req, res) => {
   try {

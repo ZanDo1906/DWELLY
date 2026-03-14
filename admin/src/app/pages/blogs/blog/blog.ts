@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Blog as BlogService } from '../../../services/blog';
+import { iBlog } from '../../../interfaces/blog';
 
 interface TextBlock {
   Loai: 'text';
@@ -18,11 +21,13 @@ type ContentBlock = TextBlock | ImageBlock;
 @Component({
   selector: 'app-blog-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './blog.html',
   styleUrls: ['./blog.css']
 })
-export class Blog {
+export class Blog implements OnInit {
+  isEditMode = false;
+  blogId: string | null = null;
 
   maBaiViet = 'BV' + Date.now().toString().slice(-6);
   today = new Date().toLocaleDateString('vi-VN');
@@ -32,6 +37,68 @@ export class Blog {
   trangThai = true;
 
   blocks: ContentBlock[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private blogService: BlogService
+  ) {}
+
+  ngOnInit(): void {
+    this.blogId = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.blogId;
+
+    if (this.isEditMode && this.blogId) {
+      this.loadBlogData(this.blogId);
+    }
+  }
+
+  loadBlogData(id: string): void {
+    this.blogService.getBlogById(id).subscribe({
+      next: (blog: iBlog) => {
+        console.log('Loaded blog:', blog);
+        
+        this.maBaiViet = blog.Ma_bai_viet;
+        this.tieuDe = blog.Tieu_de;
+        this.tomTat = blog.Tom_tat;
+        this.hinhAnh = blog.Hinh_anh;
+        this.trangThai = blog.Trang_thai;
+        this.today = new Date(blog.Ngay_tao).toLocaleDateString('vi-VN');
+        
+        // Load Noi_dung blocks
+        if (blog.Noi_dung) {
+          if (typeof blog.Noi_dung === 'string') {
+            // If Noi_dung is still a string, create a single text block
+            this.blocks = [{
+              Loai: 'text',
+              Noi_dung: blog.Noi_dung
+            }];
+          } else if (Array.isArray(blog.Noi_dung)) {
+            // If Noi_dung is an array, load each block
+            this.blocks = blog.Noi_dung.map((block: any) => {
+              if (block.Loai === 'text') {
+                return {
+                  Loai: 'text',
+                  Noi_dung: block.Noi_dung || ''
+                } as TextBlock;
+              } else {
+                return {
+                  Loai: 'image',
+                  Url: block.Url || '',
+                  Mo_ta: block.Mo_ta || ''
+                } as ImageBlock;
+              }
+            });
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Error loading blog:', err);
+        alert('Không thể tải bài viết!');
+        this.router.navigate(['/blog-list']);
+      }
+    });
+  }
 
   // ADD
   addTextBlock() {
@@ -67,18 +134,146 @@ export class Blog {
 
   // SUBMIT
   savePost() {
-    const postData = {
+    // Validate required fields
+    if (!this.tieuDe.trim()) {
+      alert('Vui lòng nhập tiêu đề bài viết!');
+      return;
+    }
+    
+    if (!this.tomTat.trim()) {
+      alert('Vui lòng nhập tóm tắt!');
+      return;
+    }
+    
+    if (!this.hinhAnh.trim()) {
+      alert('Vui lòng chọn ảnh đại diện!');
+      return;
+    }
+
+    const postData: any = {
       Ma_bai_viet: this.maBaiViet,
       Tieu_de: this.tieuDe,
       Tom_tat: this.tomTat,
       Noi_dung: this.blocks,
       Hinh_anh: this.hinhAnh,
       Trang_thai: this.trangThai,
-      Ngay_tao: new Date().toISOString(),
       Ma_quan_tri_vien: 'ADM001'
     };
 
-    console.log(postData);
-    alert('Đã lưu bài viết! Check console.');
+    if (this.isEditMode) {
+      // Update existing blog
+      this.blogService.updateBlog(this.maBaiViet, postData).subscribe({
+        next: (response) => {
+          console.log('Updated blog:', response);
+          alert('Đã cập nhật bài viết thành công!');
+          this.router.navigate(['/blog-list']);
+        },
+        error: (err) => {
+          console.error('Error updating blog:', err);
+          alert('Lỗi khi cập nhật bài viết: ' + err.message);
+        }
+      });
+    } else {
+      // Create new blog
+      postData.Ngay_tao = new Date().toISOString();
+      
+      this.blogService.createBlog(postData).subscribe({
+        next: (response) => {
+          console.log('Created blog:', response);
+          alert('Đã tạo bài viết thành công!');
+          this.router.navigate(['/blog-list']);
+        },
+        error: (err) => {
+          console.error('Error creating blog:', err);
+          alert('Lỗi khi tạo bài viết: ' + err.message);
+        }
+      });
+    }
+  }
+
+  // PREVIEW
+  previewBlog() {
+    if (this.maBaiViet) {
+      // Open blog-form in a new tab to preview
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree(['/blog-form', this.maBaiViet])
+      );
+      window.open(url, '_blank');
+    }
+  }
+
+  // IMAGE UPLOAD
+  triggerFileInput(inputId: string) {
+    const fileInput = document.getElementById(inputId) as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onImageSelected(event: Event, blockIndex: number) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Vui lòng chọn file hình ảnh!');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Kích thước file không được vượt quá 5MB!');
+        return;
+      }
+      
+      // Convert to base64
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const block = this.blocks[blockIndex] as ImageBlock;
+        block.Url = e.target?.result as string;
+        
+        // Auto-fill alt text with filename if empty
+        if (!block.Mo_ta) {
+          block.Mo_ta = file.name.replace(/\.[^/.]+$/, '');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onThumbnailSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Vui lòng chọn file hình ảnh!');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Kích thước file không được vượt quá 5MB!');
+        return;
+      }
+      
+      // Convert to base64
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.hinhAnh = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeImage(blockIndex: number) {
+    const block = this.blocks[blockIndex] as ImageBlock;
+    block.Url = '';
+  }
+
+  removeThumbnail() {
+    this.hinhAnh = '';
   }
 }

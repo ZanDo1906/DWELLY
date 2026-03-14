@@ -14,27 +14,30 @@
           Chào mừng bạn quay trở lại!
         </p>
 
-        <!-- Tên đăng nhập -->
+        <!-- Email -->
         <div class="mb-3">
-          <label>Tên đăng nhập</label>
+          <label>Email</label>
           <div class="input-pos-wrapper">
             <input
-              type="text"
+              type="email"
               class="form-control"
-              formControlName="username"
-              placeholder="Value"
-              [class.is-invalid]="username.invalid && (username.touched || username.dirty)">
+              formControlName="email"
+              placeholder="admin@dwelly.com"
+              [class.is-invalid]="email.invalid && (email.touched || email.dirty)">
             
             <div class="icon-group">
               <i class="bi bi-exclamation-circle error-icon-fixed" 
-                *ngIf="username.invalid && (username.touched || username.dirty)">
+                *ngIf="email.invalid && (email.touched || email.dirty)">
               </i>
             </div>
           </div>
 
-          <div class="error-area" *ngIf="username.invalid && (username.touched || username.dirty)">
-            <small class="text-danger" *ngIf="username.errors?.['required']">
-              Tên đăng nhập không được để trống
+          <div class="error-area" *ngIf="email.invalid && (email.touched || email.dirty)">
+            <small class="text-danger" *ngIf="email.errors?.['required']">
+              Email không được để trống
+            </small>
+            <small class="text-danger" *ngIf="email.errors?.['email']">
+              Email không hợp lệ
             </small>
           </div>
         </div>

@@ -16,6 +16,13 @@ export class Admin {
       .get<iAdmin[]>(`${baseUrl}/admins`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  
+  getAdminById(id: string): Observable<iAdmin> {
+    return this.http
+      .get<iAdmin>(`${baseUrl}/admins/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  
   login(data: any) {
   return this.http.post(`${baseUrl}/loginAdmin`, data);
   }

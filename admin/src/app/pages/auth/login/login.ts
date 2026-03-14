@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { Admin } from '../../../services/admin';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,19 @@ export class Login {
   loginError = '';
   showPassword = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private adminService: Admin
+  ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  get username() {
-    return this.loginForm.get('username')!;
+  get email() {
+    return this.loginForm.get('email')!;
   }
 
   get password() {
@@ -42,15 +47,22 @@ export class Login {
 
     this.loginError = '';
 
-    const username = String(this.loginForm.value.username || '').trim();
+    const email = String(this.loginForm.value.email || '').trim().toLowerCase();
     const password = String(this.loginForm.value.password || '').trim();
 
-    // TODO: Replace with actual admin authentication service
-    if (username === 'admin' && password === 'admin123') {
-      localStorage.setItem('adminUser', username);
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.loginError = 'Tên đăng nhập hoặc mật khẩu không đúng.';
-    }
+    this.adminService.login({ email, password }).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('adminInfo', JSON.stringify(res.admin));
+        localStorage.setItem('adminName', res.admin.fullName);
+        localStorage.setItem('adminEmail', res.admin.email);
+        
+        this.router.navigate(['/dashboard']);
+        window.dispatchEvent(new Event('admin-login'));
+      },
+      error: (err) => {
+        this.loginError = err.error?.message || 'Đăng nhập thất bại';
+      }
+    });
   }
 }

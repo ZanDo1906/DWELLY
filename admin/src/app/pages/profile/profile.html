@@ -11,8 +11,8 @@
               <div class="user-info">
                 <div class="avatar"></div>
                 <div>
-                  <div class="user-name">Your name</div>
-                  <div class="user-email">yourname&#64;gmail.com</div>
+                  <div class="user-name">{{ adminInfo?.Ho_va_ten || 'Admin' }}</div>
+                  <div class="user-email">{{ adminInfo?.Email || 'admin@dwelly.com' }}</div>
                 </div>
               </div>
             </div>
@@ -21,23 +21,23 @@
             <div class="account-form">
               <div class="form-group full">
                 <label>Họ tên</label>
-                <input type="text" value="Your name" />
+                <input type="text" [value]="adminInfo?.Ho_va_ten || ''" disabled />
               </div>
 
               <div class="form-group">
-                <label>Số điện thoại *</label>
-                <input type="text" value="0987654321" />
+                <label>Số điện thoại</label>
+                <input type="text" [value]="adminInfo?.So_dien_thoai || ''" disabled />
               </div>
 
               <div class="form-group">
                 <label>Email</label>
-                <input type="email" value="yourname&#64;gmail.com" />
+                <input type="email" [value]="adminInfo?.Email || ''" disabled />
               </div>
 
               <div class="form-group full">
-                <label>Mật khẩu *</label>
+                <label>Mật khẩu</label>
                 <div class="password-field">
-                  <input type="password" value="************" [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" />
+                  <input [value]="password" [type]="showPassword ? 'text' : 'password'" disabled />
                   <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()"></i>
                 </div>
                 <a class="change-password" routerLink="/reset-password">Thay đổi mật khẩu</a>
