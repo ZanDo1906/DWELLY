@@ -37,28 +37,28 @@ function isValidPhone(phone) {
 
 //Define API
 router.get("/", (req, res) => {
-    res.send("Ok");
+  res.send("Ok");
 });
 
 //get all clients (2) -> using async await
 router.get("/clients", async (req, res) => {
-    try {
-            let clients = await Client.find({});
-            res.json(clients);
-    }catch (err) {
-        res.json({er: err.message});
-    }
+  try {
+    let clients = await Client.find({});
+    res.json(clients);
+  } catch (err) {
+    res.json({ er: err.message });
+  }
 });
 
 
 router.get("/clients/favorite-count/:productId", async (req, res) => {
-    try {
-        const { productId } = req.params;
-        const count = await Client.countDocuments({ favorites: productId });
-        res.json({ count });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    const { productId } = req.params;
+    const count = await Client.countDocuments({ favorites: productId });
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.post("/clients/toggle-favorite", async (req, res) => {
@@ -121,28 +121,28 @@ router.get("/clients/:id/wishlist", async (req, res) => {
 });
 
 router.get("/clients/:id", async (req, res) => {
-    try {
-        let  client = await Client.findOne({ Ma_khach_hang: req.params.id });
-        if (!client) {
-            return res.status(404).json({ message: "Khách hàng không tồn tại" });
-        }
-        res.json(client);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+  try {
+    let client = await Client.findOne({ Ma_khach_hang: req.params.id });
+    if (!client) {
+      return res.status(404).json({ message: "Khách hàng không tồn tại" });
     }
+    res.json(client);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // update client info
 router.patch("/clients/:id", async (req, res) => {
-    try {
-        const client = await Client.findOne({ Ma_khach_hang: req.params.id });
+  try {
+    const client = await Client.findOne({ Ma_khach_hang: req.params.id });
 
-        if (!client) {
-            return res.status(404).json({ message: "Khách hàng không tồn tại" });
-        }
+    if (!client) {
+      return res.status(404).json({ message: "Khách hàng không tồn tại" });
+    }
 
-        // Build update object with only provided fields
-        const updateData = {};
+    // Build update object with only provided fields
+    const updateData = {};
     if (req.body.Ho_va_ten !== undefined) {
       updateData.Ho_va_ten = String(req.body.Ho_va_ten).trim();
     }
@@ -223,16 +223,16 @@ router.patch("/clients/:id", async (req, res) => {
       }
     }
 
-        const updatedClient = await Client.findOneAndUpdate(
-            { Ma_khach_hang: req.params.id },
-            { $set: updateData },
-            { returnDocument: 'after' }
-        );
+    const updatedClient = await Client.findOneAndUpdate(
+      { Ma_khach_hang: req.params.id },
+      { $set: updateData },
+      { returnDocument: 'after' }
+    );
 
-        res.json({ message: "Cập nhật thông tin thành công", client: updatedClient });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+    res.json({ message: "Cập nhật thông tin thành công", client: updatedClient });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // ================== CHANGE PASSWORD ==================
@@ -273,6 +273,43 @@ router.patch("/clients/:id/change-password", async (req, res) => {
     );
 
     res.json({ message: "Đổi mật khẩu thành công" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ================== RESET PASSWORD (FORGOT PASSWORD) ==================
+router.patch("/clients/:id/reset-password", async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "Vui lòng nhập mật khẩu mới" });
+    }
+
+    if (String(newPassword).length < 6) {
+      return res.status(400).json({ message: "Mật khẩu mới phải có ít nhất 6 ký tự" });
+    }
+
+    const client = await Client.findOne({ Ma_khach_hang: req.params.id });
+
+    if (!client) {
+      return res.status(404).json({ message: "Khách hàng không tồn tại" });
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, client.Mat_khau);
+    if (isSamePassword) {
+      return res.status(400).json({ message: "Mật khẩu mới không được trùng mật khẩu cũ" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await Client.findOneAndUpdate(
+      { Ma_khach_hang: req.params.id },
+      { $set: { Mat_khau: hashedNewPassword, updatedAt: new Date() } }
+    );
+
+    res.json({ message: "Đặt lại mật khẩu thành công" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -702,7 +739,7 @@ router.post("/register", async (req, res) => {
 
     // 🔥 Lấy mã lớn nhất hiện tại
     const clients = await Client.find({});
-    
+
     let maxNumber = 0;
 
     clients.forEach(c => {

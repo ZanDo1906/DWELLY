@@ -60,6 +60,19 @@
               <textarea rows="3" name="description" [(ngModel)]="formValue.description"></textarea>
             </div>
 
+            <div class="form-group full status-toggle-group">
+              <label>Trạng thái voucher</label>
+              <button type="button" class="status-toggle-btn" [class.paused]="formValue.status === 'paused'"
+                (click)="toggleVoucherStatus()" [attr.aria-pressed]="formValue.status === 'active'">
+                <span class="status-toggle-track">
+                  <span class="status-toggle-thumb"></span>
+                </span>
+                <span class="status-toggle-text">
+                  {{ formValue.status === 'active' ? 'Kích hoạt' : 'Tạm dừng' }}
+                </span>
+              </button>
+            </div>
+
             <div class="btn-wrapper">
               <button type="button" class="save-btn" (click)="openConfirm()">
                 Lưu mã khuyến mãi

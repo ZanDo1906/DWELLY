@@ -53,6 +53,7 @@ export class CartPage implements OnInit {
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
   voucherError: string = '';
+  isLoggedIn: boolean = false;
 
   constructor(
     private productService: Product,
@@ -63,6 +64,8 @@ export class CartPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!localStorage.getItem('userId');
+
     // Load rooms first
     this.roomService.getRoomData().subscribe({
       next: (roomData) => {
@@ -140,6 +143,10 @@ export class CartPage implements OnInit {
   }
 
   applyVoucher(): void {
+    if (!this.isLoggedIn) {
+      return;
+    }
+
     this.voucherError = '';
 
     if (!this.voucherCode.trim()) {

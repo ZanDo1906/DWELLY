@@ -7,12 +7,12 @@
                 </div>
 
                 <div class="filter-bar">
-                    <div class="search-box">
-                        <span class="search-icon" aria-hidden="true">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
-                            (input)="onSearchChange($event)" />
+                    <div class="search-wrapper">
+                        <div class="search-container">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" class="search-input" [value]="searchText"
+                                (input)="onSearchChange($event)" placeholder="Tìm kiếm" />
+                        </div>
                     </div>
 
                     <div class="filter-group">
@@ -32,25 +32,22 @@
                             Cũ nhất
                         </button>
 
-                        <div class="status-select" [class.open]="isStatusOpen">
-                            <button type="button" class="status-select-trigger" (click)="toggleStatusDropdown($event)">
-                                <span>{{ selectedStatusLabel }}</span>
-                                <span class="status-caret" aria-hidden="true">▾</span>
-                            </button>
-
-                            <ul class="status-options" *ngIf="isStatusOpen">
-                                <li *ngFor="let status of statusOptions" class="status-option"
-                                    [class.active]="status.value === selectedStatus"
+                        <div class="dropdown-wrapper">
+                            <div class="dropdown-selected" (click)="toggleStatusDropdown($event)">
+                                {{ selectedStatusLabel }}
+                                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isStatusOpen"></i>
+                            </div>
+                            <div class="dropdown-menu" *ngIf="isStatusOpen">
+                                <div class="dropdown-item" *ngFor="let status of statusOptions"
                                     (click)="selectStatus(status.value)">
                                     {{ status.label }}
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
-
-                        <button class="delete-selected-btn" (click)="deleteSelected()" [disabled]="!selectedCount"
-                            title="Xóa mục đã chọn">
+                        <button class="delete-btn" [disabled]="!selectedCount" (click)="deleteSelected()">
                             <i class="bi bi-trash"></i>
                         </button>
+
                     </div>
                 </div>
 
@@ -85,11 +82,11 @@
                             <td>{{ faq.handler }}</td>
                             <td>
                                 <div class="action-group">
-                                    <button class="icon-btn" (click)="editFaq(faq.id)" title="Sửa"
+                                    <button class="action-btn edit-btn" (click)="editFaq(faq.id)" title="Sửa"
                                         data-bs-toggle="modal" data-bs-target="#faqAnswerModal">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="icon-btn" (click)="deleteFaq(faq.id)" title="Xóa">
+                                    <button class="action-btn delete-btn" (click)="deleteFaq(faq.id)" title="Xóa">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -112,6 +109,10 @@
                         (sendAnswer)="onSendAnswer($event)">
                     </app-faq-form>
                 </app-modal>
+
+                <app-confirm-dialog *ngIf="showDeleteConfirm" modalId="faqDeleteConfirmModal" title="Xác nhận xóa"
+                    [message]="deleteConfirmMessage" (confirm)="confirmDelete()" (cancel)="cancelDelete()">
+                </app-confirm-dialog>
             </div>
         </div>
     </div>

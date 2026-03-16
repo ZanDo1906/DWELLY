@@ -18,19 +18,17 @@
 
           <div class="search-wrapper">
             <i class="bi bi-search"></i>
-            <input type="text"
-                   class="search-input"
-                   placeholder="Tìm kiếm" />
+            <input type="text" class="search-input" placeholder="Tìm kiếm" />
           </div>
 
           <div class="filter-group">
             <span class="filter-label">{{ selectedCount }} đã chọn</span>
-            
+
             <button class="filter-btn active">
               <i class="bi bi-check2"></i>
               A-Z
             </button>
-            
+
             <button class="filter-btn">Mới nhất</button>
             <button class="filter-btn">Cũ nhất</button>
 
@@ -53,10 +51,8 @@
           <!-- HEADER -->
           <ng-container table-header>
             <th>
-              <input type="checkbox" 
-                     class="checkbox-input"
-                     (change)="toggleSelectAll($event)"
-                     [checked]="isAllSelected()" />
+              <input type="checkbox" class="checkbox-input" (change)="toggleSelectAll($event)"
+                [checked]="isAllSelected()" />
             </th>
             <th>Mã bài viết</th>
             <th>Tiêu đề</th>
@@ -71,10 +67,8 @@
           <ng-container table-body>
             <tr *ngFor="let blog of pagedBlogs; let i = index">
               <td>
-                <input type="checkbox" 
-                       class="checkbox-input"
-                       [(ngModel)]="blog.selected"
-                       (change)="onCheckboxChange()" />
+                <input type="checkbox" class="checkbox-input" [(ngModel)]="blog.selected"
+                  (change)="onCheckboxChange()" />
               </td>
               <td>{{ blog.code }}</td>
               <td>{{ blog.title }}</td>
@@ -102,10 +96,7 @@
           <!-- PAGINATION -->
           <ng-container table-pagination>
             <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
-            <button
-              *ngFor="let page of pages"
-              (click)="goToPage(page)"
-              [class.active]="page === currentPage">
+            <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === currentPage">
               {{ page }}
             </button>
             <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>

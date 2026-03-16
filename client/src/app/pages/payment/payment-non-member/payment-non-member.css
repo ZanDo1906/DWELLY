@@ -175,25 +175,93 @@
     opacity: 0.6;
 }
 
-/* Select dropdown styling */
-select.form-select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 36px;
+/* Custom dropdown (province/district/ward) */
+.custom-dropdown {
+    position: relative;
 }
 
-select.form-select:disabled {
+.dropdown-toggle-btn {
+    width: 100%;
+    min-height: 42px;
+    border: 2px solid #777777;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333;
+    font-size: 14px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dropdown-toggle-btn:hover,
+.dropdown-toggle-btn.active {
+    border-color: #6C5234;
+}
+
+.dropdown-toggle-btn:focus-visible {
+    outline: none;
+    border-color: #6C5234;
+    box-shadow: 0 0 0 3px rgba(108, 82, 52, 0.18);
+}
+
+.custom-dropdown.error .dropdown-toggle-btn {
+    border-color: #A34343;
+    background-color: #fff5f5;
+}
+
+.custom-dropdown.disabled .dropdown-toggle-btn,
+.dropdown-toggle-btn:disabled {
     background-color: #f5f5f5;
     color: #999;
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
-select.form-select option:disabled {
-    color: #999;
+.selected-text {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+}
+
+.dropdown-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #6C5234;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 30;
+}
+
+.dropdown-item {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    color: #333;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #F0EDEA;
+    color: #6C5234;
+}
+
+.dropdown-item.selected {
+    background-color: #6C5234;
+    color: #ffffff;
 }
 
 .form-input.error {
@@ -452,17 +520,57 @@ select.form-select option:disabled {
     margin-bottom: 8px;
 }
 
-.voucher-input input {
+.voucher-input-wrapper {
     flex: 1;
-    padding: 10px 12px;
+    position: relative;
+}
+
+.voucher-input input {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-clear-voucher {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.btn-clear-voucher:hover {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+.btn-clear-voucher:active {
+    background-color: #e8e8e8;
 }
 
 .voucher-input input:focus {
     outline: none;
     border-color: #546745;
+}
+
+.voucher-input input:disabled {
+    cursor: not-allowed;
+    background-color: #f3f3f3;
 }
 
 .voucher-input input.error {
@@ -509,6 +617,14 @@ select.form-select option:disabled {
 .btn-apply:active {
     background-color: #7A8A6A;
     border-color: #546745;
+}
+
+.btn-apply:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #f3f3f3;
+    color: #8c8c8c;
+    border-color: #cfcfcf;
 }
 
 .summary-row {

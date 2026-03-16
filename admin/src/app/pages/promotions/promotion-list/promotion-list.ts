@@ -246,7 +246,7 @@ export class PromotionList {
         Ngay_bat_dau: payload.startDate as unknown as Date,
         Ngay_het_han: payload.endDate as unknown as Date,
         Mo_ta: payload.description.trim(),
-        Trang_thai: true,
+        Trang_thai: payload.status === 'active',
         Ma_quan_tri_vien_tao: 'AD01',
       };
 
@@ -288,6 +288,7 @@ export class PromotionList {
       Ngay_bat_dau: payload.startDate as unknown as Date,
       Ngay_het_han: payload.endDate as unknown as Date,
       Mo_ta: payload.description,
+      Trang_thai: payload.status === 'active',
     };
 
     this.voucherService.updateVoucherById(voucherId, updatePayload).subscribe({
@@ -305,6 +306,8 @@ export class PromotionList {
           startDate: this.formatDate(payload.startDate),
           endDate: this.formatDate(payload.endDate),
           description: payload.description,
+          status: payload.status,
+          statusLabel: payload.status === 'active' ? 'Kích hoạt' : 'Tạm dừng',
         };
 
         this.promotions = this.promotions.map((promotion) =>

@@ -14,6 +14,7 @@ export interface PromotionFormData {
   minimumRank: string;
   remaining: number;
   description: string;
+  status: 'active' | 'paused';
 }
 
 @Component({
@@ -63,7 +64,12 @@ export class PromotionForm {
       minimumRank: this.normalizeRankCode(this.promotion.minimumRank),
       remaining: this.promotion.remaining,
       description: this.promotion.description,
+      status: this.promotion.status,
     };
+  }
+
+  toggleVoucherStatus(): void {
+    this.formValue.status = this.formValue.status === 'active' ? 'paused' : 'active';
   }
 
   openConfirm() {
@@ -89,6 +95,7 @@ export class PromotionForm {
       minimumRank: '',
       remaining: 0,
       description: '',
+      status: 'active',
     };
   }
 

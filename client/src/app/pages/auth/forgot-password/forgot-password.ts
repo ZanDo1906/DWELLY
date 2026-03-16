@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Client } from '../../../services/client';
+import { iClient } from '../../../interfaces/client';
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,6 +21,7 @@ export class ForgotPassword {
   otp: string[] = ['', '', '', '', '', ''];
   otpTouched: boolean = false;
   otpError: string = '';
+  generatedOtp: string = '';
   resendCountdown: number = 0;
   private resendTimer: any = null;
 
@@ -29,6 +32,9 @@ export class ForgotPassword {
   passwordError: string = '';
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  matchedClient: iClient | null = null;
+
+  constructor(private clientService: Client) { }
 
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,10 +49,15 @@ export class ForgotPassword {
 
   hasError(): boolean {
     if (!this.touched) return false;
+    if (this.errorMessage.trim() !== '') return true;
     if (this.emailOrPhone.trim() === '') return true;
 
     // Kiểm tra xem có phải email hoặc số điện thoại hợp lệ
     return !this.isValidEmail(this.emailOrPhone) && !this.isValidPhone(this.emailOrPhone);
+  }
+
+  onEmailOrPhoneChange(): void {
+    this.errorMessage = '';
   }
 
   onSubmit(): void {
@@ -63,15 +74,46 @@ export class ForgotPassword {
         return;
       }
 
-      // Nếu hợp lệ - chuyển sang bước 2
-      this.maskedContact = this.maskContact(this.emailOrPhone);
-      console.log('Sending OTP to:', this.emailOrPhone);
-      this.step = 2;
+      this.verifyContactInDatabase();
     } else if (this.step === 2) {
       this.submitOTP();
     } else if (this.step === 3) {
       this.submitNewPassword();
     }
+  }
+
+  private verifyContactInDatabase(): void {
+    const contact = this.emailOrPhone.trim();
+    const isEmail = this.isValidEmail(contact);
+
+    this.clientService.getClientData().subscribe({
+      next: (clients) => {
+        const matchedClient = clients.find(client => {
+          if (isEmail) {
+            return String(client.Email || '').trim().toLowerCase() === contact.toLowerCase();
+          }
+          return String(client.So_dien_thoai || '').trim() === contact;
+        }) || null;
+
+        if (!matchedClient) {
+          this.errorMessage = 'Email hoặc số điện thoại không khớp';
+          return;
+        }
+
+        this.matchedClient = matchedClient;
+        const displayContact = isEmail
+          ? String(matchedClient.Email || '').trim()
+          : String(matchedClient.So_dien_thoai || '').trim();
+
+        this.errorMessage = '';
+        this.maskedContact = this.maskContact(displayContact);
+        this.sendOtpNotification(displayContact);
+        this.step = 2;
+      },
+      error: () => {
+        this.errorMessage = 'Không thể kiểm tra dữ liệu tài khoản. Vui lòng thử lại';
+      }
+    });
   }
 
   maskContact(contact: string): string {
@@ -165,9 +207,12 @@ export class ForgotPassword {
     console.log('OTP submitted:', otpCode);
     this.otpError = '';
 
-    // TODO: Gọi API verify OTP, nếu thành công thì chuyển sang step 3
-    // Tạm thời giả lập OTP đúng là "123456" hoặc "111111"
-    if (otpCode === '123456' || otpCode === '111111') {
+    if (!this.generatedOtp) {
+      this.otpError = 'Mã OTP chưa được tạo. Vui lòng gửi lại mã';
+      return;
+    }
+
+    if (otpCode === this.generatedOtp) {
       this.step = 3;
       console.log('OTP verified successfully, moving to step 3');
     } else {
@@ -180,7 +225,7 @@ export class ForgotPassword {
   resendOTP(): void {
     if (this.resendCountdown > 0) return; // Đang chờ, không cho gửi lại
 
-    console.log('Resending OTP to:', this.emailOrPhone);
+    this.sendOtpNotification(this.emailOrPhone.trim());
 
     // Clear cả array và DOM inputs
     this.otp = ['', '', '', '', '', ''];
@@ -192,7 +237,26 @@ export class ForgotPassword {
       if (input) input.value = '';
     }
 
-    // Bắt đầu đếm ngược 60s
+    // Focus vào ô đầu tiên
+    setTimeout(() => {
+      const firstInput = document.getElementById('otp-0') as HTMLInputElement | null;
+      firstInput?.focus();
+    }, 100);
+  }
+
+  private sendOtpNotification(contact: string): void {
+    this.generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Sending OTP to:', contact);
+    alert(`Mã OTP của bạn là: ${this.generatedOtp}`);
+    this.startResendCountdown();
+  }
+
+  private startResendCountdown(): void {
+    if (this.resendTimer) {
+      clearInterval(this.resendTimer);
+      this.resendTimer = null;
+    }
+
     this.resendCountdown = 60;
     this.resendTimer = setInterval(() => {
       this.resendCountdown--;
@@ -202,12 +266,6 @@ export class ForgotPassword {
         this.resendTimer = null;
       }
     }, 1000);
-
-    // Focus vào ô đầu tiên
-    setTimeout(() => {
-      const firstInput = document.getElementById('otp-0') as HTMLInputElement | null;
-      firstInput?.focus();
-    }, 100);
   }
 
   // Helper method to reset OTP inputs
@@ -282,6 +340,16 @@ export class ForgotPassword {
       this.passwordError = '';
     }
 
+    // Hiện cảnh báo ngay khi mật khẩu mới chưa đủ 6 ký tự.
+    if (this.newPassword && this.newPassword.length < 6) {
+      this.passwordError = 'Mật khẩu phải có ít nhất 6 ký tự';
+      return;
+    }
+
+    if (this.passwordError === 'Mật khẩu phải có ít nhất 6 ký tự') {
+      this.passwordError = '';
+    }
+
     // Nếu có confirm password thì check lại
     if (this.confirmPassword && this.confirmPassword.trim() !== '') {
       this.onConfirmPasswordInput();
@@ -320,14 +388,24 @@ export class ForgotPassword {
       return;
     }
 
-    console.log('New password submitted for:', this.emailOrPhone);
-    console.log('New password:', this.newPassword);
+    if (!this.matchedClient?.Ma_khach_hang) {
+      alert('Không tìm thấy tài khoản cần cập nhật. Vui lòng thực hiện lại');
+      return;
+    }
 
-    // TODO: Gọi API đổi mật khẩu
-    alert(`Đổi mật khẩu thành công cho ${this.emailOrPhone}`);
-
-    // Reset toàn bộ form
-    this.resetForm();
+    this.clientService.resetPassword(this.matchedClient.Ma_khach_hang, {
+      newPassword: this.newPassword,
+    }).subscribe({
+      next: () => {
+        alert(`Đổi mật khẩu thành công cho ${this.emailOrPhone}`);
+        // Reset toàn bộ form
+        this.resetForm();
+      },
+      error: (error) => {
+        const message = error?.error?.message || 'Đổi mật khẩu thất bại. Vui lòng thử lại';
+        alert(message);
+      }
+    });
   }
 
   resetForm(): void {
@@ -340,6 +418,7 @@ export class ForgotPassword {
     this.otp = ['', '', '', '', '', ''];
     this.otpTouched = false;
     this.otpError = '';
+    this.generatedOtp = '';
     this.resendCountdown = 0;
 
     this.newPassword = '';
@@ -348,6 +427,7 @@ export class ForgotPassword {
     this.passwordError = '';
     this.showNewPassword = false;
     this.showConfirmPassword = false;
+    this.matchedClient = null;
 
     if (this.resendTimer) {
       clearInterval(this.resendTimer);

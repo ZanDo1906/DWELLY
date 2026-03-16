@@ -7,6 +7,11 @@ import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { QRPayment } from '../qr-payment/qr-payment';
+import { Client } from '../../../services/client';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Modal } from '../../../components/modal/modal';
+import { VoucherPopup } from '../../cart/voucher-popup/voucher-popup';
 
 interface CheckoutItem {
   product: iProduct;
@@ -27,9 +32,17 @@ interface CheckoutPayload {
   summary: CheckoutSummary;
 }
 
+interface CheckoutAddress {
+  sourceIndex: number;
+  fullName: string;
+  phone: string;
+  address: string;
+  isDefault: boolean;
+}
+
 @Component({
   selector: 'app-payment-member',
-  imports: [CommonModule, FormsModule, QRPayment],
+  imports: [CommonModule, FormsModule, QRPayment, Modal, VoucherPopup],
   templateUrl: './payment-member.html',
   styleUrl: './payment-member.css',
 })
@@ -47,10 +60,17 @@ export class PaymentMember implements OnInit {
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
   voucherError: string = '';
+  userId: string = '';
+  defaultAddress: CheckoutAddress | null = null;
+  addressOptions: CheckoutAddress[] = [];
+  selectedAddressIndex: number = -1;
+  tempSelectedAddressIndex: number = -1;
+  isLoadingAddress: boolean = false;
 
   constructor(
     private roomService: Room,
-    private voucherService: Voucher
+    private voucherService: Voucher,
+    private clientService: Client
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +95,155 @@ export class PaymentMember implements OnInit {
     });
 
     this.loadCheckoutItems();
+    this.loadCustomerAddresses();
+  }
+
+  private loadCustomerAddresses(): void {
+    const currentUser = this.clientService.getCurrentUser();
+    const fallbackName = currentUser?.Ho_va_ten || 'Khách hàng';
+    const fallbackPhone = currentUser?.So_dien_thoai || '';
+
+    this.userId = localStorage.getItem('userId') || currentUser?.Ma_khach_hang || '';
+
+    if (!this.userId) {
+      this.buildAddressSections(currentUser?.Dia_chi || [], fallbackName, fallbackPhone);
+      return;
+    }
+
+    this.isLoadingAddress = true;
+
+    forkJoin({
+      client: this.clientService.getClientById(this.userId).pipe(catchError(() => of(null))),
+      addresses: this.clientService.getClientAddress(this.userId).pipe(catchError(() => of({ address: [] as any[] }))),
+    }).subscribe({
+      next: ({ client, addresses }) => {
+        const customerName = client?.Ho_va_ten || fallbackName;
+        const customerPhone = client?.So_dien_thoai || fallbackPhone;
+        const rawAddresses = Array.isArray(addresses?.address) && addresses.address.length > 0
+          ? addresses.address
+          : (currentUser?.Dia_chi || []);
+
+        this.buildAddressSections(rawAddresses, customerName, customerPhone);
+        this.isLoadingAddress = false;
+      },
+      error: () => {
+        this.buildAddressSections(currentUser?.Dia_chi || [], fallbackName, fallbackPhone);
+        this.isLoadingAddress = false;
+      }
+    });
+  }
+
+  private buildAddressSections(rawAddresses: any[], customerName: string, customerPhone: string): void {
+    const mappedAddresses = (rawAddresses || [])
+      .map((item, index) => this.mapAddressItem(item, index, customerName, customerPhone))
+      .filter((item): item is CheckoutAddress => item !== null);
+
+    this.addressOptions = mappedAddresses;
+
+    if (mappedAddresses.length === 0) {
+      this.defaultAddress = null;
+      this.selectedAddressIndex = -1;
+      this.tempSelectedAddressIndex = -1;
+      return;
+    }
+
+    const defaultIndex = mappedAddresses.findIndex(item => item.isDefault);
+    this.selectedAddressIndex = defaultIndex >= 0 ? defaultIndex : 0;
+    this.tempSelectedAddressIndex = this.selectedAddressIndex;
+    this.defaultAddress = mappedAddresses[this.selectedAddressIndex];
+  }
+
+  private mapAddressItem(
+    item: any,
+    index: number,
+    customerName: string,
+    customerPhone: string
+  ): CheckoutAddress | null {
+    if (typeof item === 'string') {
+      const addressText = item.trim();
+      if (!addressText) return null;
+
+      return {
+        sourceIndex: index,
+        fullName: customerName,
+        phone: customerPhone,
+        address: addressText,
+        isDefault: index === 0,
+      };
+    }
+
+    if (item && typeof item === 'object') {
+      const fullName = item.FullName || item.fullName || item.name || item.ten_nguoi_nhan || customerName;
+      const phone = item.Phone || item.phone || item.so_dien_thoai || item.soDienThoai || customerPhone;
+      const address = item.address
+        || item.dia_chi
+        || item.fullAddress
+        || [item.DetailAddress, item.Ward, item.District, item.Province].filter(Boolean).join(', ')
+        || '';
+
+      if (!String(address).trim()) return null;
+
+      return {
+        sourceIndex: index,
+        fullName: String(fullName).trim(),
+        phone: String(phone).trim(),
+        address: String(address).trim(),
+        isDefault: Boolean(item.IsDefault),
+      };
+    }
+
+    return null;
+  }
+
+  openAddressModal(): void {
+    this.tempSelectedAddressIndex = this.selectedAddressIndex;
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('addressSelectionModal');
+      if (modalEl) {
+        const modal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      }
+    }, 0);
+  }
+
+  closeAddressModal(): void {
+    const modalEl = document.getElementById('addressSelectionModal');
+    if (modalEl) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+  }
+
+  closeVoucherPopup(): void {
+    const modalEl = document.getElementById('voucherModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+  }
+
+  handleVoucherSelected(voucher: iVoucher): void {
+    // Chỉ điền mã vào input, chưa áp dụng.
+    this.voucherCode = voucher.Ma_so;
+    this.voucherError = '';
+    // Reset appliedVoucher để user phải bấm "Áp dụng".
+    this.appliedVoucher = null;
+  }
+
+  clearVoucher(): void {
+    this.voucherCode = '';
+    this.appliedVoucher = null;
+    this.voucherError = '';
+  }
+
+  confirmSelectedAddress(): void {
+    if (this.tempSelectedAddressIndex >= 0 && this.tempSelectedAddressIndex < this.addressOptions.length) {
+      this.selectedAddressIndex = this.tempSelectedAddressIndex;
+      this.defaultAddress = this.addressOptions[this.selectedAddressIndex];
+    }
+
+    this.closeAddressModal();
   }
 
   private loadCheckoutItems(): void {

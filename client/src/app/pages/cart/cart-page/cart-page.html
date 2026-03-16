@@ -77,13 +77,15 @@
                             <div class="voucher-input">
                                 <div class="voucher-input-wrapper">
                                     <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
-                                        [class.error]="voucherError" data-bs-toggle="modal"
-                                        data-bs-target="#voucherModal" readonly />
+                                        [class.error]="voucherError" [disabled]="!isLoggedIn"
+                                        [attr.data-bs-toggle]="isLoggedIn ? 'modal' : null"
+                                        [attr.data-bs-target]="isLoggedIn ? '#voucherModal' : null" readonly />
                                     <button class="btn-clear-voucher" *ngIf="voucherCode" (click)="clearVoucher()">
                                         <i class="bi bi-x"></i>
                                     </button>
                                 </div>
-                                <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
+                                <button class="btn-apply" [disabled]="!isLoggedIn" (click)="applyVoucher()">Áp
+                                    dụng</button>
                             </div>
                             <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
                             <p class="voucher-success" *ngIf="appliedVoucher && !voucherError">
