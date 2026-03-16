@@ -88,8 +88,9 @@
                     <i class="bi bi-chevron-down custom-select-icon"></i>
                   </button>
                   <ul class="custom-select-menu" *ngIf="isDropdownOpen('category')">
-                    <li class="custom-option" [class.active]="!product.Ma_danh_muc" (click)="selectCategory('', $event)">
-                      Chọn mã danh mục
+                    <li class="custom-option customize-option" (click)="openClassificationPopupFromDropdown('category', $event)">
+                      <i class="bi bi-sliders"></i>
+                      Tùy chỉnh danh mục
                     </li>
                     <li class="custom-option"
                         *ngFor="let c of categories"
@@ -108,8 +109,9 @@
                     <i class="bi bi-chevron-down custom-select-icon"></i>
                   </button>
                   <ul class="custom-select-menu" *ngIf="isDropdownOpen('room')">
-                    <li class="custom-option" [class.active]="!product.Ma_loai_phong" (click)="selectRoom('', $event)">
-                      Chọn mã loại phòng
+                    <li class="custom-option customize-option" (click)="openClassificationPopupFromDropdown('room', $event)">
+                      <i class="bi bi-sliders"></i>
+                      Tùy chỉnh loại phòng
                     </li>
                     <li class="custom-option"
                         *ngFor="let r of rooms"
@@ -130,8 +132,9 @@
                     <i class="bi bi-chevron-down custom-select-icon"></i>
                   </button>
                   <ul class="custom-select-menu" *ngIf="isDropdownOpen('style')">
-                    <li class="custom-option" [class.active]="!product.Ma_phong_cach" (click)="selectStyle('', $event)">
-                      Chọn mã phong cách
+                    <li class="custom-option customize-option" (click)="openClassificationPopupFromDropdown('style', $event)">
+                      <i class="bi bi-sliders"></i>
+                      Tùy chỉnh phong cách
                     </li>
                     <li class="custom-option"
                         *ngFor="let s of styles"
@@ -150,6 +153,10 @@
                     <i class="bi bi-chevron-down custom-select-icon"></i>
                   </button>
                   <ul class="custom-select-menu" *ngIf="isDropdownOpen('concept')">
+                    <li class="custom-option customize-option" (click)="openClassificationPopupFromDropdown('concept', $event)">
+                      <i class="bi bi-sliders"></i>
+                      Tùy chỉnh không gian
+                    </li>
                     <li class="custom-option" [class.active]="!product.Ma_khong_gian" (click)="selectConcept('', $event)">
                       Không concept
                     </li>
@@ -194,6 +201,171 @@
                 <button class="btn-draft" (click)="saveDraft()">Lưu nháp</button>
                 </div>
 
+        </div>
+
+        <div class="classification-popup-overlay" *ngIf="showClassificationPopup" (click)="closeClassificationPopup()">
+          <div class="classification-popup" (click)="$event.stopPropagation()">
+            <div class="classification-popup-header">
+              <h5>Quản lý {{ getClassificationTypeLabel(activeClassificationType) }}</h5>
+              <button type="button" class="classification-popup-close" (click)="closeClassificationPopup()">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+
+            <div class="classification-tabs">
+              <button type="button"
+                      class="classification-tab"
+                      [class.active]="activeClassificationType === 'category'"
+                      (click)="switchClassificationType('category')">
+                Danh mục
+              </button>
+              <button type="button"
+                      class="classification-tab"
+                      [class.active]="activeClassificationType === 'room'"
+                      (click)="switchClassificationType('room')">
+                Loại phòng
+              </button>
+              <button type="button"
+                      class="classification-tab"
+                      [class.active]="activeClassificationType === 'style'"
+                      (click)="switchClassificationType('style')">
+                Phong cách
+              </button>
+              <button type="button"
+                      class="classification-tab"
+                      [class.active]="activeClassificationType === 'concept'"
+                      (click)="switchClassificationType('concept')">
+                Không gian
+              </button>
+            </div>
+
+            <div class="classification-popup-body">
+              <div class="classification-list">
+                <button type="button" class="classification-item create" (click)="startCreateClassificationItem()">
+                  <i class="bi bi-plus-circle"></i>
+                  Tạo mới
+                </button>
+
+                <button *ngIf="activeClassificationType === 'concept'"
+                        type="button"
+                        class="classification-item none"
+                        (click)="selectNoConcept()">
+                  <i class="bi bi-ban"></i>
+                  Không concept
+                </button>
+
+                <button type="button"
+                        class="classification-item"
+                        *ngFor="let item of getActiveClassificationItems()"
+                        [class.active]="selectedClassificationCode === item.code"
+                        (click)="selectClassificationItem(item.code)">
+                  <strong>{{ item.code }}</strong>
+                  <small>{{ item.name }}</small>
+                </button>
+              </div>
+
+              <div class="classification-form-panel">
+                <div class="classification-form-grid">
+                  <div class="form-group">
+                    <label>{{ getClassificationCodeLabel() }}</label>
+                    <input type="text" [(ngModel)]="classificationForm.code" placeholder="Nhập mã" />
+                  </div>
+                  <div class="form-group">
+                    <label>{{ getClassificationNameLabel() }}</label>
+                    <input type="text" [(ngModel)]="classificationForm.name" placeholder="Nhập tên" />
+                  </div>
+                </div>
+
+                <div class="classification-form-grid" *ngIf="activeClassificationType === 'concept'">
+                  <div class="form-group">
+                    <label>Mã loại phòng</label>
+                    <div class="custom-select popup-custom-select" [class.open]="isPopupDropdownOpen('roomCode')">
+                      <button type="button" class="custom-select-trigger" (click)="togglePopupDropdown('roomCode', $event)">
+                        <span class="custom-select-value">{{ getPopupRoomText() }}</span>
+                        <i class="bi bi-chevron-down custom-select-icon"></i>
+                      </button>
+                      <ul class="custom-select-menu" *ngIf="isPopupDropdownOpen('roomCode')">
+                        <li class="custom-option"
+                            *ngFor="let r of rooms"
+                            [class.active]="classificationForm.roomCode === r.Ma_loai_phong"
+                            (click)="selectPopupRoom(r.Ma_loai_phong, $event)">
+                          {{ r.Ma_loai_phong }} - {{ r.Ten_loai_phong }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Mã phong cách</label>
+                    <div class="custom-select popup-custom-select" [class.open]="isPopupDropdownOpen('styleCode')">
+                      <button type="button" class="custom-select-trigger" (click)="togglePopupDropdown('styleCode', $event)">
+                        <span class="custom-select-value">{{ getPopupStyleText() }}</span>
+                        <i class="bi bi-chevron-down custom-select-icon"></i>
+                      </button>
+                      <ul class="custom-select-menu" *ngIf="isPopupDropdownOpen('styleCode')">
+                        <li class="custom-option"
+                            *ngFor="let s of styles"
+                            [class.active]="classificationForm.styleCode === s.Ma_phong_cach"
+                            (click)="selectPopupStyle(s.Ma_phong_cach, $event)">
+                          {{ s.Ma_phong_cach }} - {{ s.Ten_phong_cach }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group" *ngIf="activeClassificationType === 'concept'">
+                  <label>Ảnh không gian</label>
+                  <div class="concept-image-field">
+                    <div class="concept-image-preview" [class.has-image]="classificationForm.image">
+                      <img *ngIf="classificationForm.image" [src]="getConceptImagePreviewUrl()" alt="Ảnh không gian">
+                      <span *ngIf="!classificationForm.image">Chưa có ảnh</span>
+                    </div>
+
+                    <div class="concept-image-actions">
+                      <input #conceptImageInput type="file" accept="image/*" hidden (change)="onConceptImageSelected($event)">
+                      <button
+                        type="button"
+                        class="btn-draft concept-upload-icon-btn"
+                        (click)="conceptImageInput.click()"
+                        [disabled]="isConceptImageUploading"
+                        [attr.aria-label]="isConceptImageUploading ? 'Đang tải ảnh' : 'Tải ảnh lên'"
+                        [title]="isConceptImageUploading ? 'Đang tải ảnh...' : 'Tải ảnh lên'">
+                        <i class="bi bi-cloud-arrow-up-fill" [class.icon-spin]="isConceptImageUploading"></i>
+                      </button>
+                      <button type="button" class="btn-cancel" *ngIf="classificationForm.image" (click)="removeConceptImage()" [disabled]="isConceptImageUploading">
+                        Xóa ảnh
+                      </button>
+                    </div>
+                  </div>
+                  <small class="concept-image-link" *ngIf="classificationForm.image">{{ classificationForm.image }}</small>
+                </div>
+
+                <div class="form-group">
+                  <label>Mô tả</label>
+                  <textarea rows="3" [(ngModel)]="classificationForm.description" placeholder="Nhập mô tả"></textarea>
+                </div>
+
+                <div class="classification-status" *ngIf="activeClassificationType === 'concept'">
+                  <span class="status-text" [ngClass]="classificationForm.status ? 'status-on' : 'status-off'">
+                    {{ classificationForm.status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
+                  </span>
+                  <label class="switch">
+                    <input type="checkbox" [(ngModel)]="classificationForm.status">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="classification-actions">
+                  <button type="button" class="btn-cancel" (click)="startCreateClassificationItem()">Làm mới</button>
+                  <button type="button" class="btn-draft" (click)="assignCurrentClassificationToProduct()">Chọn cho sản phẩm</button>
+                  <button type="button" class="btn-delete-product" *ngIf="selectedClassificationCode" (click)="deleteClassificationItem()">Xóa</button>
+                  <button type="button" class="btn-save" (click)="saveClassificationItem()">
+                    {{ selectedClassificationCode ? 'Cập nhật' : 'Thêm mới' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

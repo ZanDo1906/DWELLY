@@ -14,6 +14,24 @@ import { iRoom } from '../../../interfaces/room';
 import { iStyle } from '../../../interfaces/style';
 import { iConcept } from '../../../interfaces/concept';
 
+type ClassificationType = 'category' | 'room' | 'style' | 'concept';
+type PopupDropdownType = 'roomCode' | 'styleCode';
+
+interface ClassificationListItem {
+  code: string;
+  name: string;
+}
+
+interface ClassificationFormState {
+  code: string;
+  name: string;
+  description: string;
+  roomCode: string;
+  styleCode: string;
+  image: string;
+  status: boolean;
+}
+
 @Component({
   selector: 'app-product-form',
   standalone: true,
@@ -56,7 +74,14 @@ export class ProductForm implements OnInit {
   rooms: iRoom[] = [];
   styles: iStyle[] = [];
   concepts: iConcept[] = [];
-  openDropdown: 'category' | 'room' | 'style' | 'concept' | null = null;
+  openDropdown: ClassificationType | null = null;
+  openPopupDropdown: PopupDropdownType | null = null;
+
+  showClassificationPopup = false;
+  activeClassificationType: ClassificationType = 'category';
+  selectedClassificationCode = '';
+  classificationForm: ClassificationFormState = this.createEmptyClassificationForm();
+  isConceptImageUploading = false;
 
   async ngOnInit() {
   this.loadClassificationData();
@@ -91,6 +116,7 @@ export class ProductForm implements OnInit {
     this.roomService.getRoomData().subscribe({
       next: (data) => {
         this.rooms = data || [];
+        this.syncFormDefaultsForConcept();
       },
       error: (err) => console.error('Lỗi load loại phòng', err)
     });
@@ -98,6 +124,7 @@ export class ProductForm implements OnInit {
     this.styleService.getStyleData().subscribe({
       next: (data) => {
         this.styles = data || [];
+        this.syncFormDefaultsForConcept();
       },
       error: (err) => console.error('Lỗi load phong cách', err)
     });
@@ -110,20 +137,58 @@ export class ProductForm implements OnInit {
     });
   }
 
+  private createEmptyClassificationForm(): ClassificationFormState {
+    return {
+      code: '',
+      name: '',
+      description: '',
+      roomCode: '',
+      styleCode: '',
+      image: '',
+      status: true
+    };
+  }
+
+  private syncFormDefaultsForConcept(): void {
+    if (this.activeClassificationType !== 'concept') return;
+
+    if (!this.classificationForm.roomCode && this.rooms.length > 0) {
+      this.classificationForm.roomCode = this.rooms[0]?.Ma_loai_phong ?? '';
+    }
+
+    if (!this.classificationForm.styleCode && this.styles.length > 0) {
+      this.classificationForm.styleCode = this.styles[0]?.Ma_phong_cach ?? '';
+    }
+  }
+
+  openClassificationPopup(type: ClassificationType): void {
+    this.openDropdown = null;
+    this.openPopupDropdown = null;
+    this.showClassificationPopup = true;
+    this.activeClassificationType = type;
+    this.startCreateClassificationItem();
+  }
+
+  closeClassificationPopup(): void {
+    this.showClassificationPopup = false;
+    this.openPopupDropdown = null;
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.custom-select')) {
       this.openDropdown = null;
+      this.openPopupDropdown = null;
     }
   }
 
-  toggleDropdown(type: 'category' | 'room' | 'style' | 'concept', event: Event): void {
+  toggleDropdown(type: ClassificationType, event: Event): void {
     event.stopPropagation();
     this.openDropdown = this.openDropdown === type ? null : type;
   }
 
-  isDropdownOpen(type: 'category' | 'room' | 'style' | 'concept'): boolean {
+  isDropdownOpen(type: ClassificationType): boolean {
     return this.openDropdown === type;
   }
 
@@ -149,6 +214,512 @@ export class ProductForm implements OnInit {
     event.stopPropagation();
     this.product.Ma_khong_gian = value;
     this.openDropdown = null;
+  }
+
+  openClassificationPopupFromDropdown(type: ClassificationType, event: Event): void {
+    event.stopPropagation();
+    this.openDropdown = null;
+    this.openClassificationPopup(type);
+  }
+
+  togglePopupDropdown(type: PopupDropdownType, event: Event): void {
+    event.stopPropagation();
+    this.openPopupDropdown = this.openPopupDropdown === type ? null : type;
+  }
+
+  isPopupDropdownOpen(type: PopupDropdownType): boolean {
+    return this.openPopupDropdown === type;
+  }
+
+  selectPopupRoom(value: string, event: Event): void {
+    event.stopPropagation();
+    this.classificationForm.roomCode = value;
+    this.openPopupDropdown = null;
+  }
+
+  selectPopupStyle(value: string, event: Event): void {
+    event.stopPropagation();
+    this.classificationForm.styleCode = value;
+    this.openPopupDropdown = null;
+  }
+
+  getPopupRoomText(): string {
+    if (!this.classificationForm.roomCode) return 'Chọn mã loại phòng';
+    const item = this.rooms.find((r) => r.Ma_loai_phong === this.classificationForm.roomCode);
+    return item ? `${item.Ma_loai_phong} - ${item.Ten_loai_phong}` : this.classificationForm.roomCode;
+  }
+
+  getPopupStyleText(): string {
+    if (!this.classificationForm.styleCode) return 'Chọn mã phong cách';
+    const item = this.styles.find((s) => s.Ma_phong_cach === this.classificationForm.styleCode);
+    return item ? `${item.Ma_phong_cach} - ${item.Ten_phong_cach}` : this.classificationForm.styleCode;
+  }
+
+  switchClassificationType(type: ClassificationType): void {
+    this.activeClassificationType = type;
+    this.openPopupDropdown = null;
+    this.startCreateClassificationItem();
+  }
+
+  getClassificationTypeLabel(type: ClassificationType): string {
+    switch (type) {
+      case 'category':
+        return 'Danh mục';
+      case 'room':
+        return 'Loại phòng';
+      case 'style':
+        return 'Phong cách';
+      case 'concept':
+        return 'Không gian';
+      default:
+        return '';
+    }
+  }
+
+  getClassificationCodeLabel(): string {
+    switch (this.activeClassificationType) {
+      case 'category':
+        return 'Mã danh mục';
+      case 'room':
+        return 'Mã loại phòng';
+      case 'style':
+        return 'Mã phong cách';
+      case 'concept':
+        return 'Mã không gian';
+      default:
+        return 'Mã';
+    }
+  }
+
+  getClassificationNameLabel(): string {
+    switch (this.activeClassificationType) {
+      case 'category':
+        return 'Tên danh mục';
+      case 'room':
+        return 'Tên loại phòng';
+      case 'style':
+        return 'Tên phong cách';
+      case 'concept':
+        return 'Tên không gian';
+      default:
+        return 'Tên';
+    }
+  }
+
+  getActiveClassificationItems(): ClassificationListItem[] {
+    switch (this.activeClassificationType) {
+      case 'category':
+        return this.categories.map((item) => ({
+          code: item.Ma_danh_muc,
+          name: item.Ten_danh_muc
+        }));
+      case 'room':
+        return this.rooms.map((item) => ({
+          code: item.Ma_loai_phong,
+          name: item.Ten_loai_phong
+        }));
+      case 'style':
+        return this.styles.map((item) => ({
+          code: item.Ma_phong_cach,
+          name: item.Ten_phong_cach
+        }));
+      case 'concept':
+        return this.concepts.map((item) => ({
+          code: item.Ma_khong_gian,
+          name: item.Ten_khong_gian
+        }));
+      default:
+        return [];
+    }
+  }
+
+  startCreateClassificationItem(): void {
+    this.selectedClassificationCode = '';
+    this.openPopupDropdown = null;
+    this.classificationForm = this.createEmptyClassificationForm();
+    this.syncFormDefaultsForConcept();
+  }
+
+  selectClassificationItem(code: string): void {
+    this.selectedClassificationCode = code;
+    this.openPopupDropdown = null;
+
+    if (this.activeClassificationType === 'category') {
+      const item = this.categories.find((it) => it.Ma_danh_muc === code);
+      if (!item) return;
+      this.classificationForm = {
+        ...this.createEmptyClassificationForm(),
+        code: item.Ma_danh_muc,
+        name: item.Ten_danh_muc,
+        description: item.Mo_ta
+      };
+      return;
+    }
+
+    if (this.activeClassificationType === 'room') {
+      const item = this.rooms.find((it) => it.Ma_loai_phong === code);
+      if (!item) return;
+      this.classificationForm = {
+        ...this.createEmptyClassificationForm(),
+        code: item.Ma_loai_phong,
+        name: item.Ten_loai_phong,
+        description: item.Mo_ta
+      };
+      return;
+    }
+
+    if (this.activeClassificationType === 'style') {
+      const item = this.styles.find((it) => it.Ma_phong_cach === code);
+      if (!item) return;
+      this.classificationForm = {
+        ...this.createEmptyClassificationForm(),
+        code: item.Ma_phong_cach,
+        name: item.Ten_phong_cach,
+        description: item.Mo_ta
+      };
+      return;
+    }
+
+    const item = this.concepts.find((it) => it.Ma_khong_gian === code);
+    if (!item) return;
+    this.classificationForm = {
+      ...this.createEmptyClassificationForm(),
+      code: item.Ma_khong_gian,
+      name: item.Ten_khong_gian,
+      description: item.Mo_ta,
+      roomCode: item.Ma_loai_phong,
+      styleCode: item.Ma_phong_cach,
+      image: item.Hinh_anh,
+      status: item.Trang_thai
+    };
+    this.syncFormDefaultsForConcept();
+  }
+
+  private replaceProductClassificationCode(type: ClassificationType, oldCode: string, newCode: string): void {
+    if (!oldCode || oldCode === newCode) {
+      return;
+    }
+
+    if (type === 'category' && this.product.Ma_danh_muc === oldCode) {
+      this.product.Ma_danh_muc = newCode;
+    }
+
+    if (type === 'room' && this.product.Ma_loai_phong === oldCode) {
+      this.product.Ma_loai_phong = newCode;
+    }
+
+    if (type === 'style' && this.product.Ma_phong_cach === oldCode) {
+      this.product.Ma_phong_cach = newCode;
+    }
+
+    if (type === 'concept' && this.product.Ma_khong_gian === oldCode) {
+      this.product.Ma_khong_gian = newCode;
+    }
+  }
+
+  private assignClassificationToProduct(code: string): void {
+    if (this.activeClassificationType === 'category') {
+      this.product.Ma_danh_muc = code;
+      return;
+    }
+
+    if (this.activeClassificationType === 'room') {
+      this.product.Ma_loai_phong = code;
+      return;
+    }
+
+    if (this.activeClassificationType === 'style') {
+      this.product.Ma_phong_cach = code;
+      return;
+    }
+
+    this.product.Ma_khong_gian = code;
+  }
+
+  assignCurrentClassificationToProduct(): void {
+    const code = this.classificationForm.code.trim();
+
+    if (this.activeClassificationType === 'concept' && !code) {
+      this.product.Ma_khong_gian = '';
+      this.showSuccess('Đã chọn Không concept cho sản phẩm.');
+      this.closeClassificationPopup();
+      return;
+    }
+
+    if (!code) {
+      this.showError('Vui lòng nhập hoặc chọn mã trước khi gán cho sản phẩm.');
+      return;
+    }
+
+    this.assignClassificationToProduct(code);
+    this.showSuccess('Đã cập nhật phân loại cho sản phẩm.');
+    this.closeClassificationPopup();
+  }
+
+  selectNoConcept(): void {
+    this.product.Ma_khong_gian = '';
+    this.showSuccess('Đã chọn Không concept cho sản phẩm.');
+    this.closeClassificationPopup();
+  }
+
+  getConceptImagePreviewUrl(): string {
+    if (!this.classificationForm.image) return '';
+    return this.productService.getImgUrl(this.classificationForm.image);
+  }
+
+  private extractConceptUploadFilename(imagePath: string): string | null {
+    if (!imagePath || !imagePath.includes('/uploads/concepts/')) {
+      return null;
+    }
+
+    const cleanPath = imagePath.split('?')[0]?.split('#')[0] ?? imagePath;
+    const rawFilename = cleanPath.split('/').pop();
+
+    if (!rawFilename) {
+      return null;
+    }
+
+    const filename = rawFilename.trim();
+    if (!filename || filename.includes('..') || filename.includes('\\') || filename.includes('/')) {
+      return null;
+    }
+
+    return filename;
+  }
+
+  onConceptImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const previousImagePath = this.classificationForm.image;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    this.isConceptImageUploading = true;
+
+    this.conceptService.uploadConceptImage(formData).subscribe({
+      next: (res) => {
+        this.classificationForm.image = res.relativePath || res.filePath;
+        this.isConceptImageUploading = false;
+
+        const oldFilename = this.extractConceptUploadFilename(previousImagePath);
+        if (oldFilename) {
+          this.conceptService.deleteConceptImage(oldFilename).subscribe({
+            next: () => {},
+            error: () => {}
+          });
+        }
+
+        this.showSuccess('Tải ảnh không gian thành công!');
+        input.value = '';
+      },
+      error: (err) => {
+        this.isConceptImageUploading = false;
+        this.showError('Lỗi tải ảnh không gian: ' + err.message);
+        input.value = '';
+      }
+    });
+  }
+
+  removeConceptImage(): void {
+    const currentImagePath = this.classificationForm.image;
+    if (!currentImagePath) return;
+
+    const filename = this.extractConceptUploadFilename(currentImagePath);
+    if (!filename) {
+      this.classificationForm.image = '';
+      return;
+    }
+
+    this.isConceptImageUploading = true;
+    this.conceptService.deleteConceptImage(filename).subscribe({
+      next: () => {
+        this.classificationForm.image = '';
+        this.isConceptImageUploading = false;
+        this.showSuccess('Đã xóa ảnh không gian trên máy chủ.');
+      },
+      error: (err) => {
+        this.isConceptImageUploading = false;
+        this.showError('Lỗi xóa ảnh không gian: ' + err.message);
+      }
+    });
+  }
+
+  saveClassificationItem(): void {
+    const code = this.classificationForm.code.trim();
+    const name = this.classificationForm.name.trim();
+    const description = this.classificationForm.description.trim() || 'Không có mô tả';
+    const previousCode = this.selectedClassificationCode;
+
+    if (!code || !name) {
+      this.showError('Vui lòng nhập đầy đủ mã và tên.');
+      return;
+    }
+
+    if (this.activeClassificationType === 'category') {
+      const payload: iCategory = {
+        Ma_danh_muc: code,
+        Ten_danh_muc: name,
+        Mo_ta: description
+      };
+
+      const request = previousCode
+        ? this.categoryService.updateCategory(previousCode, payload)
+        : this.categoryService.addCategory(payload);
+
+      request.subscribe({
+        next: (saved) => {
+          this.replaceProductClassificationCode('category', previousCode, saved.Ma_danh_muc);
+          this.selectedClassificationCode = saved.Ma_danh_muc;
+          this.loadClassificationData();
+          this.showSuccess(previousCode ? 'Cập nhật danh mục thành công!' : 'Thêm danh mục thành công!');
+        },
+        error: (err) => this.showError('Lỗi lưu danh mục: ' + err.message)
+      });
+      return;
+    }
+
+    if (this.activeClassificationType === 'room') {
+      const payload: iRoom = {
+        Ma_loai_phong: code,
+        Ten_loai_phong: name,
+        Mo_ta: description
+      };
+
+      const request = previousCode
+        ? this.roomService.updateRoom(previousCode, payload)
+        : this.roomService.addRoom(payload);
+
+      request.subscribe({
+        next: (saved) => {
+          this.replaceProductClassificationCode('room', previousCode, saved.Ma_loai_phong);
+          this.selectedClassificationCode = saved.Ma_loai_phong;
+          this.loadClassificationData();
+          this.showSuccess(previousCode ? 'Cập nhật loại phòng thành công!' : 'Thêm loại phòng thành công!');
+        },
+        error: (err) => this.showError('Lỗi lưu loại phòng: ' + err.message)
+      });
+      return;
+    }
+
+    if (this.activeClassificationType === 'style') {
+      const payload: iStyle = {
+        Ma_phong_cach: code,
+        Ten_phong_cach: name,
+        Mo_ta: description
+      };
+
+      const request = previousCode
+        ? this.styleService.updateStyle(previousCode, payload)
+        : this.styleService.addStyle(payload);
+
+      request.subscribe({
+        next: (saved) => {
+          this.replaceProductClassificationCode('style', previousCode, saved.Ma_phong_cach);
+          this.selectedClassificationCode = saved.Ma_phong_cach;
+          this.loadClassificationData();
+          this.showSuccess(previousCode ? 'Cập nhật phong cách thành công!' : 'Thêm phong cách thành công!');
+        },
+        error: (err) => this.showError('Lỗi lưu phong cách: ' + err.message)
+      });
+      return;
+    }
+
+    const roomCode = this.classificationForm.roomCode.trim();
+    const styleCode = this.classificationForm.styleCode.trim();
+
+    if (!roomCode || !styleCode) {
+      this.showError('Vui lòng chọn mã loại phòng và mã phong cách cho không gian.');
+      return;
+    }
+
+    const payload: iConcept = {
+      Ma_khong_gian: code,
+      Ten_khong_gian: name,
+      Ma_loai_phong: roomCode,
+      Ma_phong_cach: styleCode,
+      Hinh_anh: this.classificationForm.image.trim() || 'concept-default.jpg',
+      Mo_ta: description,
+      Trang_thai: this.classificationForm.status
+    };
+
+    const request = previousCode
+      ? this.conceptService.updateConcept(previousCode, payload)
+      : this.conceptService.addConcept(payload);
+
+    request.subscribe({
+      next: (saved) => {
+        this.replaceProductClassificationCode('concept', previousCode, saved.Ma_khong_gian);
+        this.selectedClassificationCode = saved.Ma_khong_gian;
+        this.loadClassificationData();
+        this.showSuccess(previousCode ? 'Cập nhật không gian thành công!' : 'Thêm không gian thành công!');
+      },
+      error: (err) => this.showError('Lỗi lưu không gian: ' + err.message)
+    });
+  }
+
+  deleteClassificationItem(): void {
+    const code = (this.selectedClassificationCode || this.classificationForm.code).trim();
+
+    if (!code) {
+      this.showError('Vui lòng chọn mục cần xóa.');
+      return;
+    }
+
+    if (!confirm('Bạn có chắc muốn xóa mục này không?')) {
+      return;
+    }
+
+    if (this.activeClassificationType === 'category') {
+      this.categoryService.deleteCategory(code).subscribe({
+        next: () => {
+          if (this.product.Ma_danh_muc === code) this.product.Ma_danh_muc = '';
+          this.loadClassificationData();
+          this.startCreateClassificationItem();
+          this.showSuccess('Đã xóa danh mục thành công!');
+        },
+        error: (err) => this.showError('Lỗi xóa danh mục: ' + err.message)
+      });
+      return;
+    }
+
+    if (this.activeClassificationType === 'room') {
+      this.roomService.deleteRoom(code).subscribe({
+        next: () => {
+          if (this.product.Ma_loai_phong === code) this.product.Ma_loai_phong = '';
+          this.loadClassificationData();
+          this.startCreateClassificationItem();
+          this.showSuccess('Đã xóa loại phòng thành công!');
+        },
+        error: (err) => this.showError('Lỗi xóa loại phòng: ' + err.message)
+      });
+      return;
+    }
+
+    if (this.activeClassificationType === 'style') {
+      this.styleService.deleteStyle(code).subscribe({
+        next: () => {
+          if (this.product.Ma_phong_cach === code) this.product.Ma_phong_cach = '';
+          this.loadClassificationData();
+          this.startCreateClassificationItem();
+          this.showSuccess('Đã xóa phong cách thành công!');
+        },
+        error: (err) => this.showError('Lỗi xóa phong cách: ' + err.message)
+      });
+      return;
+    }
+
+    this.conceptService.deleteConcept(code).subscribe({
+      next: () => {
+        if (this.product.Ma_khong_gian === code) this.product.Ma_khong_gian = '';
+        this.loadClassificationData();
+        this.startCreateClassificationItem();
+        this.showSuccess('Đã xóa không gian thành công!');
+      },
+      error: (err) => this.showError('Lỗi xóa không gian: ' + err.message)
+    });
   }
 
   getCategoryText(): string {

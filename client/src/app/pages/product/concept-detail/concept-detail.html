@@ -21,12 +21,12 @@
         <div class="bar">
           <div class="bar-title">Sản phẩm thuộc concept</div>
           <div class="concept-actions d-flex justify-content-end mt-2"> 
-            <div class="custom-dropdown" (click)="toggleDropdown()">
+            <div #sortDropdown class="custom-dropdown" (click)="toggleDropdown()">
               <span>{{ getLabel(sortType) }}</span>
               <i class="bi" [ngClass]="dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
               <ul *ngIf="dropdownOpen">
-                <li (click)="setSort('highest')">Giá cao</li>
-                <li (click)="setSort('lowest')">Giá thấp</li>
+                <li (click)="setSort('highest', $event)">Giá cao</li>
+                <li (click)="setSort('lowest', $event)">Giá thấp</li>
               </ul>
             </div>
             <button class="btn-add-all ms-3"> 
