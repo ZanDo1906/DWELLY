@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +15,8 @@ import { Concept } from '../../../services/concept';
   styleUrls: ['./concept-detail.css'],
 })
 export class ConceptDetail implements OnInit {
+  @ViewChild('sortDropdown') sortDropdown?: ElementRef<HTMLElement>;
+
   product?: iProduct;
   relatedProducts: iProduct[] = [];
   selectedImage = '';
@@ -22,7 +24,7 @@ export class ConceptDetail implements OnInit {
   conceptName = '';
   conceptImage = '';
 
-  sortType: string = 'newest';
+  sortType: string = 'highest';
   dropdownOpen: boolean = false;
 
 
@@ -30,12 +32,15 @@ export class ConceptDetail implements OnInit {
     public productService: Product,
     private conceptService: Concept,
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private eRef: ElementRef
+    private http: HttpClient
   ) {}
   @HostListener('document:click', ['$event'])
-  clickout(event: any) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
+  clickout(event: MouseEvent) {
+    if (!this.dropdownOpen) return;
+    const dropdownElement = this.sortDropdown?.nativeElement;
+    if (!dropdownElement) return;
+
+    if (event.target instanceof Node && !dropdownElement.contains(event.target)) {
       this.dropdownOpen = false;
     }
   }
@@ -92,8 +97,6 @@ export class ConceptDetail implements OnInit {
   }
 
   sortLabels: Record<string, string> = {
-    newest: 'Mới nhất',
-    oldest: 'Cũ nhất',
     highest: 'Giá cao',
     lowest: 'Giá thấp'
   };
@@ -104,10 +107,11 @@ export class ConceptDetail implements OnInit {
   }
 
   getLabel(type: string): string {
-    return this.sortLabels[type] || '';
+    return this.sortLabels[type] || this.sortLabels['highest'];
   }
 
-  setSort(type: string) {
+  setSort(type: string, event?: Event) {
+    event?.stopPropagation();
     this.sortType = type;
     this.sortProducts();
     this.dropdownOpen = false;
