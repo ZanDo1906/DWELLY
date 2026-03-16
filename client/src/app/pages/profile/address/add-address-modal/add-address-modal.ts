@@ -35,6 +35,7 @@ export class AddAddressModal implements OnInit, OnChanges {
   @Output() addressAdded = new EventEmitter<void>();
   addressForm!: FormGroup;
   isSubmitting = false;
+  isSubmitted = false;
   submitError = '';
   isLoadingLocations = false;
 
@@ -71,6 +72,7 @@ export class AddAddressModal implements OnInit, OnChanges {
 
   onSubmit() {
     this.submitError = '';
+    this.isSubmitted = true;
 
     if (this.addressForm.invalid) {
       this.addressForm.markAllAsTouched();
@@ -103,6 +105,7 @@ export class AddAddressModal implements OnInit, OnChanges {
       next: (response) => {
         alert(response?.message || (this.mode === 'edit' ? 'Cập nhật địa chỉ thành công' : 'Thêm địa chỉ thành công'));
         this.addressForm.reset({ isDefault: false });
+        this.isSubmitted = false;
         this.isSubmitting = false;
         this.addressAdded.emit();
 
@@ -115,6 +118,20 @@ export class AddAddressModal implements OnInit, OnChanges {
         this.isSubmitting = false;
       }
     });
+  }
+
+  isControlInvalid(controlName: string, errorKey?: string): boolean {
+    const control = this.addressForm.get(controlName);
+    if (!control) {
+      return false;
+    }
+
+    const shouldShow = control.touched || control.dirty || this.isSubmitted;
+    if (!shouldShow || !control.errors) {
+      return false;
+    }
+
+    return errorKey ? Boolean(control.errors[errorKey]) : control.invalid;
   }
 
   clearField(fieldName: string): void {

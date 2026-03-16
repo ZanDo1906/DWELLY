@@ -18,6 +18,7 @@
           <i class="bi bi-x-circle" *ngIf="addressForm.get('fullName')?.value" (click)="clearField('fullName')"></i>
         </div>
         <small class="text-danger" *ngIf="addressForm.get('fullName')?.touched && addressForm.get('fullName')?.errors?.['required']">Vui lòng nhập họ và tên</small>
+        <small class="text-danger" *ngIf="isControlInvalid('fullName', 'minlength')">Họ và tên phải có ít nhất 3 ký tự</small>
       </div>
 
       <div class="form-group">
@@ -50,6 +51,7 @@
           <option value="">{{ isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố' }}</option>
           <option *ngFor="let p of provinces" [value]="p.code">{{ p.name }}</option>
         </select>
+        <small class="text-danger" *ngIf="isControlInvalid('province', 'required')">Vui lòng chọn Tỉnh/Thành phố</small>
       </div>
 
       <div class="form-group">
@@ -58,6 +60,7 @@
           <option value="">Chọn Quận/Huyện</option>
           <option *ngFor="let d of districts" [value]="d.code">{{ d.name }}</option>
         </select>
+        <small class="text-danger" *ngIf="isControlInvalid('district', 'required')">Vui lòng chọn Quận/Huyện</small>
       </div>
     </div>
 
@@ -68,6 +71,7 @@
           <option value="">Chọn Phường/Xã</option>
           <option *ngFor="let w of wards" [value]="w.code">{{ w.name }}</option>
         </select>
+        <small class="text-danger" *ngIf="isControlInvalid('ward', 'required')">Vui lòng chọn Phường/Xã</small>
       </div>
 
       <div class="form-group">
@@ -79,6 +83,8 @@
             placeholder="222222" />
           <i class="bi bi-x-circle" *ngIf="addressForm.get('address')?.value" (click)="clearField('address')"></i>
         </div>
+        <small class="text-danger" *ngIf="isControlInvalid('address', 'required')">Vui lòng nhập địa chỉ cụ thể</small>
+        <small class="text-danger" *ngIf="isControlInvalid('address', 'minlength')">Địa chỉ phải có ít nhất 5 ký tự</small>
       </div>
     </div>
   </div>

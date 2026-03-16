@@ -52,10 +52,21 @@ export class Login {
 
     this.adminService.login({ email, password }).subscribe({
       next: (res: any) => {
+        const adminPayload = {
+          Ma_quan_tri_vien: res?.admin?.maAdmin || '',
+          Ho_ten: res?.admin?.fullName || 'Admin',
+          Email: res?.admin?.email || '',
+          id: res?.admin?.id || '',
+          Anh_dai_dien: res?.admin?.avatar || '',
+        };
+
         localStorage.setItem('token', res.token);
-        localStorage.setItem('adminInfo', JSON.stringify(res.admin));
-        localStorage.setItem('adminName', res.admin.fullName);
-        localStorage.setItem('adminEmail', res.admin.email);
+        localStorage.setItem('adminInfo', JSON.stringify(adminPayload));
+        localStorage.setItem('admin', JSON.stringify(adminPayload));
+        localStorage.setItem('adminName', adminPayload.Ho_ten);
+        localStorage.setItem('adminEmail', adminPayload.Email);
+        localStorage.setItem('adminAvatar', adminPayload.Anh_dai_dien || '');
+        localStorage.setItem('adminId', adminPayload.Ma_quan_tri_vien || adminPayload.id);
         
         this.router.navigate(['/dashboard']);
         window.dispatchEvent(new Event('admin-login'));

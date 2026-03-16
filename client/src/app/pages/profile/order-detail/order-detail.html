@@ -58,8 +58,16 @@
             </div>
           </li>
 
-          <!-- Đang giao hàng - Show when Đang giao or Hoàn thành -->
-          <li *ngIf="orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
+          <li *ngIf="orderInfo.Trang_thai === 'Đã giao'" class="active">
+            <span class="dot"></span>
+            <div>
+              <strong>Đã giao hàng</strong>
+              <p>Đơn hàng đã giao, vui lòng xác nhận đã nhận hàng</p>
+            </div>
+          </li>
+
+          <!-- Đang giao hàng - Show when Đang giao, Đã giao or Hoàn thành -->
+          <li *ngIf="orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Đã giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
               [class.active]="orderInfo.Trang_thai === 'Đang giao'">
             <span class="dot"></span>
             <div>
@@ -68,13 +76,13 @@
             </div>
           </li>
 
-          <!-- Đang vận chuyển - Show when Đã duyệt, Đang giao, or Hoàn thành -->
-          <li *ngIf="orderInfo.Trang_thai === 'Đã duyệt' || orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
-              [class.active]="orderInfo.Trang_thai === 'Đã duyệt'">
+          <!-- Chờ giao hàng - Show when Chờ giao hàng, Đang giao, Đã giao, or Hoàn thành -->
+          <li *ngIf="orderInfo.Trang_thai === 'Chờ giao hàng' || orderInfo.Trang_thai === 'Đang giao' || orderInfo.Trang_thai === 'Đã giao' || orderInfo.Trang_thai === 'Hoàn thành'" 
+              [class.active]="orderInfo.Trang_thai === 'Chờ giao hàng'">
             <span class="dot"></span>
             <div>
-              <strong>Đang vận chuyển</strong>
-              <p>Đơn vị vận chuyển đã lấy hàng thành công</p>
+              <strong>Chờ giao hàng</strong>
+              <p>Đơn hàng đã được duyệt và đang chờ bàn giao cho đơn vị vận chuyển</p>
             </div>
           </li>
 
@@ -143,7 +151,7 @@
 
          <!-- Actions -->
       <div class="action-buttons mt-4">
-        <button class="btn btn-primary-action">Đã nhận hàng</button>
+        <button class="btn btn-primary-action" *ngIf="orderInfo.Trang_thai === 'Đã giao'" (click)="confirmReceived()">Đã nhận hàng</button>
         <!-- <button class="btn btn-outline-action">
           Yêu cầu trả hàng/Hoàn tiền
         </button> -->

@@ -1,10 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { iOrder } from '../../../interfaces/order';
 import { Table } from '../../../components/table/table';
-import { Client as ClientService } from '../../../services/client';
 import { Order as OrderService } from '../../../services/order';
 
 interface OrderRow {
@@ -13,8 +11,8 @@ interface OrderRow {
   customer: string;
   date: string;
   dateValue: number;
-  approvalStatus: 'pending' | 'approved' | 'rejected';
-  deliveryStatus: 'shipping' | 'completed' | 'cancelled' | 'returned';
+  approvalStatus: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  deliveryStatus: 'none' | 'waiting' | 'shipping' | 'delivered' | 'completed';
   total: string;
 }
 
@@ -30,14 +28,13 @@ export class OrderList implements OnInit {
   searchTerm = '';
   sortMode: '' | 'az' | 'za' | 'newest' | 'oldest' = '';
   isStatusOpen = false;
-  statusOptions = ['Tất cả trạng thái', 'Chờ duyệt', 'Đã duyệt', 'Đã từ chối', 'Đang giao', 'Hoàn thành', 'Bị hủy', 'Trả hàng'];
+  statusOptions = ['Tất cả trạng thái', 'Chờ duyệt', 'Đã duyệt', 'Bị từ chối', 'Đã hủy', 'Chờ giao', 'Đang giao', 'Đã giao', 'Hoàn thành'];
   selectedStatus = this.statusOptions[0];
   private readonly allStatusLabel = 'Tất cả trạng thái';
 
   constructor(
     private router: Router,
     private orderService: OrderService,
-    private clientService: ClientService,
   ) {}
 
   ngOnInit(): void {
@@ -47,14 +44,16 @@ export class OrderList implements OnInit {
   private readonly approvalStatusLabels: Record<OrderRow['approvalStatus'], string> = {
     pending: 'Chờ duyệt',
     approved: 'Đã duyệt',
-    rejected: 'Đã từ chối',
+    rejected: 'Bị từ chối',
+    cancelled: 'Đã hủy',
   };
 
   private readonly deliveryStatusLabels: Record<OrderRow['deliveryStatus'], string> = {
+    none: '',
+    waiting: 'Chờ giao',
     shipping: 'Đang giao',
+    delivered: 'Đã giao',
     completed: 'Hoàn thành',
-    cancelled: 'Bị hủy',
-    returned: 'Trả hàng',
   };
 
   orders: OrderRow[] = [];
@@ -179,13 +178,8 @@ export class OrderList implements OnInit {
   }
 
   private loadOrders(): void {
-    forkJoin({
-      orders: this.orderService.getOrderData(),
-      clients: this.clientService.getClientData(),
-    }).subscribe({
-      next: ({ orders, clients }) => {
-        const clientMap = new Map(clients.map((client) => [client.Ma_khach_hang, client.Ho_va_ten]));
-
+    this.orderService.getOrderData().subscribe({
+      next: (orders) => {
         this.orders = orders.map((order, index) => {
           const dateValue = this.toTimestamp(order.Ngay_dat);
           const normalizedStatus = this.normalizeText(order.Trang_thai || '');
@@ -193,7 +187,7 @@ export class OrderList implements OnInit {
           return {
             id: index + 1,
             code: order.Ma_don_mua,
-            customer: this.getCustomerName(order, clientMap),
+            customer: this.getCustomerName(order),
             date: this.formatDate(order.Ngay_dat),
             dateValue,
             approvalStatus: this.mapApprovalStatus(normalizedStatus),
@@ -210,26 +204,34 @@ export class OrderList implements OnInit {
     });
   }
 
-  private getCustomerName(order: iOrder, clientMap: Map<string, string>): string {
+  private getCustomerName(order: iOrder): string {
     const guestInfo = order.Thong_tin_khach_vang_lai as unknown as {
       Ho_va_ten?: string;
       Ho_ten?: string;
     };
+    const shippingInfo = order.Thong_tin_giao_hang as unknown as {
+      Ho_ten_nguoi_nhan?: string;
+    };
+
     const guestName = (guestInfo?.Ho_va_ten || guestInfo?.Ho_ten || '').trim();
     if (guestName) {
       return guestName;
     }
 
-    const clientName = order.Ma_khach_hang ? clientMap.get(order.Ma_khach_hang)?.trim() : '';
-    if (clientName) {
-      return clientName;
+    const shippingName = (shippingInfo?.Ho_ten_nguoi_nhan || '').trim();
+    if (shippingName) {
+      return shippingName;
     }
 
     return 'Khách hàng';
   }
 
-  private mapApprovalStatus(status: string): 'pending' | 'approved' | 'rejected' {
-    if (status.includes('tu choi')) {
+  private mapApprovalStatus(status: string): 'pending' | 'approved' | 'rejected' | 'cancelled' {
+    if (status.includes('da huy')) {
+      return 'cancelled';
+    }
+
+    if (status.includes('bi tu choi')) {
       return 'rejected';
     }
 
@@ -240,20 +242,34 @@ export class OrderList implements OnInit {
     return 'approved';
   }
 
-  private mapDeliveryStatus(status: string): 'shipping' | 'completed' | 'cancelled' | 'returned' {
+  private mapDeliveryStatus(status: string): 'none' | 'waiting' | 'shipping' | 'delivered' | 'completed' {
+    if (
+      status.includes('cho duyet') ||
+      status.includes('bi tu choi') ||
+      status.includes('da huy') ||
+      status.includes('huy don') ||
+      status.includes('tra hang')
+    ) {
+      return 'none';
+    }
+
+    if (status.includes('cho giao hang') || status.includes('cho giao') || status.includes('da duyet')) {
+      return 'waiting';
+    }
+
+    if (status.includes('da giao')) {
+      return 'delivered';
+    }
+
     if (status.includes('hoan thanh')) {
       return 'completed';
     }
 
-    if (status.includes('tra hang')) {
-      return 'returned';
+    if (status.includes('dang giao') || status.includes('dang van chuyen')) {
+      return 'shipping';
     }
 
-    if (status.includes('huy') || status.includes('tu choi')) {
-      return 'cancelled';
-    }
-
-    return 'shipping';
+    return 'none';
   }
 
   private formatDate(value: Date | string): string {
@@ -279,6 +295,8 @@ export class OrderList implements OnInit {
     return value
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
       .toLowerCase()
       .trim();
   }

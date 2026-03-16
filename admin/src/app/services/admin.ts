@@ -9,7 +9,6 @@ const baseUrl = "http://localhost:3000";
   providedIn: 'root',
 })
 export class Admin {
-  // url = '/assets/data/admin.json';
   constructor(private http: HttpClient) { }
   getAdminData(): Observable<iAdmin[]> {
     return this.http

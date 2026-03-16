@@ -32,4 +32,13 @@ export class Order_Details {
       .get<iOrderDetail[]>(`${baseUrl}/order_details/order/${orderId}`)
       .pipe(retry(2), catchError(this.handleError));
   }
+
+  createOrderDetailsBulk(payload: {
+    Ma_don_mua: string;
+    details: Array<{ Ma_san_pham: string; Don_gia: number; So_luong: number }>;
+  }): Observable<any> {
+    return this.http
+      .post(`${baseUrl}/order_details/bulk`, payload)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }

@@ -257,18 +257,31 @@
   color: #fff;
 }
 
+.approval-status.cancelled {
+  background: #8f8f8f;
+  color: #fff;
+}
+
+.delivery-status.none {
+  display: none;
+}
+
+.delivery-status.waiting {
+  background: #ECAE2E;
+  color: #fff;
+}
+
 .delivery-status.shipping {
+  background: #ECAE2E;
+  color: #fff;
+}
+
+.delivery-status.delivered {
   background: #ECAE2E;
   color: #fff;
 }
 
 .delivery-status.completed {
   background: #546745;
-  color: #fff;
-}
-
-.delivery-status.cancelled,
-.delivery-status.returned {
-  background: #A34343;
   color: #fff;
 }

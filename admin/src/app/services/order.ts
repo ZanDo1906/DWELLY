@@ -29,6 +29,12 @@ export class Order {
       .pipe(retry(2), catchError(this.handleError));
   }
 
+  updateOrderStatus(orderId: string, status: string): Observable<iOrder> {
+    return this.http
+      .patch<iOrder>(`${baseUrl}/orders/${orderId}`, { Trang_thai: status })
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));
   }

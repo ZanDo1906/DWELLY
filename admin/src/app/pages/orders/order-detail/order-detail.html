@@ -72,6 +72,11 @@
               </h3>
 
               <textarea class="note-input" disabled>{{ currentOrder?.Ghi_chu || 'Không có ghi chú' }}</textarea>
+
+              <label class="invoice-checkbox">
+                <input type="checkbox" [(ngModel)]="wantInvoice" disabled />
+                <span>Tôi muốn xuất hóa đơn</span>
+              </label>
             </div>
 
           </div>
@@ -86,20 +91,22 @@
                 Trạng thái đơn hàng
               </h3>
 
+              <p><strong>Hiện tại:</strong> {{ currentStatus || 'Chưa có' }}</p>
+
               <div class="d-flex gap-2 mb-3">
-                <button class="btn-approve" [disabled]="isOrderCompleted">Duyệt đơn</button>
-                <button class="btn-reject" [disabled]="isOrderCompleted">Từ chối đơn</button>
+                <button class="btn-approve" (click)="approveOrder()" [disabled]="!canApprove || isUpdatingStatus">Duyệt đơn</button>
+                <button class="btn-reject" (click)="rejectOrder()" [disabled]="!canReject || isUpdatingStatus">Từ chối đơn</button>
               </div>
 
               <div class="dropdown-wrapper">
-                <button class="dropdown-trigger" (click)="toggleStatusDropdown()" [disabled]="isOrderCompleted">
+                <button class="dropdown-trigger" (click)="toggleStatusDropdown()" [disabled]="!canUpdateStatus || isUpdatingStatus">
                   Cập nhật trạng thái
                   <i class="bi bi-chevron-down"></i>
                 </button>
-                <ul class="dropdown-menu" [class.open]="showStatusDropdown && !isOrderCompleted">
-                  <li><a href="#">Đang giao</a></li>
-                  <li><a href="#">Hoàn thành</a></li>
-                  
+                <ul class="dropdown-menu" [class.open]="showStatusDropdown && canUpdateStatus && !isUpdatingStatus">
+                  <li *ngIf="canStartDelivery"><button type="button" (click)="startDelivery()">Chuyển sang Đang giao</button></li>
+                  <li *ngIf="canMarkDelivered"><button type="button" (click)="markDelivered()">Xác nhận Đã giao</button></li>
+                  <li *ngIf="canCancel"><button type="button" (click)="cancelOrder()">Hủy đơn</button></li>
                 </ul>
               </div>
             </div>

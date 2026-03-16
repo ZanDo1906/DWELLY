@@ -3,6 +3,10 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+function escapeRegExp(value = "") {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 //Conect to DB
 const db = require('../config/db');
 db.connect();
@@ -54,8 +58,17 @@ router.get("/admins/:id", async (req, res) => {
 router.post("/loginAdmin", async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = String(email || "").trim();
 
-    const admin = await Admin.findOne({ Email: email });
+    if (!normalizedEmail || !password) {
+      return res.status(400).json({
+        message: "Vui lòng nhập email và mật khẩu"
+      });
+    }
+
+    const admin = await Admin.findOne({
+      Email: { $regex: new RegExp(`^${escapeRegExp(normalizedEmail)}$`, "i") }
+    });
 
     if (!admin) {
       return res.status(400).json({
@@ -84,7 +97,8 @@ router.post("/loginAdmin", async (req, res) => {
         id: admin._id,
         maAdmin: admin.Ma_quan_tri_vien,
         fullName: admin.Ho_va_ten,
-        email: admin.Email
+        email: admin.Email,
+        avatar: admin.Anh_dai_dien || ''
       }
     });
 

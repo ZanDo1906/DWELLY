@@ -45,7 +45,10 @@ export class OrderDetail implements OnInit {
   loadOrderInfo(): void {
     this.orderService.getOrderById(this.orderId).subscribe({
       next: (data) => {
-        this.orderInfo = data;
+        this.orderInfo = {
+          ...data,
+          Trang_thai: this.normalizeOrderStatus((data as iOrder).Trang_thai),
+        };
         console.log('Order info:', this.orderInfo);
 
         this.resolveCustomerInfo(this.orderInfo as iOrder, undefined);
@@ -267,6 +270,11 @@ export class OrderDetail implements OnInit {
   confirmReceived(): void {
     if (!this.orderInfo) return;
 
+    if (this.orderInfo.Trang_thai !== 'Đã giao') {
+      alert('Đơn hàng chưa ở trạng thái Đã giao để xác nhận nhận hàng.');
+      return;
+    }
+
     if (confirm('Xác nhận bạn đã nhận được hàng?')) {
       this.orderService.updateOrderStatus(this.orderId, 'Hoàn thành').subscribe({
         next: (response) => {
@@ -279,5 +287,17 @@ export class OrderDetail implements OnInit {
         }
       });
     }
+  }
+
+  private normalizeOrderStatus(status: string): string {
+    if (status === 'Đã duyệt') {
+      return 'Chờ giao hàng';
+    }
+
+    if (status === 'Hủy đơn' || status === 'Bị hủy' || status === 'Trả hàng') {
+      return 'Đã hủy';
+    }
+
+    return status;
   }
 }

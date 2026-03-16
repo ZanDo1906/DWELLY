@@ -251,6 +251,22 @@
     resize: none;
 }
 
+.order-detail-page .invoice-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #373737;
+}
+
+.order-detail-page .invoice-checkbox input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: #546745;
+}
+
 /* ================= BUTTON ================= */
 
 .order-detail-page .btn-approve {
@@ -448,16 +464,20 @@
     border-bottom: none;
 }
 
-.order-detail-page .dropdown-menu a {
+.order-detail-page .dropdown-menu button {
     display: block;
+    width: 100%;
     padding: 12px 16px;
     color: #373737;
-    text-decoration: none;
+    background: #fff;
+    border: none;
+    text-align: left;
+    cursor: pointer;
     font-size: 14px;
     transition: 0.2s ease;
 }
 
-.order-detail-page .dropdown-menu a:hover {
+.order-detail-page .dropdown-menu button:hover {
     background: #F9F7F5;
     color: #6C5234;
 }

@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HostListener } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { iClient } from '../../../interfaces/client';
 import { iOrder } from '../../../interfaces/order';
 import { iOrderDetail } from '../../../interfaces/order_details';
 import { iProduct } from '../../../interfaces/product';
 import { iRoom } from '../../../interfaces/room';
-import { Client as ClientService } from '../../../services/client';
 import { Order_Details as OrderDetailsService } from '../../../services/order_details';
 import { Order as OrderService } from '../../../services/order';
 import { Product as ProductService } from '../../../services/product';
@@ -22,7 +21,7 @@ interface CartItem {
 
 @Component({
   selector: 'app-order-detail',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './order-detail.html',
   styleUrl: './order-detail.css',
 })
@@ -45,6 +44,8 @@ export class OrderDetail implements OnInit {
   discountAmount = 0;
   grandTotal = 0;
   selectedPaymentMode: 'deposit' | 'full' = 'full';
+  wantInvoice = false;
+  isUpdatingStatus = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +53,6 @@ export class OrderDetail implements OnInit {
     private orderDetailsService: OrderDetailsService,
     private productService: ProductService,
     private roomService: RoomService,
-    private clientService: ClientService,
   ) {}
 
   ngOnInit(): void {
@@ -67,8 +67,7 @@ export class OrderDetail implements OnInit {
       products: this.productService.getProductData(),
       orders: this.orderService.getOrderData(),
       orderDetails: this.orderDetailsService.getOrderDetailsData(),
-      clients: this.clientService.getClientData(),
-    }).subscribe(({ rooms, products, orders, orderDetails, clients }) => {
+    }).subscribe(({ rooms, products, orders, orderDetails }) => {
       this.rooms = rooms;
 
       const targetOrder = routeOrderId
@@ -81,10 +80,11 @@ export class OrderDetail implements OnInit {
       }
 
       this.currentOrder = targetOrder;
+      this.wantInvoice = Boolean(targetOrder.Xuat_hoa_don);
       this.orderDisplayCode = targetOrder.Ma_don_mua;
       this.orderDateDisplay = this.formatOrderDate(targetOrder.Ngay_dat);
 
-      this.resolveCustomerInfo(targetOrder, clients);
+      this.resolveCustomerInfo(targetOrder);
 
       const productMap = new Map(products.map((product) => [product.Ma_san_pham, product]));
       const detailsForOrder = orderDetails.filter((detail) => detail.Ma_don_mua === targetOrder.Ma_don_mua);
@@ -125,10 +125,10 @@ export class OrderDetail implements OnInit {
     this.discountAmount = 0;
     this.grandTotal = 0;
     this.selectedPaymentMode = 'full';
+    this.wantInvoice = false;
   }
 
-  private resolveCustomerInfo(order: iOrder, clients: iClient[]): void {
-    const orderRecord = order as unknown as Record<string, unknown>;
+  private resolveCustomerInfo(order: iOrder): void {
     const shippingInfo = order.Thong_tin_giao_hang;
     const guestInfo = order.Thong_tin_khach_vang_lai as {
       Ho_va_ten?: string;
@@ -140,11 +140,7 @@ export class OrderDetail implements OnInit {
       Phuong_xa?: string;
     };
 
-    const client = order.Ma_khach_hang
-      ? clients.find((item) => item.Ma_khach_hang === order.Ma_khach_hang)
-      : undefined;
-
-    const preferredEmail = (client?.Email || guestInfo?.Email || '').trim();
+    const preferredEmail = (guestInfo?.Email || '').trim();
 
     const shippingComposedAddress = this.composeAddressFrom4Parts(
       shippingInfo?.Dia_chi_cu_the,
@@ -160,62 +156,27 @@ export class OrderDetail implements OnInit {
       guestInfo?.Tinh_thanh,
     );
 
-    const shippingAddress = this.resolveAddress(
-      shippingComposedAddress,
-      orderRecord['Dia_chi'],
-    );
+    const shippingAddress = this.resolveAddress(shippingComposedAddress);
 
-    const addressFromOrder = this.resolveAddress(
-      shippingAddress,
-      guestComposedAddress,
-      guestInfo?.Dia_chi_cu_the,
-    );
+    const addressFromOrder = this.resolveAddress(guestComposedAddress, guestInfo?.Dia_chi_cu_the);
 
     const shippingName = (shippingInfo?.Ho_ten_nguoi_nhan || '').trim();
     const shippingPhone = (shippingInfo?.So_dien_thoai_nguoi_nhan || '').trim();
     const guestName = (guestInfo?.Ho_va_ten || '').trim();
     const guestPhone = (guestInfo?.So_dien_thoai || '').trim();
-    const isGuestOrder = !order.Ma_khach_hang;
 
-    if (isGuestOrder && (guestName || guestPhone || addressFromOrder)) {
-      this.customerName = guestName || shippingName || 'Khách hàng';
-      this.customerPhone = guestPhone || shippingPhone || 'Chưa có';
-      this.customerEmail = preferredEmail || 'Chưa có';
-      this.customerAddress = addressFromOrder || 'Chưa có';
-      return;
-    }
-
-    if (shippingName || shippingPhone || addressFromOrder) {
-      this.customerName = shippingName || 'Khách hàng';
-      this.customerPhone = shippingPhone || 'Chưa có';
-      this.customerEmail = preferredEmail || 'Chưa có';
-      this.customerAddress = addressFromOrder || 'Chưa có';
-      return;
-    }
-
-    if (guestName) {
-      this.customerName = guestName;
+    if (order.Thong_tin_khach_vang_lai) {
+      this.customerName = guestName || 'Khách hàng';
       this.customerPhone = guestPhone || 'Chưa có';
       this.customerEmail = preferredEmail || 'Chưa có';
       this.customerAddress = addressFromOrder || 'Chưa có';
       return;
     }
 
-    if (client) {
-      this.customerName = client.Ho_va_ten || 'Khách hàng';
-      this.customerPhone = client.So_dien_thoai || 'Chưa có';
-      this.customerEmail = preferredEmail || 'Chưa có';
-      this.customerAddress =
-        addressFromOrder ||
-        this.resolveAddress(client.Dia_chi, orderRecord['Dia_chi'], orderRecord['dia_chi']) ||
-        'Chưa có';
-      return;
-    }
-
-    this.customerName = 'Khách hàng';
-    this.customerPhone = 'Chưa có';
+    this.customerName = shippingName || 'Khách hàng';
+    this.customerPhone = shippingPhone || 'Chưa có';
     this.customerEmail = 'Chưa có';
-    this.customerAddress = addressFromOrder || 'Chưa có';
+    this.customerAddress = shippingAddress || 'Chưa có';
   }
 
   private composeAddressFrom4Parts(
@@ -366,8 +327,93 @@ export class OrderDetail implements OnInit {
       .trim();
   }
 
+  get currentStatus(): string {
+    return this.currentOrder?.Trang_thai || '';
+  }
+
+  private get normalizedCurrentStatus(): string {
+    if (this.currentStatus === 'Đã duyệt') {
+      return 'Chờ giao hàng';
+    }
+
+    if (this.currentStatus === 'Hủy đơn' || this.currentStatus === 'Bị hủy' || this.currentStatus === 'Trả hàng') {
+      return 'Đã hủy';
+    }
+
+    return this.currentStatus;
+  }
+
+  get canApprove(): boolean {
+    return this.normalizedCurrentStatus === 'Chờ duyệt';
+  }
+
+  get canReject(): boolean {
+    return this.normalizedCurrentStatus === 'Chờ duyệt';
+  }
+
+  get canStartDelivery(): boolean {
+    return this.normalizedCurrentStatus === 'Chờ giao hàng';
+  }
+
+  get canCancel(): boolean {
+    return this.normalizedCurrentStatus === 'Chờ giao hàng';
+  }
+
+  get canMarkDelivered(): boolean {
+    return this.normalizedCurrentStatus === 'Đang giao';
+  }
+
+  get canUpdateStatus(): boolean {
+    return this.canStartDelivery || this.canCancel || this.canMarkDelivered;
+  }
+
+  approveOrder(): void {
+    this.updateOrderStatus('Chờ giao hàng', 'Duyệt đơn hàng này?');
+  }
+
+  rejectOrder(): void {
+    this.updateOrderStatus('Bị từ chối', 'Từ chối đơn hàng này?');
+  }
+
+  startDelivery(): void {
+    this.updateOrderStatus('Đang giao', 'Chuyển đơn sang trạng thái Đang giao?');
+  }
+
+  markDelivered(): void {
+    this.updateOrderStatus('Đã giao', 'Xác nhận đơn đã được giao thành công?');
+  }
+
+  cancelOrder(): void {
+    this.updateOrderStatus('Đã hủy', 'Hủy đơn hàng này?');
+  }
+
+  private updateOrderStatus(nextStatus: string, confirmMessage: string): void {
+    if (!this.currentOrder || this.isUpdatingStatus) {
+      return;
+    }
+
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
+    this.isUpdatingStatus = true;
+    this.orderService.updateOrderStatus(this.currentOrder.Ma_don_mua, nextStatus).subscribe({
+      next: (updatedOrder) => {
+        this.currentOrder = updatedOrder;
+        this.wantInvoice = Boolean(updatedOrder.Xuat_hoa_don);
+        this.showStatusDropdown = false;
+        this.isUpdatingStatus = false;
+      },
+      error: (error) => {
+        const message = error?.message || 'Không thể cập nhật trạng thái đơn hàng.';
+        alert(message);
+        this.isUpdatingStatus = false;
+      },
+    });
+  }
+
   toggleStatusDropdown(): void {
-    if (this.isOrderCompleted) {
+    if (this.isOrderCompleted || !this.canUpdateStatus || this.isUpdatingStatus) {
       this.showStatusDropdown = false;
       return;
     }

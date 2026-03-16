@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { iProduct } from '../../../interfaces/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { QRPayment } from '../qr-payment/qr-payment';
+import { Order } from '../../../services/order';
+import { Order_Details } from '../../../services/order_details';
 
 interface CheckoutItem {
   product: iProduct;
@@ -49,6 +52,9 @@ export class PaymentNonMember implements OnInit {
   voucherCode: string = '';
   appliedVoucher: iVoucher | null = null;
   voucherError: string = '';
+  note: string = '';
+  wantInvoice: boolean = false;
+  createdOrderCode: string = '';
 
   // Address form fields
   fullName: string = '';
@@ -90,7 +96,9 @@ export class PaymentNonMember implements OnInit {
   constructor(
     private roomService: Room,
     private voucherService: Voucher,
-    private http: HttpClient
+    private http: HttpClient,
+    private orderService: Order,
+    private orderDetailsService: Order_Details,
   ) { }
 
   ngOnInit(): void {
@@ -522,12 +530,50 @@ export class PaymentNonMember implements OnInit {
     return this.validatePhoneFormat(this.phone);
   }
 
-  openQRPayment(): void {
+  async openQRPayment(): Promise<void> {
     const isValid = this.validateForm();
     console.log('Form validation result:', isValid);
 
     if (isValid) {
-      this.showQRModal = true;
+      try {
+        const created = await firstValueFrom(this.orderService.createOrder({
+          Tong_tien: this.getFinalTotal(),
+          Hinh_thuc_thanh_toan: this.paymentMethod === 'deposit' ? 'Thanh toán cọc' : 'Thanh toán toàn bộ',
+          Phi_van_chuyen: this.getShippingFee(),
+          Ghi_chu: this.note,
+          Xuat_hoa_don: this.wantInvoice,
+          Thong_tin_khach_vang_lai: {
+            Ho_va_ten: this.fullName,
+            So_dien_thoai: this.phone,
+            Email: this.email,
+            Tinh_thanh: this.city,
+            Quan_huyen: this.district,
+            Phuong_xa: this.ward,
+            Dia_chi_cu_the: this.specificAddress,
+          },
+        }));
+
+        const orderCode = created?.order?.Ma_don_mua;
+        if (!orderCode) {
+          alert('Không thể tạo đơn hàng. Vui lòng thử lại.');
+          return;
+        }
+
+        await firstValueFrom(this.orderDetailsService.createOrderDetailsBulk({
+          Ma_don_mua: orderCode,
+          details: this.cartItems.map((item) => ({
+            Ma_san_pham: item.product.Ma_san_pham,
+            Don_gia: item.product.Gia_ban,
+            So_luong: item.quantity,
+          })),
+        }));
+
+        this.createdOrderCode = orderCode;
+        this.showQRModal = true;
+      } catch (error) {
+        console.error('Error creating order:', error);
+        alert('Không thể tạo đơn hàng. Vui lòng thử lại.');
+      }
     } else {
       this.showValidationModal = true;
     }

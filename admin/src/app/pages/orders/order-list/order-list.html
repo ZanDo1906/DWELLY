@@ -97,8 +97,16 @@
               <td>{{ order.code }}</td>
               <td>{{ order.customer }}</td>
               <td>{{ order.date }}</td>
-              <td><span class="status approval-status" [ngClass]="order.approvalStatus">{{ order.approvalStatus === 'pending' ? 'Chờ duyệt' : order.approvalStatus === 'approved' ? 'Đã duyệt' : 'Đã từ chối' }}</span></td>
-              <td><span class="status delivery-status" [ngClass]="order.deliveryStatus">{{ order.deliveryStatus === 'shipping' ? 'Đang giao' : order.deliveryStatus === 'completed' ? 'Hoàn thành' : order.deliveryStatus === 'cancelled' ? 'Bị hủy' : 'Trả hàng' }}</span></td>
+              <td>
+                <span class="status approval-status" [ngClass]="order.approvalStatus">
+                  {{ order.approvalStatus === 'pending' ? 'Chờ duyệt' : order.approvalStatus === 'rejected' ? 'Bị từ chối' : order.approvalStatus === 'cancelled' ? 'Đã hủy' : 'Đã duyệt' }}
+                </span>
+              </td>
+              <td>
+                <span class="status delivery-status" [ngClass]="order.deliveryStatus" *ngIf="order.deliveryStatus !== 'none'">
+                  {{ order.deliveryStatus === 'waiting' ? 'Chờ giao' : order.deliveryStatus === 'shipping' ? 'Đang giao' : order.deliveryStatus === 'delivered' ? 'Đã giao' : 'Hoàn thành' }}
+                </span>
+              </td>
               <td>{{ order.total }}</td>
             </tr>
           </ng-container>

@@ -30,6 +30,12 @@ export class Order {
         .pipe(retry(2), catchError(this.handleError));
     }
 
+  createOrder(order: Partial<iOrder>): Observable<{ message: string; order: iOrder }> {
+    return this.http
+      .post<{ message: string; order: iOrder }>(`${baseUrl}/orders`, order)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   updateOrderStatus(id: string, status: string): Observable<any> {
     return this.http
       .patch(`${baseUrl}/orders/${id}`, { Trang_thai: status })
