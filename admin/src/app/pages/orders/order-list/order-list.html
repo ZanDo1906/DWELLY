@@ -18,40 +18,22 @@
           <div class="search-wrapper">
             <div class="search-container">
               <i class="bi bi-search search-icon"></i>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="Tìm kiếm"
-                [value]="searchTerm"
-                (input)="onSearchInput($event)"
-              />
+              <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchTerm"
+                (input)="onSearchInput($event)" />
             </div>
           </div>
 
           <div class="filter-group">
-            <button
-              class="filter-btn"
-              (click)="toggleSort('az')"
-              [class.active]="sortMode === 'az' || sortMode === 'za'"
-            >
-              <i
-                class="bi"
-                [ngClass]="sortMode === 'az' ? 'bi-arrow-down' : (sortMode === 'za' ? 'bi-arrow-up' : 'bi-arrow-down')"
-              ></i>
-               A-Z
+            <button class="filter-btn" (click)="toggleSort('az')"
+              [class.active]="sortMode === 'az' || sortMode === 'za'">
+              <i class="bi"
+                [ngClass]="sortMode === 'az' ? 'bi-arrow-down' : (sortMode === 'za' ? 'bi-arrow-up' : 'bi-arrow-down')"></i>
+              A-Z
             </button>
-            <button
-              class="filter-btn"
-              (click)="setDateSort('newest')"
-              [class.active]="sortMode === 'newest'"
-            >
+            <button class="filter-btn" (click)="setDateSort('newest')" [class.active]="sortMode === 'newest'">
               Mới nhất
             </button>
-            <button
-              class="filter-btn"
-              (click)="setDateSort('oldest')"
-              [class.active]="sortMode === 'oldest'"
-            >
+            <button class="filter-btn" (click)="setDateSort('oldest')" [class.active]="sortMode === 'oldest'">
               Cũ nhất
             </button>
 
@@ -62,12 +44,8 @@
               </div>
 
               <div class="dropdown-menu" *ngIf="isStatusOpen">
-                <div
-                  *ngFor="let status of statusOptions"
-                  class="dropdown-item"
-                  [class.active]="status === selectedStatus"
-                  (click)="selectStatus(status)"
-                >
+                <div *ngFor="let status of statusOptions" class="dropdown-item"
+                  [class.active]="status === selectedStatus" (click)="selectStatus(status)">
                   {{ status }}
                 </div>
               </div>
@@ -112,17 +90,13 @@
           </ng-container>
 
           <!-- PAGINATION -->
-            <ng-container table-pagination>
-                <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
-                <button
-                *ngFor="let page of pages"
-                (click)="goToPage(page)"
-                [class.active]="page === currentPage"
-                >
-                {{ page }}
-                </button>
-                <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
-            </ng-container>
+          <ng-container table-pagination>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+            <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === currentPage">
+              {{ page }}
+            </button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+          </ng-container>
 
         </app-table>
 

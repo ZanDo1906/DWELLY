@@ -51,15 +51,17 @@
                                         <label>Mã OTP <span class="required">*</span></label>
                                         <div class="input-with-button">
                                             <input type="text" class="form-input" [(ngModel)]="otpCode"
-                                                (blur)="validateField('otpCode')" [class.error]="hasError('otpCode')"
+                                                (blur)="validateField('otpCode')"
+                                                [class.error]="hasError('otpCode') || otpValidationError"
                                                 placeholder="" />
                                             <button class="btn-otp" *ngIf="otpSent" (click)="verifyOTP()"
                                                 [disabled]="otpVerified" type="button">
                                                 {{otpVerified ? 'ĐÃ XÁC NHẬN' : 'XÁC NHẬN'}}
                                             </button>
                                         </div>
-                                        <p class="field-error" *ngIf="hasError('otpCode')">
+                                        <p class="field-error" *ngIf="hasError('otpCode') && !otpValidationError">
                                             {{getErrorMessage('otpCode')}}</p>
+                                        <p class="field-error" *ngIf="otpValidationError">{{otpValidationError}}</p>
                                     </div>
                                 </div>
 
@@ -74,25 +76,50 @@
                                 <div class="form-row">
                                     <div class="form-group half-width">
                                         <label>Tỉnh/ Thành phố <span class="required">*</span></label>
-                                        <select class="form-input form-select" [(ngModel)]="selectedProvinceCode"
-                                            (ngModelChange)="onProvinceSelect()" [class.error]="hasError('city')">
-                                            <option value="" disabled selected>Chọn Tỉnh/ Thành phố</option>
-                                            <option *ngFor="let province of provinces" [value]="province.code">
-                                                {{province.name}}
-                                            </option>
-                                        </select>
+                                        <div class="custom-dropdown" [class.error]="hasError('city')"
+                                            (click)="$event.stopPropagation()">
+                                            <button type="button" class="dropdown-toggle-btn"
+                                                [class.active]="isProvinceDropdownOpen"
+                                                (click)="toggleProvinceDropdown($event)">
+                                                <span class="selected-text">{{getSelectedProvinceName()}}</span>
+                                                <i class="bi" [class.bi-chevron-down]="!isProvinceDropdownOpen"
+                                                    [class.bi-chevron-up]="isProvinceDropdownOpen"></i>
+                                            </button>
+
+                                            <div class="dropdown-list" *ngIf="isProvinceDropdownOpen">
+                                                <button type="button" class="dropdown-item"
+                                                    *ngFor="let province of provinces"
+                                                    [class.selected]="selectedProvinceCode === (province.code + '')"
+                                                    (click)="selectProvince(province, $event)">
+                                                    {{province.name}}
+                                                </button>
+                                            </div>
+                                        </div>
                                         <p class="field-error" *ngIf="hasError('city')">{{getErrorMessage('city')}}</p>
                                     </div>
                                     <div class="form-group half-width">
                                         <label>Quận/ Huyện <span class="required">*</span></label>
-                                        <select class="form-input form-select" [(ngModel)]="selectedDistrictCode"
-                                            (ngModelChange)="onDistrictSelect()" [class.error]="hasError('district')"
-                                            [disabled]="!selectedProvinceCode || districts.length === 0">
-                                            <option value="" disabled selected>Chọn Quận/ Huyện</option>
-                                            <option *ngFor="let district of districts" [value]="district.code">
-                                                {{district.name}}
-                                            </option>
-                                        </select>
+                                        <div class="custom-dropdown" [class.error]="hasError('district')"
+                                            [class.disabled]="!selectedProvinceCode || districts.length === 0"
+                                            (click)="$event.stopPropagation()">
+                                            <button type="button" class="dropdown-toggle-btn"
+                                                [disabled]="!selectedProvinceCode || districts.length === 0"
+                                                [class.active]="isDistrictDropdownOpen"
+                                                (click)="toggleDistrictDropdown($event)">
+                                                <span class="selected-text">{{getSelectedDistrictName()}}</span>
+                                                <i class="bi" [class.bi-chevron-down]="!isDistrictDropdownOpen"
+                                                    [class.bi-chevron-up]="isDistrictDropdownOpen"></i>
+                                            </button>
+
+                                            <div class="dropdown-list" *ngIf="isDistrictDropdownOpen">
+                                                <button type="button" class="dropdown-item"
+                                                    *ngFor="let district of districts"
+                                                    [class.selected]="selectedDistrictCode === (district.code + '')"
+                                                    (click)="selectDistrict(district, $event)">
+                                                    {{district.name}}
+                                                </button>
+                                            </div>
+                                        </div>
                                         <p class="field-error" *ngIf="hasError('district')">
                                             {{getErrorMessage('district')}}</p>
                                     </div>
@@ -101,12 +128,25 @@
                                 <div class="form-row">
                                     <div class="form-group half-width">
                                         <label>Phường/ Xã <span class="required">*</span></label>
-                                        <select class="form-input form-select" [(ngModel)]="ward"
-                                            (ngModelChange)="onWardSelect()" [class.error]="hasError('ward')"
-                                            [disabled]="!selectedDistrictCode || wards.length === 0">
-                                            <option value="" disabled selected>Chọn Phường/ Xã</option>
-                                            <option *ngFor="let w of wards" [value]="w.name">{{w.name}}</option>
-                                        </select>
+                                        <div class="custom-dropdown" [class.error]="hasError('ward')"
+                                            [class.disabled]="!selectedDistrictCode || wards.length === 0"
+                                            (click)="$event.stopPropagation()">
+                                            <button type="button" class="dropdown-toggle-btn"
+                                                [disabled]="!selectedDistrictCode || wards.length === 0"
+                                                [class.active]="isWardDropdownOpen"
+                                                (click)="toggleWardDropdown($event)">
+                                                <span class="selected-text">{{getSelectedWardName()}}</span>
+                                                <i class="bi" [class.bi-chevron-down]="!isWardDropdownOpen"
+                                                    [class.bi-chevron-up]="isWardDropdownOpen"></i>
+                                            </button>
+
+                                            <div class="dropdown-list" *ngIf="isWardDropdownOpen">
+                                                <button type="button" class="dropdown-item" *ngFor="let w of wards"
+                                                    [class.selected]="ward === w.name" (click)="selectWard(w, $event)">
+                                                    {{w.name}}
+                                                </button>
+                                            </div>
+                                        </div>
                                         <p class="field-error" *ngIf="hasError('ward')">{{getErrorMessage('ward')}}</p>
                                     </div>
                                     <div class="form-group half-width">
@@ -208,9 +248,17 @@
                                 Mã khuyến mãi
                             </h3>
                             <div class="voucher-input">
-                                <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
-                                    [class.error]="voucherError" />
-                                <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
+                                <div class="voucher-input-wrapper">
+                                    <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
+                                        [class.error]="voucherError" [disabled]="!isLoggedIn"
+                                        [attr.data-bs-toggle]="isLoggedIn ? 'modal' : null"
+                                        [attr.data-bs-target]="isLoggedIn ? '#voucherModal' : null" readonly />
+                                    <button class="btn-clear-voucher" *ngIf="voucherCode" (click)="clearVoucher()">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
+                                <button class="btn-apply" [disabled]="!isLoggedIn" (click)="applyVoucher()">Áp
+                                    dụng</button>
                             </div>
                             <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
                             <p class="voucher-success" *ngIf="appliedVoucher && !voucherError">
@@ -297,6 +345,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Voucher Modal -->
+    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()" title="Khuyến mãi">
+        <app-voucher-popup [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
+            (voucherSelected)="handleVoucherSelected($event)">
+        </app-voucher-popup>
+    </app-modal>
 
     <!-- QR Payment Modal -->
     <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length" [orderCode]="createdOrderCode"

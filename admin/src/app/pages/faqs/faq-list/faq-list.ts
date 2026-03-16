@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { Table } from '../../../components/table/table';
 import { Contact } from '../../../services/contact';
 import { Modal } from '../../../components/modal/modal';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
 import { FaqForm, FaqFormData, FaqReplyPayload } from '../faq-form/faq-form';
 
 interface FaqItem {
@@ -13,7 +14,7 @@ interface FaqItem {
   submittedAt: string;
   submittedTimestamp: number;
   questionContent: string;
-  status: 'unprocessed' | 'processed';
+  status: 'unprocessed' | 'draft' | 'processed';
   statusLabel: string;
   handler: string;
   draftReplyContent?: string;
@@ -22,7 +23,7 @@ interface FaqItem {
 
 @Component({
   selector: 'app-faq-list',
-  imports: [CommonModule, Table, Modal, FaqForm],
+  imports: [CommonModule, Table, Modal, FaqForm, ConfirmDialogComponent],
   templateUrl: './faq-list.html',
   styleUrl: './faq-list.css',
 })
@@ -31,18 +32,22 @@ export class FaqList implements OnInit {
   currentPage = 1;
 
   searchText = '';
-  selectedStatus: 'all' | 'unprocessed' | 'processed' = 'all';
+  selectedStatus: 'all' | 'unprocessed' | 'draft' | 'processed' = 'all';
   isStatusOpen = false;
   sortType: 'az' | 'newest' | 'oldest' = 'az';
 
-  statusOptions: Array<{ label: string; value: 'all' | 'unprocessed' | 'processed' }> = [
+  statusOptions: Array<{ label: string; value: 'all' | 'unprocessed' | 'draft' | 'processed' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
     { label: 'Chưa xử lý', value: 'unprocessed' },
+    { label: 'Đang lưu nháp', value: 'draft' },
     { label: 'Đã xử lý', value: 'processed' },
   ];
 
   selectedIds = new Set<string>();
   selectedFaq: FaqFormData | null = null;
+  showDeleteConfirm = false;
+  deleteConfirmMessage = '';
+  pendingDeleteIds: string[] = [];
 
   faqs: FaqItem[] = [];
 
@@ -140,7 +145,7 @@ export class FaqList implements OnInit {
     this.isStatusOpen = !this.isStatusOpen;
   }
 
-  selectStatus(status: 'all' | 'unprocessed' | 'processed'): void {
+  selectStatus(status: 'all' | 'unprocessed' | 'draft' | 'processed'): void {
     this.selectedStatus = status;
     this.currentPage = 1;
     this.isStatusOpen = false;
@@ -181,31 +186,58 @@ export class FaqList implements OnInit {
   }
 
   deleteSelected(): void {
+    this.requestDeleteSelected();
+  }
+
+  requestDeleteSelected(): void {
     if (!this.selectedIds.size) {
       return;
     }
 
-    const idsToDelete = Array.from(this.selectedIds);
+    this.pendingDeleteIds = Array.from(this.selectedIds);
+    this.deleteConfirmMessage = this.pendingDeleteIds.length === 1
+      ? 'Bạn có chắc chắn muốn xóa câu hỏi đã chọn không?'
+      : `Bạn có chắc chắn muốn xóa ${this.pendingDeleteIds.length} câu hỏi đã chọn không?`;
+    this.showDeleteConfirm = true;
+  }
+
+  requestDeleteFaq(id: string): void {
+    const selectedFaq = this.faqs.find((faq) => faq.id === id);
+    this.pendingDeleteIds = [id];
+    this.deleteConfirmMessage = selectedFaq
+      ? `Bạn có chắc chắn muốn xóa câu hỏi ${selectedFaq.questionCode} không?`
+      : 'Bạn có chắc chắn muốn xóa câu hỏi này không?';
+    this.showDeleteConfirm = true;
+  }
+
+  confirmDelete(): void {
+    if (!this.pendingDeleteIds.length) {
+      this.cancelDelete();
+      return;
+    }
+
+    const idsToDelete = [...this.pendingDeleteIds];
 
     forkJoin(idsToDelete.map((id) => this.contactService.deleteContact(id))).subscribe({
       next: () => {
         this.removeFaqsFromView(idsToDelete);
+        this.cancelDelete();
       },
       error: (error) => {
         console.error('Xoa FAQ that bai:', error);
+        this.cancelDelete();
       },
     });
   }
 
+  cancelDelete(): void {
+    this.showDeleteConfirm = false;
+    this.deleteConfirmMessage = '';
+    this.pendingDeleteIds = [];
+  }
+
   deleteFaq(id: string): void {
-    this.contactService.deleteContact(id).subscribe({
-      next: () => {
-        this.removeFaqsFromView([id]);
-      },
-      error: (error) => {
-        console.error('Xoa FAQ that bai:', error);
-      },
-    });
+    this.requestDeleteFaq(id);
   }
 
   editFaq(id: string): void {
@@ -339,11 +371,17 @@ export class FaqList implements OnInit {
     this.currentPage = Math.min(this.currentPage, this.totalPages);
   }
 
-  private normalizeStatus(status: string): 'unprocessed' | 'processed' {
+  private normalizeStatus(status: string): 'unprocessed' | 'draft' | 'processed' {
     const normalizedStatus = status.trim().toLowerCase();
-    return normalizedStatus.includes('chưa') || normalizedStatus.includes('nháp')
-      ? 'unprocessed'
-      : 'processed';
+    if (normalizedStatus.includes('nháp')) {
+      return 'draft';
+    }
+
+    if (normalizedStatus.includes('chưa')) {
+      return 'unprocessed';
+    }
+
+    return 'processed';
   }
 
   private formatDate(date: Date): string {

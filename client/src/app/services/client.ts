@@ -68,22 +68,27 @@ export class Client {
       .patch(`${baseUrl}/clients/${id}/change-password`, data)
       .pipe(retry(2), catchError(this.handleError));
   }
+  resetPassword(id: string, data: { newPassword: string }): Observable<any> {
+    return this.http
+      .patch(`${baseUrl}/clients/${id}/reset-password`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
   uploadAvatar(formData: FormData): Observable<any> {
     return this.http
       .post(`${baseUrl}/upload/avatar`, formData)
       .pipe(catchError(this.handleError));
   }
   login(data: any) {
-  return this.http.post(`${baseUrl}/login`, data);
+    return this.http.post(`${baseUrl}/login`, data);
   }
   register(data: any) {
-  return this.http.post(`${baseUrl}/register`, data);
+    return this.http.post(`${baseUrl}/register`, data);
   }
 
   getCurrentUser() {
-  const user = localStorage.getItem('current_user');
-  return user ? JSON.parse(user) : null;
-}
+    const user = localStorage.getItem('current_user');
+    return user ? JSON.parse(user) : null;
+  }
 
   getWishlist(customerCode: string) {
     return this.http
@@ -92,26 +97,26 @@ export class Client {
   }
 
   saveLoginData(response: any) {
-  localStorage.setItem('auth_token', response.token);
-  localStorage.setItem('current_user', JSON.stringify(response.user));
-}
+    localStorage.setItem('auth_token', response.token);
+    localStorage.setItem('current_user', JSON.stringify(response.user));
+  }
   isLoggedIn(): boolean {
     return !!localStorage.getItem('auth_token');
   }
-    getFavoriteCount(productId: string): Observable<{ count: number }> {
+  getFavoriteCount(productId: string): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${baseUrl}/clients/favorite-count/${productId}`)
       .pipe(retry(2), catchError(this.handleError));
   }
-      
+
   toggleFavorite(customerCode: string, productId: string): Observable<any> {
-  return this.http.post(`${baseUrl}/clients/toggle-favorite`, {
-    customerCode,
-    productId
-  }).pipe(
-    retry(2),
-    catchError(this.handleError)
-  );
-}
+    return this.http.post(`${baseUrl}/clients/toggle-favorite`, {
+      customerCode,
+      productId
+    }).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }

@@ -64,20 +64,24 @@
   font-weight: 500;
 }
 
-app-table th:nth-child(1), app-table td:nth-child(1) {
-  width: 40px; 
+app-table th:nth-child(1),
+app-table td:nth-child(1) {
+  width: 40px;
   text-align: center;
 }
 
-app-table th:nth-child(2), app-table td:nth-child(2) {
-  width: 60px; 
-    text-align: center;
+app-table th:nth-child(2),
+app-table td:nth-child(2) {
+  width: 60px;
+  text-align: center;
 }
 
-app-table th:nth-child(3), app-table td:nth-child(3) {
-  width: 280px; 
-    text-align: center;
+app-table th:nth-child(3),
+app-table td:nth-child(3) {
+  width: 280px;
+  text-align: center;
 }
+
 /* FILTER BAR & BUTTONS */
 .filter-bar {
   display: flex;
@@ -92,27 +96,27 @@ app-table th:nth-child(3), app-table td:nth-child(3) {
 .search-container {
   position: relative;
   width: 100%;
-  max-width: 250px; 
+  max-width: 250px;
 }
 
 .search-icon {
   position: absolute;
-  left: 15px; 
+  left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #6c5234; 
-  font-size: 16px; 
+  color: #6c5234;
+  font-size: 16px;
   z-index: 2;
   display: block !important;
 }
 
 .search-input {
   width: 100%;
-  height: 36px !important; 
-  padding: 0 15px 0 42px !important; 
-  border: 1px solid rgba(108, 82, 52, 0.4); 
-  border-radius: 50px; 
-  font-size: 14px; 
+  height: 36px !important;
+  padding: 0 15px 0 42px !important;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  border-radius: 50px;
+  font-size: 14px;
   color: #333;
   outline: none;
   background-color: #fff;
@@ -136,7 +140,7 @@ app-table th:nth-child(3), app-table td:nth-child(3) {
 
 .filter-btn {
   background: #ffffff;
-  border: 1px solid rgba(108, 82, 52, 0.4); 
+  border: 1px solid rgba(108, 82, 52, 0.4);
   color: #6c5234;
   border-radius: 8px;
   padding: 8px 16px;
@@ -149,7 +153,8 @@ app-table th:nth-child(3), app-table td:nth-child(3) {
   background: rgba(108, 82, 52, 0.05);
 }
 
-.filter-btn.active, .filter-btn:active {
+.filter-btn.active,
+.filter-btn:active {
   background: #6c5234 !important;
   color: #ffffff !important;
   border-color: #6c5234 !important;
@@ -223,21 +228,23 @@ app-table th:nth-child(3), app-table td:nth-child(3) {
     opacity: 0;
     transform: translateY(-4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 app-table th {
-  background: rgba(175, 163, 134, 0.67) !important; 
+  background: rgba(175, 163, 134, 0.67) !important;
   font-weight: 700;
-  color: #ffffff; 
+  color: #ffffff;
   padding: 14px 12px;
   font-size: 16px;
 }
 
 app-table td {
-font-size: 14px;
+  font-size: 14px;
 }
 
 .text-warning {

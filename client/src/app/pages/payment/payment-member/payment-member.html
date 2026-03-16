@@ -19,21 +19,25 @@
                                 Địa chỉ nhận hàng
                             </h3>
 
-                            <div class="address-wrapper">
-                                <div class="address-box">
-                                    <span class="default-badge">Mặc định</span>
+                            <div class="address-loading" *ngIf="isLoadingAddress">Đang tải địa chỉ...</div>
+
+                            <div class="address-wrapper" *ngIf="!isLoadingAddress && defaultAddress">
+                                <div class="address-box" [class.default-address-box]="defaultAddress.isDefault">
+                                    <span class="default-badge" *ngIf="defaultAddress.isDefault">Mặc định</span>
                                     <div class="address-content">
                                         <div class="address-header">
-                                            <strong>Lê Thanh Như Ngọc - 0915736103</strong>
+                                            <strong>{{defaultAddress.fullName}} - {{defaultAddress.phone}}</strong>
                                         </div>
-                                        <p class="address-text">
-                                            Cổng sau ký túc xá khu B, Phường Linh Xuân, Thành Phố Thủ Đức, TP. Hồ Chí
-                                            Minh
-                                        </p>
+                                        <p class="address-text">{{defaultAddress.address}}</p>
                                     </div>
                                 </div>
-                                <button class="btn-change">Thay đổi</button>
+                                <button class="btn-change" (click)="openAddressModal()">Thay đổi</button>
                             </div>
+
+                            <div class="address-empty" *ngIf="!isLoadingAddress && !defaultAddress">
+                                Bạn chưa có địa chỉ nhận hàng. Vui lòng thêm địa chỉ trong sổ địa chỉ.
+                            </div>
+
                         </div>
 
                         <!-- GHI CHÚ -->
@@ -122,8 +126,14 @@
                                 Mã khuyến mãi
                             </h3>
                             <div class="voucher-input">
-                                <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
-                                    [class.error]="voucherError" />
+                                <div class="voucher-input-wrapper">
+                                    <input type="text" placeholder="Nhập mã khuyến mãi" [(ngModel)]="voucherCode"
+                                        [class.error]="voucherError" data-bs-toggle="modal"
+                                        data-bs-target="#voucherModal" readonly />
+                                    <button class="btn-clear-voucher" *ngIf="voucherCode" (click)="clearVoucher()">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
                                 <button class="btn-apply" (click)="applyVoucher()">Áp dụng</button>
                             </div>
                             <p class="voucher-error" *ngIf="voucherError">{{voucherError}}</p>
@@ -204,4 +214,44 @@
     <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length" [orderCode]="createdOrderCode"
         (closeModal)="closeQRPayment()">
     </app-qr-payment>
+
+    <!-- Voucher Modal -->
+    <app-modal modalId="voucherModal" (close)="closeVoucherPopup()" title="Khuyến mãi">
+        <app-voucher-popup [currentVoucher]="appliedVoucher" (closeModal)="closeVoucherPopup()"
+            (voucherSelected)="handleVoucherSelected($event)">
+        </app-voucher-popup>
+    </app-modal>
+
+    <!-- Address Selection Modal -->
+    <app-modal modalId="addressSelectionModal" title="Chọn địa chỉ giao hàng" [showHeader]="true"
+        [showTitleAndLine]="true" [showCloseButton]="true" (close)="closeAddressModal()">
+        <div class="address-modal-content">
+            <p class="address-modal-note" *ngIf="addressOptions.length > 0">Chọn một địa chỉ để giao hàng cho đơn này.
+            </p>
+
+            <div class="address-option-list" *ngIf="addressOptions.length > 0; else noAddressInModal">
+                <label class="address-option-item" *ngFor="let address of addressOptions; let i = index"
+                    [class.active]="tempSelectedAddressIndex === i">
+                    <input type="radio" name="selectedAddress" [value]="i" [(ngModel)]="tempSelectedAddressIndex" />
+                    <div class="address-option-info">
+                        <div class="address-option-header">
+                            <strong>{{address.fullName}} - {{address.phone}}</strong>
+                            <span class="modal-default-tag" *ngIf="address.isDefault">Mặc định</span>
+                        </div>
+                        <p>{{address.address}}</p>
+                    </div>
+                </label>
+            </div>
+
+            <ng-template #noAddressInModal>
+                <p class="address-modal-empty">Bạn chưa có địa chỉ nhận hàng.</p>
+            </ng-template>
+
+            <div class="address-modal-actions">
+                <button class="btn-modal-cancel" (click)="closeAddressModal()">Hủy</button>
+                <button class="btn-modal-confirm" [disabled]="tempSelectedAddressIndex < 0"
+                    (click)="confirmSelectedAddress()">Xác nhận</button>
+            </div>
+        </div>
+    </app-modal>
 </section>

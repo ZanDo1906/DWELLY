@@ -56,7 +56,7 @@
         "Ngay_bat_dau": "2026-01-01",
         "Ngay_het_han": "2027-03-15",
         "Mo_ta": "Voucher đặc biệt giảm 20% cho khách hàng Kim cương trong chương trình khuyến mãi giới hạn.",
-        "Trang_thai": true,
+        "Trang_thai": false,
         "Ma_quan_tri_vien_tao": "AD03"
     }
 ]

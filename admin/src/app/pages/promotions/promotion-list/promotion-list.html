@@ -4,59 +4,48 @@
       <div class="site-inner promotion-page orders-page">
         <div class="page-header">
           <h2 class="page-title">Quản lý khuyến mãi</h2>
-
-          <button class="add-btn" data-bs-toggle="modal" data-bs-target="#promotionModal"
-            (click)="openCreatePromotion()">
-            <span class="add-icon" aria-hidden="true">+</span>
-            <span class="add-label">Thêm khuyến mãi</span>
+          <button class="add-btn" (click)="openCreatePromotion()" data-bs-toggle="modal"
+            data-bs-target="#promotionModal">
+            <i class="bi bi-plus-circle"></i> Thêm khuyến mãi
           </button>
         </div>
 
         <div class="filter-bar">
-          <div class="search-box">
-            <span class="search-icon" aria-hidden="true">
-              <i class="bi bi-search"></i>
-            </span>
-            <input type="text" class="search-input" placeholder="Tìm kiếm" [value]="searchText"
-              (input)="onSearchChange($event)" />
+          <div class="search-wrapper">
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text" class="search-input" [value]="searchText" (input)="onSearchChange($event)"
+                placeholder="Tìm kiếm" />
+            </div>
           </div>
 
           <div class="filter-group">
-            <span class="selected-text">{{ selectedCount }} đã chọn</span>
-
             <button class="filter-btn" [class.active]="sortType === 'az'" (click)="setSortType('az')">
               ✓ A-Z
             </button>
 
-            <button class="filter-btn" [class.active]="sortType === 'newest'" (click)="setSortType('newest')">
-              Mới nhất
-            </button>
+            <button class="filter-btn" [class.active]="sortType === 'newest'" (click)="setSortType('newest')">Mới
+              nhất</button>
+            <button class="filter-btn" [class.active]="sortType === 'oldest'" (click)="setSortType('oldest')">Cũ
+              nhất</button>
 
-            <button class="filter-btn" [class.active]="sortType === 'oldest'" (click)="setSortType('oldest')">
-              Cũ nhất
-            </button>
-
-            <div class="status-select" [class.open]="isStatusOpen">
-              <button type="button" class="status-select-trigger" (click)="toggleStatusDropdown($event)">
-                <span>{{ selectedStatusLabel }}</span>
-                <span class="status-caret" aria-hidden="true">▾</span>
-              </button>
-
-              <ul class="status-options" *ngIf="isStatusOpen">
-                <li *ngFor="let status of statusOptions" class="status-option"
-                  [class.active]="status.value === selectedStatus" (click)="selectStatus(status.value)">
+            <div class="dropdown-wrapper">
+              <div class="dropdown-selected" (click)="toggleStatusDropdown($event)">
+                {{ selectedStatusLabel }}
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isStatusOpen"></i>
+              </div>
+              <div class="dropdown-menu" *ngIf="isStatusOpen">
+                <div class="dropdown-item" *ngFor="let status of statusOptions" (click)="selectStatus(status.value)">
                   {{ status.label }}
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
-
-            <button class="delete-selected-btn" (click)="requestDeleteSelected()" [disabled]="!selectedCount"
-              title="Xóa mục đã chọn">
+            <button class="delete-btn" [disabled]="!selectedCount" (click)="requestDeleteSelected()">
               <i class="bi bi-trash"></i>
             </button>
+
           </div>
         </div>
-
         <app-table>
           <ng-container table-header>
             <th>
@@ -85,10 +74,10 @@
               <td>{{ promotion.startDate }}</td>
               <td>{{ promotion.endDate }}</td>
               <td>
-                <span class="admin-status-badge" [ngClass]="{
-                  'admin-status-success': promotion.status === 'active',
-                  'admin-status-warning': promotion.status === 'paused'
-                }">{{ promotion.statusLabel }}</span>
+                <span class="status approval-status"
+                  [ngClass]="promotion.status === 'active' ? 'approved' : 'rejected'">
+                  {{ promotion.status === 'active' ? 'Kích hoạt' : 'Tạm dừng' }}
+                </span>
               </td>
               <td>{{ promotion.creator }}</td>
             </tr>

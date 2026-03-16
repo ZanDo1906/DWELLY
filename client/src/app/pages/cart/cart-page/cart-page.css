@@ -314,6 +314,11 @@
     border-color: #546745;
 }
 
+.voucher-input input:disabled {
+    cursor: not-allowed;
+    background-color: #f3f3f3;
+}
+
 .btn-clear-voucher {
     position: absolute;
     right: 8px;
@@ -387,6 +392,14 @@
 .btn-apply:active {
     background-color: #7A8A6A;
     border-color: #546745;
+}
+
+.btn-apply:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #f3f3f3;
+    color: #8c8c8c;
+    border-color: #cfcfcf;
 }
 
 .summary-row {

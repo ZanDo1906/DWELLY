@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,8 @@ import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
 import { iVoucher } from '../../../interfaces/voucher';
 import { QRPayment } from '../qr-payment/qr-payment';
+import { VoucherPopup } from '../../cart/voucher-popup/voucher-popup';
+import { Modal } from '../../../components/modal/modal';
 import { Order } from '../../../services/order';
 import { Order_Details } from '../../../services/order_details';
 
@@ -33,7 +35,7 @@ interface CheckoutPayload {
 
 @Component({
   selector: 'app-payment-non-member',
-  imports: [CommonModule, FormsModule, QRPayment],
+  imports: [CommonModule, FormsModule, QRPayment, VoucherPopup, Modal],
   templateUrl: './payment-non-member.html',
   styleUrl: './payment-non-member.css',
 })
@@ -55,6 +57,7 @@ export class PaymentNonMember implements OnInit {
   note: string = '';
   wantInvoice: boolean = false;
   createdOrderCode: string = '';
+  isLoggedIn: boolean = false;
 
   // Address form fields
   fullName: string = '';
@@ -72,12 +75,16 @@ export class PaymentNonMember implements OnInit {
   wards: any[] = [];
   selectedProvinceCode: string = '';
   selectedDistrictCode: string = '';
+  isProvinceDropdownOpen: boolean = false;
+  isDistrictDropdownOpen: boolean = false;
+  isWardDropdownOpen: boolean = false;
 
   // OTP countdown
   otpCountdown: number = 0;
   otpTimer: any = null;
   otpSent: boolean = false;
   otpVerified: boolean = false;
+  generatedOtpCode: string = '';
 
   // Validation tracking
   touched = {
@@ -92,6 +99,7 @@ export class PaymentNonMember implements OnInit {
   };
 
   phoneValidationError: string = '';
+  otpValidationError: string = '';
 
   constructor(
     private roomService: Room,
@@ -102,6 +110,8 @@ export class PaymentNonMember implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!localStorage.getItem('userId');
+
     // Load rooms first
     this.roomService.getRoomData().subscribe({
       next: (roomData) => {
@@ -126,6 +136,13 @@ export class PaymentNonMember implements OnInit {
     this.loadProvinces();
 
     this.loadCheckoutItems();
+  }
+
+  @HostListener('document:click')
+  closeAllDropdowns(): void {
+    this.isProvinceDropdownOpen = false;
+    this.isDistrictDropdownOpen = false;
+    this.isWardDropdownOpen = false;
   }
 
   private loadCheckoutItems(): void {
@@ -187,6 +204,10 @@ export class PaymentNonMember implements OnInit {
   }
 
   applyVoucher(): void {
+    if (!this.isLoggedIn) {
+      return;
+    }
+
     this.voucherError = '';
 
     if (!this.voucherCode.trim()) {
@@ -222,6 +243,28 @@ export class PaymentNonMember implements OnInit {
       this.voucherError = 'Mã khuyến mãi không hợp lệ';
       this.appliedVoucher = null;
     }
+  }
+
+  closeVoucherPopup(): void {
+    const modalEl = document.getElementById('voucherModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+  }
+
+  handleVoucherSelected(voucher: iVoucher): void {
+    // Chỉ điền mã vào input, chưa áp dụng.
+    this.voucherCode = voucher.Ma_so;
+    this.voucherError = '';
+    // Reset appliedVoucher để user bấm "Áp dụng" như cart-page.
+    this.appliedVoucher = null;
+  }
+
+  clearVoucher(): void {
+    this.voucherCode = '';
+    this.appliedVoucher = null;
+    this.voucherError = '';
   }
 
   getDiscountAmount(): number {
@@ -296,7 +339,7 @@ export class PaymentNonMember implements OnInit {
 
   onProvinceSelect(): void {
     // Update city name from selected province
-    const selectedProvince = this.provinces.find(p => p.code === this.selectedProvinceCode);
+    const selectedProvince = this.provinces.find(p => String(p.code) === this.selectedProvinceCode);
     if (selectedProvince) {
       this.city = selectedProvince.name;
     }
@@ -325,7 +368,7 @@ export class PaymentNonMember implements OnInit {
 
   onDistrictSelect(): void {
     // Update district name from selected district
-    const selectedDistrict = this.districts.find(d => d.code === this.selectedDistrictCode);
+    const selectedDistrict = this.districts.find(d => String(d.code) === this.selectedDistrictCode);
     if (selectedDistrict) {
       this.district = selectedDistrict.name;
     }
@@ -339,6 +382,69 @@ export class PaymentNonMember implements OnInit {
     if (this.ward) {
       this.touched.ward = false;
     }
+  }
+
+  toggleProvinceDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isProvinceDropdownOpen = !this.isProvinceDropdownOpen;
+    this.isDistrictDropdownOpen = false;
+    this.isWardDropdownOpen = false;
+  }
+
+  toggleDistrictDropdown(event: Event): void {
+    event.stopPropagation();
+    if (!this.selectedProvinceCode || this.districts.length === 0) return;
+
+    this.isDistrictDropdownOpen = !this.isDistrictDropdownOpen;
+    this.isProvinceDropdownOpen = false;
+    this.isWardDropdownOpen = false;
+  }
+
+  toggleWardDropdown(event: Event): void {
+    event.stopPropagation();
+    if (!this.selectedDistrictCode || this.wards.length === 0) return;
+
+    this.isWardDropdownOpen = !this.isWardDropdownOpen;
+    this.isProvinceDropdownOpen = false;
+    this.isDistrictDropdownOpen = false;
+  }
+
+  selectProvince(province: any, event: Event): void {
+    event.stopPropagation();
+    this.selectedProvinceCode = String(province.code);
+    this.onProvinceSelect();
+    this.isProvinceDropdownOpen = false;
+    this.isDistrictDropdownOpen = false;
+    this.isWardDropdownOpen = false;
+  }
+
+  selectDistrict(district: any, event: Event): void {
+    event.stopPropagation();
+    this.selectedDistrictCode = String(district.code);
+    this.onDistrictSelect();
+    this.isDistrictDropdownOpen = false;
+    this.isWardDropdownOpen = false;
+  }
+
+  selectWard(ward: any, event: Event): void {
+    event.stopPropagation();
+    this.ward = String(ward.name);
+    this.onWardSelect();
+    this.isWardDropdownOpen = false;
+  }
+
+  getSelectedProvinceName(): string {
+    const selected = this.provinces.find(p => String(p.code) === this.selectedProvinceCode);
+    return selected?.name || 'Chọn Tỉnh/ Thành phố';
+  }
+
+  getSelectedDistrictName(): string {
+    const selected = this.districts.find(d => String(d.code) === this.selectedDistrictCode);
+    return selected?.name || 'Chọn Quận/ Huyện';
+  }
+
+  getSelectedWardName(): string {
+    return this.ward || 'Chọn Phường/ Xã';
   }
 
   // Form validation methods
@@ -357,6 +463,10 @@ export class PaymentNonMember implements OnInit {
     // Phone validation - check both empty and format
     if (fieldName === 'phone') {
       return this.phone.trim() === '' || !this.validatePhoneFormat(this.phone);
+    }
+
+    if (fieldName === 'otpCode') {
+      return this.otpCode.trim() === '' || !this.otpVerified;
     }
 
     // Check dropdown fields
@@ -388,6 +498,7 @@ export class PaymentNonMember implements OnInit {
 
   sendOTP(): void {
     this.phoneValidationError = '';
+    this.otpValidationError = '';
 
     if (this.phone.trim() === '') {
       this.phoneValidationError = 'Vui l\u00f2ng nh\u1eadp s\u1ed1 \u0111i\u1ec7n tho\u1ea1i';
@@ -400,10 +511,14 @@ export class PaymentNonMember implements OnInit {
     }
 
     if (this.otpCountdown === 0) {
-      console.log('Sending OTP to:', this.phone);
+      this.generatedOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      alert(`Mã OTP của bạn là: ${this.generatedOtpCode}`);
 
       // Mark OTP as sent
       this.otpSent = true;
+      this.otpCode = '';
+      this.otpVerified = false;
 
       // Start countdown
       this.otpCountdown = 60;
@@ -420,6 +535,7 @@ export class PaymentNonMember implements OnInit {
   onPhoneChange(): void {
     // Clear validation error
     this.phoneValidationError = '';
+    this.otpValidationError = '';
 
     // Reset countdown if phone number is changed during countdown
     if (this.otpCountdown > 0) {
@@ -430,21 +546,42 @@ export class PaymentNonMember implements OnInit {
     // Reset OTP sent status
     this.otpSent = false;
     this.otpVerified = false;
+    this.generatedOtpCode = '';
+    this.otpCode = '';
   }
 
   verifyOTP(): void {
-    if (this.otpCode.trim() !== '' && !this.otpVerified) {
-      // Logic to verify OTP
-      console.log('Verifying OTP:', this.otpCode);
-      // Mark as verified
-      this.otpVerified = true;
-      // Stop and hide countdown
-      if (this.otpTimer) {
-        clearInterval(this.otpTimer);
-        this.otpTimer = null;
-      }
-      this.otpCountdown = 0;
+    this.otpValidationError = '';
+
+    if (!this.otpSent || !this.generatedOtpCode) {
+      this.otpValidationError = 'Vui lòng gửi OTP trước khi xác nhận';
+      this.otpVerified = false;
+      return;
     }
+
+    const normalizedOtp = this.otpCode.trim();
+    if (!/^\d{6}$/.test(normalizedOtp)) {
+      this.otpValidationError = 'Mã OTP phải gồm đúng 6 chữ số';
+      this.otpVerified = false;
+      return;
+    }
+
+    if (normalizedOtp !== this.generatedOtpCode) {
+      this.otpValidationError = 'Mã OTP không chính xác';
+      this.otpVerified = false;
+      return;
+    }
+
+    this.otpVerified = true;
+
+    // Stop and hide countdown
+    if (this.otpTimer) {
+      clearInterval(this.otpTimer);
+      this.otpTimer = null;
+    }
+    this.otpCountdown = 0;
+
+    alert('Xác nhận OTP thành công');
   }
 
   getErrorMessage(fieldName: string): string {
@@ -456,6 +593,12 @@ export class PaymentNonMember implements OnInit {
         return 'Vui lòng nhập số điện thoại';
       }
       return 'Số điện thoại phải có 10 chữ số và bắt đầu bằng 0';
+    }
+    if (fieldName === 'otpCode') {
+      if (this.otpCode.trim() === '') {
+        return 'Vui lòng nhập mã OTP';
+      }
+      return 'Vui lòng xác nhận OTP hợp lệ';
     }
     const fieldLabels: { [key: string]: string } = {
       fullName: 'Họ và tên',
@@ -491,7 +634,7 @@ export class PaymentNonMember implements OnInit {
     // Kiểm tra các trường bắt buộc
     const isFullNameValid = this.fullName.trim() !== '';
     const isPhoneValid = this.phone.trim() !== '' && this.validatePhoneFormat(this.phone);
-    const isOtpValid = this.otpCode.trim() !== '';
+    const isOtpValid = this.otpCode.trim() !== '' && this.otpVerified;
     const isCityValid = this.selectedProvinceCode !== '';
     const isDistrictValid = this.selectedDistrictCode !== '';
     const isWardValid = this.ward !== '';
