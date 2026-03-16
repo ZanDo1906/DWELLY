@@ -96,53 +96,64 @@
 .filter-options input[type="checkbox"] {
   margin-right: 8px;
   cursor: pointer;
+  accent-color: #6c5234;
 }
 
 /* PRICE RANGE */
 .price-range {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 }
 
-.slider {
+.price-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.price-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6c5234;
+}
+
+.price-input {
   width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: #e0d9d1;
+  border: 1px solid #d6c8b9;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #373737;
+  padding: 10px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
   outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.price-input:focus {
+  border-color: #6c5234;
+  box-shadow: 0 0 0 3px rgba(108, 82, 52, 0.12);
+}
+
+.price-input::-webkit-outer-spin-button,
+.price-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  margin: 0;
 }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #6c5234;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 2px 8px rgba(108, 82, 52, 0.3);
-}
-
-.slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #6c5234;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s ease;
+.price-input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 .price-display {
   font-family: 'Nunito', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: #6c5234;
   font-weight: 600;
 }
@@ -364,6 +375,7 @@
   margin: 0 0 12px 0;
   line-height: 1.5;
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -503,6 +515,10 @@
 }
 
 @media (max-width: 576px) {
+  .price-inputs {
+    grid-template-columns: 1fr;
+  }
+
   .product-grid {
     grid-template-columns: 1fr;
   }

@@ -118,16 +118,36 @@ export class ProductList implements OnInit {
     this.selectedStyles.clear();
     this.selectedCategories.clear();
     this.minPrice = 0;
-    this.maxPrice = 100000000;
+    this.maxPrice = this.maxPriceLimit;
     this.displayedCount = 9;
+  }
+
+  onMinPriceChange(value: number | null): void {
+    const normalizedValue = this.normalizePrice(value, 0);
+    this.minPrice = Math.min(normalizedValue, this.maxPrice);
+    this.onPriceChange();
+  }
+
+  onMaxPriceChange(value: number | null): void {
+    const normalizedValue = this.normalizePrice(value, this.maxPriceLimit);
+    this.maxPrice = Math.max(normalizedValue, this.minPrice);
+    this.onPriceChange();
   }
 
   onPriceChange(): void {
     this.displayedCount = 9;
   }
 
+  normalizePrice(value: number | null, fallback: number): number {
+    if (typeof value !== 'number' || Number.isNaN(value)) {
+      return fallback;
+    }
+
+    return Math.min(Math.max(value, 0), this.maxPriceLimit);
+  }
+
   getPriceDisplay(): string {
-    return `${this.minPrice.toLocaleString('vi-VN')} - ${this.maxPrice.toLocaleString('vi-VN')}đ`;
+    return `${this.minPrice.toLocaleString('vi-VN')} - ${this.maxPrice.toLocaleString('vi-VN')} VND`;
   }
 
   setSortOption(option: string): void {

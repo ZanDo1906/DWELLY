@@ -52,7 +52,30 @@
               <div class="filter-group">
                 <h6 class="filter-title">Giá</h6>
                 <div class="price-range">
-                  <input type="range" min="0" max="100000000" [value]="maxPrice" class="slider" id="priceRange" (input)="maxPrice = +$event.target.value; onPriceChange()">
+                  <div class="price-inputs">
+                    <label class="price-input-group">
+                      <span>Từ</span>
+                      <input
+                        type="number"
+                        min="0"
+                        class="price-input"
+                        [ngModel]="minPrice"
+                        (ngModelChange)="onMinPriceChange($event)"
+                        placeholder="0"
+                      >
+                    </label>
+                    <label class="price-input-group">
+                      <span>Đến</span>
+                      <input
+                        type="number"
+                        min="0"
+                        class="price-input"
+                        [ngModel]="maxPrice"
+                        (ngModelChange)="onMaxPriceChange($event)"
+                        placeholder="100000000"
+                      >
+                    </label>
+                  </div>
                   <div class="price-display">{{ getPriceDisplay() }}</div>
                 </div>
               </div>
