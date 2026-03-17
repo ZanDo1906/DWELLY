@@ -27,62 +27,155 @@ section{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  gap: 20px;
 }
 
 .search-wrapper {
+  width: 100%;
+}
+
+.search-container {
   position: relative;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  max-width: 250px;
 }
 
 .search-icon {
   position: absolute;
-  left: 14px;
-  color: #373737;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c5234;
   font-size: 16px;
-  pointer-events: none;
+  z-index: 2;
+  display: block !important;
 }
 
 .search-input {
-  width: 280px;
-  padding: 10px 16px 10px 40px;
-  border-radius: 24px;
-  border: 1px solid #AFA386;
+  width: 100%;
+  height: 36px !important;
+  padding: 0 15px 0 42px !important;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  border-radius: 50px;
   font-size: 14px;
+  color: #333;
   outline: none;
-  background: #fff;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.search-input:focus {
+  border-color: #6c5234;
 }
 
 .search-input::placeholder {
-  color: #373737;
+  color: #888;
+  font-weight: 300;
 }
 
 .filter-group {
   display: flex;
-  gap: 12px;
-  align-items: center;
+  gap: 10px;
 }
 
 .filter-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid #6C5234;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.2s ease;
+  
   white-space: nowrap;
+
+  background: #ffffff;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  color: #6c5234;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .filter-btn:hover {
-  background: #ececec;
+  background: rgba(108, 82, 52, 0.05);
 }
 
-.filter-btn.active {
-  background: #6C5234;
+.filter-btn.active,
+.filter-btn:active {
+  background-color: #6c5234;
   color: #fff;
-  border-color: #6C5234;
+  font-weight: 500;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  width: 180px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.dropdown-selected {
+  display: flex;
+  width: 180px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid rgba(108, 82, 52, 0.4);
+  border-radius: 8px;
+  background: #fff;
+  color: #6c5234;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.dropdown-selected:hover {
+  border-color: #6c5234;
+}
+
+.dropdown-icon {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  font-size: 14px;
+  width: 180px;
+  background: #fff;
+  border: 1px solid rgba(108, 82, 52, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: block !important;
+  z-index: 2000;
+  overflow: visible;
+  animation: fadeDown 0.1s ease-in-out;
+}
+
+.dropdown-item {
+  padding: 10px 14px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(108, 82, 52, 0.1);
+  color: #6c5234;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* USER CARDS */
@@ -189,33 +282,35 @@ section{
 /* PAGINATION */
 .pagination {
   display: flex;
-  justify-content: center;
-  gap: 8px;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
   margin-top: 24px;
 }
 
-.pagination-btn {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #dcdcdc;
-  background: #fff;
-  font-size: 13px;
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  color: #373737;
   cursor: pointer;
   transition: 0.2s ease;
-  min-width: 36px;
 }
 
-.pagination-btn:hover:not(:disabled) {
+.pagination button:hover:not(:disabled) {
   background: #ececec;
 }
 
-.pagination-btn.active {
-  background: #6C5234;
+.pagination button.active {
+  background: #6F5A46;
   color: #fff;
-  border-color: #6C5234;
 }
 
-.pagination-btn:disabled {
-  opacity: 0.5;
+.pagination button:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
 }

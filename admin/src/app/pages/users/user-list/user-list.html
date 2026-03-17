@@ -11,18 +11,32 @@
         <!-- FILTER BAR -->
         <div class="filter-bar">
           <div class="search-wrapper">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text"
-                   class="search-input"
-                   placeholder="Tìm kiếm..."
-                   [(ngModel)]="searchTerm"
-                   (input)="onSearch()" />
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text"
+                     class="search-input"
+                     placeholder="Tìm kiếm"
+                     [(ngModel)]="searchTerm"
+                (input)="onSearchInput($event)" />
+            </div>
           </div>
 
           <div class="filter-group">
             <button class="filter-btn" [class.active]="sortType === 'a-z'" (click)="setSortType('a-z')">A-Z</button>
             <button class="filter-btn" [class.active]="sortType === 'newest'" (click)="setSortType('newest')">Mới nhất</button>
             <button class="filter-btn" [class.active]="sortType === 'oldest'" (click)="setSortType('oldest')">Cũ nhất</button>
+
+            <div class="dropdown-wrapper">
+              <div class="dropdown-selected" (click)="toggleDropdown($event)">
+                {{ statusFilterLabel }}
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="dropdownOpen"></i>
+              </div>
+              <div class="dropdown-menu" *ngIf="dropdownOpen">
+                <div class="dropdown-item" (click)="selectStatus('all', 'Tất cả trạng thái', $event)">Tất cả trạng thái</div>
+                <div class="dropdown-item" (click)="selectStatus('active', 'Hoạt động', $event)">Hoạt động</div>
+                <div class="dropdown-item" (click)="selectStatus('inactive', 'Không hoạt động', $event)">Không hoạt động</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -37,7 +51,7 @@
             </div>
             <div class="user-actions">
               <button class="action-btn view-btn" (click)="openUserForm(user)">👁 Xem chi tiết</button>
-              <button class="action-btn disable-btn" (click)="toggleUserStatus(user)">
+              <button class="action-btn disable-btn" (click)="requestToggleUserStatus(user)">
                 <i class="bi" [ngClass]="user.Trang_thai ? 'bi-slash-circle' : 'bi-arrow-counterclockwise'"></i>
                 {{ user.Trang_thai ? 'Vô hiệu hóa' : 'Khôi phục tài khoản' }}
               </button>
@@ -70,7 +84,16 @@
     <app-user-form
       [selectedUser]="selectedUser"
       (cancel)="closeUserFormModal()"
-      (disable)="selectedUser && toggleUserStatus(selectedUser)">
+      (disable)="selectedUser && requestToggleUserStatus(selectedUser)">
     </app-user-form>
   </app-modal>
+
+  <app-confirm-dialog
+    *ngIf="showStatusConfirm"
+    modalId="userStatusConfirmModal"
+    [title]="confirmTitle"
+    [message]="confirmMessage"
+    (confirm)="confirmToggleUserStatus()"
+    (cancel)="cancelToggleUserStatus()">
+  </app-confirm-dialog>
 </section>
