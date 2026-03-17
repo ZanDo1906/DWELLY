@@ -260,6 +260,20 @@
   flex-shrink: 0;
 }
 
+.review-product-selection .product-action .btn-primary-custom {
+  background: #6c5234 !important;
+  border-color: #6c5234 !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.review-product-selection .product-action .btn-primary-custom:hover {
+  background: #5a4229 !important;
+  border-color: #5a4229 !important;
+}
+
 /* ===== REVIEW MODAL (FORM VIEW) ===== */
 .review-form-view .product-info-selected {
   display: flex;

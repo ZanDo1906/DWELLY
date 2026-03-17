@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Modal } from '../../../components/modal/modal';
@@ -17,6 +17,13 @@ interface OrderItemWithReview {
   items: (iOrderDetail & { product: iProduct })[];
   hasReview: boolean;
   canReview: boolean; // Order completed and within 7 days
+  reviewRatings: number[];
+  productRatings: Record<string, number>;
+}
+
+interface ReviewViewItem {
+  item: iOrderDetail & { product: iProduct };
+  review: iReview;
 }
 
 @Component({
@@ -34,13 +41,17 @@ export class Reviews implements OnInit {
   // Filter & Sort
   filterStatus: 'all' | 'reviewed' | 'not-reviewed' = 'all';
   sortBy: 'newest' | 'oldest' | 'high-rating' = 'newest';
+  searchKeyword: string = '';
+  isSortDropdownOpen: boolean = false;
   selectedRatingFilter: number = 0; // 0 means all ratings
 
   // Review Modal
   currentReviewOrder: OrderItemWithReview | null = null;
   currentSelectedProduct: (iOrderDetail & { product: iProduct }) | null = null;
+  viewReviewItems: ReviewViewItem[] = [];
   reviewedProductIds: Set<string> = new Set(); // Track reviewed products
-  modalView: 'list' | 'form' = 'list'; // Which view to show in modal
+  modalView: 'list' | 'form' | 'view' = 'list'; // Which view to show in modal
+  customerReviews: iReview[] = [];
   
   reviewRating: number = 5;
   reviewContent: string = '';
@@ -78,6 +89,8 @@ export class Reviews implements OnInit {
     reviews: iReview[],
     products: iProduct[]
   ): void {
+    this.customerReviews = reviews.filter(r => r.Ma_khach_hang === this.currentCustomerId);
+
     // Filter orders for current customer
     const customerOrders = orders.filter(o => o.Ma_khach_hang === this.currentCustomerId);
 
@@ -93,10 +106,21 @@ export class Reviews implements OnInit {
           };
         });
 
+      const customerOrderReviews = this.customerReviews.filter(r =>
+        r.Ma_don_mua === order.Ma_don_mua
+      );
+
+      const productRatings: Record<string, number> = {};
+      customerOrderReviews.forEach(review => {
+        productRatings[review.Ma_san_pham] = review.Diem_danh_gia;
+      });
+
       // Check if ALL products in the order have been reviewed
       const hasReview = items.length > 0 && items.every(item =>
-        reviews.some(r => r.Ma_don_mua === order.Ma_don_mua && r.Ma_san_pham === item.Ma_san_pham)
+        customerOrderReviews.some(r => r.Ma_san_pham === item.Ma_san_pham)
       );
+
+      const reviewRatings = customerOrderReviews.map(r => r.Diem_danh_gia);
 
       // Check if order can be reviewed: status is "Hoàn thành" and within 7 days
       const canReview = this.isOrderEligibleForReview(order);
@@ -106,6 +130,8 @@ export class Reviews implements OnInit {
         items,
         hasReview,
         canReview,
+        reviewRatings,
+        productRatings,
       };
     });
 
@@ -137,9 +163,38 @@ export class Reviews implements OnInit {
       filtered = filtered.filter(o => !o.hasReview);
     }
 
-    // Filter by rating - Not applicable for this view since we show all products
+    // Filter by rating based on ratings in this order
     if (this.selectedRatingFilter > 0) {
-      // Can be implemented later if needed
+      filtered = filtered.filter(o => this.getVisibleItems(o).length > 0);
+    }
+
+    // Live search across order and product fields
+    const keyword = this.normalizeText(this.searchKeyword.trim());
+    if (keyword) {
+      const tokens = keyword.split(/\s+/).filter(Boolean);
+
+      filtered = filtered.filter(o => {
+        const productText = this.getVisibleItems(o).map(item => {
+          const lineTotal = item.Don_gia * item.So_luong;
+          return [
+            item.product?.Ten_san_pham || '',
+            item.So_luong?.toString() || '',
+            item.Don_gia?.toString() || '',
+            lineTotal.toString(),
+          ].join(' ');
+        }).join(' ');
+
+        const orderText = [
+          o.order.Ma_don_mua || '',
+          o.order.Trang_thai || '',
+          this.getOrderDate(o.order.Ngay_dat),
+          this.getTotalPrice(o.items).toString(),
+          productText,
+        ].join(' ');
+
+        const haystack = this.normalizeText(orderText);
+        return tokens.every(token => haystack.includes(token));
+      });
     }
 
     // Sort
@@ -150,13 +205,49 @@ export class Reviews implements OnInit {
         case 'oldest':
           return new Date(a.order.Ngay_dat).getTime() - new Date(b.order.Ngay_dat).getTime();
         case 'high-rating':
-          return 0; // Not applicable for this view
+          return this.getOrderAverageRating(b) - this.getOrderAverageRating(a);
         default:
           return 0;
       }
     });
 
     this.filteredOrders = filtered;
+  }
+
+  onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.searchKeyword = target?.value || '';
+    this.applyFiltersAndSort();
+  }
+
+  private normalizeText(value: string): string {
+    return value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd');
+  }
+
+  private getOrderAverageRating(orderItem: OrderItemWithReview): number {
+    if (orderItem.reviewRatings.length === 0) {
+      return 0;
+    }
+    const total = orderItem.reviewRatings.reduce((sum, rating) => sum + rating, 0);
+    return total / orderItem.reviewRatings.length;
+  }
+
+  getVisibleItems(orderItem: OrderItemWithReview): (iOrderDetail & { product: iProduct })[] {
+    if (this.selectedRatingFilter <= 0) {
+      return orderItem.items;
+    }
+
+    return orderItem.items.filter(item =>
+      orderItem.productRatings[item.Ma_san_pham] === this.selectedRatingFilter
+    );
+  }
+
+  getVisibleTotalPrice(orderItem: OrderItemWithReview): number {
+    return this.getTotalPrice(this.getVisibleItems(orderItem));
   }
 
   setFilterStatus(status: 'all' | 'reviewed' | 'not-reviewed'): void {
@@ -169,9 +260,73 @@ export class Reviews implements OnInit {
     this.applyFiltersAndSort();
   }
 
+  getSortLabel(sort: 'newest' | 'oldest' | 'high-rating'): string {
+    switch (sort) {
+      case 'newest':
+        return 'Mới nhất';
+      case 'oldest':
+        return 'Cũ nhất';
+      case 'high-rating':
+        return 'Cao đến thấp';
+      default:
+        return 'Mới nhất';
+    }
+  }
+
+  toggleSortDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isSortDropdownOpen = !this.isSortDropdownOpen;
+  }
+
+  selectSortOption(sort: 'newest' | 'oldest' | 'high-rating'): void {
+    this.sortBy = sort;
+    this.applyFiltersAndSort();
+    this.isSortDropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement | null;
+    if (!target?.closest('.sort-dropdown')) {
+      this.isSortDropdownOpen = false;
+    }
+  }
+
   toggleRatingFilter(rating: number): void {
     this.selectedRatingFilter = this.selectedRatingFilter === rating ? 0 : rating;
     this.applyFiltersAndSort();
+  }
+
+  openViewReviewModal(order: OrderItemWithReview): void {
+    const reviewMap = new Map(
+      this.customerReviews
+        .filter(r => r.Ma_don_mua === order.order.Ma_don_mua)
+        .map(r => [r.Ma_san_pham, r] as const)
+    );
+
+    this.viewReviewItems = order.items
+      .map(item => {
+        const review = reviewMap.get(item.Ma_san_pham);
+        return review ? { item, review } : null;
+      })
+      .filter((entry): entry is ReviewViewItem => entry !== null);
+
+    if (this.viewReviewItems.length === 0) {
+      alert('Chưa có đánh giá nào để xem lại');
+      return;
+    }
+
+    this.currentReviewOrder = order;
+    this.currentSelectedProduct = null;
+    this.modalView = 'view';
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('reviewModal');
+      if (modalEl) {
+        const modal = new (window as any).bootstrap.Modal(modalEl);
+        modal.show();
+      }
+    }, 0);
   }
 
   openReviewModal(order: OrderItemWithReview): void {
@@ -184,7 +339,7 @@ export class Reviews implements OnInit {
     // Mark products as reviewed if they already have reviews
     const existingReviews = this.reviewService.getReviewData().toPromise().then(reviews => {
       reviews?.forEach(review => {
-        if (review.Ma_don_mua === order.order.Ma_don_mua) {
+        if (review.Ma_don_mua === order.order.Ma_don_mua && review.Ma_khach_hang === this.currentCustomerId) {
           this.reviewedProductIds.add(review.Ma_san_pham);
         }
       });
@@ -230,6 +385,7 @@ export class Reviews implements OnInit {
     }
     this.currentReviewOrder = null;
     this.currentSelectedProduct = null;
+    this.viewReviewItems = [];
     this.modalView = 'list';
     this.reviewedProductIds.clear();
     this.reviewRating = 5;

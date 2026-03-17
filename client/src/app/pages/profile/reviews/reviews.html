@@ -34,6 +34,8 @@
     <input
       type="text"
       class="form-control"
+      [(ngModel)]="searchKeyword"
+      (input)="onSearchInput($event)"
       placeholder="Tìm kiếm đơn hàng của bạn"
     />
   </div>
@@ -93,14 +95,38 @@
       </div>
     </div>
     <div class="sort-dropdown">
-      <select 
-        class="form-select"
-        [(ngModel)]="sortBy"
-        (change)="applyFiltersAndSort()">
-        <option value="newest">Mới nhất</option>
-        <option value="oldest">Cũ nhất</option>
-        <option value="high-rating">Cao đến thấp</option>
-      </select>
+      <button
+        type="button"
+        class="sort-trigger"
+        [class.open]="isSortDropdownOpen"
+        (click)="toggleSortDropdown($event)">
+        <span>{{ getSortLabel(sortBy) }}</span>
+        <i class="bi" [ngClass]="isSortDropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+      </button>
+
+      <div class="sort-menu" *ngIf="isSortDropdownOpen">
+        <button
+          type="button"
+          class="sort-option"
+          [class.active]="sortBy === 'newest'"
+          (click)="selectSortOption('newest')">
+          Mới nhất
+        </button>
+        <button
+          type="button"
+          class="sort-option"
+          [class.active]="sortBy === 'oldest'"
+          (click)="selectSortOption('oldest')">
+          Cũ nhất
+        </button>
+        <button
+          type="button"
+          class="sort-option"
+          [class.active]="sortBy === 'high-rating'"
+          (click)="selectSortOption('high-rating')">
+          Cao đến thấp
+        </button>
+      </div>
     </div>
   </div>
 
@@ -119,7 +145,7 @@
     </div>
 
     <!-- Product item -->
-    <div class="review-product" *ngFor="let item of orderItem.items">
+    <div class="review-product" *ngFor="let item of getVisibleItems(orderItem)">
       <div class="thumb">
         <img 
           [src]="item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
@@ -137,26 +163,31 @@
     </div>
 
     <!-- Collapse -->
-    <div class="text-center collapse-toggle" *ngIf="orderItem.items.length > 2">
+    <div class="text-center collapse-toggle" *ngIf="getVisibleItems(orderItem).length > 2">
       Thu gọn <i class="bi bi-chevron-up"></i>
     </div>
 
     <!-- Footer -->
     <div class="review-card-footer">
       <div class="total">
-        Tổng số tiền ({{ orderItem.items.length }} sản phẩm):
-        <span>{{ getTotalPrice(orderItem.items) | number: '1.0-0' }} đ</span>
+        Tổng số tiền ({{ getVisibleItems(orderItem).length }} sản phẩm):
+        <span>{{ getVisibleTotalPrice(orderItem) | number: '1.0-0' }} đ</span>
       </div>
 
       <div class="actions">
         <button 
           class="btn btn-primary-custom"
-          *ngIf="!orderItem.hasReview && orderItem.canReview"
+          *ngIf="!orderItem.hasReview"
+          [disabled]="!orderItem.canReview"
           (click)="openReviewModal(orderItem)">
           Đánh giá
         </button>
-        <span *ngIf="orderItem.hasReview" class="badge bg-success">Đã đánh giá</span>
-        <span *ngIf="!orderItem.canReview && !orderItem.hasReview" class="badge bg-secondary">Không thể đánh giá</span>
+        <button
+          class="btn btn-outline-custom"
+          *ngIf="orderItem.reviewRatings.length > 0"
+          (click)="openViewReviewModal(orderItem)">
+          Xem lại đánh giá
+        </button>
       </div>
     </div>
   </div>
@@ -168,7 +199,7 @@
 <!-- Review Modal -->
 <app-modal
   modalId="reviewModal"
-  [title]="modalView === 'list' ? 'Chọn sản phẩm để đánh giá' : 'Đánh giá sản phẩm'"
+  [title]="modalView === 'list' ? 'Chọn sản phẩm để đánh giá' : (modalView === 'view' ? 'Xem lại đánh giá' : 'Đánh giá sản phẩm')"
   [showHeader]="true"
   [showTitleAndLine]="true"
   [showCloseButton]="true"
@@ -202,6 +233,36 @@
                 class="badge bg-success">
             Đã đánh giá
           </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW MODE: Show submitted reviews -->
+  <div *ngIf="modalView === 'view'" class="review-view-section">
+    <div class="review-view-list">
+      <div class="review-view-item" *ngFor="let entry of viewReviewItems">
+        <div class="review-view-product">
+          <img
+            [src]="entry.item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
+            [alt]="entry.item.product?.Ten_san_pham" />
+          <div>
+            <h6>{{ entry.item.product?.Ten_san_pham }}</h6>
+            <p>Số lượng: {{ entry.item.So_luong }}</p>
+          </div>
+        </div>
+
+        <div class="review-view-rating">
+          <i
+            class="bi"
+            *ngFor="let star of [1,2,3,4,5]"
+            [ngClass]="entry.review.Diem_danh_gia >= star ? 'bi-star-fill' : 'bi-star'"></i>
+        </div>
+
+        <p class="review-view-content" *ngIf="entry.review.Noi_dung">{{ entry.review.Noi_dung }}</p>
+
+        <div class="review-view-images" *ngIf="entry.review.Hinh_anh?.length">
+          <img *ngFor="let img of entry.review.Hinh_anh" [src]="img" alt="review image" />
         </div>
       </div>
     </div>
