@@ -41,6 +41,10 @@ interface CheckoutAddress {
   phone: string;
   address: string;
   isDefault: boolean;
+  city?: string;
+  district?: string;
+  ward?: string;
+  detailAddress?: string;
 }
 
 @Component({
@@ -177,6 +181,7 @@ export class PaymentMember implements OnInit {
         phone: customerPhone,
         address: addressText,
         isDefault: index === 0,
+        detailAddress: addressText,
       };
     }
 
@@ -197,6 +202,10 @@ export class PaymentMember implements OnInit {
         phone: String(phone).trim(),
         address: String(address).trim(),
         isDefault: Boolean(item.IsDefault),
+        city: item.Province || item.tinh_thanh || item.city || '',
+        district: item.District || item.quan_huyen || item.district || '',
+        ward: item.Ward || item.phuong_xa || item.ward || '',
+        detailAddress: item.DetailAddress || item.dia_chi_cu_the || item.detailAddress || String(address).trim(),
       };
     }
 
@@ -395,9 +404,23 @@ export class PaymentMember implements OnInit {
   async openQRPayment(): Promise<void> {
     try {
       const userId = localStorage.getItem('userId') || undefined;
+      const selectedAddress = this.defaultAddress;
+
+      if (!selectedAddress) {
+        alert('Bạn chưa có địa chỉ nhận hàng. Vui lòng thêm/chọn địa chỉ trước khi đặt hàng.');
+        return;
+      }
 
       const created = await firstValueFrom(this.orderService.createOrder({
         Ma_khach_hang: userId,
+        Thong_tin_giao_hang: {
+          Ho_ten_nguoi_nhan: selectedAddress.fullName,
+          So_dien_thoai_nguoi_nhan: selectedAddress.phone,
+          Tinh_thanh: selectedAddress.city || '',
+          Quan_huyen: selectedAddress.district || '',
+          Phuong_xa: selectedAddress.ward || '',
+          Dia_chi_cu_the: selectedAddress.detailAddress || selectedAddress.address,
+        },
         Tong_tien: this.getFinalTotal(),
         Hinh_thuc_thanh_toan: this.paymentMethod === 'deposit' ? 'Thanh toán cọc' : 'Thanh toán toàn bộ',
         Phi_van_chuyen: this.getShippingFee(),

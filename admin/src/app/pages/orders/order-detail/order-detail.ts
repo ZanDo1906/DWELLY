@@ -8,10 +8,12 @@ import { iOrder } from '../../../interfaces/order';
 import { iOrderDetail } from '../../../interfaces/order_details';
 import { iProduct } from '../../../interfaces/product';
 import { iRoom } from '../../../interfaces/room';
+import { iClient } from '../../../interfaces/client';
 import { Order_Details as OrderDetailsService } from '../../../services/order_details';
 import { Order as OrderService } from '../../../services/order';
 import { Product as ProductService } from '../../../services/product';
 import { Room as RoomService } from '../../../services/room';
+import { Client as ClientService } from '../../../services/client';
 
 interface CartItem {
   product: iProduct;
@@ -53,6 +55,7 @@ export class OrderDetail implements OnInit {
     private orderDetailsService: OrderDetailsService,
     private productService: ProductService,
     private roomService: RoomService,
+    private clientService: ClientService,
   ) {}
 
   ngOnInit(): void {
@@ -67,8 +70,10 @@ export class OrderDetail implements OnInit {
       products: this.productService.getProductData(),
       orders: this.orderService.getOrderData(),
       orderDetails: this.orderDetailsService.getOrderDetailsData(),
-    }).subscribe(({ rooms, products, orders, orderDetails }) => {
+      clients: this.clientService.getClientData(),
+    }).subscribe(({ rooms, products, orders, orderDetails, clients }) => {
       this.rooms = rooms;
+      const clientMap = new Map((clients || []).map((client) => [client.Ma_khach_hang, client]));
 
       const targetOrder = routeOrderId
         ? orders.find((order) => order.Ma_don_mua === routeOrderId)
@@ -84,7 +89,7 @@ export class OrderDetail implements OnInit {
       this.orderDisplayCode = targetOrder.Ma_don_mua;
       this.orderDateDisplay = this.formatOrderDate(targetOrder.Ngay_dat);
 
-      this.resolveCustomerInfo(targetOrder);
+      this.resolveCustomerInfo(targetOrder, clientMap);
 
       const productMap = new Map(products.map((product) => [product.Ma_san_pham, product]));
       const detailsForOrder = orderDetails.filter((detail) => detail.Ma_don_mua === targetOrder.Ma_don_mua);
@@ -128,7 +133,7 @@ export class OrderDetail implements OnInit {
     this.wantInvoice = false;
   }
 
-  private resolveCustomerInfo(order: iOrder): void {
+  private resolveCustomerInfo(order: iOrder, clientMap: Map<string, iClient>): void {
     const shippingInfo = order.Thong_tin_giao_hang;
     const guestInfo = order.Thong_tin_khach_vang_lai as {
       Ho_va_ten?: string;
@@ -141,6 +146,7 @@ export class OrderDetail implements OnInit {
     };
 
     const preferredEmail = (guestInfo?.Email || '').trim();
+    const registeredEmail = (clientMap.get(order.Ma_khach_hang || '')?.Email || '').trim();
 
     const shippingComposedAddress = this.composeAddressFrom4Parts(
       shippingInfo?.Dia_chi_cu_the,
@@ -168,14 +174,14 @@ export class OrderDetail implements OnInit {
     if (order.Thong_tin_khach_vang_lai) {
       this.customerName = guestName || 'Khách hàng';
       this.customerPhone = guestPhone || 'Chưa có';
-      this.customerEmail = preferredEmail || 'Chưa có';
+      this.customerEmail = preferredEmail || registeredEmail || 'Chưa có';
       this.customerAddress = addressFromOrder || 'Chưa có';
       return;
     }
 
     this.customerName = shippingName || 'Khách hàng';
     this.customerPhone = shippingPhone || 'Chưa có';
-    this.customerEmail = 'Chưa có';
+    this.customerEmail = registeredEmail || 'Chưa có';
     this.customerAddress = shippingAddress || 'Chưa có';
   }
 
