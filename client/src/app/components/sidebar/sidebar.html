@@ -5,7 +5,8 @@
     <div class="user-info">
       <div class="d-flex gap-3 align-items-start mb-3">
         <img
-          [src]="userInfo?.Anh_dai_dien || 'https://i.pravatar.cc/100'"
+          [src]="getAvatarUrl(userInfo?.Anh_dai_dien)"
+          (error)="onAvatarError($event)"
           alt="avatar"
           class="avatar"
         />
@@ -53,9 +54,28 @@
 
   <!-- LOGOUT -->
   <div class="logout-wrapper">
-    <button class="btn logout-btn w-100" type="button" (click)="logout()">
+    <button
+      class="btn logout-btn w-100"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#logoutConfirmModal">
       <i class="bi bi-box-arrow-right me-2"></i>
       Đăng xuất
     </button>
   </div>
 </div>
+
+<app-modal
+  modalId="logoutConfirmModal"
+  title="Xác nhận đăng xuất"
+  [showHeader]="true"
+  [showTitleAndLine]="true"
+  [showCloseButton]="true">
+  <div class="logout-confirm-content">
+    <p class="logout-confirm-message">Có chắc chắn muốn đăng xuất không?</p>
+    <div class="logout-confirm-actions">
+      <!-- <button type="button" class="logout-cancel-btn" data-bs-dismiss="modal">Hủy</button> -->
+      <button type="button" class="logout-confirm-btn" (click)="confirmLogout()">Xác nhận</button>
+    </div>
+  </div>
+</app-modal>

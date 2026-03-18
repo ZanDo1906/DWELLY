@@ -69,6 +69,9 @@ app.use("/", uploadRoute);
 const cartRoute = require('./routes/cart.router');
 app.use("/", cartRoute);
 
+const aiRoute = require('./routes/ai.router');
+app.use("/", aiRoute);
+
 
 app.listen(port, () => {
   console.log(`My server listening on port: ${port}`);

@@ -1,3 +1,4 @@
+:host,
 .address-page {
   --brown: #6C5234;
   --text-dark: #373737;
@@ -107,6 +108,25 @@
   cursor: pointer;
 }
 
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+.btn-delete i {
+  font-size: 16px;
+}
+
+.btn-outline-brown:disabled,
+.btn-brown:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .btn-add {
   display: flex;
   align-items: center;
@@ -116,4 +136,51 @@
 
 .set-default {
   margin-top: 8px;
+}
+
+.delete-confirm-content {
+  padding: 6px 4px 0;
+}
+
+.delete-confirm-message {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--text-dark);
+}
+
+.delete-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.address-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  background: #546745;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(84, 103, 69, 0.35);
+  box-shadow: 0 4px 12px rgba(84, 103, 69, 0.2);
+  animation: toast-fade-in 0.2s ease;
+}
+
+.address-toast.toast-error {
+  background: #546745;
+  color: #fff;
+}
+
+@keyframes toast-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

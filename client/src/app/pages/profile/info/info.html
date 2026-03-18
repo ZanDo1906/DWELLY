@@ -12,7 +12,7 @@
             <div class="account-top">
               <div class="user-info">
                 <div class="avatar-wrapper">
-                  <img class="avatar" [src]="userInfo.Anh_dai_dien || 'https://i.pravatar.cc/100'" alt="User Avatar">
+                  <img class="avatar" [src]="getAvatarUrl(userInfo.Anh_dai_dien)" (error)="onAvatarError($event)" alt="User Avatar">
                   <label class="avatar-upload" *ngIf="isEditing">
                     <i class="bi bi-camera-fill"></i>
                     <input type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden>
@@ -92,6 +92,11 @@
     </div>
   </div>
 </section>
+
+<!-- TOAST NOTIFICATION -->
+<div *ngIf="showToast" class="info-toast" [class.toast-error]="toastType === 'error'">
+  {{ toastMessage }}
+</div>
 
 <!-- CHANGE PASSWORD MODAL -->
 <app-modal

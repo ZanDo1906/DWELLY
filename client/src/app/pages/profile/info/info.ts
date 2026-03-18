@@ -16,9 +16,14 @@ import { phoneValidator } from '../../../validator/check.validator';
 export class Info implements OnInit {
   isEditing = false;
   showPassword = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  showToast = false;
+  private toastTimer: ReturnType<typeof setTimeout> | null = null;
   userInfo: iClient | null = null;
   userId: string = '';
   isSaving = false;
+  private readonly avatarFallback = 'https://i.pravatar.cc/100';
   private readonly phoneControlValidator = phoneValidator();
 
   constructor(private clientService: Client) {}
@@ -63,7 +68,7 @@ export class Info implements OnInit {
 
     const normalizedPhone = (this.userInfo.So_dien_thoai || '').trim();
     if (!this.isValidPhone(normalizedPhone)) {
-      alert('Số điện thoại không hợp lệ hoặc là dãy số yếu (lặp/liên tiếp).');
+      this.pushToast('Số điện thoại không hợp lệ hoặc là dãy số yếu (lặp/liên tiếp).', 'error');
       return;
     }
 
@@ -78,15 +83,23 @@ export class Info implements OnInit {
     this.clientService.updateClient(this.userId, updateData).subscribe({
       next: (response) => {
         console.log('Update successful:', response);
-        alert('Cập nhật thông tin thành công!');
         this.isEditing = false;
         this.isSaving = false;
+        // Update localStorage with new info
+        if (this.userInfo) {
+          localStorage.setItem('userAvatar', this.userInfo.Anh_dai_dien || '');
+        }
+        // Emit user-updated event for sidebar to reload
+        const event = new Event('user-updated');
+        window.dispatchEvent(event);
+        // Show success toast
+        this.pushToast('Cập nhật thông tin thành công!', 'success');
         // Reload user info to get updated data
         this.loadUserInfo();
       },
       error: (err) => {
         console.error('Error updating user info:', err);
-        alert('Cập nhật thông tin thất bại!');
+        this.pushToast('Cập nhật thông tin thất bại!', 'error');
         this.isSaving = false;
       }
     });
@@ -109,13 +122,73 @@ export class Info implements OnInit {
         next: (response: any) => {
           if (this.userInfo && response.filePath) {
             this.userInfo.Anh_dai_dien = response.filePath;
+            // Update localStorage
+            localStorage.setItem('userAvatar', response.filePath);
+            // Emit user-updated event for sidebar to reload
+            const event = new Event('user-updated');
+            window.dispatchEvent(event);
           }
         },
         error: (err) => {
           console.error('Error uploading avatar:', err);
-          alert('Upload ảnh thất bại!');
+          this.pushToast(err?.error?.message || err?.message || 'Upload ảnh thất bại!', 'error');
         }
       });
     }
+  }
+
+  getAvatarUrl(rawPath?: string | null): string {
+    if (!rawPath) {
+      return this.avatarFallback;
+    }
+
+    const normalizedPath = String(rawPath).trim().replace(/\\/g, '/');
+    if (!normalizedPath) {
+      return this.avatarFallback;
+    }
+
+    if (/^https?:\/\//i.test(normalizedPath)) {
+      return encodeURI(normalizedPath);
+    }
+
+    if (normalizedPath.startsWith('/uploads/')) {
+      return encodeURI(`http://localhost:3000${normalizedPath}`);
+    }
+
+    if (normalizedPath.startsWith('uploads/')) {
+      return encodeURI(`http://localhost:3000/${normalizedPath}`);
+    }
+
+    if (normalizedPath.startsWith('assets/')) {
+      return encodeURI(normalizedPath);
+    }
+
+    if (/^[^/]+\.(png|jpg|jpeg|gif|webp|bmp|svg|avif|jfif|heic|heif|tif|tiff)$/i.test(normalizedPath)) {
+      return encodeURI(`http://localhost:3000/uploads/avatars/${normalizedPath}`);
+    }
+
+    return encodeURI(normalizedPath);
+  }
+
+  onAvatarError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (img && img.src !== this.avatarFallback) {
+      img.src = this.avatarFallback;
+    }
+  }
+
+  private pushToast(message: string, type: 'success' | 'error'): void {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+
+    this.toastTimer = setTimeout(() => {
+      this.showToast = false;
+      this.toastTimer = null;
+    }, 2500);
   }
 }
