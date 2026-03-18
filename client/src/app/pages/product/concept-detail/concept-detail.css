@@ -153,6 +153,44 @@ app-product-card {
 }
 .btn-add-all:hover { background: #6c5234; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); } 
 .btn-add-all:active { background: #56422A;  color: #fff;  }
+.btn-add-all:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.add-all-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.add-all-notification {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6c5234;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+  animation: fadeInOutAddAll 1.5s ease;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.add-all-notification i {
+  margin-right: 6px;
+}
+
+@keyframes fadeInOutAddAll {
+  0% { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
 
 .custom-dropdown {
   position: relative;
@@ -317,10 +355,18 @@ app-product-card {
     width: 100%;
   }
 
-  .concept-actions .btn-add-all {
+  .concept-actions .add-all-wrapper {
+    width: 100%;
     margin-left: 0 !important;
+  }
+
+  .concept-actions .btn-add-all {
     justify-content: center;
     gap: 8px;
+  }
+
+  .add-all-notification {
+    left: 50%;
   }
 
   .breadcrumb {

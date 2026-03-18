@@ -42,10 +42,15 @@
                 <div class="dropdown-item" (click)="selectStatus('Ngưng kinh doanh', $event)">Ngưng kinh doanh</div>
               </div>
             </div>
-            <button class="delete-btn" [disabled]="selectedProducts.length === 0" (click)="deleteSelected()">
-              <i class="bi bi-trash"></i>
-            </button>
 
+            <button
+              class="deactivate-btn"
+              [class.activate-mode]="isActivateSelectedMode"
+              [disabled]="selectedProducts.length === 0"
+              (click)="applySelectedStatusChange()">
+              <i class="bi" [ngClass]="isActivateSelectedMode ? 'bi-play-circle' : 'bi-pause-circle'"></i>
+              {{ isActivateSelectedMode ? 'Đang kinh doanh' : 'Ngưng hoạt động' }}
+            </button>
           </div>
         </div>
 
@@ -54,7 +59,7 @@
             <th>
               <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()">
             </th>
-            <th>Mã SP</th>
+            <th>Mã sản phẩm</th>
             <th>Tên sản phẩm</th>
             <th>Giá</th>
             <th>Tồn kho</th>

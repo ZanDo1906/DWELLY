@@ -13,9 +13,11 @@ import { iCategory } from '../../../interfaces/category';
 import { iRoom } from '../../../interfaces/room';
 import { iStyle } from '../../../interfaces/style';
 import { iConcept } from '../../../interfaces/concept';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
 
 type ClassificationType = 'category' | 'room' | 'style' | 'concept';
 type PopupDropdownType = 'roomCode' | 'styleCode';
+type ConfirmActionType = 'delete-product' | 'cancel-form' | 'save-product' | 'delete-classification';
 
 interface ClassificationListItem {
   code: string;
@@ -35,7 +37,7 @@ interface ClassificationFormState {
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ConfirmDialogComponent],
   templateUrl: './product-form.html',
   styleUrls: ['./product-form.css'],
 })
@@ -82,6 +84,61 @@ export class ProductForm implements OnInit {
   selectedClassificationCode = '';
   classificationForm: ClassificationFormState = this.createEmptyClassificationForm();
   isConceptImageUploading = false;
+  showActionConfirm = false;
+  confirmTitle = 'Xác nhận';
+  confirmMessage = 'Bạn có chắc muốn thực hiện hành động này?';
+  pendingConfirmAction: ConfirmActionType | null = null;
+
+  openActionConfirm(action: ConfirmActionType): void {
+    this.pendingConfirmAction = action;
+
+    if (action === 'delete-product') {
+      this.confirmTitle = 'Xác nhận xóa';
+      this.confirmMessage = 'Bạn có chắc muốn xóa sản phẩm này?';
+    } else if (action === 'cancel-form') {
+      this.confirmTitle = 'Xác nhận hủy';
+      this.confirmMessage = 'Bạn có chắc muốn hủy các thay đổi hiện tại?';
+    } else if (action === 'save-product') {
+      this.confirmTitle = 'Xác nhận lưu';
+      this.confirmMessage = this.isEditMode
+        ? 'Bạn có chắc muốn lưu cập nhật sản phẩm này?'
+        : 'Bạn có chắc muốn lưu mới sản phẩm này?';
+    } else {
+      this.confirmTitle = 'Xác nhận xóa';
+      this.confirmMessage = 'Bạn có chắc muốn xóa mục này không?';
+    }
+
+    this.showActionConfirm = true;
+  }
+
+  closeActionConfirm(): void {
+    this.showActionConfirm = false;
+    this.pendingConfirmAction = null;
+  }
+
+  handleActionConfirm(): void {
+    const action = this.pendingConfirmAction;
+    this.closeActionConfirm();
+
+    if (action === 'delete-product') {
+      this.performDeleteProduct();
+      return;
+    }
+
+    if (action === 'cancel-form') {
+      this.resetForm();
+      return;
+    }
+
+    if (action === 'save-product') {
+      this.saveProduct();
+      return;
+    }
+
+    if (action === 'delete-classification') {
+      this.performDeleteClassificationItem();
+    }
+  }
 
   async ngOnInit() {
   this.loadClassificationData();
@@ -668,7 +725,14 @@ export class ProductForm implements OnInit {
       return;
     }
 
-    if (!confirm('Bạn có chắc muốn xóa mục này không?')) {
+    this.openActionConfirm('delete-classification');
+  }
+
+  private performDeleteClassificationItem(): void {
+    const code = (this.selectedClassificationCode || this.classificationForm.code).trim();
+
+    if (!code) {
+      this.showError('Vui lòng chọn mục cần xóa.');
       return;
     }
 
@@ -810,11 +874,20 @@ export class ProductForm implements OnInit {
   }
   
   deleteProduct(): void {
-  if (!this.product.Ma_san_pham) {
-    alert('Không có mã sản phẩm để xóa!');
-    return;
+    if (!this.product.Ma_san_pham) {
+      alert('Không có mã sản phẩm để xóa!');
+      return;
+    }
+
+    this.openActionConfirm('delete-product');
   }
-  if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+
+  private performDeleteProduct(): void {
+    if (!this.product.Ma_san_pham) {
+      alert('Không có mã sản phẩm để xóa!');
+      return;
+    }
+
     this.productService.deleteProduct(this.product.Ma_san_pham).subscribe({
       next: () => {
         alert('Sản phẩm đã được xóa!');
@@ -826,7 +899,6 @@ export class ProductForm implements OnInit {
       }
     });
   }
-}
 
 removeImage(index: number, event: Event): void {
   event.stopPropagation();
@@ -878,9 +950,7 @@ removeImage(index: number, event: Event): void {
       return;
     }
 
-    if (confirm('Bạn có chắc muốn hủy không?')) {
-      this.resetForm();
-    }
+    this.openActionConfirm('cancel-form');
   }
 
   saveDraft(): void {
@@ -893,8 +963,13 @@ removeImage(index: number, event: Event): void {
     alert('Đã lưu nháp thành công!');
   }
 
+  requestSaveProduct(): void {
+    this.openActionConfirm('save-product');
+  }
+
   saveProduct(): void {
     const missingFields: string[] = [];
+    const priceValue = Number(this.product.Gia_ban);
 
     if (!this.product.Ma_san_pham.trim())
       missingFields.push('Mã sản phẩm');
@@ -902,11 +977,17 @@ removeImage(index: number, event: Event): void {
     if (!this.product.Ten_san_pham.trim())
       missingFields.push('Tên sản phẩm');
 
-    if (this.product.Gia_ban === 0)
+    if (this.product.Gia_ban === null || this.product.Gia_ban === undefined || Number.isNaN(priceValue))
       missingFields.push('Giá bán');
 
-    if (this.product.So_luong_ton_kho === 0)
-      missingFields.push('Tồn kho');
+    if (!this.product.Mo_ta.trim())
+      missingFields.push('Mô tả chi tiết');
+
+    if (!this.product.Kich_thuoc.trim())
+      missingFields.push('Kích thước');
+
+    if (!this.product.Chat_lieu.trim())
+      missingFields.push('Chất liệu');
 
     if (!this.product.Ma_danh_muc)
       missingFields.push('Danh mục');

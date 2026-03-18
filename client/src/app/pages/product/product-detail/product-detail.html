@@ -52,7 +52,7 @@
 
             <span class="divider">|</span>
 
-            <span class="sold">20 lượt mua</span>
+            <span class="sold">{{ soldCount }} lượt mua</span>
 
             <span class="divider">|</span>
 
@@ -85,20 +85,11 @@
             </span>
           </div>
 
-
-          <div class="color-row">
-            <span class="color-label">Màu tự nhiên</span>
-
-            <span class="color-dot"
-                  [style.background]="'#EDE9DF'">
-            </span>
-          </div>
           <div class="option-row">
               <span>Kích thước:</span>
               <span class="ms-2">{{ product?.Kich_thuoc }}</span>
           </div>
           <div class="option-row">
-          
 
             <span>Chất liệu:</span>
             <span class="ms-2">
@@ -136,9 +127,13 @@
                 MUA NGAY
               </button>
 
-              <button class="btn-cart" (click)="goToCart()">
+              <button class="btn-cart" (click)="addToCart()">
                 THÊM VÀO GIỎ HÀNG
               </button>
+            </div>
+
+            <div class="cart-notification" *ngIf="showCartNotification">
+              <i class="bi bi-check-circle"></i> Đã thêm vào giỏ hàng
             </div>
 
             <div class="service-row">
@@ -292,7 +287,7 @@
           <div class="total-reviews">
               {{ productReviews.length }} đánh giá
           </div>
-          <div class="custom-dropdown" (click)="toggleDropdown()">
+          <div #reviewSortDropdown class="custom-dropdown" (click)="toggleDropdown()">
             <span>{{ getLabel(sortType) }}</span>
             <i class="bi" [ngClass]="dropdownOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
             <ul *ngIf="dropdownOpen">
@@ -309,7 +304,11 @@
           *ngFor="let r of productReviews">
 
           <div class="review-left">
-            <div class="avatar"></div>
+            <img
+              class="avatar"
+              [src]="getClientAvatar(r.Ma_khach_hang)"
+              [alt]="getClientName(r.Ma_khach_hang)"
+              (error)="onAvatarError($event)">
           </div>
           <div class="review-right">
             <div class="review-top">
