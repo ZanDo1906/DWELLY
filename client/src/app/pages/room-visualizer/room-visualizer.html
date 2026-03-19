@@ -1,84 +1,173 @@
-<div class="container">
+<section class="brand-story-image-section">
+  <div class="container-fluid ">
+    <div class="px-4">
+      <div class="site-inner">
+        <div class="page">
+          <div class="header">
+            <!-- <button class="back" type="button" (click)="onChangeImage(file)">←</button> -->
+            <div class="header-copy">
+              <h1>TRẢI NGHIỆM KHÔNG GIAN</h1>
+              <p>Upload ảnh phòng và chọn nội thất để xem trước không gian của bạn</p>
+            </div>
+          </div>
 
-  <!-- LEFT -->
-  <div class="left">
-    <h2>Trải nghiệm không gian</h2>
+          <div class="container">
+            <div class="grid">
+              <div class="left">
+                <div class="card upload" *ngIf="!previewUrl" (click)="file.click()">
+                  <div class="upload-inner">
+                    <div class="icon">⇧</div>
+                    <p class="title">Upload ảnh không gian phòng</p>
+                    <p class="desc">Kéo thả hoặc click để chọn ảnh (PNG, JPG, tối đa 10MB)</p>
+                  </div>
+                </div>
 
-    <!-- Upload -->
-    <div class="upload-box">
-      <input type="file" (change)="onUpload($event)" />
-      <p>Upload ảnh phòng</p>
-    </div>
+                <input #file type="file" hidden (change)="onFileSelected($event)">
 
-    <!-- Preview -->
-    <div *ngIf="imagePreview">
-      <img [src]="imagePreview" class="main-img"/>
-    </div>
+                <div class="card image-box" *ngIf="previewUrl">
+                  <img [src]="getMainImage()" alt="Room image">
 
-    <!-- Result -->
-    <div *ngIf="resultImage">
-      <img [src]="resultImage" class="main-img"/>
-    </div>
-  </div>
+                  <div class="badge" *ngIf="resultImage">
+                    ✨ Đã thêm nội thất
+                  </div>
 
-  <!-- RIGHT -->
-  <div class="right">
+                  <div class="actions">
+                    <button type="button" *ngIf="resultImage" (click)="downloadResult()">Tải về</button>
+                    <button type="button" (click)="onChangeImage(file)">Đổi ảnh</button>
+                  </div>
+                </div>
 
-    <h3>Chọn sản phẩm</h3>
+                <div class="thumbs" *ngIf="previewUrl">
+                  <div class="thumb" [class.active]="activePreview === 'original'" (click)="setPreviewMode('original')">
+                    <p>Ảnh gốc</p>
+                    <img [src]="previewUrl" alt="Anh goc">
+                  </div>
 
-    <!-- SEARCH -->
-    <input
-      class="search"
-      placeholder="Tìm nội thất..."
-      [(ngModel)]="search"
-      (input)="onFilterChange()"
-    />
+                  <div
+                    class="thumb"
+                    [class.active]="activePreview === 'generated' && !!resultImage"
+                    [class.disabled]="!resultImage"
+                    (click)="setPreviewMode('generated')">
+                    <p>Đã thêm nội thất</p>
+                    <img [src]="resultImage || previewUrl" alt="Anh ket qua">
+                  </div>
+                </div>
+              </div>
 
-    <!-- FILTER ROOM -->
-    <div class="filter">
-      <button (click)="selectedRoom='all'; onFilterChange()">Tất cả</button>
-      <button (click)="selectedRoom='living'; onFilterChange()">Phòng khách</button>
-      <button (click)="selectedRoom='bedroom'; onFilterChange()">Phòng ngủ</button>
-      <button (click)="selectedRoom='work'; onFilterChange()">Làm việc</button>
-    </div>
+              <div class="right">
+                <div class="product-header">
+                  <h3>Chọn sản phẩm</h3>
+                  <p>Chọn nội thất bạn muốn đặt vào phòng</p>
+                </div>
 
-    <!-- FILTER STYLE -->
-    <div class="filter">
-      <button (click)="selectedStyle='all'; onFilterChange()">Tất cả</button>
-      <button (click)="selectedStyle='modern'; onFilterChange()">Modern</button>
-      <button (click)="selectedStyle='minimal'; onFilterChange()">Minimal</button>
-      <button (click)="selectedStyle='japandi'; onFilterChange()">Japandi</button>
-    </div>
+                <div class="filters-wrap">
+                  <div class="search-box">
+                    <span class="search-icon">⌕</span>
+                    <input
+                      type="text"
+                      [value]="searchTerm"
+                      (input)="setSearchTerm($any($event.target).value)"
+                      placeholder="Tìm kiếm" />
+                  </div>
 
-    <!-- LIST -->
-    <div class="product-list">
-      <p *ngIf="loadingProducts">Đang tải sản phẩm...</p>
-      <p *ngIf="!loadingProducts && productError">{{ productError }}</p>
-      <p *ngIf="!loadingProducts && !productError && products.length === 0">Không có sản phẩm phù hợp.</p>
+                  <div class="filter-dropdowns">
+                    <div class="rv-dropdown" [class.open]="openDropdown === 'room'">
+                      <button type="button" class="rv-dropdown-toggle" (click)="toggleDropdown('room', $event)">
+                        <span>{{ getSelectedRoomLabel() }}</span>
+                        <span class="rv-caret"></span>
+                      </button>
+                      <div class="rv-dropdown-menu" *ngIf="openDropdown === 'room'" (click)="$event.stopPropagation()">
+                        <button type="button" class="rv-dropdown-item" [class.active]="selectedRoomCode === 'all'" (click)="setRoomFilter('all'); closeDropdown()">Loại phòng</button>
+                        <button
+                          type="button"
+                          class="rv-dropdown-item"
+                          *ngFor="let r of rooms"
+                          [class.active]="selectedRoomCode === r.Ma_loai_phong"
+                          (click)="setRoomFilter(r.Ma_loai_phong); closeDropdown()">
+                          {{ r.Ten_loai_phong }}
+                        </button>
+                      </div>
+                    </div>
 
-      <div
-        class="product-card"
-        *ngFor="let p of products"
-        [class.active]="isSelected(p)"
-        (click)="toggleProduct(p)"
-      >
-        <img [src]="p.image" />
+                    <div class="rv-dropdown" [class.open]="openDropdown === 'category'">
+                      <button type="button" class="rv-dropdown-toggle" (click)="toggleDropdown('category', $event)">
+                        <span>{{ getSelectedCategoryLabel() }}</span>
+                        <span class="rv-caret"></span>
+                      </button>
+                      <div class="rv-dropdown-menu" *ngIf="openDropdown === 'category'" (click)="$event.stopPropagation()">
+                        <button type="button" class="rv-dropdown-item" [class.active]="selectedCategoryCode === 'all'" (click)="setCategoryFilter('all'); closeDropdown()">Loại sản phẩm</button>
+                        <button
+                          type="button"
+                          class="rv-dropdown-item"
+                          *ngFor="let c of categories"
+                          [class.active]="selectedCategoryCode === c.Ma_danh_muc"
+                          (click)="setCategoryFilter(c.Ma_danh_muc); closeDropdown()">
+                          {{ c.Ten_danh_muc }}
+                        </button>
+                      </div>
+                    </div>
 
-        <div class="info">
-          <h4>{{ p.name }}</h4>
-          <p>{{ p.price | number }}đ</p>
+                    <div class="rv-dropdown" [class.open]="openDropdown === 'style'">
+                      <button type="button" class="rv-dropdown-toggle" (click)="toggleDropdown('style', $event)">
+                        <span>{{ getSelectedStyleLabel() }}</span>
+                        <span class="rv-caret"></span>
+                      </button>
+                      <div class="rv-dropdown-menu" *ngIf="openDropdown === 'style'" (click)="$event.stopPropagation()">
+                        <button type="button" class="rv-dropdown-item" [class.active]="selectedStyleCode === 'all'" (click)="setStyleFilter('all'); closeDropdown()">Phong cách</button>
+                        <button
+                          type="button"
+                          class="rv-dropdown-item"
+                          *ngFor="let s of styles"
+                          [class.active]="selectedStyleCode === s.Ma_phong_cach"
+                          (click)="setStyleFilter(s.Ma_phong_cach); closeDropdown()">
+                          {{ s.Ten_phong_cach }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="button" class="clear-filter" (click)="clearFilters()">Xóa bộ lọc</button>
+                </div>
+
+                <div class="product-list">
+                  <p class="state" *ngIf="loadingProducts">Đang tải sản phẩm...</p>
+                  <p class="state error" *ngIf="productError">{{ productError }}</p>
+
+                  <div
+                    class="product"
+                    *ngFor="let p of filteredProducts"
+                    [class.active]="isFurnitureSelected(p.Ma_san_pham)"
+                    (click)="toggleFurniture(p.Ma_san_pham)">
+                    <img [src]="getProductImage(p)" [alt]="p.Ten_san_pham">
+
+                    <div class="info">
+                      <p class="name">{{ p.Ten_san_pham }}</p>
+                      <p class="category">{{ getCategoryName(p) }}</p>
+                      <p class="price">{{ getProductPrice(p) }}</p>
+                    </div>
+                  </div>
+
+                  <p class="state" *ngIf="!loadingProducts && !productError && filteredProducts.length === 0">
+                    Không có sản phẩm phù hợp bộ lọc.
+                  </p>
+                </div>
+
+                <div class="selected">
+                  Đã chọn {{ selectedProductCodes.length }} sản phẩm
+                </div>
+
+                <button
+                  class="generate"
+                  type="button"
+                  [disabled]="!selectedFile || selectedProductCodes.length === 0 || loading"
+                  (click)="generate()">
+                  {{ loading ? 'Đang tạo ...' : '✨ Tạo hình ảnh không gian' }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- ACTION -->
-    <div class="bottom">
-      <p>Đã chọn {{ selectedProducts.length }} sản phẩm</p> 
-
-      <button (click)="generateAI()" [disabled]="loading">
-        {{ loading ? 'Đang tạo...' : 'Tạo hình ảnh không gian' }}
-      </button> 
-    </div>
-
   </div>
-</div>
+</section>

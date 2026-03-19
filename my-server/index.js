@@ -69,8 +69,11 @@ app.use("/", uploadRoute);
 const cartRoute = require('./routes/cart.router');
 app.use("/", cartRoute);
 
-const aiRoute = require('./routes/ai.router');
-app.use("/", aiRoute);
+// const aiRoute = require('./routes/ai.router');
+// app.use("/", aiRoute);
+
+const roomVisualizerRoute = require('./routes/room-visualizer.routes');
+app.use('/', roomVisualizerRoute);
 
 
 app.listen(port, () => {
