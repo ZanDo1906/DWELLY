@@ -18,14 +18,34 @@
   align-items: flex-start;
 }
 
+.filter-sidebar-column {
+  align-self: stretch;
+}
+
 /* ===== FILTER SIDEBAR ===== */
 .filter-sidebar {
   border: 1px solid #6c5234;
   border-radius: 15px;
-  padding: 24px;
+  padding: 18px;
   position: sticky;
   top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
   height: fit-content;
+}
+
+.filter-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-sidebar::-webkit-scrollbar-thumb {
+  background: #c0a78e;
+  border-radius: 999px;
+}
+
+.filter-sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .filter-header {
@@ -59,7 +79,7 @@
 
 /* FILTER GROUP */
 .filter-group {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .filter-title {
@@ -498,12 +518,20 @@
 }
 
 @media (max-width: 768px) {
+  .filter-sidebar-column {
+    align-self: auto;
+  }
+
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
   .filter-sidebar {
+    position: static;
+    top: auto;
+    max-height: none;
+    overflow: visible;
     margin-bottom: 32px;
   }
 
