@@ -76,12 +76,22 @@ router.post("/loginAdmin", async (req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(password, admin.Mat_khau);
+    const storedPassword = String(admin.Mat_khau || "");
+    const isBcryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$");
+
+    const isMatch = isBcryptHash
+      ? await bcrypt.compare(password, storedPassword)
+      : password === storedPassword;
 
     if (!isMatch) {
       return res.status(400).json({
         message: "Sai mật khẩu"
       });
+    }
+
+    if (!isBcryptHash) {
+      admin.Mat_khau = await bcrypt.hash(password, 10);
+      await admin.save();
     }
 
     const token = jwt.sign(
@@ -104,6 +114,44 @@ router.post("/loginAdmin", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+router.patch("/admins/:id/change-password", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới" });
+    }
+
+    let admin = await Admin.findOne({ Ma_quan_tri_vien: id });
+    if (!admin) {
+      admin = await Admin.findById(id);
+    }
+
+    if (!admin) {
+      return res.status(404).json({ message: "Quản trị viên không tồn tại" });
+    }
+
+    const storedPassword = String(admin.Mat_khau || "");
+    const isBcryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$");
+
+    const isCurrentPasswordCorrect = isBcryptHash
+      ? await bcrypt.compare(currentPassword, storedPassword)
+      : currentPassword === storedPassword;
+
+    if (!isCurrentPasswordCorrect) {
+      return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
+    }
+
+    admin.Mat_khau = await bcrypt.hash(newPassword, 10);
+    await admin.save();
+
+    return res.json({ message: "Đổi mật khẩu thành công" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
   }
 });
 

@@ -11,8 +11,8 @@
     <div class="tab" [class.active]="activeTab === 'Tất cả'" (click)="filterOrdersByTab('Tất cả')">
       Tất cả <span>{{ allOrders.length }}</span>
     </div>
-    <div class="tab" [class.active]="activeTab === 'Chờ xác nhận'" (click)="filterOrdersByTab('Chờ xác nhận')">
-      Chờ xác nhận <span>{{ getOrderCountByStatus('Chờ duyệt') }}</span>
+    <div class="tab" [class.active]="activeTab === 'Chờ duyệt'" (click)="filterOrdersByTab('Chờ xác nhận')">
+      Chờ duyệt <span>{{ getOrderCountByStatus('Chờ duyệt') }}</span>
     </div>
     <div class="tab" [class.active]="activeTab === 'Chờ giao hàng'" (click)="filterOrdersByTab('Chờ giao hàng')">
       Chờ giao hàng <span>{{ getOrderCountByStatus('Chờ giao hàng') }}</span>
@@ -37,6 +37,8 @@
     <input
       type="text"
       class="form-control"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange($event)"
       placeholder="Tìm kiếm đơn hàng của bạn"
     />
   </div>
@@ -57,7 +59,7 @@
     </div>
 
     <!-- Product item -->
-    <div class="order-product" *ngFor="let item of orderView.items; trackBy: trackByOrderItem">
+    <div class="order-product" *ngFor="let item of getVisibleItems(orderView); trackBy: trackByOrderItem">
       <div class="thumb">
         <img [src]="item.product?.Hinh_anh?.[0] || ''" [alt]="item.product?.Ten_san_pham || 'product'" />
       </div>
@@ -73,8 +75,11 @@
     </div>
 
     <!-- Collapse -->
-    <div class="text-center collapse-toggle" *ngIf="orderView.items.length > 2">
-      Thu gọn <i class="bi bi-chevron-up"></i>
+    <div class="text-center collapse-toggle"
+      *ngIf="hasHiddenItems(orderView)"
+      (click)="toggleItems(orderView, $event)">
+      {{ isExpanded(orderView) ? 'Thu gọn' : 'Mở rộng' }}
+      <i class="bi" [ngClass]="isExpanded(orderView) ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
     </div>
 
     <!-- Footer -->
@@ -85,16 +90,26 @@
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary-custom"
-          [class.disabled]="!canReviewOrder(orderView)"
-          [attr.title]="canReviewOrder(orderView) ? 'Đánh giá đơn hàng' : 'Chỉ đánh giá trong 7 ngày sau khi hoàn thành'"
-          (click)="openReviewModal(orderView, $event)">
-          Đánh giá
-        </button>
-        <button class="btn btn-outline-custom"
-          (click)="$event.stopPropagation()">
-          Trả hàng / hoàn tiền
-        </button>
+        <ng-container *ngIf="isPendingOrder(orderView); else nonPendingActions">
+          <button class="btn btn-outline-custom"
+            (click)="cancelOrder(orderView, $event)">
+            Huỷ đơn
+          </button>
+        </ng-container>
+        <ng-template #nonPendingActions>
+          <button *ngIf="isDeliveredOrder(orderView)"
+            class="btn btn-primary-custom"
+            (click)="confirmReceived(orderView, $event)">
+            Đã nhận hàng
+          </button>
+          <button *ngIf="isCompletedOrder(orderView)"
+            class="btn btn-primary-custom"
+            [class.disabled]="!canReviewOrder(orderView)"
+            [attr.title]="canReviewOrder(orderView) ? 'Đánh giá đơn hàng' : 'Chỉ đánh giá trong 7 ngày sau khi hoàn thành'"
+            (click)="openReviewModal(orderView, $event)">
+            Đánh giá
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>

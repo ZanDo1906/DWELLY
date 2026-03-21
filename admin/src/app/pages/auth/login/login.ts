@@ -50,29 +50,27 @@ export class Login {
     const email = String(this.loginForm.value.email || '').trim().toLowerCase();
     const password = String(this.loginForm.value.password || '').trim();
 
+    console.log('Login form values:', { email, password });
+
     this.adminService.login({ email, password }).subscribe({
       next: (res: any) => {
-        const adminPayload = {
-          Ma_quan_tri_vien: res?.admin?.maAdmin || '',
-          Ho_ten: res?.admin?.fullName || 'Admin',
-          Email: res?.admin?.email || '',
-          id: res?.admin?.id || '',
-          Anh_dai_dien: res?.admin?.avatar || '',
-        };
-
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('adminInfo', JSON.stringify(adminPayload));
-        localStorage.setItem('admin', JSON.stringify(adminPayload));
-        localStorage.setItem('adminName', adminPayload.Ho_ten);
-        localStorage.setItem('adminEmail', adminPayload.Email);
-        localStorage.setItem('adminAvatar', adminPayload.Anh_dai_dien || '');
-        localStorage.setItem('adminId', adminPayload.Ma_quan_tri_vien || adminPayload.id);
-        
+        console.log('Login success:', res);
+        this.adminService.saveLoginData(res);
         this.router.navigate(['/dashboard']);
         window.dispatchEvent(new Event('admin-login'));
       },
-      error: (err) => {
-        this.loginError = err.error?.message || 'Đăng nhập thất bại';
+      error: (err: any) => {
+        console.error('Login error caught in component:', err);
+        // Check error.message first (from backend response), then fallbacks
+        if (err?.error?.message) {
+          this.loginError = err.error.message;
+        } else if (err?.message && !err?.message?.includes('Http failure')) {
+          this.loginError = err.message;
+        } else if (err?.statusText) {
+          this.loginError = `${err.statusText}: Vui lòng thử lại`;
+        } else {
+          this.loginError = 'Đăng nhập thất bại';
+        }
       }
     });
   }

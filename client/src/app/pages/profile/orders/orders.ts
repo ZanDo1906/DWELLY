@@ -36,6 +36,8 @@ interface OrderView {
 export class Orders implements OnInit {
   orders: OrderView[] = [];
   allOrders: OrderView[] = []; // Store all orders
+  expandedOrderIds: Set<string> = new Set();
+  searchQuery = '';
   currentCustomerId: string = '';
   isLoading = false;
   errorMessage = '';
@@ -70,38 +72,72 @@ export class Orders implements OnInit {
 
   filterOrdersByTab(tabName: string): void {
     this.activeTab = tabName;
-    
-    switch(tabName) {
+
+    this.applyFilters();
+  }
+
+  onSearchChange(value: string): void {
+    this.searchQuery = value;
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    const byTab = this.filterByActiveTab(this.allOrders);
+    this.orders = this.filterBySearch(byTab);
+  }
+
+  private filterByActiveTab(source: OrderView[]): OrderView[] {
+    switch (this.activeTab) {
       case 'Tất cả':
-        this.orders = [...this.allOrders];
-        break;
+        return [...source];
       case 'Chờ xác nhận':
-        this.orders = this.allOrders.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Chờ duyệt');
-        break;
+        return source.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Chờ duyệt');
       case 'Chờ giao hàng':
-        this.orders = this.allOrders.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Chờ giao hàng');
-        break;
+        return source.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Chờ giao hàng');
       case 'Đang giao hàng':
-        this.orders = this.allOrders.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Đang giao');
-        break;
+        return source.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Đang giao');
       case 'Đã giao hàng':
-        this.orders = this.allOrders.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Đã giao');
-        break;
+        return source.filter(o => this.normalizeOrderStatus(o.order.Trang_thai) === 'Đã giao');
       case 'Hoàn thành':
-        this.orders = this.allOrders.filter(o => {
+        return source.filter(o => {
           const status = this.normalizeOrderStatus(o.order.Trang_thai);
           return status === 'Hoàn thành';
         });
-        break;
       case 'Đã hủy':
-        this.orders = this.allOrders.filter(o => {
+        return source.filter(o => {
           const status = this.normalizeOrderStatus(o.order.Trang_thai);
           return status === 'Đã hủy' || status === 'Bị từ chối';
         });
-        break;
       default:
-        this.orders = [...this.allOrders];
+        return [...source];
     }
+  }
+
+  private filterBySearch(source: OrderView[]): OrderView[] {
+    const query = this.normalizeSearchText(this.searchQuery);
+    if (!query) {
+      return source;
+    }
+
+    return source.filter((orderView) => {
+      const fields: string[] = [
+        orderView.order.Ma_don_mua,
+        this.normalizeOrderStatus(orderView.order.Trang_thai),
+        ...orderView.items.map((item) => item.product?.Ten_san_pham || ''),
+        ...orderView.items.map((item) => item.detail.Ma_san_pham || ''),
+      ];
+
+      const haystack = this.normalizeSearchText(fields.join(' '));
+      return haystack.includes(query);
+    });
+  }
+
+  private normalizeSearchText(value: string): string {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
   }
 
   getOrderData(): void {
@@ -125,7 +161,7 @@ export class Orders implements OnInit {
           products,
           categories
         );
-        this.orders = [...this.allOrders]; // Initialize with all orders
+        this.applyFilters();
         this.isLoading = false;
       },
       error: (error) => {
@@ -189,9 +225,99 @@ export class Orders implements OnInit {
     return item.detail.Ma_chi_tiet;
   }
 
+  getVisibleItems(orderView: OrderView): OrderProductView[] {
+    const isExpanded = this.expandedOrderIds.has(orderView.order.Ma_don_mua);
+    if (isExpanded) {
+      return orderView.items;
+    }
+
+    return orderView.items.slice(0, 2);
+  }
+
+  hasHiddenItems(orderView: OrderView): boolean {
+    return orderView.items.length > 2;
+  }
+
+  isExpanded(orderView: OrderView): boolean {
+    return this.expandedOrderIds.has(orderView.order.Ma_don_mua);
+  }
+
+  toggleItems(orderView: OrderView, event: MouseEvent): void {
+    event.stopPropagation();
+    const orderId = orderView.order.Ma_don_mua;
+
+    if (this.expandedOrderIds.has(orderId)) {
+      this.expandedOrderIds.delete(orderId);
+      return;
+    }
+
+    this.expandedOrderIds.add(orderId);
+  }
+
   goToOrderDetail(orderId: string): void {
     localStorage.setItem('orderId', orderId);
     this.router.navigate(['/user-layout/order-detail']);
+  }
+
+  isPendingOrder(orderView: OrderView): boolean {
+    return this.normalizeOrderStatus(orderView.order.Trang_thai) === 'Chờ duyệt';
+  }
+
+  isDeliveredOrder(orderView: OrderView): boolean {
+    const status = this.normalizeOrderStatus(orderView.order.Trang_thai);
+    return status === 'Đã giao' || status === 'Đã giao hàng';
+  }
+
+  isCompletedOrder(orderView: OrderView): boolean {
+    return this.normalizeOrderStatus(orderView.order.Trang_thai) === 'Hoàn thành';
+  }
+
+  cancelOrder(orderView: OrderView, event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (!this.isPendingOrder(orderView)) {
+      return;
+    }
+
+    const confirmed = window.confirm('Bạn có chắc muốn huỷ đơn hàng này?');
+    if (!confirmed) {
+      return;
+    }
+
+    this.orderService.updateOrderStatus(orderView.order.Ma_don_mua, 'Hủy đơn').subscribe({
+      next: () => {
+        orderView.order.Trang_thai = 'Đã hủy';
+        this.allOrders = [...this.allOrders];
+        this.filterOrdersByTab(this.activeTab);
+      },
+      error: (error) => {
+        alert(error?.message || 'Không thể huỷ đơn hàng. Vui lòng thử lại.');
+      },
+    });
+  }
+
+  confirmReceived(orderView: OrderView, event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (!this.isDeliveredOrder(orderView)) {
+      return;
+    }
+
+    const confirmed = window.confirm('Xác nhận bạn đã nhận được đơn hàng này?');
+    if (!confirmed) {
+      return;
+    }
+
+    this.orderService.updateOrderStatus(orderView.order.Ma_don_mua, 'Hoàn thành').subscribe({
+      next: () => {
+        orderView.order.Trang_thai = 'Hoàn thành';
+        this.allOrders = [...this.allOrders];
+        this.filterOrdersByTab(this.activeTab);
+      },
+      error: (error) => {
+        alert(error?.message || 'Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại.');
+      },
+    });
   }
 
   canReviewOrder(orderView: OrderView): boolean {

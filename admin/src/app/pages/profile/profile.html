@@ -5,14 +5,18 @@
 
         <div class="account-page">
 
-          <div class="account-card">
+          <h2 class="page-title">Tài khoản cá nhân</h2>
+
+          <div class="account-card" *ngIf="adminInfo">
             <!-- TOP INFO -->
             <div class="account-top">
               <div class="user-info">
-                <div class="avatar"></div>
+                <div class="avatar-wrapper">
+                  <img class="avatar" [src]="getAdminAvatarUrl()" alt="Admin Avatar" (error)="onImageError($event)">
+                </div>
                 <div>
-                  <div class="user-name">{{ adminInfo?.Ho_va_ten || 'Admin' }}</div>
-                  <div class="user-email">{{ adminInfo?.Email || 'admin@dwelly.com' }}</div>
+                  <div class="user-name">{{ adminInfo.Ho_va_ten || 'Admin' }}</div>
+                  <div class="user-email">{{ adminInfo.Email || 'admin@dwelly.com' }}</div>
                 </div>
               </div>
             </div>
@@ -21,17 +25,23 @@
             <div class="account-form">
               <div class="form-group full">
                 <label>Họ tên</label>
-                <input type="text" [value]="adminInfo?.Ho_va_ten || ''" disabled />
+                <div class="input-wrapper">
+                  <input type="text" [value]="adminInfo.Ho_va_ten || ''" disabled />
+                </div>
               </div>
 
               <div class="form-group">
                 <label>Số điện thoại</label>
-                <input type="text" [value]="adminInfo?.So_dien_thoai || ''" disabled />
+                <div class="input-wrapper">
+                  <input type="text" [value]="adminInfo.So_dien_thoai || ''" disabled />
+                </div>
               </div>
 
               <div class="form-group">
                 <label>Email</label>
-                <input type="email" [value]="adminInfo?.Email || ''" disabled />
+                <div class="input-wrapper">
+                  <input type="email" [value]="adminInfo.Email || ''" disabled />
+                </div>
               </div>
 
               <div class="form-group full">
@@ -40,7 +50,11 @@
                   <input [value]="password" [type]="showPassword ? 'text' : 'password'" disabled />
                   <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()"></i>
                 </div>
-                <a class="change-password" routerLink="/reset-password">Thay đổi mật khẩu</a>
+                <a class="change-password"
+                  data-bs-toggle="modal"
+                  data-bs-target="#changePasswordModal">
+                  Thay đổi mật khẩu
+                </a>
               </div>
             </div>
 
@@ -52,3 +66,60 @@
     </div>
   </div>
 </section>
+
+<app-modal
+  modalId="changePasswordModal"
+  title="Thay đổi mật khẩu"
+  [showHeader]="true"
+  [showTitleAndLine]="true"
+  [showCloseButton]="true">
+  <form (ngSubmit)="onChangePasswordSubmit()" class="change-password-form">
+    <div class="form-group">
+      <label>Mật khẩu hiện tại <span class="required">*</span></label>
+      <div class="input-wrapper">
+        <input
+          [type]="showCurrentPassword ? 'text' : 'password'"
+          [(ngModel)]="currentPassword"
+          name="currentPassword"
+          placeholder="Nhập mật khẩu hiện tại" />
+        <i class="bi"
+          [ngClass]="showCurrentPassword ? 'bi-eye' : 'bi-eye-slash'"
+          (click)="showCurrentPassword = !showCurrentPassword"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Mật khẩu mới <span class="required">*</span></label>
+      <div class="input-wrapper">
+        <input
+          [type]="showNewPassword ? 'text' : 'password'"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+          placeholder="Nhập mật khẩu mới" />
+        <i class="bi"
+          [ngClass]="showNewPassword ? 'bi-eye' : 'bi-eye-slash'"
+          (click)="showNewPassword = !showNewPassword"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Xác nhận mật khẩu mới <span class="required">*</span></label>
+      <div class="input-wrapper">
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Nhập lại mật khẩu mới" />
+        <i class="bi"
+          [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"
+          (click)="showConfirmPassword = !showConfirmPassword"></i>
+      </div>
+    </div>
+
+    <div class="text-danger" *ngIf="formError">{{ formError }}</div>
+
+    <button type="submit" class="btn-save" [disabled]="isChangingPassword">
+      {{ isChangingPassword ? 'Đang xử lý...' : 'Lưu thay đổi' }}
+    </button>
+  </form>
+</app-modal>

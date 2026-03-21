@@ -86,4 +86,43 @@ export class Sidebar implements OnInit {
     window.dispatchEvent(new Event('user-logout'));
     this.router.navigateByUrl('/');
   }
+
+  getMemberBadgeLabel(): string {
+    const memberCode = (this.userInfo?.Ma_phan_hang || '').toUpperCase();
+    const normalizedCode = memberCode.replace(/[\s_-]+/g, '');
+
+    if (normalizedCode === 'DONG') return 'Đồng';
+    if (normalizedCode === 'BAC') return 'Bạc';
+    if (normalizedCode === 'VANG') return 'Vàng';
+    if (normalizedCode === 'KIMCUONG') return 'Kim cương';
+
+    if (normalizedCode === 'PH01') return 'Đồng';
+    if (normalizedCode === 'PH02') return 'Bạc';
+    if (normalizedCode === 'PH03') return 'Vàng';
+    if (normalizedCode === 'PH04') return 'Kim cương';
+
+    return 'Thành viên';
+  }
+
+  getMemberBadgeIcon(): string {
+    const label = this.getMemberBadgeLabel();
+
+    if (label === 'Kim cương') return 'bi-gem';
+    if (label === 'Vàng') return 'bi-award';
+    if (label === 'Bạc') return 'bi-shield-check';
+    if (label === 'Đồng') return 'bi-patch-check';
+
+    return 'bi-person-badge';
+  }
+
+  getMemberBadgeClass(): string {
+    const label = this.getMemberBadgeLabel();
+
+    if (label === 'Kim cương') return 'badge-diamond';
+    if (label === 'Vàng') return 'badge-gold';
+    if (label === 'Bạc') return 'badge-silver';
+    if (label === 'Đồng') return 'badge-bronze';
+
+    return 'badge-default';
+  }
 }

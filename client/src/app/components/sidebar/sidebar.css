@@ -37,13 +37,51 @@
   }
 
   .member-badge {
-    display: inline-block;
-    padding: 6px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
     border-radius: 20px;
+    border: 1px solid transparent;
     background-color: #ffffff;
     color: #6c5234;
     font-weight: 600;
     font-size: 12px;
+    line-height: 1;
+
+    i {
+      font-size: 13px;
+    }
+
+    /* &.badge-bronze {
+      background: #f8efe8;
+      color: #8b5a2b;
+      border-color: #d2a679;
+    }
+
+    &.badge-silver {
+      background: #f2f4f7;
+      color: #5c6670;
+      border-color: #c7cfd9;
+    }
+
+    &.badge-gold {
+      background: #fff7dc;
+      color: #9a6b00;
+      border-color: #e7c86a;
+    }
+
+    &.badge-diamond {
+      background: #edf9ff;
+      color: #0f6b8f;
+      border-color: #8ccfe8;
+    }
+
+    &.badge-default {
+      background: #ffffff;
+      color: #6c5234;
+      border-color: #d4c4b0;
+    } */
   }
 }
 
