@@ -167,7 +167,12 @@ export class BlogForm implements OnInit, AfterViewInit {
 
   backToEdit(): void {
     if (this.blog) {
-      this.router.navigate(['/blog', this.blog.Ma_bai_viet]);
+      const isEditMode = (this.blog as any).isEditMode;
+      if (isEditMode) {
+        this.router.navigate(['/blog', this.blog.Ma_bai_viet], { queryParams: { restore: '1' } });
+      } else {
+        this.router.navigate(['/blog'], { queryParams: { restore: this.blog.Ma_bai_viet } });
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Modal } from '../../../components/modal/modal';
+import { ReviewModa } from '../reviews/review-moda/review-moda';
 import { Order as OrderService } from '../../../services/order';
 import { iOrder } from '../../../interfaces/order';
 import { Product } from '../../../services/product';
@@ -10,6 +11,8 @@ import { Category } from '../../../services/category';
 import { iOrderDetail } from '../../../interfaces/order_details';
 import { iProduct } from '../../../interfaces/product';
 import { iCategory } from '../../../interfaces/category';
+import { Review } from '../../../services/review';
+import { iReview } from '../../../interfaces/review';
 import { forkJoin } from 'rxjs';
 
 type OrderWithDetails = iOrder & { details?: iOrderDetail[] };
@@ -25,11 +28,13 @@ interface OrderView {
   order: iOrder;
   items: OrderProductView[];
   totalItems: number;
+  hasAllReviewed?: boolean;
+  hasAnyReview?: boolean;
 }
 
 @Component({
   selector: 'app-orders',
-  imports: [CommonModule, FormsModule, Modal],
+  imports: [CommonModule, FormsModule, Modal, ReviewModa],
   templateUrl: './orders.html',
   styleUrl: './orders.css',
 })
@@ -46,8 +51,10 @@ export class Orders implements OnInit {
   currentReviewOrder: OrderView | null = null;
   currentSelectedProduct: OrderProductView | null = null;
   reviewedProductIds: Set<string> = new Set();
-  modalView: 'list' | 'form' = 'list';
+  modalView: 'list' | 'form' | 'view' = 'list';
   isSubmittingReview = false;
+  customerReviews: iReview[] = [];
+  viewReviewItems: any[] = [];
 
   reviewRating = 5;
   hoveringRating = 0;
@@ -58,6 +65,7 @@ export class Orders implements OnInit {
     private orderService: OrderService,
     private productService: Product,
     private categoryService: Category,
+    private reviewService: Review,
     private router: Router
   ) {}
 
@@ -154,8 +162,10 @@ export class Orders implements OnInit {
       orders: this.orderService.getOrderDataByUserId(this.currentCustomerId),
       products: this.productService.getProductData(),
       categories: this.categoryService.getCategoryData(),
+      reviews: this.reviewService.getReviewData(),
     }).subscribe({
-      next: ({ orders, products, categories }) => {
+      next: ({ orders, products, categories, reviews }) => {
+        this.customerReviews = (reviews as iReview[]).filter(r => r.Ma_khach_hang === this.currentCustomerId);
         this.allOrders = this.mapOrdersForCurrentCustomer(
           orders as OrderWithDetails[],
           products,
@@ -194,6 +204,10 @@ export class Orders implements OnInit {
           };
         });
 
+      const orderReviews = this.customerReviews.filter(r => r.Ma_don_mua === order.Ma_don_mua);
+      const hasAllReviewed = items.length > 0 && items.every(item => orderReviews.some(r => r.Ma_san_pham === item.detail.Ma_san_pham));
+      const hasAnyReview = orderReviews.length > 0;
+
       return {
         order: {
           ...order,
@@ -201,6 +215,8 @@ export class Orders implements OnInit {
         },
         items,
         totalItems: items.reduce((sum, item) => sum + item.detail.So_luong, 0),
+        hasAllReviewed,
+        hasAnyReview
       };
     });
   }
@@ -338,6 +354,43 @@ export class Orders implements OnInit {
     return diffMs >= 0 && diffMs <= sevenDaysMs;
   }
 
+  openViewReviewModal(orderView: OrderView, event: MouseEvent): void {
+    event.stopPropagation();
+    
+    const reviewMap = new Map(
+      this.customerReviews
+        .filter(r => r.Ma_don_mua === orderView.order.Ma_don_mua)
+        .map(r => [r.Ma_san_pham, r] as const)
+    );
+
+    this.viewReviewItems = orderView.items
+      .map(item => {
+        const review = reviewMap.get(item.detail.Ma_san_pham);
+        return review ? { item, review } : null;
+      })
+      .filter((entry) => entry !== null);
+
+    if (this.viewReviewItems.length === 0) {
+      alert('Chưa có đánh giá nào để xem lại');
+      return;
+    }
+
+    this.currentReviewOrder = orderView;
+    this.currentSelectedProduct = null;
+    this.modalView = 'view';
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('reviewModal');
+      if (modalEl) {
+        const bootstrapRef = (window as any).bootstrap;
+        if (bootstrapRef?.Modal) {
+          const modal = new bootstrapRef.Modal(modalEl);
+          modal.show();
+        }
+      }
+    }, 0);
+  }
+
   openReviewModal(orderView: OrderView, event: MouseEvent): void {
     event.stopPropagation();
 
@@ -348,8 +401,19 @@ export class Orders implements OnInit {
 
     this.currentReviewOrder = orderView;
     this.currentSelectedProduct = null;
+    this.viewReviewItems = [];
     this.modalView = 'list';
     this.reviewedProductIds.clear();
+    
+    // Đánh dấu các sản phẩm đã được đánh giá từ trước
+    this.reviewService.getReviewData().toPromise().then(reviews => {
+      reviews?.forEach(review => {
+        if (review.Ma_don_mua === orderView.order.Ma_don_mua && review.Ma_khach_hang === this.currentCustomerId) {
+          this.reviewedProductIds.add(review.Ma_san_pham);
+        }
+      });
+    });
+
     this.reviewRating = 5;
     this.hoveringRating = 0;
     this.reviewImages = [];
@@ -454,27 +518,43 @@ export class Orders implements OnInit {
 
     this.isSubmittingReview = true;
 
-    console.log('Submit review:', {
-      orderId: this.currentReviewOrder?.order.Ma_don_mua,
-      productId: this.currentSelectedProduct.detail.Ma_san_pham,
-      rating: this.reviewRating,
-      content: this.reviewContent,
-    });
+    const review: iReview = {
+      Ma_danh_gia: '', // Will be generated by server
+      Ma_khach_hang: this.currentCustomerId,
+      Ma_san_pham: this.currentSelectedProduct.detail.Ma_san_pham,
+      Ma_don_mua: this.currentReviewOrder!.order.Ma_don_mua,
+      Diem_danh_gia: this.reviewRating,
+      Noi_dung: this.reviewContent,
+      Hinh_anh: this.reviewImages.filter(img => img !== '')
+        .map(img => typeof img === 'string' ? img : ''),
+      Thoi_gian_gui: new Date(),
+    };
 
-    const reviewedId = this.currentSelectedProduct.detail.Ma_san_pham;
-    this.reviewedProductIds.add(reviewedId);
-    this.isSubmittingReview = false;
+    this.reviewService.createReview(review).toPromise()
+      .then(() => {
+        const reviewedId = this.currentSelectedProduct!.detail.Ma_san_pham;
+        this.reviewedProductIds.add(reviewedId);
+        alert('Cảm ơn bạn đã đánh giá sản phẩm này!');
 
-    const remainingItems = (this.currentReviewOrder?.items || []).filter(
-      (item) => !this.reviewedProductIds.has(item.detail.Ma_san_pham),
-    );
+        const remainingItems = (this.currentReviewOrder?.items || []).filter(
+          (item) => !this.reviewedProductIds.has(item.detail.Ma_san_pham)
+        );
 
-    if (remainingItems.length > 0) {
-      this.backToProductList();
-      return;
-    }
-
-    this.closeReviewModal();
+        if (remainingItems.length > 0) {
+          this.backToProductList();
+        } else {
+          // If all items are reviewed, update the main list state so the button switches to Xem lại đánh giá
+          this.getOrderData(); 
+          this.closeReviewModal();
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting review:', error);
+        alert('Lỗi khi gửi đánh giá. Vui lòng thử lại.');
+      })
+      .finally(() => {
+        this.isSubmittingReview = false;
+      });
   }
 
   closeReviewModal(): void {
@@ -485,6 +565,7 @@ export class Orders implements OnInit {
     }
 
     this.currentSelectedProduct = null;
+    this.viewReviewItems = [];
     this.modalView = 'list';
     this.reviewedProductIds.clear();
     this.reviewRating = 5;

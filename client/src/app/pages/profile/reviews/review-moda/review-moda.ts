@@ -9,7 +9,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './review-moda.css',
 })
 export class ReviewModa {
-  @Input() orderInfo: any = null; // Array of order details with products
+  @Input() imgSrc: string = '';
+  @Input() productName: string = '';
+  @Input() quantity: number = 0;
   @Input() reviewRating = 5;
   @Input() hoveringRating = 0;
   @Input() reviewImages: (string | File)[] = [];

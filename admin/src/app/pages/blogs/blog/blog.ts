@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Blog as BlogService } from '../../../services/blog';
+import { Admin as AdminService } from '../../../services/admin';
 import { iBlog } from '../../../interfaces/blog';
 
 interface TextBlock {
@@ -35,18 +36,67 @@ export class Blog implements OnInit {
   tomTat = '';
   hinhAnh = '';
   trangThai = true;
+  adminId = '';
+  adminName = '';
 
   blocks: ContentBlock[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private adminService: AdminService
   ) {}
 
   ngOnInit(): void {
+    this.adminId = localStorage.getItem('adminId') || '';
+    this.adminName = localStorage.getItem('adminName') || 'Admin';
+
     this.blogId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.blogId;
+
+    const restoreParam = this.route.snapshot.queryParamMap.get('restore');
+
+    if (restoreParam) {
+      // restoreParam có thể là '1' (nếu là bài viết cũ) hoặc 'BVxxx' (nếu là bài viết mới)
+      const previewId = restoreParam === '1' ? this.blogId : restoreParam;
+      const previewRaw = sessionStorage.getItem(`blog_preview_${previewId}`);
+      if (previewRaw) {
+        try {
+          const blockData = JSON.parse(previewRaw);
+          this.maBaiViet = blockData.Ma_bai_viet;
+          this.tieuDe = blockData.Tieu_de;
+          this.tomTat = blockData.Tom_tat;
+          this.hinhAnh = blockData.Hinh_anh;
+          this.trangThai = blockData.Trang_thai;
+          this.blocks = blockData.Noi_dung || [];
+
+          if (blockData.Ma_quan_tri_vien) {
+            this.adminId = blockData.Ma_quan_tri_vien;
+            if (this.adminId === localStorage.getItem('adminId')) {
+              this.adminName = localStorage.getItem('adminName') || '';
+            } else {
+              this.adminName = 'Đang tải tên...';
+              this.adminService.getAdminById(this.adminId).subscribe({
+                next: (adminInfo) => {
+                  this.adminName = adminInfo.Ho_va_ten || adminInfo.Email || '';
+                },
+                error: (err) => {
+                  console.error('Không thể lấy thông tin Admin:', err);
+                  this.adminName = '';
+                }
+              });
+            }
+          }
+          
+          // Sau khi restore, có thể xóa session data đi nếu không cần dùng nữa
+          // sessionStorage.removeItem(`blog_preview_${previewId}`);
+          return; // Skip loading from backend
+        } catch (e) {
+          console.error("Lỗi parse preview data:", e);
+        }
+      }
+    }
 
     if (this.isEditMode && this.blogId) {
       this.loadBlogData(this.blogId);
@@ -64,6 +114,31 @@ export class Blog implements OnInit {
         this.hinhAnh = blog.Hinh_anh;
         this.trangThai = blog.Trang_thai;
         this.today = new Date(blog.Ngay_tao).toLocaleDateString('vi-VN');
+
+        // Phục hồi thông tin người tạo từ backend
+        const creator = (blog as any).Ma_quan_tri_vien;
+        if (creator && typeof creator === 'object') {
+          this.adminId = creator.Ma_quan_tri_vien || creator._id || '';
+          this.adminName = creator.Ho_va_ten || creator.fullName || '';
+        } else if (creator) {
+          this.adminId = creator as string;
+          
+          if (this.adminId === localStorage.getItem('adminId')) {
+            this.adminName = localStorage.getItem('adminName') || '';
+          } else {
+            this.adminName = 'Đang tải tên...';
+            // Gọi API để lấy tên người quản trị này
+            this.adminService.getAdminById(this.adminId).subscribe({
+              next: (adminInfo) => {
+                this.adminName = adminInfo.Ho_va_ten || adminInfo.Email || '';
+              },
+              error: (err) => {
+                console.error('Không thể lấy thông tin Admin:', err);
+                this.adminName = '';
+              }
+            });
+          }
+        }
         
         // Load Noi_dung blocks
         if (blog.Noi_dung) {
@@ -157,7 +232,7 @@ export class Blog implements OnInit {
       Noi_dung: this.blocks,
       Hinh_anh: this.hinhAnh,
       Trang_thai: this.trangThai,
-      Ma_quan_tri_vien: 'ADM001'
+      Ma_quan_tri_vien: this.adminId || 'ADM001'
     };
 
     if (this.isEditMode) {
@@ -202,7 +277,8 @@ export class Blog implements OnInit {
         Hinh_anh: this.hinhAnh,
         Trang_thai: this.trangThai,
         Ngay_tao: this.isEditMode && this.blogId ? new Date(this.today.split('/').reverse().join('-')).toISOString() : new Date().toISOString(),
-        Ma_quan_tri_vien: 'ADM001'
+        Ma_quan_tri_vien: this.adminId || 'ADM001',
+        isEditMode: this.isEditMode
       };
 
       sessionStorage.setItem(`blog_preview_${this.maBaiViet}`, JSON.stringify(previewData));

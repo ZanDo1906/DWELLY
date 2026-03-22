@@ -138,12 +138,21 @@ router.patch("/admins/:id/change-password", async (req, res) => {
     const storedPassword = String(admin.Mat_khau || "");
     const isBcryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$");
 
+    // Kiểm tra mật khẩu hiện tại có đúng không
     const isCurrentPasswordCorrect = isBcryptHash
       ? await bcrypt.compare(currentPassword, storedPassword)
       : currentPassword === storedPassword;
 
     if (!isCurrentPasswordCorrect) {
       return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
+    }
+
+    // Kiểm tra mật khẩu mới không được trùng với mật khẩu hiện tại
+    const isNewPasswordSame = isBcryptHash
+      ? await bcrypt.compare(newPassword, storedPassword)
+      : newPassword === storedPassword;
+    if (isNewPasswordSame) {
+      return res.status(400).json({ message: "Mật khẩu mới không được trùng với mật khẩu hiện tại" });
     }
 
     admin.Mat_khau = await bcrypt.hash(newPassword, 10);

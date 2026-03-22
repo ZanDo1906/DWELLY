@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Admin as AdminService } from '../../services/admin';
 import { iAdmin } from '../../interfaces/admin';
 import { Modal } from '../../components/modal/modal';
+import { ChangePassword } from './change-password/change-password';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, FormsModule, Modal],
+  imports: [CommonModule, FormsModule, Modal, ChangePassword],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })

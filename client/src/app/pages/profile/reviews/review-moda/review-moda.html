@@ -1,23 +1,12 @@
-<!-- Products Info (List of all products in the order) -->
-<div *ngIf="orderInfo" class="review-products-list">
-	<h6 class="mb-3">Sản phẩm đánh giá ({{ orderInfo?.length || 0 }} sản phẩm):</h6>
-	<div class="products-scroll">
-		<div *ngFor="let product of orderInfo" class="review-product-info-item">
-			<div class="review-product-image">
-				<img
-					[src]="product.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
-					alt="product"
-					class="img-thumbnail"
-				/>
-			</div>
-			<div class="review-product-text">
-				<p>
-					<strong>{{ product.product?.Ten_san_pham }}</strong>
-				</p>
-				<p>
-					<span>Số lượng: {{ product.So_luong }}</span>
-				</p>
-			</div>
+<!-- Single Product Info -->
+<div class="review-products-list">
+	<div class="review-product-info-item" style="background: none; padding: 0;">
+		<div class="review-product-image">
+			<img [src]="imgSrc || 'assets/images/placeholder.png'" [alt]="productName" class="img-thumbnail" />
+		</div>
+		<div class="review-product-text justify-content-center">
+			<p><strong>{{ productName }}</strong></p>
+			<p><span>Số lượng: {{ quantity }}</span></p>
 		</div>
 	</div>
 	<hr/>
@@ -79,8 +68,9 @@
 
 <!-- Modal Footer -->
 <div class="modal-footer">
+	<button class="btn btn-secondary" (click)="cancel.emit()">Quay lại</button>
 	<button 
-		class="btn-submit" 
+		class="btn btn-submit" 
 		(click)="submit.emit()"
 		[disabled]="isSubmitting">
 		{{ isSubmitting ? 'Đang gửi...' : 'Gửi đánh giá' }}

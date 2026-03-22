@@ -4,11 +4,7 @@
     <!-- User info -->
     <div class="user-info">
       <div class="d-flex gap-3 align-items-start mb-3">
-        <img
-          [src]="userInfo?.Anh_dai_dien || 'https://i.pravatar.cc/100'"
-          alt="avatar"
-          class="avatar"
-        />
+        <img [src]="userInfo?.Anh_dai_dien || 'https://i.pravatar.cc/100'" alt="avatar" class="avatar" />
         <div class="user-details flex-grow-1">
           <h6 class="mb-1 text-white">{{ userInfo?.Ho_va_ten }}</h6>
           <small class="text-light d-block">{{ userInfo?.Email }}</small>
@@ -34,10 +30,10 @@
         <i class="bi bi-receipt"></i>
         <span>Quản lý đơn hàng</span>
       </li>
-      <li class="menu-item" routerLink="/user-layout/returns" routerLinkActive="active">
+      <!-- <li class="menu-item" routerLink="/user-layout/returns" routerLinkActive="active">
         <i class="bi bi-arrow-repeat"></i>
         <span>Quản lý đổi trả</span>
-      </li>
+      </li> -->
       <li class="menu-item" routerLink="/user-layout/reviews" routerLinkActive="active">
         <i class="bi bi-star"></i>
         <span>Đánh giá đơn hàng</span>

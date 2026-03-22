@@ -461,3 +461,83 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* ===== REVIEW MODAL (VIEW MODE) ===== */
+.review-view-section {
+  padding: 8px 0;
+}
+
+.review-view-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.review-view-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fafafa;
+  padding: 12px;
+}
+
+.review-view-product {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-view-product img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.review-view-product h6 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.review-view-product p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.review-view-rating {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.review-view-rating i {
+  color: #f2b01e;
+  font-size: 16px;
+}
+
+.review-view-content {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.review-view-images {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.review-view-images img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}

@@ -44,7 +44,7 @@
 
             <div class="form-group">
               <label>Quản trị viên</label>
-              <input value="ADM001 – Nguyễn Văn A" disabled />
+              <input [value]="adminId + (adminName ? ' – ' + adminName : '')" disabled />
             </div>
           </div>
 
