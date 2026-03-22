@@ -33,6 +33,7 @@ export class BlogForm implements OnInit, AfterViewInit {
   allBlogs: Blog[] = [];
   isLoading = true;
   isCopied = false;
+  isPreviewMode = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,16 +42,41 @@ export class BlogForm implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadBlogs();
-    
-    // Subscribe to route params to reload blog when navigating between blog posts
-    this.route.paramMap.subscribe(params => {
-      const blogId = params.get('id');
-      if (blogId && this.allBlogs.length > 0) {
-        this.updateBlogContent(blogId);
-        window.scrollTo(0, 0);
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.isPreviewMode = queryParams.get('preview') === '1';
+
+      const blogId = this.route.snapshot.paramMap.get('id');
+      if (this.isPreviewMode && blogId && this.loadPreviewData(blogId)) {
+        this.isLoading = false;
+        return;
       }
+
+      this.loadBlogs();
+
+      this.route.paramMap.subscribe(params => {
+        const routeBlogId = params.get('id');
+        if (routeBlogId && this.allBlogs.length > 0) {
+          this.updateBlogContent(routeBlogId);
+          window.scrollTo(0, 0);
+        }
+      });
     });
+  }
+
+  private loadPreviewData(blogId: string): boolean {
+    const previewRaw = sessionStorage.getItem(`blog_preview_${blogId}`);
+    if (!previewRaw) {
+      return false;
+    }
+
+    try {
+      const previewBlog = JSON.parse(previewRaw) as Blog;
+      this.blog = previewBlog;
+      this.relatedBlogs = [];
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   ngAfterViewInit(): void {

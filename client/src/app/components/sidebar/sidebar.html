@@ -12,7 +12,10 @@
         <div class="user-details flex-grow-1">
           <h6 class="mb-1 text-white">{{ userInfo?.Ho_va_ten }}</h6>
           <small class="text-light d-block">{{ userInfo?.Email }}</small>
-          <div class="member-badge mt-2">Đồng</div>
+          <div class="member-badge mt-2" [ngClass]="getMemberBadgeClass()">
+            <i class="bi" [ngClass]="getMemberBadgeIcon()"></i>
+            <span>{{ getMemberBadgeLabel() }}</span>
+          </div>
         </div>
       </div>
     </div>

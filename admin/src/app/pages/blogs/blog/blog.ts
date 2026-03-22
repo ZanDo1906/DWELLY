@@ -194,9 +194,23 @@ export class Blog implements OnInit {
   // PREVIEW
   previewBlog() {
     if (this.maBaiViet) {
-      // Open blog-form in a new tab to preview
+      const previewData = {
+        Ma_bai_viet: this.maBaiViet,
+        Tieu_de: this.tieuDe,
+        Tom_tat: this.tomTat,
+        Noi_dung: this.blocks,
+        Hinh_anh: this.hinhAnh,
+        Trang_thai: this.trangThai,
+        Ngay_tao: this.isEditMode && this.blogId ? new Date(this.today.split('/').reverse().join('-')).toISOString() : new Date().toISOString(),
+        Ma_quan_tri_vien: 'ADM001'
+      };
+
+      sessionStorage.setItem(`blog_preview_${this.maBaiViet}`, JSON.stringify(previewData));
+
       const url = this.router.serializeUrl(
-        this.router.createUrlTree(['/blog-form', this.maBaiViet])
+        this.router.createUrlTree(['/blog-form', this.maBaiViet], {
+          queryParams: { preview: '1' }
+        })
       );
       window.open(url, '_blank');
     }

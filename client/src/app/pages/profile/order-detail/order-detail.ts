@@ -6,9 +6,11 @@ import { Order } from '../../../services/order';
 import { Client} from '../../../services/client';
 import { Order_Details } from '../../../services/order_details';
 import { Product } from '../../../services/product';
+import { Voucher } from '../../../services/voucher';
 import { Router } from '@angular/router';
 import { iOrder } from '../../../interfaces/order';
 import { iClient } from '../../../interfaces/client';
+import { iVoucher } from '../../../interfaces/voucher';
 
 @Component({
   selector: 'app-order-detail',
@@ -23,6 +25,7 @@ export class OrderDetail implements OnInit {
   userId: string = '';
   orderDetails: any[] = [];
   productInfo: any = null;
+  appliedVoucher: iVoucher | null = null;
   customerName = 'Khách hàng';
   customerPhone = 'Chưa có';
   customerAddress = 'Chưa có';
@@ -32,7 +35,8 @@ export class OrderDetail implements OnInit {
     private router: Router,
     private clientService: Client,
     private orderDetailsService: Order_Details,
-    private productService: Product
+    private productService: Product,
+    private voucherService: Voucher
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +66,8 @@ export class OrderDetail implements OnInit {
         if (this.orderInfo.Ma_don_mua) {
           this.loadOrderDetails(this.orderInfo.Ma_don_mua);
         }
+
+        this.loadVoucherInfo();
       },
       error: (err) => {
         console.error('Error loading order info:', err);
@@ -265,6 +271,52 @@ export class OrderDetail implements OnInit {
     }
 
     return '';
+  }
+
+  getShippingFee(): number {
+    return Number(this.orderInfo?.Phi_giao_hang ?? this.orderInfo?.Phi_van_chuyen ?? 0);
+  }
+
+  getVoucherDisplayCode(): string {
+    if (this.appliedVoucher?.Ma_so) {
+      return this.appliedVoucher.Ma_so;
+    }
+
+    return this.orderInfo?.Ma_khuyen_mai ? String(this.orderInfo.Ma_khuyen_mai) : 'Không áp dụng';
+  }
+
+  getVoucherDiscountAmount(): number {
+    if (!this.orderInfo?.Tong_tien || !this.appliedVoucher?.Phan_tram_giam) {
+      return 0;
+    }
+
+    const subtotal = Number(this.orderInfo.Tong_tien || 0);
+    return (subtotal * this.appliedVoucher.Phan_tram_giam) / 100;
+  }
+
+  getGrandTotal(): number {
+    const subtotal = Number(this.orderInfo?.Tong_tien || 0);
+    return subtotal + this.getShippingFee() - this.getVoucherDiscountAmount();
+  }
+
+  private loadVoucherInfo(): void {
+    if (!this.orderInfo?.Ma_khuyen_mai) {
+      this.appliedVoucher = null;
+      return;
+    }
+
+    this.voucherService.getVoucherData().subscribe({
+      next: (vouchers) => {
+        this.appliedVoucher = vouchers.find((voucher) =>
+          voucher.Ma_khuyen_mai === this.orderInfo.Ma_khuyen_mai ||
+          voucher.Ma_so === this.orderInfo.Ma_khuyen_mai
+        ) || null;
+      },
+      error: (err) => {
+        console.error('Error loading voucher info:', err);
+        this.appliedVoucher = null;
+      }
+    });
   }
 
   confirmReceived(): void {

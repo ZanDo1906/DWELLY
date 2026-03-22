@@ -20,13 +20,14 @@ const ORDER_STATUSES = new Set([
 
 const LEGACY_STATUS_MAP = {
     'Đã duyệt': 'Chờ giao hàng',
+    'Đã giao hàng': 'Đã giao',
     'Hủy đơn': 'Đã hủy',
     'Bị hủy': 'Đã hủy',
     'Trả hàng': 'Đã hủy',
 };
 
 const ALLOWED_STATUS_TRANSITIONS = {
-    'Chờ duyệt': ['Chờ giao hàng', 'Bị từ chối'],
+    'Chờ duyệt': ['Chờ giao hàng', 'Bị từ chối', 'Đã hủy'],
     'Chờ giao hàng': ['Đang giao', 'Đã hủy'],
     'Đang giao': ['Đã giao'],
     'Đã giao': ['Hoàn thành'],

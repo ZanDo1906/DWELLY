@@ -14,11 +14,12 @@
       
 
             <!-- BREADCRUMB -->
-      <div class="breadcrumb">
-        <a routerLink="/blog-list">Quản lý Blogs</a>
-        <span class="separator">/</span>
-        <span class="current">{{ isEditMode ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' }}</span>
-      </div>
+      <nav class="breadcrumb">
+        <ol>
+          <li><a routerLink="/blog-list">Quản lý Blogs</a></li>
+          <li>{{ isEditMode ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới' }}</li>
+        </ol>
+      </nav>
 
       
 

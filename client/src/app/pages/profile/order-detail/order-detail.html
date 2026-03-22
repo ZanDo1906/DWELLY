@@ -137,16 +137,25 @@
         </div>
         <div class="row-price">
           <span>Phí vận chuyển</span>
-          <span *ngIf="orderInfo.Phi_giao_hang">{{ orderInfo.Phi_giao_hang | number:'1.0-0' }} VND</span>
-          <span *ngIf="!orderInfo.Phi_giao_hang">Miễn phí</span>
+          <span *ngIf="getShippingFee() > 0">{{ getShippingFee() | number:'1.0-0' }} VND</span>
+          <span *ngIf="getShippingFee() === 0">Miễn phí</span>
         </div>
-
+        <div class="row-price">
+          <span>Mã khuyến mãi</span>
+          <span>{{ getVoucherDisplayCode() }}</span>
+        </div>
+        <div class="row-price">
+          <span>Giảm giá</span>
+          <span [class.discount]="getVoucherDiscountAmount() > 0">
+            {{ getVoucherDiscountAmount() > 0 ? '-' + (getVoucherDiscountAmount() | number:'1.0-0') : '0' }} VND
+          </span>
+        </div>
 
         <hr>
 
         <div class="row-price total">
           <strong>Tổng thanh toán</strong>
-          <strong>{{ (orderInfo.Tong_tien + (orderInfo.Phi_giao_hang || 0)) | number:'1.0-0' }} VND</strong>
+          <strong>{{ getGrandTotal() | number:'1.0-0' }} VND</strong>
         </div>
 
          <!-- Actions -->
@@ -155,7 +164,7 @@
         <!-- <button class="btn btn-outline-action">
           Yêu cầu trả hàng/Hoàn tiền
         </button> -->
-        <button class="btn btn-outline-action">Liên hệ</button>
+        <button class="btn btn-outline-action" routerLink="/support" type="button">Liên hệ</button>
       </div>
       </div>
     </div>
