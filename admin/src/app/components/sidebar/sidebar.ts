@@ -43,6 +43,11 @@ export class Sidebar implements OnInit {
         this.currentUrl.includes('/add-order');
   }
 
+  isProductsActive(): boolean {
+    return this.currentUrl.includes('/product-list') ||
+      this.currentUrl.includes('/product-form');
+  }
+
   @HostListener('window:admin-login')
   onAdminLogin(): void {
     this.refreshUserInfo();

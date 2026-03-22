@@ -69,6 +69,8 @@ export class ProductForm implements OnInit {
     Ma_khong_gian: '',
     Trang_thai: true
   };
+  private originalProduct: iProduct | null = null;
+  private originalImages: (string | null)[] = [null, null, null, null];
   selectedFiles: File[] = [];
   isEditMode: boolean = false;
   images: (string | null)[] = [null, null, null, null];
@@ -126,7 +128,7 @@ export class ProductForm implements OnInit {
     }
 
     if (action === 'cancel-form') {
-      this.resetForm();
+      this.restoreFormState();
       return;
     }
 
@@ -153,7 +155,8 @@ export class ProductForm implements OnInit {
         this.images = this.product.Hinh_anh.length
           ? [...this.product.Hinh_anh]
           : [null, null, null, null];
-          this.checkAndAddNewPlaceholder();
+        this.checkAndAddNewPlaceholder();
+        this.syncOriginalState();
       },
       error: (err) => console.error('Không tìm thấy sản phẩm', err)
     });
@@ -944,7 +947,10 @@ removeImage(index: number, event: Event): void {
     return allTextEmpty && numberNotChanged && noImage;
   }
 
-  cancelForm(): void {
+  cancelForm(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+
     if (this.isFormEmpty()) {
       alert('Bạn chưa nhập nội dung nào!');
       return;
@@ -963,7 +969,13 @@ removeImage(index: number, event: Event): void {
     alert('Đã lưu nháp thành công!');
   }
 
-  requestSaveProduct(): void {
+  requestSaveProduct(event?: Event): void {
+    if (this.showActionConfirm) {
+      return;
+    }
+
+    event?.preventDefault();
+    event?.stopPropagation();
     this.openActionConfirm('save-product');
   }
 
@@ -1053,24 +1065,48 @@ removeImage(index: number, event: Event): void {
     }
   }
 
-  private uploadAfterSave(code: string, formData: FormData) {
-  this.productService.uploadImages(code, formData).subscribe({
-    next: () => {
-      this.showSuccess('Lưu sản phẩm và tải ảnh thành công!');
-      localStorage.removeItem('dwelly_product_draft');
-    this.selectedFiles = []; 
-      
-      this.productService.getProductByCode(code).subscribe({
-        next: (data) => {
-          this.product = { ...data };
-          this.images = [...data.Hinh_anh];
-          this.checkAndAddNewPlaceholder();
-        }
-      });
-    },
-    error: () => this.showError('Đã lưu thông tin nhưng tải ảnh thất bại!')
-  });
-}
+  private uploadAfterSave(code: string, formData: FormData): void {
+    this.productService.uploadImages(code, formData).subscribe({
+      next: () => {
+        this.showSuccess('Lưu sản phẩm và tải ảnh thành công!');
+        localStorage.removeItem('dwelly_product_draft');
+        this.selectedFiles = [];
+
+        this.productService.getProductByCode(code).subscribe({
+          next: (data) => {
+            this.product = { ...data };
+            this.images = [...data.Hinh_anh];
+            this.checkAndAddNewPlaceholder();
+            this.syncOriginalState();
+          }
+        });
+      },
+      error: () => this.showError('Đã lưu thông tin nhưng tải ảnh thất bại!')
+    });
+  }
+
+  private syncOriginalState(): void {
+    this.originalProduct = {
+      ...this.product,
+      Hinh_anh: [...(this.product.Hinh_anh || [])]
+    };
+    this.originalImages = this.images.length ? [...this.images] : [null, null, null, null];
+  }
+
+  private restoreFormState(): void {
+    if (this.isEditMode && this.originalProduct) {
+      this.product = {
+        ...this.originalProduct,
+        Hinh_anh: [...(this.originalProduct.Hinh_anh || [])]
+      };
+      this.images = this.originalImages.length ? [...this.originalImages] : [null, null, null, null];
+      this.selectedFiles = [];
+      this.checkAndAddNewPlaceholder();
+      return;
+    }
+
+    this.resetForm();
+  }
   
   
   private resetForm(): void {

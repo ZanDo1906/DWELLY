@@ -238,10 +238,10 @@
 
             <!-- Nút hành động -->
             <div class="form-actions">
-                <button *ngIf="isEditMode" class="btn-delete-product" (click)="deleteProduct()">Xóa sản phẩm</button>
-                <button class="btn-save" (click)="requestSaveProduct()">Lưu sản phẩm</button>
+              <button *ngIf="isEditMode" type="button" class="btn-delete-product" (click)="deleteProduct()">Xóa sản phẩm</button>
+              <button type="button" class="btn-save" (pointerdown)="requestSaveProduct($event)" (click)="requestSaveProduct($event)">Lưu sản phẩm</button>
              
-                <button class="btn-cancel" (click)="cancelForm()">Hủy</button>
+              <button type="button" class="btn-cancel" (click)="cancelForm($event)">Hủy</button>
             </div> 
 
         </div>
