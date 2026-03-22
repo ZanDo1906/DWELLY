@@ -11,6 +11,28 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 991.98px) {
+  .sidebar-wrapper {
+    width: 100%;
+    position: static;
+    padding: 16px 14px 18px;
+  }
+
+  .menu {
+    margin-top: 14px;
+  }
+
+  .menu .menu-item {
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+
+  .logout-wrapper {
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+}
+
 /* =========================
    USER INFO
 ========================= */

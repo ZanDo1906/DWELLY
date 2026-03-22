@@ -34,7 +34,7 @@
   max-width: 1360px;
   margin: 0 auto;
   height: 100%;
-  background-image: url('../../../assets/images/banner/banner-aboutus.png');
+  background-image: var(--bg-image, url('../../../assets/images/banner/banner-aboutus.png'));
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

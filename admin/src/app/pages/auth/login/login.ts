@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Admin } from '../../../services/admin';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -15,6 +15,7 @@ export class Login {
   loginForm!: any;
   loginError = '';
   showPassword = false;
+  rememberMe = false;
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +26,19 @@ export class Login {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  ngOnInit(): void {
+    const savedEmail = localStorage.getItem('adminSavedEmail');
+    const savedPassword = localStorage.getItem('adminSavedPassword');
+    
+    if (savedEmail && savedPassword) {
+      this.loginForm.patchValue({
+        email: savedEmail,
+        password: savedPassword
+      });
+      this.rememberMe = true;
+    }
   }
 
   get email() {
@@ -52,6 +66,13 @@ export class Login {
 
     this.adminService.login({ email, password }).subscribe({
       next: (res: any) => {
+        if (this.rememberMe) {
+          localStorage.setItem('adminSavedEmail', email);
+          localStorage.setItem('adminSavedPassword', password);
+        } else {
+          localStorage.removeItem('adminSavedEmail');
+          localStorage.removeItem('adminSavedPassword');
+        }
         const adminPayload = {
           Ma_quan_tri_vien: res?.admin?.maAdmin || '',
           Ho_ten: res?.admin?.fullName || 'Admin',
@@ -67,13 +88,26 @@ export class Login {
         localStorage.setItem('adminEmail', adminPayload.Email);
         localStorage.setItem('adminAvatar', adminPayload.Anh_dai_dien || '');
         localStorage.setItem('adminId', adminPayload.Ma_quan_tri_vien || adminPayload.id);
-        
-        this.router.navigate(['/dashboard']);
+
+        const lastRoute = localStorage.getItem('admin_last_route') || '';
+        const fallbackRoute = '/profile';
+        const targetRoute = this.isSafePostLoginRoute(lastRoute) ? lastRoute : fallbackRoute;
+
+        this.router.navigateByUrl(targetRoute);
         window.dispatchEvent(new Event('admin-login'));
       },
       error: (err) => {
         this.loginError = err.error?.message || 'Đăng nhập thất bại';
       }
     });
+  }
+
+  private isSafePostLoginRoute(route: string): boolean {
+    if (!route || !route.startsWith('/')) {
+      return false;
+    }
+
+    const authRoutes = ['/', '/login', '/forgot-password', '/reset-password'];
+    return !authRoutes.some((authRoute) => route.startsWith(authRoute));
   }
 }

@@ -14,6 +14,7 @@ import { Order as OrderService } from '../../../services/order';
 import { Product as ProductService } from '../../../services/product';
 import { Room as RoomService } from '../../../services/room';
 import { Client as ClientService } from '../../../services/client';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
 
 interface CartItem {
   product: iProduct;
@@ -23,7 +24,7 @@ interface CartItem {
 
 @Component({
   selector: 'app-order-detail',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ConfirmDialogComponent],
   templateUrl: './order-detail.html',
   styleUrl: './order-detail.css',
 })
@@ -31,6 +32,7 @@ export class OrderDetail implements OnInit {
   rooms: iRoom[] = [];
   cartItems: CartItem[] = [];
   showStatusDropdown = false;
+  showPrintConfirm = false;
 
   currentOrder: iOrder | null = null;
   orderDisplayCode = '--';
@@ -416,6 +418,20 @@ export class OrderDetail implements OnInit {
         this.isUpdatingStatus = false;
       },
     });
+  }
+
+  handlePrintInvoice(): void {
+    this.showPrintConfirm = true;
+  }
+
+  closePrintConfirm(): void {
+    this.showPrintConfirm = false;
+  }
+
+  confirmPrint(): void {
+    if (!this.currentOrder) return;
+    window.print();
+    this.closePrintConfirm();
   }
 
   toggleStatusDropdown(): void {

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+	font-family: 'Nunito Sans', sans-serif;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow-x: auto;
+	min-width: 320px;
+}
+
+.site-inner {
+	width: 100%;
+	max-width: 1280px;
+	margin: 0 auto;
+}

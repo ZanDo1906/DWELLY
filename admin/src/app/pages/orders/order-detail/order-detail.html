@@ -6,11 +6,21 @@
         <!-- HEADER -->
         <div class="page-title-wrapper">
           <h1 class="page-title">Quản lý đơn hàng</h1>
-          <button class="print-btn">
+          <button class="print-btn" (click)="handlePrintInvoice()">
             <i class="bi bi-printer"></i>
             <span>In đơn hàng</span>
           </button>
         </div>
+
+        <!-- PRINT CONFIRMATION MODAL -->
+        <app-confirm-dialog 
+          *ngIf="showPrintConfirm"
+          [title]="'Xác nhận in đơn hàng'"
+          [message]="'Bạn có muốn in đơn hàng ' + orderDisplayCode + '?'"
+          [modalId]="'print-confirm'"
+          (confirm)="confirmPrint()"
+          (cancel)="closePrintConfirm()">
+        </app-confirm-dialog>
 
         <nav class="breadcrumb">
           <ol>

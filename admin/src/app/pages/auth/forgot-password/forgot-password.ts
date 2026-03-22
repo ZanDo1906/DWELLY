@@ -90,6 +90,11 @@ export class ForgotPassword {
         this.step = 2;
         // Start resend countdown
         this.startResendCountdown();
+
+        // Hiển thị mã OTP trên popup
+        if (response.otp) {
+          alert(`Mã OTP của bạn là: ${response.otp}`);
+        }
       },
       error: (err: any) => {
         this.isLoading = false;
@@ -205,6 +210,12 @@ export class ForgotPassword {
       next: (response: any) => {
         this.isLoading = false;
         this.startResendCountdown();
+        
+        // Hiển thị mã OTP trên popup
+        if (response.otp) {
+          alert(`Mã OTP của bạn là: ${response.otp}`);
+        }
+
         // Focus vào ô đầu tiên
         setTimeout(() => {
           document.getElementById('otp-0')?.focus();

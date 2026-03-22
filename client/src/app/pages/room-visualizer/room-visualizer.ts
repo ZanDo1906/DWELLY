@@ -5,6 +5,8 @@ import { Product as ProductService } from '../../services/product';
 import { Category as CategoryService } from '../../services/category';
 import { Room as RoomService } from '../../services/room';
 import { Style as StyleService } from '../../services/style';
+import { Client as ClientService } from '../../services/client';
+import { Cart as CartService } from '../../services/cart';
 import { iProduct } from '../../interfaces/product';
 import { iCategory } from '../../interfaces/category';
 import { iRoom } from '../../interfaces/room';
@@ -36,6 +38,7 @@ export class RoomVisualizer implements OnInit {
   selectedCategoryCode = 'all';
   selectedStyleCode = 'all';
   openDropdown: 'room' | 'category' | 'style' | null = null;
+  notifiedProductId: string | null = null;
   private categoryNameByCode: Record<string, string> = {};
   private vndFormatter = new Intl.NumberFormat('vi-VN');
 
@@ -44,7 +47,9 @@ export class RoomVisualizer implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private roomService: RoomService,
-    private styleService: StyleService
+    private styleService: StyleService,
+    private clientService: ClientService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +147,44 @@ export class RoomVisualizer implements OnInit {
 
   isFurnitureSelected(productCode: string) {
     return this.selectedProductCodes.includes(productCode);
+  }
+
+  isFavorite(productId: string): boolean {
+    const user = this.clientService.getCurrentUser();
+    if (!user || !user.favorites) return false;
+    return user.favorites.includes(productId);
+  }
+
+  toggleFavorite(event: Event, productId: string) {
+    event.preventDefault();
+    event.stopPropagation();
+    const user = this.clientService.getCurrentUser();
+    if (!user) {
+      alert('Vui lòng đăng nhập để lưu sản phẩm yêu thích');
+      return;
+    }
+    const maKhachHang = user.customerCode ?? user.Ma_khach_hang;
+    this.clientService.toggleFavorite(maKhachHang, productId)
+      .subscribe({
+        next: (res: any) => {
+          user.favorites = res.favorites;
+          localStorage.setItem('current_user', JSON.stringify(user));
+        },
+        error: (err) => console.error(err)
+      });
+  }
+
+  goToCart(event: Event, productId: string) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.cartService.addItem(productId);
+    
+    this.notifiedProductId = productId;
+    setTimeout(() => {
+      if (this.notifiedProductId === productId) {
+        this.notifiedProductId = null;
+      }
+    }, 1500);
   }
 
   getSelectedProducts(): iProduct[] {

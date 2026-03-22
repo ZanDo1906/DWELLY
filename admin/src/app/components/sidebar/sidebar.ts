@@ -3,13 +3,14 @@ import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/ro
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { Admin as AdminService } from '../../services/admin';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 
 const API_BASE_URL = 'http://localhost:3000';
 const DEFAULT_AVATAR = '';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, ConfirmDialogComponent],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
@@ -19,6 +20,7 @@ export class Sidebar implements OnInit {
   userAvatar = DEFAULT_AVATAR;
   isLoggedIn = false;
   currentUrl = '';
+  showLogoutConfirm = false;
 
   constructor(
     private router: Router,
@@ -29,12 +31,14 @@ export class Sidebar implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.currentUrl = event.url;
+        this.persistLastRoute(this.currentUrl);
       });
   }
 
   ngOnInit(): void {
     this.refreshUserInfo();
     this.currentUrl = this.router.url;
+    this.persistLastRoute(this.currentUrl);
   }
 
   isOrdersActive(): boolean {
@@ -150,7 +154,15 @@ export class Sidebar implements OnInit {
     return avatar;
   }
 
-  logout(): void {
+  requestLogout(): void {
+    this.showLogoutConfirm = true;
+  }
+
+  cancelLogout(): void {
+    this.showLogoutConfirm = false;
+  }
+
+  confirmLogout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
     localStorage.removeItem('adminInfo');
@@ -158,8 +170,21 @@ export class Sidebar implements OnInit {
     localStorage.removeItem('adminEmail');
     localStorage.removeItem('adminAvatar');
     localStorage.removeItem('adminId');
+    localStorage.removeItem('admin_last_route');
 
+    this.showLogoutConfirm = false;
     window.dispatchEvent(new Event('admin-logout'));
     this.router.navigateByUrl('/login');
+  }
+
+  private persistLastRoute(url: string): void {
+    if (!this.isAuthRoute(url)) {
+      localStorage.setItem('admin_last_route', url);
+    }
+  }
+
+  private isAuthRoute(url: string): boolean {
+    const authRoutes = ['/', '/login', '/forgot-password', '/reset-password'];
+    return authRoutes.some((route) => url.startsWith(route));
   }
 }

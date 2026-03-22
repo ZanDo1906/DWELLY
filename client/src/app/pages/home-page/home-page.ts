@@ -11,6 +11,8 @@ import { Product as ProductService } from '../../services/product';
 import { ProductCard } from '../../components/product-card/product-card';
 import { iProduct } from '../../interfaces/product';
 import { RouterLink } from '@angular/router';
+import { Banner as BannerService } from '../../services/banner';
+import { iBanner } from '../../interfaces/banner';
 
 @Component({
   selector: 'app-home-page',
@@ -40,11 +42,28 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   currentIndex = 0;
   currentReviewPage = 0;
 
+  heroBanners: iBanner[] = [];
+  currentHeroIndex = 0;
+  heroInterval: any;
+
+  heroData = {
+    subtitle: 'NỘI THẤT CAO CẤP',
+    title: 'Kiến Tạo Không Gian\nSống Đầy Cảm Hứng',
+    description: 'Nội thất hiện đại, tinh tế trong từng chi tiết,\nmang đến sự hài hòa cho mọi không gian sống.',
+    backgroundImage: 'assets/images/banner/hero.jpg',
+    ctaText: 'Khám Phá Ngay',
+    ctaLink: '/product-list',
+    ctaIsExternal: false,
+    overlayType: 'dark' as 'none' | 'dark' | 'light' | 'gradient' | 'custom',
+    overlayColor: 'rgba(80, 55, 35, 0.65)',
+  };
+
   constructor(
     private reviewService: ReviewService,
     private clientService: ClientService,
     private blogService: BlogService,
     private productService: ProductService,
+    private bannerService: BannerService,
   ) {}
 
   ngOnInit() {
@@ -58,6 +77,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.loadReviews();
     this.loadBlogs();
     this.loadProducts();
+    this.loadHeroBanner();
   }
 
   ngAfterViewInit() {
@@ -66,6 +86,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     document.body.classList.remove('homepage');
+    if (this.heroInterval) {
+      clearInterval(this.heroInterval);
+    }
   }
 
   setupScrollAnimations() {
@@ -192,6 +215,80 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       const source = highRatedProducts.length ? highRatedProducts : activeProducts;
       this.products = this.shuffleProducts(source);
     });
+  }
+
+  private loadHeroBanner() {
+    this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
+      this.heroBanners = banners
+        .filter((banner) => banner.Trang_thai && (banner.Trang === 'home' || banner.Trang === 'Trang chủ'))
+        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0));
+
+      if (this.heroBanners.length === 0) {
+        return;
+      }
+      
+      this.updateHeroData();
+
+      if (this.heroBanners.length > 1) {
+        this.startHeroSlider();
+      }
+    });
+  }
+
+  private updateHeroData() {
+    const heroBanner = this.heroBanners[this.currentHeroIndex];
+    if (!heroBanner) return;
+
+    const title = (heroBanner.Tieu_de_chinh || heroBanner.Tieu_de || '').trim();
+    const description = (heroBanner.Mo_ta_ngan || heroBanner.Mo_ta || '').trim();
+    const ctaLink = (heroBanner.CTA_link || heroBanner.Duong_dan || '').trim();
+    const overlayColor = this.resolveOverlayColor(heroBanner);
+
+    this.heroData = {
+      subtitle: (heroBanner.Tieu_de_phu || '').trim(),
+      title: title || this.heroData.title,
+      description: description || this.heroData.description,
+      backgroundImage: (heroBanner.Hinh_anh || '').trim() || this.heroData.backgroundImage,
+      ctaText: (heroBanner.CTA_text || '').trim() || this.heroData.ctaText,
+      ctaLink: ctaLink || this.heroData.ctaLink,
+      ctaIsExternal: /^(https?:)?\/\//i.test(ctaLink),
+      overlayType: heroBanner.Loai_overlay || 'dark',
+      overlayColor,
+    };
+  }
+
+  private startHeroSlider() {
+    if (this.heroInterval) clearInterval(this.heroInterval);
+    this.heroInterval = setInterval(() => {
+      this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroBanners.length;
+      this.updateHeroData();
+    }, 5000);
+  }
+
+  setHeroIndex(index: number) {
+    this.currentHeroIndex = index;
+    this.updateHeroData();
+    this.startHeroSlider(); // Reset interval
+  }
+
+  private resolveOverlayColor(heroBanner: iBanner): string {
+    if (heroBanner.Loai_overlay === 'none') {
+      return 'transparent';
+    }
+
+    if (heroBanner.Loai_overlay === 'light') {
+      return 'rgba(255, 255, 255, 0.35)';
+    }
+
+    if (heroBanner.Loai_overlay === 'gradient') {
+      return 'linear-gradient(135deg, rgba(80, 55, 35, 0.72), rgba(108, 82, 52, 0.45))';
+    }
+
+    if (heroBanner.Loai_overlay === 'custom' && heroBanner.Mau_overlay) {
+      return heroBanner.Mau_overlay;
+    }
+
+    return 'rgba(80, 55, 35, 0.65)';
   }
 
   private shuffleProducts(items: iProduct[]): iProduct[] {

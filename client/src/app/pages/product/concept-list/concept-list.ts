@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Concept } from '../../../services/concept';
 import { iConcept } from '../../../interfaces/concept';
+import { Banner } from '../../../services/banner';
+import { iBanner } from '../../../interfaces/banner';
 
 @Component({
   selector: 'app-concept-list',
@@ -12,6 +14,7 @@ import { iConcept } from '../../../interfaces/concept';
   styleUrl: './concept-list.css',
 })
 export class ConceptList implements OnInit {
+  heroData: any = null;
   concepts: iConcept[] = [];
   displayedCount: number = 6;
   itemsPerPage: number = 6;
@@ -34,10 +37,22 @@ export class ConceptList implements OnInit {
     '03': 'Bắc Âu',
   };
 
-  constructor(private conceptService: Concept) {}
+  constructor(private conceptService: Concept, private bannerService: Banner) {}
 
   ngOnInit(): void {
     this.loadConcepts();
+    this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
+      const banner = banners
+        .filter((b) => b.Trang_thai && (b.Trang === 'concept' || b.Trang === 'Gợi ý không gian'))
+        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0))[0];
+
+      if (banner) {
+        this.heroData = {
+          title: banner.Tieu_de_chinh || banner.Tieu_de,
+          backgroundImage: banner.Hinh_anh
+        };
+      }
+    });
   }
 
   loadConcepts(): void {

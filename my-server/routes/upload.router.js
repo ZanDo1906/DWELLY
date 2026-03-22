@@ -100,6 +100,31 @@ router.post('/upload/concept', conceptUpload.single('image'), (req, res) => {
   }
 });
 
+const bannerUpload = multer({
+  storage: createStorage('banners', 'banner'),
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: fileFilter
+});
+
+router.post('/upload/banner', bannerUpload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const relativePath = `/uploads/banners/${req.file.filename}`;
+    const filePath = `http://localhost:3000${relativePath}`;
+
+    res.json({
+      message: 'Banner image uploaded successfully',
+      filePath,
+      relativePath
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Delete concept image file endpoint
 router.delete('/upload/concept/:filename', (req, res) => {
   try {

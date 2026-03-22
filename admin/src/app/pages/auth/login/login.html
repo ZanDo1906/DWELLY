@@ -89,7 +89,7 @@
 
         <!-- Remember me -->
         <div class="form-check mb-3">
-          <input class="form-check-input" type="checkbox" id="rememberMe">
+          <input class="form-check-input" type="checkbox" id="rememberMe" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}">
           <label class="form-check-label" for="rememberMe">
             Ghi nhớ cho lần đăng nhập sau
           </label>

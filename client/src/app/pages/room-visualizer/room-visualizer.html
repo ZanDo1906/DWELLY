@@ -143,7 +143,22 @@
                     <div class="info">
                       <p class="name">{{ p.Ten_san_pham }}</p>
                       <p class="category">{{ getCategoryName(p) }}</p>
-                      <p class="price">{{ getProductPrice(p) }}</p>
+                      <div class="price-actions">
+                        <p class="price">{{ getProductPrice(p) }}</p>
+                        <div class="actions">
+                          <i class="bi"
+                            [ngClass]="isFavorite(p.Ma_san_pham) ? 'bi-heart-fill' : 'bi-heart'"
+                            (click)="toggleFavorite($event, p.Ma_san_pham)">
+                          </i>
+                          <i class="bi bi-cart"
+                            (click)="goToCart($event, p.Ma_san_pham)">
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="cart-notification" *ngIf="notifiedProductId === p.Ma_san_pham">
+                      <i class="bi bi-check-circle"></i> Đã thêm vào giỏ hàng
                     </div>
                   </div>
 

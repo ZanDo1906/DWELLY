@@ -1,0 +1,120 @@
+<section>
+  <div class="container-fluid py-4">
+    <div class="padding-x">
+      <div class="site-inner banner-page orders-page">
+        <div class="page-header">
+          <h2 class="page-title">Quản lý banner</h2>
+          <button class="add-btn" (click)="openCreateBanner(); showBannerModal()">
+            <i class="bi bi-plus-circle"></i> Thêm banner
+          </button>
+        </div>
+
+        <div class="filter-bar">
+          <div class="search-wrapper">
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text" class="search-input" [value]="searchText" (input)="onSearchChange($event)"
+                placeholder="Tìm kiếm" />
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'az'" (click)="setSortType('az')">
+              <i class="bi bi-check2" aria-hidden="true"></i> A-Z
+            </button>
+
+            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'newest'" (click)="setSortType('newest')">Mới
+              nhất</button>
+            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'oldest'" (click)="setSortType('oldest')">Cũ
+              nhất</button>
+
+            <div class="dropdown-wrapper">
+              <div class="dropdown-selected" (click)="toggleStatusDropdown($event)">
+                {{ selectedStatusLabel }}
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isStatusOpen"></i>
+              </div>
+              <div class="dropdown-menu" *ngIf="isStatusOpen">
+                <div class="dropdown-item" *ngFor="let status of statusOptions" (click)="selectStatus(status.value)">
+                  {{ status.label }}
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-wrapper">
+              <div class="dropdown-selected" (click)="togglePageDropdown($event)">
+                {{ selectedPageLabel }}
+                <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isPageOpen"></i>
+              </div>
+              <div class="dropdown-menu" *ngIf="isPageOpen">
+                <div class="dropdown-item" *ngFor="let page of pageOptions" (click)="selectPage(page.value)">
+                  {{ page.label }}
+                </div>
+              </div>
+            </div>
+
+            <button class="delete-btn" (click)="requestDeleteSelected()">
+              <i class="bi bi-trash"></i>
+            </button>
+
+          </div>
+        </div>
+        <app-table>
+          <ng-container table-header>
+            <th>
+              <input type="checkbox" [checked]="isPageFullySelected" (change)="toggleSelectPage($event)" />
+            </th>
+            <th>Ảnh</th>
+            <th>Tên banner</th>
+            <th>Trang</th>
+            <th>Thứ tự</th>
+            <th>Trạng thái</th>
+            <th>Cập nhật</th>
+          </ng-container>
+
+          <ng-container table-body>
+            <tr *ngFor="let banner of pagedBanners" (click)="openBannerDetail(banner)">
+              <td (click)="$event.stopPropagation()">
+                <input type="checkbox" [checked]="banner.Ma_banner ? selectedIds.has(banner.Ma_banner) : false" (click)="$event.stopPropagation()"
+                  (change)="toggleSelectRow(banner.Ma_banner, $event)" />
+              </td>
+              <td>
+                <img [src]="banner.Hinh_anh" alt="{{ banner.Tieu_de }}" class="banner-thumbnail" 
+                  onerror="this.src='assets/images/default-product.png'" />
+              </td>
+              <td>{{ banner.Tieu_de }}</td>
+              <td>{{ banner.Trang }}</td>
+              <td>{{ banner.Thu_tu }}</td>
+              <td>
+                <span class="status approval-status"
+                  [ngClass]="banner.Trang_thai ? 'approved' : 'rejected'">
+                  {{ banner.Trang_thai ? 'Đang hiển thị' : 'Đã ẩn' }}
+                </span>
+              </td>
+              <td>{{ banner.updatedDateDisplay }}</td>
+            </tr>
+          </ng-container>
+
+          <ng-container table-pagination>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="page === currentPage">
+              {{ page }}
+            </button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </ng-container>
+        </app-table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-modal modalId="bannerModal" [title]="bannerModalTitle">
+  <app-banner-form [banner]="selectedBanner" (saveConfirmed)="onBannerSave($event)"></app-banner-form>
+</app-modal>
+
+<app-confirm-dialog *ngIf="showDeleteConfirm" modalId="bannerDeleteConfirmModal" title="Xác nhận xóa"
+  [message]="deleteConfirmMessage" (confirm)="confirmDeleteSelected()" (cancel)="cancelDeleteSelected()">
+</app-confirm-dialog>

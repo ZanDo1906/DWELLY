@@ -17,6 +17,7 @@ import { ProductForm } from './pages/products/product-form/product-form';
 import { Profile } from './pages/profile/profile';
 import { PromotionList } from './pages/promotions/promotion-list/promotion-list';
 import { PromotionForm } from './pages/promotions/promotion-form/promotion-form';
+import { BannerList } from './pages/banners/banner-list/banner-list';
 import { UserForm } from './pages/users/user-form/user-form';
 import { UserList } from './pages/users/user-list/user-list';
 
@@ -47,6 +48,7 @@ export const routes: Routes = [
     { path: 'promotion-list', component: PromotionList },
     { path: 'promotion-form', component: PromotionForm },
     { path: 'promotion-form/:id', component: PromotionForm },
+    { path: 'banner-list', component: BannerList },
     { path: 'user-list', component: UserList },
     { path: 'user-form', component: UserForm },
     { path: 'user-form/:id', component: UserForm },

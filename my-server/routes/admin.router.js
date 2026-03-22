@@ -167,7 +167,8 @@ router.post("/forgot-password", async (req, res) => {
     res.json({
       message: "Đã gửi mã xác thực",
       adminId: adminId,
-      maskedContact: maskContact(normalizedInput)
+      maskedContact: maskContact(normalizedInput),
+      otp: otp
     });
 
   } catch (err) {
