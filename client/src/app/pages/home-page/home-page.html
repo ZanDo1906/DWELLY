@@ -38,9 +38,9 @@
           <span class="title-line brown"></span>
         </div>
         <!-- PRODUCT GRID -->
-            <div class="product-grid py-4">
-                <app-product-card *ngFor="let product of displayedProducts" [product]="product"></app-product-card>
-            </div>
+        <div class="product-grid py-4">
+          <app-product-card *ngFor="let product of displayedProducts" [product]="product"></app-product-card>
+        </div>
       </div>
     </div>
   </div>
@@ -64,10 +64,7 @@
           <!-- LEFT: ẢNH LỚN -->
           <div class="col-lg-7">
             <div class="space-left h-100">
-              <img
-                src="assets/images/banner/bg_goiykhonggian.jpeg"
-                class="space-img-big"
-              />
+              <img src="assets/images/banner/bg_goiykhonggian.jpeg" class="space-img-big" />
             </div>
           </div>
 
@@ -98,22 +95,13 @@
 
                 <div class="row g-3">
                   <div class="col-4">
-                    <img
-                      src="assets/images/banner/bg_small3.jfif"
-                      class="space-img-small"
-                    />
+                    <img src="assets/images/banner/bg_small3.jfif" class="space-img-small" />
                   </div>
                   <div class="col-4">
-                    <img
-                      src="assets/images/banner/bg_small2.jfif"
-                      class="space-img-small"
-                    />
+                    <img src="assets/images/banner/bg_small2.jfif" class="space-img-small" />
                   </div>
                   <div class="col-4">
-                    <img
-                      src="assets/images/banner/bg_small3.webp"
-                      class="space-img-small"
-                    />
+                    <img src="assets/images/banner/bg_small3.webp" class="space-img-small" />
                   </div>
                 </div>
               </div>
@@ -132,21 +120,74 @@
     <div class="px-4">
       <div class="site-inner">
         <div class="rooms-track">
-            <div class="row g-4 text-center">
-                <div class="col-lg-4">
-                    <img [src]="getRoomByPosition(0).img" class="space-room-img" />
-                    <p class="space-room-text">{{ getRoomByPosition(0).name }}</p>
-                </div>
-                <div class="col-lg-4">
-                    <img [src]="getRoomByPosition(1).img" class="space-room-img" />
-                    <p class="space-room-text">{{ getRoomByPosition(1).name }}</p>
-                </div>
-                <div class="col-lg-4">
-                    <img [src]="getRoomByPosition(2).img" class="space-room-img" />
-                    <p class="space-room-text">{{ getRoomByPosition(2).name }}</p>
-                </div>
+          <div class="row g-4 text-center">
+            <div class="col-lg-4">
+              <img [src]="getRoomByPosition(0).img" class="space-room-img" />
+              <p class="space-room-text">{{ getRoomByPosition(0).name }}</p>
             </div>
+            <div class="col-lg-4">
+              <img [src]="getRoomByPosition(1).img" class="space-room-img" />
+              <p class="space-room-text">{{ getRoomByPosition(1).name }}</p>
+            </div>
+            <div class="col-lg-4">
+              <img [src]="getRoomByPosition(2).img" class="space-room-img" />
+              <p class="space-room-text">{{ getRoomByPosition(2).name }}</p>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRẢI NGHIỆM KHÔNG GIAN -->
+<section class="py-4 experience-section animate-on-scroll" data-animation="fade-up">
+  <div class="container-fluid">
+    <div class="px-4">
+      <div class="site-inner">
+
+        <!-- TITLE -->
+        <div class="section-title text-center mb-4">
+          <h2 class="title brown">TRẢI NGHIỆM KHÔNG GIAN</h2>
+          <span class="title-line brown"></span>
+        </div>
+
+        <div class="row g-4 align-items-center experience-wrapper">
+          <!-- LEFT: OVERLAP IMAGES -->
+          <div class="col-lg-5">
+            <div class="experience-gallery">
+              <img src="assets/images/banner/trai-nghiem-khong-gian1.jpg" class="experience-img experience-img-main" />
+              <img src="assets/images/banner/trai-nghiem-khong-gian2.png" class="experience-img experience-img-float" />
+            </div>
+          </div>
+
+          <!-- RIGHT: CONTENT -->
+          <div class="col-lg-7">
+            <div class="experience-content">
+              <h3 class="experience-heading">
+                Biến ý tưởng thành không gian thật<br />
+                chỉ trong vài giây
+              </h3>
+
+              <p class="experience-desc">
+                Tải lên hình ảnh căn phòng của bạn và thử ngay các sản phẩm nội thất của
+                chúng tôi bằng công nghệ AI. Xem trước cách sofa, bàn, kệ... hòa hợp với
+                không gian thực tế trước khi quyết định mua.
+              </p>
+
+              <div class="experience-highlight">
+                <ul class="experience-list">
+                  <li>Không còn mua "theo tưởng tượng"</li>
+                  <li>Phối nội thất chuẩn hơn, đẹp hơn</li>
+                  <li>Tiết kiệm thời gian thử nghiệm</li>
+                </ul>
+
+                <a routerLink="/concept-list" class="experience-btn">Trải nghiệm ngay</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -186,7 +227,7 @@
               </p>
             </div>
             <a class="about-more" routerLink="/about-us">
-                XEM THÊM <span>→</span>
+              XEM THÊM <span>→</span>
             </a>
           </div>
 
@@ -219,57 +260,57 @@
 
         <!-- CONTENT -->
         <div class="row g-4">
-      <!-- ITEM 1 -->
-      <div class="col-lg-6">
-        <div class="why-card why-card-animate" style="animation-delay: 0.1s;">
-          <div class="why-icon">
-            <i class="bi bi-cash-stack"></i>
+          <!-- ITEM 1 -->
+          <div class="col-lg-6">
+            <div class="why-card why-card-animate" style="animation-delay: 0.1s;">
+              <div class="why-icon">
+                <i class="bi bi-cash-stack"></i>
+              </div>
+              <div class="why-text">
+                <h5>CHÍNH SÁCH GIÁ</h5>
+                <p>Tốt nhất và công khai giá trên website</p>
+              </div>
+            </div>
           </div>
-          <div class="why-text">
-            <h5>CHÍNH SÁCH GIÁ</h5>
-            <p>Tốt nhất và công khai giá trên website</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- ITEM 2 -->
-      <div class="col-lg-6">
-        <div class="why-card why-card-animate" style="animation-delay: 0.2s;">
-          <div class="why-icon">
-            <i class="bi bi-box-seam"></i>
+          <!-- ITEM 2 -->
+          <div class="col-lg-6">
+            <div class="why-card why-card-animate" style="animation-delay: 0.2s;">
+              <div class="why-icon">
+                <i class="bi bi-box-seam"></i>
+              </div>
+              <div class="why-text">
+                <h5>SẢN XUẤT</h5>
+                <p>Trực tiếp sản xuất bởi đội ngũ nhân viên hàng đầu</p>
+              </div>
+            </div>
           </div>
-          <div class="why-text">
-            <h5>SẢN XUẤT</h5>
-            <p>Trực tiếp sản xuất bởi đội ngũ nhân viên hàng đầu</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- ITEM 3 -->
-      <div class="col-lg-6">
-        <div class="why-card why-card-animate" style="animation-delay: 0.3s;">
-          <div class="why-icon">
-            <i class="bi bi-award"></i>
+          <!-- ITEM 3 -->
+          <div class="col-lg-6">
+            <div class="why-card why-card-animate" style="animation-delay: 0.3s;">
+              <div class="why-icon">
+                <i class="bi bi-award"></i>
+              </div>
+              <div class="why-text">
+                <h5>CHẤT LƯỢNG</h5>
+                <p>Cam kết chất lượng sản phẩm và tốc độ thi công</p>
+              </div>
+            </div>
           </div>
-          <div class="why-text">
-            <h5>CHẤT LƯỢNG</h5>
-            <p>Cam kết chất lượng sản phẩm và tốc độ thi công</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- ITEM 4 -->
-      <div class="col-lg-6">
-        <div class="why-card why-card-animate" style="animation-delay: 0.4s;">
-          <div class="why-icon">
-            <i class="bi bi-headset"></i>
+          <!-- ITEM 4 -->
+          <div class="col-lg-6">
+            <div class="why-card why-card-animate" style="animation-delay: 0.4s;">
+              <div class="why-icon">
+                <i class="bi bi-headset"></i>
+              </div>
+              <div class="why-text">
+                <h5>BẢO HÀNH</h5>
+                <p>Dịch vụ bảo hành tốt nhất khu vực</p>
+              </div>
+            </div>
           </div>
-          <div class="why-text">
-            <h5>BẢO HÀNH</h5>
-            <p>Dịch vụ bảo hành tốt nhất khu vực</p>
-          </div>
-        </div>
-      </div>
         </div>
 
       </div>
@@ -303,12 +344,10 @@
         <div class="row g-4 justify-content-center">
 
           <!-- ITEM -->
-          <div class="col-lg-4" *ngFor="let blog of (showBlogSlider ? getBlogsByPage() : blogs.slice(0, 3)); let i = index">
+          <div class="col-lg-4"
+            *ngFor="let blog of (showBlogSlider ? getBlogsByPage() : blogs.slice(0, 3)); let i = index">
             <div class="news-card news-card-animate" [style.animation-delay]="(i * 0.15) + 's'">
-              <img
-                [src]="blog.Hinh_anh"
-                class="news-img"
-              />
+              <img [src]="blog.Hinh_anh" class="news-img" />
 
               <div class="news-body">
                 <h5>
@@ -376,8 +415,7 @@
 
           <div class="review-dots">
             <ng-container *ngFor="let i of [0, 1, 2]; let idx = index">
-              <span class="dot" [class.active]="idx === currentReviewPage"
-                    *ngIf="idx < getTotalPages()"></span>
+              <span class="dot" [class.active]="idx === currentReviewPage" *ngIf="idx < getTotalPages()"></span>
             </ng-container>
           </div>
 
