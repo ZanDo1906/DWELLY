@@ -84,6 +84,39 @@ router.patch("/cart/update", async (req, res) => {
     }
 });
 
+// PATCH - Xóa nhiều sản phẩm khỏi giỏ hàng trong một request
+router.patch("/cart/remove-items", async (req, res) => {
+    try {
+        const { Ma_khach_hang, Ma_san_pham_list } = req.body;
+
+        if (!Ma_khach_hang || !Array.isArray(Ma_san_pham_list)) {
+            return res.status(400).json({ message: "Thiếu mã khách hàng hoặc danh sách mã sản phẩm" });
+        }
+
+        const productIds = Ma_san_pham_list
+            .map(item => String(item || '').trim())
+            .filter(Boolean);
+
+        if (productIds.length === 0) {
+            return res.status(400).json({ message: "Danh sách mã sản phẩm không hợp lệ" });
+        }
+
+        const cart = await Cart.findOne({ Ma_khach_hang });
+        if (!cart) {
+            return res.status(404).json({ message: "Giỏ hàng không tồn tại" });
+        }
+
+        const toRemove = new Set(productIds);
+        cart.San_pham = cart.San_pham.filter(item => !toRemove.has(item.Ma_san_pham));
+        cart.updatedAt = Date.now();
+
+        await cart.save();
+        res.json(cart);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // DELETE - Xóa một sản phẩm khỏi giỏ hàng
 router.delete("/cart/:maKhachHang/:maSanPham", async (req, res) => {
     try {

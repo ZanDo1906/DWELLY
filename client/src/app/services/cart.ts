@@ -24,7 +24,7 @@ export class Cart {
 
   cart$ = this.cartSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getCustomerId(): string | null {
     const user = localStorage.getItem('current_user');
@@ -100,6 +100,29 @@ export class Cart {
     if (customerId) {
       this.http.delete<CartResponse>(`${baseUrl}/cart/${customerId}/${productId}`)
         .pipe(catchError(this.handleError)).subscribe();
+    }
+  }
+
+  // Xóa nhiều sản phẩm cùng lúc
+  removeItems(productIds: string[]): void {
+    const normalizedIds = Array.from(new Set(
+      (productIds || [])
+        .map(id => String(id || '').trim())
+        .filter(Boolean)
+    ));
+
+    if (normalizedIds.length === 0) return;
+
+    const idSet = new Set(normalizedIds);
+    const items = this.getLocalItems().filter(i => !idSet.has(i.productId));
+    this.saveLocal(items);
+
+    const customerId = this.getCustomerId();
+    if (customerId) {
+      this.http.patch<CartResponse>(`${baseUrl}/cart/remove-items`, {
+        Ma_khach_hang: customerId,
+        Ma_san_pham_list: normalizedIds
+      }).pipe(catchError(this.handleError)).subscribe();
     }
   }
 

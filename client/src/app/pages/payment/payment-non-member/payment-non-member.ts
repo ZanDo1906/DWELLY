@@ -726,6 +726,12 @@ export class PaymentNonMember implements OnInit {
     this.showQRModal = false;
   }
 
+  getPurchasedProductIds(): string[] {
+    return this.cartItems
+      .map(item => item?.product?.Ma_san_pham)
+      .filter((productId): productId is string => typeof productId === 'string' && productId.trim().length > 0);
+  }
+
   closeValidationModal(): void {
     this.showValidationModal = false;
   }

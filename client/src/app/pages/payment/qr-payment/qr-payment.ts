@@ -3,6 +3,18 @@ import { EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Modal } from '../../../components/modal/modal';
 import { Router } from '@angular/router';
+import { Cart } from '../../../services/cart';
+
+interface CheckoutItem {
+  product: {
+    Ma_san_pham: string;
+  };
+  quantity: number;
+}
+
+interface CheckoutPayload {
+  items: CheckoutItem[];
+}
 
 @Component({
   selector: 'app-qr-payment',
@@ -16,6 +28,7 @@ export class QRPayment implements OnInit, OnDestroy {
   @Input() totalAmount: number = 0;
   @Input() orderCode: string = '';
   @Input() itemCount: number = 0;
+  @Input() purchasedProductIds: string[] = [];
 
   showSuccessModal: boolean = false;
   remainingTime = '10:00';
@@ -23,10 +36,11 @@ export class QRPayment implements OnInit, OnDestroy {
   private secondsLeft = 600; // 10 minutes in seconds
   confirmCountdown: number = 0;
   private confirmTimer: any;
+  private hasClearedPurchasedItems = false;
 
   @Output() closeModal = new EventEmitter<void>();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cartService: Cart) { }
 
   ngOnInit() {
     this.startCountdown();
@@ -71,6 +85,7 @@ export class QRPayment implements OnInit, OnDestroy {
       if (this.confirmCountdown <= 0) {
         clearInterval(this.confirmTimer);
         this.confirmTimer = null;
+        this.removePurchasedItemsFromCart();
         this.showSuccessModal = true;
         setTimeout(() => {
           const modalEl = document.getElementById('successModal');
@@ -93,9 +108,68 @@ export class QRPayment implements OnInit, OnDestroy {
     this.close();
   }
 
+  trackOrder(): void {
+    const isLoggedIn = !!localStorage.getItem('userId');
+
+    if (!isLoggedIn) {
+      alert('Vui lòng đăng nhập để theo dõi đơn hàng.');
+      this.closeSuccessModal();
+      return;
+    }
+
+    const orderCode = (this.orderCode || '').trim();
+    if (orderCode) {
+      localStorage.setItem('orderId', orderCode);
+    }
+
+    this.closeSuccessModal();
+    this.router.navigate(['/user-layout/order-detail']);
+  }
+
   continueShopping(): void {
     this.closeSuccessModal();
-    this.router.navigate(['/']);
+    this.router.navigate(['/product-list']);
+  }
+
+  private removePurchasedItemsFromCart(): void {
+    if (this.hasClearedPurchasedItems) {
+      return;
+    }
+
+    const rawCheckoutItems = localStorage.getItem('checkoutItems');
+    if (!rawCheckoutItems) {
+      this.hasClearedPurchasedItems = true;
+      return;
+    }
+
+    let checkoutItems: CheckoutItem[] = [];
+
+    try {
+      const parsedData = JSON.parse(rawCheckoutItems) as CheckoutItem[] | CheckoutPayload;
+      checkoutItems = Array.isArray(parsedData) ? parsedData : (parsedData.items || []);
+    } catch (error) {
+      console.error('Invalid checkoutItems data when clearing cart:', error);
+      this.hasClearedPurchasedItems = true;
+      return;
+    }
+
+    const idsFromInput = (this.purchasedProductIds || [])
+      .filter((productId): productId is string => typeof productId === 'string' && productId.trim().length > 0)
+      .map(productId => productId.trim());
+
+    const idsFromCheckout = checkoutItems
+      .map(item => item?.product?.Ma_san_pham)
+      .filter((productId): productId is string => typeof productId === 'string' && productId.trim().length > 0)
+      .map(productId => productId.trim());
+
+    const purchasedProductIds = Array.from(new Set(
+      idsFromInput.length > 0 ? idsFromInput : idsFromCheckout
+    ));
+
+    this.cartService.removeItems(purchasedProductIds);
+
+    localStorage.removeItem('checkoutItems');
+    this.hasClearedPurchasedItems = true;
   }
 
   formatPrice(price: number): string {
