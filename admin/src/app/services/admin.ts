@@ -29,30 +29,21 @@ export class Admin {
   }
   
   login(data: any) {
-    console.log('Sending login request:', data);
-    return this.http.post(`${baseUrl}/loginAdmin`, data)
-      .pipe(
-        catchError((error) => {
-          console.error('Login API error:', error);
-          console.error('Error status:', error.status);
-          console.error('Error body:', error.error);
-          return throwError(() => error);
-        })
-      );
+  return this.http.post(`${baseUrl}/loginAdmin`, data);
+  }
+  
+  forgotPassword(emailOrPhone: string): Observable<any> {
+    return this.http.post(`${baseUrl}/forgot-password`, { emailOrPhone });
   }
 
-  saveLoginData(response: any) {
-    localStorage.setItem('auth_token', response.token);
-    localStorage.setItem('current_admin', JSON.stringify(response.admin));
-    localStorage.setItem('adminId', response.admin?.maAdmin || response.admin?.id || '');
-    localStorage.setItem('adminEmail', response.admin?.email || '');
-    localStorage.setItem('adminName', response.admin?.fullName || 'Admin');
+  verifyOTP(adminId: string, otp: string): Observable<any> {
+    return this.http.post(`${baseUrl}/verify-otp`, { adminId, otp });
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('auth_token');
+  resetPassword(adminId: string, newPassword: string): Observable<any> {
+    return this.http.patch(`${baseUrl}/admins/${adminId}/reset-password`, { newPassword });
   }
-
+  
   handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }

@@ -64,6 +64,12 @@
         </a>
       </li>
       <li>
+        <a class="menu-item" routerLink="/banner-list" routerLinkActive="active">
+          <i class="bi bi-images"></i>
+          <span>Quản lý Banner</span>
+        </a>
+      </li>
+      <li>
         <a class="menu-item" routerLink="/dashboard" routerLinkActive="active">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
@@ -74,9 +80,18 @@
 
   <!-- LOGOUT -->
   <div class="logout-wrapper">
-    <button class="btn logout-btn w-100" type="button" (click)="logout()">
+    <button class="btn logout-btn w-100" type="button" (click)="requestLogout()">
       <i class="bi bi-box-arrow-right me-2"></i>
       Đăng xuất
     </button>
   </div>
 </div>
+
+<app-confirm-dialog
+  *ngIf="showLogoutConfirm"
+  [modalId]="'logout-confirm'"
+  [title]="'Xác nhận đăng xuất'"
+  [message]="'Bạn có chắc muốn đăng xuất không?'"
+  (confirm)="confirmLogout()"
+  (cancel)="cancelLogout()">
+</app-confirm-dialog>

@@ -17,14 +17,28 @@ const storage = multer.diskStorage({
   },
   filename: (_, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    const safeExt = [".png", ".jpg", ".jpeg", ".gif", ".webp"].includes(ext) ? ext : ".bin";
+    const safeExt = [
+      ".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg", ".avif", ".jfif", ".heic", ".heif", ".tif", ".tiff"
+    ].includes(ext) ? ext : ".bin";
     cb(null, `${Date.now()}-${Math.round(Math.random() * 1e9)}${safeExt}`);
   }
 });
 
 
 const fileFilter = (_, file, cb) => {
-  const ok = ["image/png", "image/jpeg", "image/gif", "image/webp"].includes(file.mimetype);
+  const ok = [
+    "image/png",
+    "image/jpeg",
+    "image/pjpeg",
+    "image/gif",
+    "image/webp",
+    "image/bmp",
+    "image/svg+xml",
+    "image/avif",
+    "image/heic",
+    "image/heif",
+    "image/tiff"
+  ].includes(file.mimetype);
   cb(ok ? null : new Error("Only image files allowed"), ok);
 };
 

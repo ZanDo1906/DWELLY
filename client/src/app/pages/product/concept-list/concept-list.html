@@ -4,10 +4,10 @@
       <div class="site-inner">
 
         <!-- BANNER -->
-  <div class="concept-banner">
-    <img src="../../../../assets/images/banner/concept-banner.jpg" alt="Phong cách sống" class="banner-img">
+  <div class="concept-banner" *ngIf="heroData">
+    <img [src]="heroData.backgroundImage" [alt]="heroData.title" class="banner-img">
     <div class="banner-overlay">
-      <h1 class="banner-text">Phong cách sống</h1>
+      <h1 class="banner-text">{{ heroData.title }}</h1>
     </div>
   </div>
         <!-- FILTER SECTION -->

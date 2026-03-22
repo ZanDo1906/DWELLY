@@ -13,6 +13,10 @@ interface AddressDisplayItem {
   rawData: any;
 }
 
+interface AddressSavedEvent {
+  message: string;
+}
+
 @Component({
   selector: 'app-address',
   imports: [CommonModule, Modal, AddAddressModal],
@@ -30,6 +34,13 @@ export class Address implements OnInit {
   addressModalMode: 'add' | 'edit' = 'add';
   editingAddressIndex: number | null = null;
   editingAddressData: any = null;
+  pendingDeleteIndex: number | null = null;
+  deletingAddressIndex: number | null = null;
+  isDeletingAddress = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  showToast = false;
+  private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(private clientService: Client) {}
 
@@ -87,26 +98,55 @@ export class Address implements OnInit {
     this.editingAddressData = address.rawData;
   }
 
+  onAddressSaved(event: AddressSavedEvent): void {
+    this.loadAddresses();
+    this.pushToast(event?.message || 'Thêm địa chỉ thành công', 'success');
+  }
+
   deleteAddress(index: number): void {
-    if (!this.userId) {
-      alert('Không xác định được tài khoản. Vui lòng đăng nhập lại.');
+    this.pendingDeleteIndex = index;
+  }
+
+  confirmDeleteAddress(): void {
+    if (this.pendingDeleteIndex === null) {
       return;
     }
 
-    const isConfirmed = confirm('Bạn có chắc muốn xóa địa chỉ này không?');
-    if (!isConfirmed) {
+    this.deleteAddressConfirmed(this.pendingDeleteIndex);
+  }
+
+  private deleteAddressConfirmed(index: number): void {
+    if (!this.userId) {
+      this.pushToast('Không xác định được tài khoản. Vui lòng đăng nhập lại.', 'error');
+      this.pendingDeleteIndex = null;
       return;
     }
+
+    this.isDeletingAddress = true;
+    this.deletingAddressIndex = index;
 
     this.clientService.deleteClientAddress(this.userId, index).subscribe({
       next: (response) => {
-        alert(response?.message || 'Xóa địa chỉ thành công');
+        this.pushToast(response?.message || 'Xóa địa chỉ thành công', 'success');
+        this.closeDeleteAddressModal();
         this.loadAddresses();
+        this.isDeletingAddress = false;
+        this.deletingAddressIndex = null;
+        this.pendingDeleteIndex = null;
       },
       error: (err) => {
-        alert(err?.error?.message || err?.message || 'Xóa địa chỉ thất bại');
+        this.pushToast(err?.error?.message || err?.message || 'Xóa địa chỉ thất bại', 'error');
+        this.isDeletingAddress = false;
+        this.deletingAddressIndex = null;
+        this.pendingDeleteIndex = null;
       }
     });
+  }
+
+  private closeDeleteAddressModal(): void {
+    const modalEl = document.getElementById('deleteAddressConfirmModal');
+    const modalInstance = (window as any).bootstrap?.Modal?.getInstance(modalEl);
+    modalInstance?.hide();
   }
 
   setDefaultAddress(address: AddressDisplayItem): void {
@@ -190,6 +230,21 @@ export class Address implements OnInit {
     }
 
     return null;
+  }
+
+  private pushToast(message: string, type: 'success' | 'error'): void {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+
+    this.toastTimer = setTimeout(() => {
+      this.showToast = false;
+      this.toastTimer = null;
+    }, 2500);
   }
 
 }

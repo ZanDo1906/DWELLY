@@ -36,6 +36,9 @@ app.use("/", adminRoute);
 const blogRoute = require('./routes/blog.router');
 app.use("/", blogRoute);
 
+const bannerRoute = require('./routes/banner.router');
+app.use("/", bannerRoute);
+
 const careInstructionRoute = require('./routes/care_instruction.router');
 app.use("/", careInstructionRoute);
 
@@ -68,6 +71,12 @@ app.use("/", uploadRoute);
 
 const cartRoute = require('./routes/cart.router');
 app.use("/", cartRoute);
+
+// const aiRoute = require('./routes/ai.router');
+// app.use("/", aiRoute);
+
+const roomVisualizerRoute = require('./routes/room-visualizer.routes');
+app.use('/', roomVisualizerRoute);
 
 
 app.listen(port, () => {

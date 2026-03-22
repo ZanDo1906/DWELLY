@@ -1,12 +1,35 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Banner } from '../../services/banner';
+import { iBanner } from '../../interfaces/banner';
 
 @Component({
   selector: 'app-about-us',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })
-export class AboutUs {
+export class AboutUs implements OnInit, AfterViewInit {
+  heroData: any = null;
+
+  constructor(private bannerService: Banner) {}
+
+  ngOnInit() {
+    this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
+      const banner = banners
+        .filter((b) => b.Trang_thai && (b.Trang === 'about' || b.Trang === 'Giới thiệu'))
+        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0))[0];
+
+      if (banner) {
+        this.heroData = {
+          title: banner.Tieu_de_chinh || banner.Tieu_de,
+          subtitle: banner.Tieu_de_phu,
+          backgroundImage: banner.Hinh_anh
+        };
+      }
+    });
+  }
+
   // annimation banner
   ngAfterViewInit() {
     const sections = document.querySelectorAll('.animate-on-scroll');

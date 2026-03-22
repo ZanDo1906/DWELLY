@@ -117,50 +117,191 @@ router.post("/loginAdmin", async (req, res) => {
   }
 });
 
-router.patch("/admins/:id/change-password", async (req, res) => {
+// ================= FORGOT PASSWORD - STEP 1: VERIFY EMAIL/PHONE & SEND OTP =================
+// In-memory storage for OTP (in production, use Redis or database)
+const otpStorage = {};
+const OTP_EXPIRY = 5 * 60 * 1000; // 5 minutes
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+router.post("/forgot-password", async (req, res) => {
   try {
-    const { id } = req.params;
-    const { currentPassword, newPassword } = req.body;
+    const { emailOrPhone } = req.body;
+    const normalizedInput = String(emailOrPhone || "").trim();
 
-    if (!currentPassword || !newPassword) {
-      return res.status(400).json({ message: "Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới" });
+    if (!normalizedInput) {
+      return res.status(400).json({
+        message: "Vui lòng nhập Email hoặc Số điện thoại"
+      });
     }
 
-    let admin = await Admin.findOne({ Ma_quan_tri_vien: id });
+    // Find admin by email or phone
+    let admin = await Admin.findOne({
+      $or: [
+        { Email: { $regex: new RegExp(`^${escapeRegExp(normalizedInput)}$`, "i") } },
+        { So_dien_thoai: normalizedInput }
+      ]
+    });
+
     if (!admin) {
-      admin = await Admin.findById(id);
+      return res.status(404).json({
+        message: "Email hoặc Số điện thoại không tồn tại trong hệ thống"
+      });
     }
 
-    if (!admin) {
-      return res.status(404).json({ message: "Quản trị viên không tồn tại" });
-    }
+    // Generate OTP
+    const otp = generateOTP();
+    const adminId = admin._id.toString();
+    
+    // Store OTP in memory with expiry
+    otpStorage[adminId] = {
+      otp: otp,
+      contact: normalizedInput,
+      createdAt: Date.now(),
+      attempts: 0
+    };
 
-    const storedPassword = String(admin.Mat_khau || "");
-    const isBcryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$");
+    // Auto-delete OTP after expiry
+    setTimeout(() => {
+      delete otpStorage[adminId];
+    }, OTP_EXPIRY);
 
-    // Kiểm tra mật khẩu hiện tại có đúng không
-    const isCurrentPasswordCorrect = isBcryptHash
-      ? await bcrypt.compare(currentPassword, storedPassword)
-      : currentPassword === storedPassword;
+    // Log OTP to console for development
+    console.log(`\n========== OTP FOR ${normalizedInput} ==========`);
+    console.log(`OTP Code: ${otp}`);
+    console.log(`Expires in: ${OTP_EXPIRY / 1000} seconds`);
+    console.log(`========== END OTP ==========\n`);
 
-    if (!isCurrentPasswordCorrect) {
-      return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
-    }
+    res.json({
+      message: "Đã gửi mã xác thực",
+      adminId: adminId,
+      maskedContact: maskContact(normalizedInput),
+      otp: otp
+    });
 
-    // Kiểm tra mật khẩu mới không được trùng với mật khẩu hiện tại
-    const isNewPasswordSame = isBcryptHash
-      ? await bcrypt.compare(newPassword, storedPassword)
-      : newPassword === storedPassword;
-    if (isNewPasswordSame) {
-      return res.status(400).json({ message: "Mật khẩu mới không được trùng với mật khẩu hiện tại" });
-    }
-
-    admin.Mat_khau = await bcrypt.hash(newPassword, 10);
-    await admin.save();
-
-    return res.json({ message: "Đổi mật khẩu thành công" });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
+  }
+});
+
+function maskContact(contact) {
+  if (contact.includes('@')) {
+    // Mask email
+    const [name, domain] = contact.split('@');
+    return name.substring(0, 2) + '***@' + domain;
+  } else {
+    // Mask phone
+    return contact.substring(0, 4) + '****' + contact.substring(8);
+  }
+}
+
+// ================= FORGOT PASSWORD - STEP 2: VERIFY OTP =================
+router.post("/verify-otp", async (req, res) => {
+  try {
+    const { adminId, otp } = req.body;
+
+    if (!adminId || !otp) {
+      return res.status(400).json({
+        message: "Vui lòng nhập mã xác thực"
+      });
+    }
+
+    const otpData = otpStorage[adminId];
+
+    if (!otpData) {
+      return res.status(400).json({
+        message: "Mã xác thực đã hết hạn hoặc không tồn tại. Vui lòng yêu cầu mã mới"
+      });
+    }
+
+    if (Date.now() - otpData.createdAt > OTP_EXPIRY) {
+      delete otpStorage[adminId];
+      return res.status(400).json({
+        message: "Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới"
+      });
+    }
+
+    if (otpData.attempts >= 5) {
+      delete otpStorage[adminId];
+      return res.status(429).json({
+        message: "Quá nhiều lần nhập sai. Vui lòng yêu cầu mã xác thực mới"
+      });
+    }
+
+    if (otpData.otp !== otp) {
+      otpData.attempts++;
+      return res.status(400).json({
+        message: "Mã xác thực không chính xác"
+      });
+    }
+
+    // OTP is correct - user can now reset password
+    res.json({
+      message: "Xác thực thành công",
+      adminId: adminId
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ================= FORGOT PASSWORD - STEP 3: RESET PASSWORD =================
+router.patch("/admins/:id/reset-password", async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({
+        message: "Vui lòng nhập mật khẩu mới"
+      });
+    }
+
+    if (String(newPassword).length < 6) {
+      return res.status(400).json({
+        message: "Mật khẩu mới phải có ít nhất 6 ký tự"
+      });
+    }
+
+    const admin = await Admin.findById(req.params.id);
+
+    if (!admin) {
+      return res.status(404).json({
+        message: "Quản trị viên không tồn tại"
+      });
+    }
+
+    // Check if new password is same as old password
+    const isSamePassword = await bcrypt.compare(newPassword, admin.Mat_khau);
+    if (isSamePassword) {
+      return res.status(400).json({
+        message: "Mật khẩu mới không được trùng mật khẩu cũ"
+      });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await Admin.findByIdAndUpdate(
+      req.params.id,
+      { 
+        $set: { 
+          Mat_khau: hashedNewPassword, 
+          updatedAt: new Date() 
+        } 
+      }
+    );
+
+    // Clear OTP data after successful reset
+    delete otpStorage[req.params.id];
+
+    res.json({
+      message: "Đặt lại mật khẩu thành công"
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

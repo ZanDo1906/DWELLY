@@ -47,19 +47,55 @@
     <div class="form-row">
       <div class="form-group">
         <label>Tỉnh/Thành phố <span class="required">*</span></label>
-        <select formControlName="province" class="form-select" [disabled]="isLoadingLocations">
-          <option value="">{{ isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố' }}</option>
-          <option *ngFor="let p of provinces" [value]="p.code">{{ p.name }}</option>
-        </select>
+        <div class="dropdown location-dropdown">
+          <button
+            type="button"
+            class="location-toggle"
+            data-bs-toggle="dropdown"
+            [disabled]="isLoadingLocations">
+            <span>{{ getSelectedLocationName(provinces, addressForm.get('province')?.value, isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố') }}</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+
+          <ul class="dropdown-menu location-menu w-100">
+            <li *ngFor="let p of provinces">
+              <button
+                type="button"
+                class="dropdown-item"
+                [class.selected]="((addressForm.get('province')?.value || '') + '') === (p.code + '')"
+                (click)="selectLocation('province', p.code)">
+                {{ p.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
         <small class="text-danger" *ngIf="isControlInvalid('province', 'required')">Vui lòng chọn Tỉnh/Thành phố</small>
       </div>
 
       <div class="form-group">
         <label>Quận/Huyện <span class="required">*</span></label>
-        <select formControlName="district" class="form-select" [disabled]="isLoadingLocations || districts.length === 0">
-          <option value="">Chọn Quận/Huyện</option>
-          <option *ngFor="let d of districts" [value]="d.code">{{ d.name }}</option>
-        </select>
+        <div class="dropdown location-dropdown">
+          <button
+            type="button"
+            class="location-toggle"
+            data-bs-toggle="dropdown"
+            [disabled]="isLoadingLocations || districts.length === 0">
+            <span>{{ getSelectedLocationName(districts, addressForm.get('district')?.value, 'Chọn Quận/Huyện') }}</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+
+          <ul class="dropdown-menu location-menu w-100">
+            <li *ngFor="let d of districts">
+              <button
+                type="button"
+                class="dropdown-item"
+                [class.selected]="((addressForm.get('district')?.value || '') + '') === (d.code + '')"
+                (click)="selectLocation('district', d.code)">
+                {{ d.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
         <small class="text-danger" *ngIf="isControlInvalid('district', 'required')">Vui lòng chọn Quận/Huyện</small>
       </div>
     </div>
@@ -67,10 +103,28 @@
     <div class="form-row">
       <div class="form-group">
         <label>Phường/Xã <span class="required">*</span></label>
-        <select formControlName="ward" class="form-select" [disabled]="isLoadingLocations || wards.length === 0">
-          <option value="">Chọn Phường/Xã</option>
-          <option *ngFor="let w of wards" [value]="w.code">{{ w.name }}</option>
-        </select>
+        <div class="dropdown location-dropdown">
+          <button
+            type="button"
+            class="location-toggle"
+            data-bs-toggle="dropdown"
+            [disabled]="isLoadingLocations || wards.length === 0">
+            <span>{{ getSelectedLocationName(wards, addressForm.get('ward')?.value, 'Chọn Phường/Xã') }}</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+
+          <ul class="dropdown-menu location-menu w-100">
+            <li *ngFor="let w of wards">
+              <button
+                type="button"
+                class="dropdown-item"
+                [class.selected]="((addressForm.get('ward')?.value || '') + '') === (w.code + '')"
+                (click)="selectLocation('ward', w.code)">
+                {{ w.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
         <small class="text-danger" *ngIf="isControlInvalid('ward', 'required')">Vui lòng chọn Phường/Xã</small>
       </div>
 

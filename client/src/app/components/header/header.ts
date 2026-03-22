@@ -7,6 +7,7 @@ import { Login } from '../../pages/auth/login/login';
 import { Register } from '../../pages/auth/register/register';
 import { Modal } from '../modal/modal';
 import { VerifyAccount } from '../../pages/auth/verify-account/verify-account';
+import { Cart } from '../../services/cart';
 
 @Component({
   selector: 'app-header',
@@ -18,12 +19,22 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
   displayName = 'Tài khoản';
   isLoggedIn = false;
   isOverHero = false;
+  cartCount = 0;
   private routeSubscription?: Subscription;
+  private cartSubscription?: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cartService: Cart,
+  ) {}
 
   ngOnInit(): void {
     this.refreshDisplayName();
+    this.cartService.loadCart();
+    this.cartSubscription = this.cartService.cart$.subscribe((items) => {
+      const uniqueProductIds = new Set(items.map((item) => item.productId));
+      this.cartCount = uniqueProductIds.size;
+    });
   }
 
   scrollToTop(): void {
@@ -40,6 +51,7 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
+    this.cartSubscription?.unsubscribe();
   }
 
   @HostListener('window:scroll')
@@ -56,6 +68,7 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('window:user-login')
   onUserLogin(): void {
     this.refreshDisplayName();
+    this.cartService.loadCart();
   }
 
   @HostListener('window:user-logout')

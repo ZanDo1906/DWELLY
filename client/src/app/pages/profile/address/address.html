@@ -39,8 +39,16 @@
 
               <div class="btn-group">
                 <button class="btn-brown" (click)="openEditAddress(address)" data-bs-toggle="modal" data-bs-target="#addAddressModal">Cập nhật</button>
-                <button class="btn-outline-brown" (click)="deleteAddress(address.sourceIndex)">
-                  <i class="bi bi-trash"></i>
+                <button
+                  class="btn-outline-brown btn-delete"
+                  [disabled]="isDeletingAddress && deletingAddressIndex === address.sourceIndex"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteAddressConfirmModal"
+                  title="Xóa địa chỉ"
+                  aria-label="Xóa địa chỉ"
+                  (click)="deleteAddress(address.sourceIndex)">
+                  <span class="spinner-border spinner-border-sm" *ngIf="isDeletingAddress && deletingAddressIndex === address.sourceIndex" aria-hidden="true"></span>
+                  <i class="bi bi-trash" *ngIf="!(isDeletingAddress && deletingAddressIndex === address.sourceIndex)" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
@@ -73,5 +81,26 @@
     [mode]="addressModalMode"
     [addressIndex]="editingAddressIndex"
     [initialAddress]="editingAddressData"
-    (addressAdded)="loadAddresses()"></app-add-address-modal>
+    (addressAdded)="onAddressSaved($event)"></app-add-address-modal>
 </app-modal>
+
+<app-modal
+  modalId="deleteAddressConfirmModal"
+  title="Xác nhận xóa"
+  [showHeader]="true"
+  [showTitleAndLine]="true"
+  [showCloseButton]="true">
+  <div class="delete-confirm-content">
+    <p class="delete-confirm-message">Bạn có chắc muốn xóa địa chỉ này không?</p>
+    <div class="delete-confirm-actions">
+      <button type="button" class="btn-brown" [disabled]="isDeletingAddress" (click)="confirmDeleteAddress()">
+        <span class="spinner-border spinner-border-sm me-2" *ngIf="isDeletingAddress" aria-hidden="true"></span>
+        {{ isDeletingAddress ? 'Đang xử lý...' : 'Xác nhận' }}
+      </button>
+    </div>
+  </div>
+</app-modal>
+
+<div *ngIf="showToast" class="address-toast" [class.toast-error]="toastType === 'error'">
+  {{ toastMessage }}
+</div>

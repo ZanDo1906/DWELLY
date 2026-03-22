@@ -1,0 +1,120 @@
+<form class="banner-form">
+  <div class="form-group full">
+    <label>Tên banner <span>*</span></label>
+    <input type="text" name="title" [(ngModel)]="formValue.title" placeholder="VD: Hero Banner Trang chủ" />
+  </div>
+  <div class="form-group full" style="display: flex; flex-direction: row; gap: 16px; align-items: flex-end;">
+    <div style="flex:1;">
+      <label>Trang</label>
+      <div class="custom-select" [class.open]="isPageDropdownOpen" (click)="togglePageDropdown($event)">
+        <div class="custom-select-trigger" [class.placeholder]="!formValue.page">
+          <span>{{ getPageLabel() || 'Chọn trang' }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </div>
+        <ul class="custom-select-dropdown" *ngIf="isPageDropdownOpen">
+          <li class="custom-select-option" 
+              *ngFor="let option of pageOptions" 
+              [class.selected]="formValue.page === option.value"
+              (click)="selectPage(option.value); $event.stopPropagation()">
+            {{ option.label }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="flex:1;">
+      <label>Thứ tự</label>
+      <input type="number" name="order" [(ngModel)]="formValue.order" style="width:100%;" />
+    </div>
+  </div>
+
+  <div class="form-group full">
+    <label><span style="font-size:1.2em"></span> Ảnh Desktop <span>*</span></label>
+    <div style="display: flex; gap: 8px;">
+      <input type="text" name="image" [(ngModel)]="formValue.image" (change)="onImageUrlChange($event)" placeholder="Nhập URL ảnh hoặc đường dẫn file" style="flex: 1;" />
+      <input type="file" (change)="onImageChange($event)" accept="image/*" />
+    </div>
+  </div>
+  <div class="form-group full" *ngIf="isFieldVisible('mobileImage')">
+    <label><span style="font-size:1.2em"></span> Ảnh Mobile (tùy chọn)</label>
+    <div style="display: flex; gap: 8px;">
+      <input type="text" name="mobileImage" [(ngModel)]="formValue.mobileImage" (change)="onMobileImageUrlChange($event)" placeholder="Ảnh riêng cho mobile (nếu khác desktop)" style="flex: 1;" />
+      <input type="file" (change)="onMobileImageChange($event)" accept="image/*" />
+    </div>
+  </div>
+  <div class="form-group full" *ngIf="isFieldVisible('subtitle')">
+    <label>Tiêu đề phụ</label>
+    <input type="text" name="subtitle" [(ngModel)]="formValue.subtitle" placeholder="Nhập tiêu đề phụ (tùy chọn)" />
+  </div>
+  <div class="form-group full" *ngIf="isFieldVisible('mainTitle')">
+    <label>Tiêu đề chính</label>
+    <textarea rows="2" name="mainTitle" [(ngModel)]="formValue.mainTitle" placeholder="VD: Nâng tầm không gian sống\n(Nhấn Enter để xuống dòng)"></textarea>
+  </div>
+  <div class="form-group full" *ngIf="isFieldVisible('shortDescription')">
+    <label>Mô tả ngắn</label>
+    <textarea rows="2" name="shortDescription" [(ngModel)]="formValue.shortDescription"
+      placeholder="VD: Nội thất hiện đại, tinh tế trong từng chi tiết, mang đến sự hài hòa cho mọi không gian sống."></textarea>
+  </div>
+
+  <div class="form-group full" *ngIf="isFieldVisible('ctaText')" style="display: flex; flex-direction: row; gap: 16px; align-items: flex-end;">
+    <div style="flex:1;">
+      <label style="font-size: 0.95em;">Chữ nút CTA</label>
+      <input type="text" name="ctaText" [(ngModel)]="formValue.ctaText" placeholder="Khám phá ngay"
+        style="width:100%;" />
+    </div>
+    <div style="flex:1;">
+      <label style="font-size: 0.95em;">Link nút CTA</label>
+      <input type="text" name="ctaLink" [(ngModel)]="formValue.ctaLink" placeholder="/product-list hoặc https://..."
+        style="width:100%;" />
+    </div>
+  </div>
+
+
+  <div class="form-group full" *ngIf="isFieldVisible('overlayType')" style="display: flex; flex-direction: row; gap: 16px; align-items: flex-end;">
+    <div style="flex:1;">
+      <label>Loại overlay</label>
+      <div class="custom-select" [class.open]="isOverlayDropdownOpen" (click)="toggleOverlayDropdown($event)">
+        <div class="custom-select-trigger" [class.placeholder]="!formValue.overlayType">
+          <span>{{ getOverlayLabel() || 'Chọn loại overlay' }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </div>
+        <ul class="custom-select-dropdown" *ngIf="isOverlayDropdownOpen">
+          <li class="custom-select-option" 
+              *ngFor="let option of overlayOptions" 
+              [class.selected]="formValue.overlayType === option.value"
+              (click)="selectOverlay(option.value); $event.stopPropagation()">
+            {{ option.label }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="flex:1;">
+      <label>Màu overlay (nếu chọn Tùy chỉnh)</label>
+      <input type="text" name="overlayColor" [(ngModel)]="formValue.overlayColor"
+        placeholder="rgba(80,55,35,0.65) hoặc #00000080" style="width:100%;" />
+    </div>
+  </div>
+  <div class="form-group full" style="display: flex; flex-direction: row; gap: 16px; align-items: flex-end;">
+    <div style="flex:1;" *ngIf="isFieldVisible('overlayOpacity')">
+      <label>Độ mờ overlay (0-1, ví dụ 0.65)</label>
+      <input type="number" name="overlayOpacity" [(ngModel)]="formValue.overlayOpacity" min="0" max="1" step="0.01"
+        style="width:100%;" />
+    </div>
+    <div style="flex:1;" class="status-toggle-group">
+      <label>Trạng thái banner</label><br />
+      <button type="button" class="status-toggle-btn" [class.inactive]="formValue.status === 'inactive'"
+        (click)="toggleBannerStatus()" [attr.aria-pressed]="formValue.status === 'active'">
+        <span class="status-toggle-track">
+          <span class="status-toggle-thumb"></span>
+        </span>
+        <span class="status-toggle-text">
+          {{ formValue.status === 'active' ? 'Đang hiển thị' : 'Đã ẩn' }}
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="btn-wrapper" style="text-align:right; margin-top:32px;">
+    <button type="button" class="save-btn" (click)="openConfirm()">
+      {{ isEditMode ? 'Cập nhật banner' : 'Thêm banner' }}
+    </button>
+  </div>
+</form>

@@ -32,7 +32,7 @@ export class AddAddressModal implements OnInit, OnChanges {
   @Input() mode: 'add' | 'edit' = 'add';
   @Input() addressIndex: number | null = null;
   @Input() initialAddress: any = null;
-  @Output() addressAdded = new EventEmitter<void>();
+  @Output() addressAdded = new EventEmitter<{ message: string }>();
   addressForm!: FormGroup;
   isSubmitting = false;
   isSubmitted = false;
@@ -103,11 +103,11 @@ export class AddAddressModal implements OnInit, OnChanges {
 
     request$.subscribe({
       next: (response) => {
-        alert(response?.message || (this.mode === 'edit' ? 'Cập nhật địa chỉ thành công' : 'Thêm địa chỉ thành công'));
+        const successMessage = response?.message || (this.mode === 'edit' ? 'Cập nhật địa chỉ thành công' : 'Thêm địa chỉ thành công');
         this.addressForm.reset({ isDefault: false });
         this.isSubmitted = false;
         this.isSubmitting = false;
-        this.addressAdded.emit();
+        this.addressAdded.emit({ message: successMessage });
 
         const modalEl = document.getElementById('addAddressModal');
         const modalInstance = (window as any).bootstrap?.Modal?.getInstance(modalEl);
@@ -151,6 +151,25 @@ export class AddAddressModal implements OnInit, OnChanges {
       alert('Không thể bỏ mặc định tại đây. Vui lòng đặt một địa chỉ khác làm mặc định trước.');
       this.addressForm.patchValue({ isDefault: true }, { emitEvent: false });
     }
+  }
+
+  selectLocation(controlName: 'province' | 'district' | 'ward', code: number): void {
+    const control = this.addressForm.get(controlName);
+    if (!control) {
+      return;
+    }
+
+    control.setValue(String(code));
+    control.markAsTouched();
+    control.markAsDirty();
+  }
+
+  getSelectedLocationName(
+    options: Array<{ code: number; name: string }>,
+    code: string,
+    placeholder: string
+  ): string {
+    return this.getNameById(options, code) || placeholder;
   }
 
   private applyFormModeData(): void {

@@ -22,26 +22,27 @@ const createStorage = (folder, prefix) => multer.diskStorage({
 
 // File filter - only images
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif|webp/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
+  const allowedExt = /\.(jpeg|jpg|png|gif|webp|bmp|svg|avif|jfif|heic|heif|tif|tiff)$/i;
+  const hasValidExt = allowedExt.test(path.extname(file.originalname || '').toLowerCase());
+  const mime = String(file.mimetype || '').toLowerCase();
+  const hasImageMime = mime.startsWith('image/');
 
-  if (mimetype && extname) {
+  if (hasImageMime || hasValidExt) {
     return cb(null, true);
-  } else {
-    cb(new Error('Only image files are allowed!'));
   }
+
+  cb(new Error('Định dạng ảnh không được hỗ trợ'));
 };
 
 const avatarUpload = multer({
   storage: createStorage('avatars', 'avatar'),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: fileFilter
 });
 
 const conceptUpload = multer({
   storage: createStorage('concepts', 'concept'),
-  limits: { fileSize: 8 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: fileFilter
 });
 
@@ -53,21 +54,30 @@ const getSafeFilename = (value) => {
 };
 
 // Upload avatar endpoint
-router.post('/upload/avatar', avatarUpload.single('avatar'), (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+router.post('/upload/avatar', (req, res) => {
+  avatarUpload.single('avatar')(req, res, (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({ message: 'Ảnh vượt quá 20MB' });
+        }
+
+        return res.status(400).json({ message: err.message });
+      }
+
+      return res.status(400).json({ message: err.message || 'Upload ảnh thất bại' });
     }
 
-    // Return the file path
+    if (!req.file) {
+      return res.status(400).json({ message: 'Không tìm thấy file ảnh' });
+    }
+
     const filePath = `http://localhost:3000/uploads/avatars/${req.file.filename}`;
-    res.json({
+    return res.json({
       message: 'File uploaded successfully',
       filePath: filePath
     });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  });
 });
 
 // Upload concept image endpoint
@@ -82,6 +92,31 @@ router.post('/upload/concept', conceptUpload.single('image'), (req, res) => {
 
     res.json({
       message: 'Concept image uploaded successfully',
+      filePath,
+      relativePath
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+const bannerUpload = multer({
+  storage: createStorage('banners', 'banner'),
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: fileFilter
+});
+
+router.post('/upload/banner', bannerUpload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const relativePath = `/uploads/banners/${req.file.filename}`;
+    const filePath = `http://localhost:3000${relativePath}`;
+
+    res.json({
+      message: 'Banner image uploaded successfully',
       filePath,
       relativePath
     });

@@ -1,29 +1,61 @@
 <!-- HERO -->
-<section class="hero-section animate-on-scroll" data-animation="hero">
-  <div class="hero-overlay"></div>
+<section
+  class="hero-section animate-on-scroll"
+  data-animation="hero"
+>
+  <!-- Background Slider -->
+  <div *ngFor="let banner of heroBanners; let i = index" 
+       class="hero-bg" 
+       [class.active]="i === currentHeroIndex"
+       [style.background-image]="(banner.Hinh_anh && banner.Hinh_anh !== '') ? 'url(' + banner.Hinh_anh + ')' : 'url(assets/images/banner/hero.jpg)'">
+  </div>
+  <div class="hero-bg active" *ngIf="heroBanners.length === 0" style="background-image: url('assets/images/banner/hero.jpg');"></div>
+
+  <div class="hero-overlay" [style.background]="heroData.overlayColor"></div>
 
   <div class="container-fluid hero-content">
     <div class="px-4">
       <div class="site-inner">
         <div class="hero-text text-center">
-          <span class="hero-subtitle hero-animate-text" style="animation-delay: 0.2s;">NỘI THẤT CAO CẤP</span>
+          <span class="hero-subtitle hero-animate-text" style="animation-delay: 0.2s;">{{ heroData.subtitle }}</span>
 
-          <h1 class="hero-title hero-animate-text" style="animation-delay: 0.4s;">
-            Kiến Tạo Không Gian<br />
-            Sống Đầy Cảm Hứng
+          <h1 class="hero-title hero-animate-text" style="animation-delay: 0.4s; white-space: pre-wrap;">
+            {{ heroData.title }}
           </h1>
 
           <p class="hero-desc hero-animate-text" style="animation-delay: 0.6s;">
-            Nội thất hiện đại, tinh tế trong từng chi tiết,<br />
-            mang đến sự hài hòa cho mọi không gian sống.
+            {{ heroData.description }}
           </p>
 
-          <a routerLink="/product-list" class="hero-btn hero-animate-text" style="animation-delay: 0.8s;">
-            Khám Phá Ngay <span>→</span>
+          <a
+            *ngIf="!heroData.ctaIsExternal"
+            [routerLink]="heroData.ctaLink"
+            class="hero-btn hero-animate-text"
+            style="animation-delay: 0.8s;"
+          >
+            {{ heroData.ctaText }} <span>→</span>
+          </a>
+
+          <a
+            *ngIf="heroData.ctaIsExternal"
+            [href]="heroData.ctaLink"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hero-btn hero-animate-text"
+            style="animation-delay: 0.8s;"
+          >
+            {{ heroData.ctaText }} <span>→</span>
           </a>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Identifiers for slide -->
+  <div class="hero-indicators" *ngIf="heroBanners.length > 1">
+    <span *ngFor="let banner of heroBanners; let i = index" 
+          [class.active]="i === currentHeroIndex" 
+          (click)="setHeroIndex(i)"></span>
   </div>
 </section>
 

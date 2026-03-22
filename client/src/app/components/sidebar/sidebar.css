@@ -175,3 +175,49 @@
 .sidebar-wrapper::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.logout-confirm-content {
+  padding: 6px 4px 0;
+}
+
+.logout-confirm-message {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: #373737;
+}
+
+.logout-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logout-cancel-btn,
+.logout-confirm-btn {
+  min-width: 110px;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.logout-cancel-btn {
+  border: 1px solid #b9ab95;
+  background: #fff;
+  color: #6c5234;
+}
+
+.logout-cancel-btn:hover {
+  background: rgba(108, 82, 52, 0.08);
+}
+
+.logout-confirm-btn {
+  border: none;
+  background: #6c5234;
+  color: #fff;
+}
+
+.logout-confirm-btn:hover {
+  background: #5b4328;
+}
