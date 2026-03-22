@@ -9,4 +9,6 @@ export interface iVoucher {
     Mo_ta: string;
     Trang_thai: boolean;
     Ma_quan_tri_vien_tao: string;   // ObjectId (FK)
+    createdAt?: Date;
+    updatedAt?: Date;
 }

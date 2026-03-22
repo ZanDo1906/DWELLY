@@ -11,9 +11,7 @@ const Voucher = new Scheme({
     Ngay_het_han: { type: Date, required: true },
     Mo_ta: { type: String, required: true },
     Trang_thai: { type: Boolean, required: true },
-    Ma_quan_tri_vien_tao: { type: String, required: true },   // ObjectId (FK)
-
-    updatedAt: { type: Date, default: Date.now }
-}); 
+    Ma_quan_tri_vien_tao: { type: String, required: true }    // ObjectId (FK)
+}, { timestamps: true }); 
 
 module.exports = mongoose.model('Voucher', Voucher);

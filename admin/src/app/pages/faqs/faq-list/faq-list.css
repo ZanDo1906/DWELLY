@@ -31,7 +31,7 @@
     display: inline-block;
     padding: 4px 10px;
     border-radius: 20px;
-    min-width: 110px;
+    width: 140px;
     text-align: center;
     font-size: 16px;
     font-weight: 600;
@@ -202,10 +202,15 @@
     border: 1px solid rgba(108, 82, 52, 0.4);
     color: #6c5234;
     border-radius: 8px;
-    padding: 8px 16px;
+    padding: 0 16px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 .filter-btn:hover {
@@ -233,13 +238,14 @@
     width: 160px;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 14px;
+    padding: 0 14px;
     border: 1px solid rgba(108, 82, 52, 0.4);
     border-radius: 8px;
     background: #fff;
     color: #6c5234;
     box-sizing: border-box;
     transition: all 0.2s ease;
+    height: 40px;
 }
 
 .dropdown-selected:hover {
@@ -283,13 +289,18 @@
 
 /* Nút xóa */
 .delete-btn {
-    padding: 8px 12px;
+    padding: 0 12px;
     border-radius: 8px;
     border: 1px solid #dcdcdc;
     background: #fff;
     color: #c05c5c;
     cursor: pointer;
     transition: 0.2s ease;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 .delete-btn:hover {

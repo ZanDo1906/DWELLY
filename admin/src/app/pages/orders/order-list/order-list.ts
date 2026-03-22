@@ -137,13 +137,19 @@ export class OrderList implements OnInit {
 
   toggleSort(mode: 'az'): void {
     if (mode === 'az') {
-      this.sortMode = this.sortMode === 'az' ? 'za' : 'az';
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
       this.currentPage = 1;
     }
   }
 
   setDateSort(mode: 'newest' | 'oldest'): void {
-    this.sortMode = mode;
+    this.sortMode = this.sortMode === mode ? '' : mode;
     this.currentPage = 1;
   }
 

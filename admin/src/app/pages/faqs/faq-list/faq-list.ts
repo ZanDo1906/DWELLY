@@ -34,7 +34,7 @@ export class FaqList implements OnInit {
   searchText = '';
   selectedStatus: 'all' | 'unprocessed' | 'draft' | 'processed' = 'all';
   isStatusOpen = false;
-  sortType: 'az' | 'newest' | 'oldest' | null = null;
+  sortMode: '' | 'az' | 'za' | 'newest' | 'oldest' = '';
 
   statusOptions: Array<{ label: string; value: 'all' | 'unprocessed' | 'draft' | 'processed' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
@@ -106,15 +106,18 @@ export class FaqList implements OnInit {
   get sortedFaqs(): FaqItem[] {
     const list = [...this.filteredFaqs];
 
-    if (this.sortType === 'az') {
-      return list.sort((a, b) => a.questionCode.localeCompare(b.questionCode));
+    if (this.sortMode === 'az' || this.sortMode === 'za') {
+      return list.sort((a, b) => {
+        const compareValue = a.questionCode.localeCompare(b.questionCode);
+        return this.sortMode === 'az' ? compareValue : -compareValue;
+      });
     }
 
-    if (this.sortType === 'newest') {
+    if (this.sortMode === 'newest') {
       return list.sort((a, b) => b.submittedTimestamp - a.submittedTimestamp);
     }
 
-    if (this.sortType === 'oldest') {
+    if (this.sortMode === 'oldest') {
       return list.sort((a, b) => a.submittedTimestamp - b.submittedTimestamp);
     }
 
@@ -164,8 +167,21 @@ export class FaqList implements OnInit {
     this.isStatusOpen = false;
   }
 
-  setSortType(type: 'az' | 'newest' | 'oldest'): void {
-    this.sortType = type;
+  toggleSort(mode: 'az'): void {
+    if (mode === 'az') {
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
+      this.currentPage = 1;
+    }
+  }
+
+  setDateSort(mode: 'newest' | 'oldest'): void {
+    this.sortMode = this.sortMode === mode ? '' : mode;
     this.currentPage = 1;
   }
 

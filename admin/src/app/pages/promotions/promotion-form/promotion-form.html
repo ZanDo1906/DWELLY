@@ -40,12 +40,21 @@
             <!-- Phân hạng người dùng -->
             <div class="form-group">
               <label>Phân hạng người dùng <span>*</span></label>
-              <select name="minimumRank" [(ngModel)]="formValue.minimumRank">
-                <option value="" disabled>Chọn phân hạng</option>
-                <option *ngFor="let option of rankOptions" [value]="option.value">
-                  {{ option.label }}
-                </option>
-              </select>
+              <div class="custom-dropdown-wrapper" [class.open]="isRankOpen">
+                <div class="custom-dropdown-selected" 
+                     [class.placeholder]="!formValue.minimumRank"
+                     (click)="toggleRankDropdown($event)">
+                  {{ selectedRankLabel }}
+                  <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="isRankOpen"></i>
+                </div>
+                <div class="custom-dropdown-menu" *ngIf="isRankOpen">
+                  <div class="custom-dropdown-item" 
+                       *ngFor="let option of rankOptions" 
+                       (click)="selectRank(option.value)">
+                    {{ option.label }}
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Số lượng -->

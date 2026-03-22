@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
@@ -41,6 +41,30 @@ export class PromotionForm {
   formValue: PromotionFormData = this.createEmptyFormValue();
 
   showConfirm = false;
+  isRankOpen = false;
+
+  get selectedRankLabel(): string {
+    if (!this.formValue.minimumRank) {
+      return 'Chọn phân hạng';
+    }
+    const option = this.rankOptions.find(o => o.value === this.formValue.minimumRank);
+    return option ? option.label : 'Chọn phân hạng';
+  }
+
+  toggleRankDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isRankOpen = !this.isRankOpen;
+  }
+
+  selectRank(value: string): void {
+    this.formValue.minimumRank = value;
+    this.isRankOpen = false;
+  }
+
+  @HostListener('document:click')
+  closeDropdowns(): void {
+    this.isRankOpen = false;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['promotion']) {

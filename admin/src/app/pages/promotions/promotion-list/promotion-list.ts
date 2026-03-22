@@ -38,7 +38,7 @@ export class PromotionList {
   searchText = '';
   selectedStatus: 'all' | 'active' | 'paused' = 'all';
   isStatusOpen = false;
-  sortType: 'az' | 'newest' | 'oldest' | null = null;
+  sortMode: '' | 'az' | 'za' | 'newest' | 'oldest' = '';
 
   statusOptions: Array<{ label: string; value: 'all' | 'active' | 'paused' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
@@ -92,15 +92,18 @@ export class PromotionList {
   get sortedPromotions(): PromotionItem[] {
     const list = [...this.filteredPromotions];
 
-    if (this.sortType === 'az') {
-      return list.sort((first, second) => first.promotionCode.localeCompare(second.promotionCode));
+    if (this.sortMode === 'az' || this.sortMode === 'za') {
+      return list.sort((first, second) => {
+        const compareValue = first.promotionCode.localeCompare(second.promotionCode);
+        return this.sortMode === 'az' ? compareValue : -compareValue;
+      });
     }
 
-    if (this.sortType === 'newest') {
+    if (this.sortMode === 'newest') {
       return list.sort((first, second) => this.toTimestamp(second.startDate) - this.toTimestamp(first.startDate));
     }
 
-    if (this.sortType === 'oldest') {
+    if (this.sortMode === 'oldest') {
       return list.sort((first, second) => this.toTimestamp(first.startDate) - this.toTimestamp(second.startDate));
     }
 
@@ -156,8 +159,21 @@ export class PromotionList {
     this.isStatusOpen = false;
   }
 
-  setSortType(type: 'az' | 'newest' | 'oldest'): void {
-    this.sortType = type;
+  toggleSort(mode: 'az'): void {
+    if (mode === 'az') {
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
+      this.currentPage = 1;
+    }
+  }
+
+  setDateSort(mode: 'newest' | 'oldest'): void {
+    this.sortMode = this.sortMode === mode ? '' : mode;
     this.currentPage = 1;
   }
 
