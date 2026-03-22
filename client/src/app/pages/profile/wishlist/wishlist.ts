@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { iProduct } from '../../../interfaces/product';
 import { Product } from '../../../services/product';
 import { Client } from '../../../services/client';
-import { Router } from '@angular/router';
+import { Cart } from '../../../services/cart';
 
 @Component({
   selector: 'app-wishlist',
@@ -19,10 +19,13 @@ export class Wishlist implements OnInit {
   priceSort: 'asc' | 'desc' = 'desc';
   dateSort: 'asc' | 'desc' = 'desc';
   currentSort: 'date' | 'price' | null = null;
+  cartNotificationProductId: string | null = null;
+  private cartNotificationTimer: ReturnType<typeof setTimeout> | null = null;
+
   constructor(
     public productService: Product,
     private clientService: Client,
-    private router: Router
+    private cartService: Cart
   ) {}
 
   ngOnInit(): void {
@@ -96,8 +99,22 @@ export class Wishlist implements OnInit {
         error: (err) => console.error(err)
       });
   }
-  goToCart() {
-  this.router.navigate(['/cart-page']);
+  addToCart(productId: string): void {
+    this.cartService.addItem(productId);
+    this.showCartNotification(productId);
+  }
+
+  private showCartNotification(productId: string): void {
+    this.cartNotificationProductId = productId;
+
+    if (this.cartNotificationTimer) {
+      clearTimeout(this.cartNotificationTimer);
+    }
+
+    this.cartNotificationTimer = setTimeout(() => {
+      this.cartNotificationProductId = null;
+      this.cartNotificationTimer = null;
+    }, 1500);
   }
   sortByNewest() {
     this.products = [...this.products].sort((a, b) =>

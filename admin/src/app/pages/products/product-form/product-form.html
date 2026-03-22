@@ -37,23 +37,45 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Mã sản phẩm</label>
+                <label>
+                  Mã sản phẩm
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <input type="text" placeholder="Nhập mã sản phẩm" [(ngModel)]="product.Ma_san_pham" required />
               </div>
               <div class="form-group">
-                <label>Tên sản phẩm</label>
+                <label>
+                  Tên sản phẩm
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <input type="text" placeholder="Nhập tên sản phẩm" [(ngModel)]="product.Ten_san_pham" required />
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Giá bán</label>
+                <label>
+                  Giá bán
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <input type="number" placeholder="Nhập giá bán" [(ngModel)]="product.Gia_ban" required />
               </div>
               <div class="form-group">
-                <label>Tồn kho</label>
+                <label>% giảm giá</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  placeholder="Nhập % giảm giá"
+                  [ngModel]="$any(product).Phan_tram_giam_gia ?? 0"
+                  (ngModelChange)="$any(product).Phan_tram_giam_gia = $event" />
+              </div>
+              <div class="form-group">
+                <label>
+                  Tồn kho
+                </label>
                 <input type="number" placeholder="Nhập số lượng tồn kho" [(ngModel)]="product.So_luong_ton_kho" required />
               </div>
+              
             </div>
           </div>
 
@@ -62,16 +84,25 @@
             <h4 class="section-title">Đặc tính sản phẩm</h4>
             <div class="form-row">
               <div class="form-group">
-                <label>Chất liệu</label>
+                <label>
+                  Chất liệu
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <input type="text" placeholder="Nhập chất liệu" [(ngModel)]="product.Chat_lieu" />
               </div>
               <div class="form-group">
-                <label>Kích thước</label>
+                <label>
+                  Kích thước
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <input type="text" placeholder="Nhập kích thước" [(ngModel)]="product.Kich_thuoc" />
               </div>
             </div>
             <div class="form-group">
-              <label>Mô tả chi tiết</label>
+              <label>
+                Mô tả chi tiết
+                <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+              </label>
               <textarea rows="4" placeholder="Nhập mô tả chi tiết" [(ngModel)]="product.Mo_ta"></textarea>
             </div>
           </div>
@@ -81,7 +112,10 @@
             <h4 class="section-title">Phân loại sản phẩm</h4>
             <div class="form-row">
               <div class="form-group">
-                <label>Mã danh mục</label>
+                <label>
+                  Mã danh mục
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <div class="custom-select" [class.open]="isDropdownOpen('category')">
                   <button type="button" class="custom-select-trigger" (click)="toggleDropdown('category', $event)">
                     <span class="custom-select-value">{{ getCategoryText() }}</span>
@@ -102,7 +136,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Mã loại phòng</label>
+                <label>
+                  Mã loại phòng
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <div class="custom-select" [class.open]="isDropdownOpen('room')">
                   <button type="button" class="custom-select-trigger" (click)="toggleDropdown('room', $event)">
                     <span class="custom-select-value">{{ getRoomText() }}</span>
@@ -125,7 +162,10 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Mã phong cách</label>
+                <label>
+                  Mã phong cách
+                  <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+                </label>
                 <div class="custom-select" [class.open]="isDropdownOpen('style')">
                   <button type="button" class="custom-select-trigger" (click)="toggleDropdown('style', $event)">
                     <span class="custom-select-value">{{ getStyleText() }}</span>
@@ -174,7 +214,10 @@
 
           <!-- Hình minh họa -->
             <div class="form-section">
-            <h4 class="section-title">Hình minh họa</h4>
+            <h4 class="section-title">
+              Hình minh họa
+              <i class="bi bi-asterisk" style="color:#c73030;font-size:7px;vertical-align:super;margin-left:4px;" aria-hidden="true"></i>
+            </h4>
             <div class="image-upload-grid">
                 <div *ngFor="let img of images; let i = index" 
                     class="image-placeholder"
@@ -195,11 +238,11 @@
 
             <!-- Nút hành động -->
             <div class="form-actions">
-                <button *ngIf="isEditMode" class="btn-delete-product" (click)="deleteProduct()">Xóa sản phẩm</button>
-                <button class="btn-cancel" (click)="cancelForm()">Hủy</button>
-                <button class="btn-save" (click)="saveProduct()">Lưu sản phẩm</button>
-                <button class="btn-draft" (click)="saveDraft()">Lưu nháp</button>
-                </div>
+              <button *ngIf="isEditMode" type="button" class="btn-delete-product" (click)="deleteProduct()">Xóa sản phẩm</button>
+              <button type="button" class="btn-save" (pointerdown)="requestSaveProduct($event)" (click)="requestSaveProduct($event)">Lưu sản phẩm</button>
+             
+              <button type="button" class="btn-cancel" (click)="cancelForm($event)">Hủy</button>
+            </div> 
 
         </div>
 
@@ -372,3 +415,12 @@
     </div>
   </div>
 </section>
+
+<app-confirm-dialog
+  *ngIf="showActionConfirm"
+  modalId="productActionConfirmModal"
+  [title]="confirmTitle"
+  [message]="confirmMessage"
+  (confirm)="handleActionConfirm()"
+  (cancel)="closeActionConfirm()">
+</app-confirm-dialog>

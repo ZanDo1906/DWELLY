@@ -6,6 +6,7 @@ import { ProductForm } from '../product-form/product-form';
 import { iProduct } from '../../../interfaces/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../services/product';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -42,52 +43,85 @@ export class ProductList implements OnInit {
     this.dropdownOpen = false;
   }
 
-  toggleSelect(id: string) {
+  toggleSelect(id: string): void {
+    if (this.selectedProducts.includes(id)) {
+      this.selectedProducts = this.selectedProducts.filter((productId) => productId !== id);
+      return;
+    }
 
-  if (this.selectedProducts.includes(id)) {
-    this.selectedProducts =
-      this.selectedProducts.filter(p => p !== id);
-  } else {
     this.selectedProducts.push(id);
   }
 
-}
   isSelected(id: string): boolean {
     return this.selectedProducts.includes(id);
   }
-  isAllSelected(): boolean {
-  return this.pagedProducts.length > 0 &&
-         this.pagedProducts.every(p =>
-           this.selectedProducts.includes(p.Ma_san_pham)
-         );
-}
-  toggleSelectAll(event: any) {
 
-  if (event.target.checked) {
-    this.selectedProducts =
-      this.pagedProducts.map(p => p.Ma_san_pham);
-  } else {
-    this.selectedProducts = [];
+  isAllSelected(): boolean {
+    return this.pagedProducts.length > 0
+      && this.pagedProducts.every((product) => this.selectedProducts.includes(product.Ma_san_pham));
   }
 
-}
+  toggleSelectAll(event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    const currentPageIds = this.pagedProducts.map((product) => product.Ma_san_pham);
 
-  deleteSelected() {
+    if (checked) {
+      this.selectedProducts = Array.from(new Set([...this.selectedProducts, ...currentPageIds]));
+      return;
+    }
 
-  if (!confirm("Bạn có chắc muốn xóa các sản phẩm đã chọn?")) return;
+    this.selectedProducts = this.selectedProducts.filter((id) => !currentPageIds.includes(id));
+  }
 
-  this.selectedProducts.forEach(id => {
-    this.productService.deleteProduct(id).subscribe();
-  });
+  get isActivateSelectedMode(): boolean {
+    if (!this.selectedProducts.length) {
+      return false;
+    }
 
-  this.products =
-    this.products.filter(
-      p => !this.selectedProducts.includes(p.Ma_san_pham)
+    const selectedSet = new Set(this.selectedProducts);
+    return this.products.some(
+      (product) => selectedSet.has(product.Ma_san_pham) && !product.Trang_thai
+    );
+  }
+
+  applySelectedStatusChange(): void {
+    if (!this.selectedProducts.length) {
+      return;
+    }
+
+    const targetStatus = this.isActivateSelectedMode;
+    const selectedSet = new Set(this.selectedProducts);
+    const productsToUpdate = this.products.filter(
+      (product) => selectedSet.has(product.Ma_san_pham) && product.Trang_thai !== targetStatus
     );
 
-  this.selectedProducts = [];
+    if (!productsToUpdate.length) {
+      alert(targetStatus
+        ? 'Các sản phẩm đã ở trạng thái đang kinh doanh.'
+        : 'Các sản phẩm đã ở trạng thái ngưng kinh doanh.');
+      this.selectedProducts = [];
+      return;
+    }
 
-}
+    const requests = productsToUpdate.map((product) =>
+      this.productService.updateProduct(product.Ma_san_pham, { Trang_thai: targetStatus })
+    );
+
+    forkJoin(requests).subscribe({
+      next: () => {
+        this.products = this.products.map((product) =>
+          selectedSet.has(product.Ma_san_pham)
+            ? { ...product, Trang_thai: targetStatus }
+            : product
+        );
+        this.selectedProducts = [];
+      },
+      error: (err) => {
+        console.error('Lỗi khi cập nhật trạng thái sản phẩm', err);
+        alert('Không thể cập nhật trạng thái một số sản phẩm. Vui lòng thử lại!');
+      }
+    });
+  }
 
   toggleDropdown(event: Event): void {
   event.stopPropagation();

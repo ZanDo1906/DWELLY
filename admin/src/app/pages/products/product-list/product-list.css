@@ -39,7 +39,7 @@
   background: #56422a;
 }
 
-.delete-btn {
+.deactivate-btn {
   background: #6c5234;
   border: 1px solid #6c5234;
   color: #fff;
@@ -47,15 +47,31 @@
   padding: 8px 14px;
   cursor: pointer;
   font-size: 14px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   transition: all 0.2s ease;
 }
 
-.delete-btn:hover {
+.deactivate-btn:hover {
   background: #56422a;
   border-color: #56422a;
+}
+
+.deactivate-btn.activate-mode {
+  background: #546745;
+  border-color: #546745;
+}
+
+.deactivate-btn.activate-mode:hover {
+  background: #45573a;
+  border-color: #45573a;
+}
+
+.deactivate-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .filter-btn.active {
@@ -64,23 +80,54 @@
   font-weight: 500;
 }
 
-app-table th:nth-child(1),
-app-table td:nth-child(1) {
-  width: 40px;
+.products-page app-table input[type="checkbox"] {
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  accent-color: #6c5234;
+}
+
+.products-page app-table th:nth-child(1),
+.products-page app-table td:nth-child(1) {
+  width: 48px;
+  min-width: 48px;
   text-align: center;
 }
 
-app-table th:nth-child(2),
-app-table td:nth-child(2) {
-  width: 60px;
-  text-align: center;
+.products-page app-table th:nth-child(2),
+.products-page app-table td:nth-child(2) {
+  width: 8%;
+  min-width: 88px;
+  white-space: nowrap;
 }
 
-app-table th:nth-child(3),
-app-table td:nth-child(3) {
-  width: 280px;
-  text-align: center;
+.products-page app-table th:nth-child(3),
+.products-page app-table td:nth-child(3) {
+  width: 42%;
+  min-width: 260px;
 }
+
+.products-page app-table th:nth-child(4),
+.products-page app-table td:nth-child(4) {
+  width: 16%;
+  min-width: 140px;
+  white-space: nowrap;
+}
+
+.products-page app-table th:nth-child(5),
+.products-page app-table td:nth-child(5) {
+  width: 14%;
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.products-page app-table th:nth-child(6),
+.products-page app-table td:nth-child(6) {
+  width: 18%;
+  min-width: 150px;
+  white-space: nowrap;
+}
+
 
 /* FILTER BAR & BUTTONS */
 .filter-bar {
@@ -235,40 +282,6 @@ app-table td:nth-child(3) {
   }
 }
 
-app-table th {
-  background: rgba(175, 163, 134, 0.67) !important;
-  font-weight: 700;
-  color: #ffffff;
-  padding: 14px 12px;
-  font-size: 16px;
-}
-
-app-table td {
-  font-size: 14px;
-}
-
 .text-warning {
   color: #ffc107 !important;
-}
-
-[table-pagination] button {
-  margin: 0 4px;
-  padding: 6px 12px;
-  border: 1px solid rgba(108, 82, 52, 0.4);
-  border-radius: 4px;
-  background: #fff;
-  color: #6c5234;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-[table-pagination] button.active {
-  background: #6c5234;
-  color: #fff;
-  border-color: #6c5234;
-}
-
-[table-pagination] button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }

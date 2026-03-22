@@ -1,12 +1,12 @@
-import { Component, OnInit, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { iProduct } from '../../../interfaces/product';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { Product } from '../../../services/product';
 import { iConcept } from '../../../interfaces/concept';
 import { Concept } from '../../../services/concept';
+import { Cart } from '../../../services/cart';
 
 @Component({
   selector: 'app-concept-detail',
@@ -14,7 +14,7 @@ import { Concept } from '../../../services/concept';
   templateUrl: './concept-detail.html',
   styleUrls: ['./concept-detail.css'],
 })
-export class ConceptDetail implements OnInit {
+export class ConceptDetail implements OnInit, OnDestroy {
   @ViewChild('sortDropdown') sortDropdown?: ElementRef<HTMLElement>;
 
   product?: iProduct;
@@ -26,13 +26,16 @@ export class ConceptDetail implements OnInit {
 
   sortType: string = 'highest';
   dropdownOpen: boolean = false;
+  isAddingAll = false;
+  addAllStatusMessage = '';
+  private addAllStatusTimer: ReturnType<typeof setTimeout> | null = null;
 
 
   constructor(
     public productService: Product,
     private conceptService: Concept,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private cartService: Cart
   ) {}
   @HostListener('document:click', ['$event'])
   clickout(event: MouseEvent) {
@@ -94,6 +97,13 @@ export class ConceptDetail implements OnInit {
       },
       error: (err: unknown) => console.error('Failed to load products', err),
     });
+}
+
+  ngOnDestroy(): void {
+    if (this.addAllStatusTimer) {
+      clearTimeout(this.addAllStatusTimer);
+      this.addAllStatusTimer = null;
+    }
   }
 
   sortLabels: Record<string, string> = {
@@ -149,6 +159,42 @@ export class ConceptDetail implements OnInit {
     if (!len) return;
     const idx = this.currentIndex[p.Ma_san_pham] ?? 0;
     this.currentIndex[p.Ma_san_pham] = (idx + 1) % len;
+  }
+
+  addAllToCart(): void {
+    if (this.isAddingAll || this.relatedProducts.length === 0) {
+      return;
+    }
+
+    this.isAddingAll = true;
+
+    const uniqueProductIds = Array.from(
+      new Set(
+        this.relatedProducts
+          .map((product) => product.Ma_san_pham)
+          .filter((productId) => Boolean(productId))
+      )
+    );
+
+    uniqueProductIds.forEach((productId) => {
+      this.cartService.addItem(productId, 1);
+    });
+
+    this.showAddAllStatus(`Đã thêm ${uniqueProductIds.length} sản phẩm vào giỏ hàng`);
+    this.isAddingAll = false;
+  }
+
+  private showAddAllStatus(message: string): void {
+    this.addAllStatusMessage = message;
+
+    if (this.addAllStatusTimer) {
+      clearTimeout(this.addAllStatusTimer);
+    }
+
+    this.addAllStatusTimer = setTimeout(() => {
+      this.addAllStatusMessage = '';
+      this.addAllStatusTimer = null;
+    }, 1800);
   }
 
   }

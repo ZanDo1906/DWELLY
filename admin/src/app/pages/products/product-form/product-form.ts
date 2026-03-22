@@ -13,9 +13,11 @@ import { iCategory } from '../../../interfaces/category';
 import { iRoom } from '../../../interfaces/room';
 import { iStyle } from '../../../interfaces/style';
 import { iConcept } from '../../../interfaces/concept';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
 
 type ClassificationType = 'category' | 'room' | 'style' | 'concept';
 type PopupDropdownType = 'roomCode' | 'styleCode';
+type ConfirmActionType = 'delete-product' | 'cancel-form' | 'save-product' | 'delete-classification';
 
 interface ClassificationListItem {
   code: string;
@@ -35,7 +37,7 @@ interface ClassificationFormState {
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ConfirmDialogComponent],
   templateUrl: './product-form.html',
   styleUrls: ['./product-form.css'],
 })
@@ -67,6 +69,8 @@ export class ProductForm implements OnInit {
     Ma_khong_gian: '',
     Trang_thai: true
   };
+  private originalProduct: iProduct | null = null;
+  private originalImages: (string | null)[] = [null, null, null, null];
   selectedFiles: File[] = [];
   isEditMode: boolean = false;
   images: (string | null)[] = [null, null, null, null];
@@ -82,6 +86,61 @@ export class ProductForm implements OnInit {
   selectedClassificationCode = '';
   classificationForm: ClassificationFormState = this.createEmptyClassificationForm();
   isConceptImageUploading = false;
+  showActionConfirm = false;
+  confirmTitle = 'Xác nhận';
+  confirmMessage = 'Bạn có chắc muốn thực hiện hành động này?';
+  pendingConfirmAction: ConfirmActionType | null = null;
+
+  openActionConfirm(action: ConfirmActionType): void {
+    this.pendingConfirmAction = action;
+
+    if (action === 'delete-product') {
+      this.confirmTitle = 'Xác nhận xóa';
+      this.confirmMessage = 'Bạn có chắc muốn xóa sản phẩm này?';
+    } else if (action === 'cancel-form') {
+      this.confirmTitle = 'Xác nhận hủy';
+      this.confirmMessage = 'Bạn có chắc muốn hủy các thay đổi hiện tại?';
+    } else if (action === 'save-product') {
+      this.confirmTitle = 'Xác nhận lưu';
+      this.confirmMessage = this.isEditMode
+        ? 'Bạn có chắc muốn lưu cập nhật sản phẩm này?'
+        : 'Bạn có chắc muốn lưu mới sản phẩm này?';
+    } else {
+      this.confirmTitle = 'Xác nhận xóa';
+      this.confirmMessage = 'Bạn có chắc muốn xóa mục này không?';
+    }
+
+    this.showActionConfirm = true;
+  }
+
+  closeActionConfirm(): void {
+    this.showActionConfirm = false;
+    this.pendingConfirmAction = null;
+  }
+
+  handleActionConfirm(): void {
+    const action = this.pendingConfirmAction;
+    this.closeActionConfirm();
+
+    if (action === 'delete-product') {
+      this.performDeleteProduct();
+      return;
+    }
+
+    if (action === 'cancel-form') {
+      this.restoreFormState();
+      return;
+    }
+
+    if (action === 'save-product') {
+      this.saveProduct();
+      return;
+    }
+
+    if (action === 'delete-classification') {
+      this.performDeleteClassificationItem();
+    }
+  }
 
   async ngOnInit() {
   this.loadClassificationData();
@@ -96,7 +155,8 @@ export class ProductForm implements OnInit {
         this.images = this.product.Hinh_anh.length
           ? [...this.product.Hinh_anh]
           : [null, null, null, null];
-          this.checkAndAddNewPlaceholder();
+        this.checkAndAddNewPlaceholder();
+        this.syncOriginalState();
       },
       error: (err) => console.error('Không tìm thấy sản phẩm', err)
     });
@@ -668,7 +728,14 @@ export class ProductForm implements OnInit {
       return;
     }
 
-    if (!confirm('Bạn có chắc muốn xóa mục này không?')) {
+    this.openActionConfirm('delete-classification');
+  }
+
+  private performDeleteClassificationItem(): void {
+    const code = (this.selectedClassificationCode || this.classificationForm.code).trim();
+
+    if (!code) {
+      this.showError('Vui lòng chọn mục cần xóa.');
       return;
     }
 
@@ -810,11 +877,20 @@ export class ProductForm implements OnInit {
   }
   
   deleteProduct(): void {
-  if (!this.product.Ma_san_pham) {
-    alert('Không có mã sản phẩm để xóa!');
-    return;
+    if (!this.product.Ma_san_pham) {
+      alert('Không có mã sản phẩm để xóa!');
+      return;
+    }
+
+    this.openActionConfirm('delete-product');
   }
-  if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+
+  private performDeleteProduct(): void {
+    if (!this.product.Ma_san_pham) {
+      alert('Không có mã sản phẩm để xóa!');
+      return;
+    }
+
     this.productService.deleteProduct(this.product.Ma_san_pham).subscribe({
       next: () => {
         alert('Sản phẩm đã được xóa!');
@@ -826,7 +902,6 @@ export class ProductForm implements OnInit {
       }
     });
   }
-}
 
 removeImage(index: number, event: Event): void {
   event.stopPropagation();
@@ -872,15 +947,16 @@ removeImage(index: number, event: Event): void {
     return allTextEmpty && numberNotChanged && noImage;
   }
 
-  cancelForm(): void {
+  cancelForm(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+
     if (this.isFormEmpty()) {
       alert('Bạn chưa nhập nội dung nào!');
       return;
     }
 
-    if (confirm('Bạn có chắc muốn hủy không?')) {
-      this.resetForm();
-    }
+    this.openActionConfirm('cancel-form');
   }
 
   saveDraft(): void {
@@ -893,8 +969,19 @@ removeImage(index: number, event: Event): void {
     alert('Đã lưu nháp thành công!');
   }
 
+  requestSaveProduct(event?: Event): void {
+    if (this.showActionConfirm) {
+      return;
+    }
+
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.openActionConfirm('save-product');
+  }
+
   saveProduct(): void {
     const missingFields: string[] = [];
+    const priceValue = Number(this.product.Gia_ban);
 
     if (!this.product.Ma_san_pham.trim())
       missingFields.push('Mã sản phẩm');
@@ -902,11 +989,17 @@ removeImage(index: number, event: Event): void {
     if (!this.product.Ten_san_pham.trim())
       missingFields.push('Tên sản phẩm');
 
-    if (this.product.Gia_ban === 0)
+    if (this.product.Gia_ban === null || this.product.Gia_ban === undefined || Number.isNaN(priceValue))
       missingFields.push('Giá bán');
 
-    if (this.product.So_luong_ton_kho === 0)
-      missingFields.push('Tồn kho');
+    if (!this.product.Mo_ta.trim())
+      missingFields.push('Mô tả chi tiết');
+
+    if (!this.product.Kich_thuoc.trim())
+      missingFields.push('Kích thước');
+
+    if (!this.product.Chat_lieu.trim())
+      missingFields.push('Chất liệu');
 
     if (!this.product.Ma_danh_muc)
       missingFields.push('Danh mục');
@@ -972,24 +1065,48 @@ removeImage(index: number, event: Event): void {
     }
   }
 
-  private uploadAfterSave(code: string, formData: FormData) {
-  this.productService.uploadImages(code, formData).subscribe({
-    next: () => {
-      this.showSuccess('Lưu sản phẩm và tải ảnh thành công!');
-      localStorage.removeItem('dwelly_product_draft');
-    this.selectedFiles = []; 
-      
-      this.productService.getProductByCode(code).subscribe({
-        next: (data) => {
-          this.product = { ...data };
-          this.images = [...data.Hinh_anh];
-          this.checkAndAddNewPlaceholder();
-        }
-      });
-    },
-    error: () => this.showError('Đã lưu thông tin nhưng tải ảnh thất bại!')
-  });
-}
+  private uploadAfterSave(code: string, formData: FormData): void {
+    this.productService.uploadImages(code, formData).subscribe({
+      next: () => {
+        this.showSuccess('Lưu sản phẩm và tải ảnh thành công!');
+        localStorage.removeItem('dwelly_product_draft');
+        this.selectedFiles = [];
+
+        this.productService.getProductByCode(code).subscribe({
+          next: (data) => {
+            this.product = { ...data };
+            this.images = [...data.Hinh_anh];
+            this.checkAndAddNewPlaceholder();
+            this.syncOriginalState();
+          }
+        });
+      },
+      error: () => this.showError('Đã lưu thông tin nhưng tải ảnh thất bại!')
+    });
+  }
+
+  private syncOriginalState(): void {
+    this.originalProduct = {
+      ...this.product,
+      Hinh_anh: [...(this.product.Hinh_anh || [])]
+    };
+    this.originalImages = this.images.length ? [...this.images] : [null, null, null, null];
+  }
+
+  private restoreFormState(): void {
+    if (this.isEditMode && this.originalProduct) {
+      this.product = {
+        ...this.originalProduct,
+        Hinh_anh: [...(this.originalProduct.Hinh_anh || [])]
+      };
+      this.images = this.originalImages.length ? [...this.originalImages] : [null, null, null, null];
+      this.selectedFiles = [];
+      this.checkAndAddNewPlaceholder();
+      return;
+    }
+
+    this.resetForm();
+  }
   
   
   private resetForm(): void {

@@ -12,7 +12,7 @@
 
     <!-- Tên -->
     <div class="mb-3">
-      <label>Họ và tên</label>
+      <label>Họ và tên <span class="text-danger">*</span></label>
       <div class="input-pos-wrapper">
         <input type="text" class="form-control" formControlName="name" placeholder="Nhập họ và tên"
           [class.is-invalid]="name.invalid && (name.touched || name.dirty)">
@@ -31,7 +31,7 @@
 
     <!-- Số điện thoại -->
     <div class="mb-3">
-      <label>Số điện thoại</label>
+      <label>Số điện thoại <span class="text-danger">*</span></label>
       <div class="input-pos-wrapper">
         <input type="tel" class="form-control" formControlName="phone" placeholder="Nhập số điện thoại"
           [class.is-invalid]="phone.invalid && (phone.touched || phone.dirty)">
@@ -50,7 +50,7 @@
 
     <!-- Email -->
     <div class="mb-3">
-      <label>Email</label>
+      <label>Email <span class="text-danger">*</span></label>
       <div class="input-pos-wrapper">
         <input type="email" class="form-control" formControlName="email" placeholder="Nhập email"
           [class.is-invalid]="email.invalid && (email.touched || email.dirty)">
@@ -68,7 +68,7 @@
 
     <!-- Mật khẩu -->
     <div class="mb-3">
-      <label>Mật khẩu</label>
+      <label>Mật khẩu <span class="text-danger">*</span></label>
       <div class="input-pos-wrapper">
         <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password"
           placeholder="Nhập mật khẩu" [class.is-invalid]="password.invalid && (password.touched || password.dirty)">
@@ -87,7 +87,7 @@
     </div>
       <!-- Nhập lại mật khẩu -->
       <div class="mb-3">
-      <label>Nhập lại mật khẩu</label>
+      <label>Nhập lại mật khẩu <span class="text-danger">*</span></label>
       <div class="input-pos-wrapper">
         <input
           [type]="showConfirmPassword ? 'text' : 'password'"
@@ -122,7 +122,7 @@
         id="accept">
 
       <label class="form-check-label" for="accept">
-        Tôi đã đọc và đồng ý với Chính sách & Quy định
+        Tôi đã đọc và đồng ý với Chính sách & Quy định <span class="text-danger">*</span>
       </label>
     </div>
 
@@ -130,13 +130,17 @@
       Bạn phải đồng ý điều khoản
     </div>
 
+    <div class="text-danger mb-2" *ngIf="registerError">
+      {{ registerError }}
+    </div>
+
     <button
   type="submit"
   class="btn btn-register"
-  [disabled]="regForm.invalid">
+  [disabled]="regForm.invalid || isCheckingAvailability">
 
-  <i class="bi bi-arrow-right"></i>
-  <span>Đăng ký</span>
+  <i class="bi bi-arrow-right" *ngIf="!isCheckingAvailability"></i>
+  <span>{{ isCheckingAvailability ? 'Đang kiểm tra...' : 'Đăng ký' }}</span>
 
 </button>
 

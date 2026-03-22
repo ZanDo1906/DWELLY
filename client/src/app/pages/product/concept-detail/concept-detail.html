@@ -5,9 +5,9 @@
 
         <!-- Breadcrumb --> 
         <div class="breadcrumb mb-3"> 
-          <a routerLink="/" class="breadcrumb-home">
+          <a routerLink="/concept-list" class="breadcrumb-home">
             <i class="bi bi-house-door"></i>
-            <span>Trang chủ</span>
+            <span>Gợi ý không gian</span>
           </a>
           <i class="bi bi-chevron-right"></i>
           <a routerLink="/concepts">{{ conceptName }}</a>
@@ -29,10 +29,20 @@
                 <li (click)="setSort('lowest', $event)">Giá thấp</li>
               </ul>
             </div>
-            <button class="btn-add-all ms-3"> 
-              <i class="bi bi-plus-circle"></i> 
-              <span>Thêm tất cả vào giỏ </span>
-            </button> 
+            <div class="add-all-wrapper ms-3">
+              <button
+                type="button"
+                class="btn-add-all"
+                (click)="addAllToCart()"
+                [disabled]="!relatedProducts.length || isAddingAll">
+                <i class="bi" [ngClass]="isAddingAll ? 'bi-hourglass-split' : 'bi-plus-circle'"></i>
+                <span>{{ isAddingAll ? 'Đang thêm...' : 'Thêm tất cả vào giỏ' }}</span>
+              </button>
+
+              <div class="add-all-notification" *ngIf="addAllStatusMessage">
+                <i class="bi bi-check-circle"></i> {{ addAllStatusMessage }}
+              </div>
+            </div>
           </div>
         </div>
         <!-- Phần sản phẩm liên quan -->

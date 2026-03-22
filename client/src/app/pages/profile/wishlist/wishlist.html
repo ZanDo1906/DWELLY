@@ -44,9 +44,13 @@
           </div>
 
           <div class="actions">
-            <button class="btn-cart" (click)="goToCart()">
+            <button class="btn-cart" (click)="addToCart(p.Ma_san_pham)">
               <i class="bi bi-cart"></i>
             </button>
+          </div>
+
+          <div class="cart-notification" *ngIf="cartNotificationProductId === p.Ma_san_pham">
+            <i class="bi bi-check-circle"></i> Đã thêm vào giỏ hàng
           </div>
 
         </div>

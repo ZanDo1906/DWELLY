@@ -81,6 +81,13 @@ export class Client {
   login(data: any) {
     return this.http.post(`${baseUrl}/login`, data);
   }
+
+  checkRegisterAvailability(data: { email: string; phone: string }) {
+    return this.http
+      .post(`${baseUrl}/register/check-availability`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   register(data: any) {
     return this.http.post(`${baseUrl}/register`, data);
   }

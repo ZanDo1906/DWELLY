@@ -15,6 +15,44 @@ function normalizePhone(phone) {
   return String(phone || '').trim().replace(/\s+/g, '');
 }
 
+function normalizeEmail(email) {
+  return String(email || '').trim().toLowerCase();
+}
+
+function escapeRegex(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+async function checkDuplicateEmailPhone(email, phone) {
+  const [existingEmail, existingPhone] = await Promise.all([
+    email
+      ? Client.findOne({
+        Email: { $regex: new RegExp(`^${escapeRegex(email)}$`, 'i') }
+      }).select('_id')
+      : null,
+    phone
+      ? Client.findOne({ So_dien_thoai: phone }).select('_id')
+      : null
+  ]);
+
+  return {
+    emailExists: Boolean(existingEmail),
+    phoneExists: Boolean(existingPhone)
+  };
+}
+
+function buildDuplicateContactMessage({ emailExists, phoneExists }) {
+  if (emailExists && phoneExists) {
+    return 'Email và Số điện thoại đều đã tồn tại';
+  }
+
+  if (emailExists) {
+    return 'Email đã tồn tại';
+  }
+
+  return 'Số điện thoại đã tồn tại';
+}
+
 function isValidPhone(phone) {
   const normalizedPhone = normalizePhone(phone);
   const isValidFormat = /^(0|\+84)(3|5|7|8|9)\d{8}$/.test(normalizedPhone);
@@ -715,11 +753,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//====================== REGISTER =================
-router.post("/register", async (req, res) => {
+//====================== REGISTER AVAILABILITY =================
+router.post("/register/check-availability", async (req, res) => {
   try {
-    const { name, phone, email, password } = req.body;
+    const { phone, email } = req.body;
     const normalizedPhone = normalizePhone(phone);
+    const normalizedEmail = normalizeEmail(email);
+
+    if (!normalizedEmail || !normalizedPhone) {
+      return res.status(400).json({
+        message: "Vui lòng nhập đầy đủ email và số điện thoại"
+      });
+    }
 
     if (!isValidPhone(normalizedPhone)) {
       return res.status(400).json({
@@ -727,13 +772,60 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    const existing = await Client.findOne({
-      $or: [{ Email: email }, { So_dien_thoai: normalizedPhone }]
-    });
+    const duplicateStatus = await checkDuplicateEmailPhone(normalizedEmail, normalizedPhone);
+    const hasDuplicate = duplicateStatus.emailExists || duplicateStatus.phoneExists;
 
-    if (existing) {
+    if (hasDuplicate) {
+      return res.status(409).json({
+        message: buildDuplicateContactMessage(duplicateStatus),
+        exists: {
+          email: duplicateStatus.emailExists,
+          phone: duplicateStatus.phoneExists
+        }
+      });
+    }
+
+    return res.json({
+      message: "Thông tin đăng ký hợp lệ",
+      exists: {
+        email: false,
+        phone: false
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
+
+//====================== REGISTER =================
+router.post("/register", async (req, res) => {
+  try {
+    const { name, phone, email, password } = req.body;
+    const normalizedPhone = normalizePhone(phone);
+    const normalizedEmail = normalizeEmail(email);
+
+    if (!name || !password || !normalizedEmail || !normalizedPhone) {
       return res.status(400).json({
-        message: "Email hoặc Số điện thoại đã tồn tại"
+        message: "Vui lòng nhập đầy đủ thông tin đăng ký"
+      });
+    }
+
+    if (!isValidPhone(normalizedPhone)) {
+      return res.status(400).json({
+        message: "Số điện thoại không hợp lệ"
+      });
+    }
+
+    const duplicateStatus = await checkDuplicateEmailPhone(normalizedEmail, normalizedPhone);
+    const hasDuplicate = duplicateStatus.emailExists || duplicateStatus.phoneExists;
+
+    if (hasDuplicate) {
+      return res.status(400).json({
+        message: buildDuplicateContactMessage(duplicateStatus),
+        exists: {
+          email: duplicateStatus.emailExists,
+          phone: duplicateStatus.phoneExists
+        }
       });
     }
 
@@ -758,7 +850,7 @@ router.post("/register", async (req, res) => {
       Ma_khach_hang: newCode,
       Ho_va_ten: name,
       So_dien_thoai: normalizedPhone,
-      Email: email,
+      Email: normalizedEmail,
       Mat_khau: hashed,
       Trang_thai: true,
       Ngay_tao: new Date(),

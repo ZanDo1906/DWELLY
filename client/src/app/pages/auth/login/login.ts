@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../../services/client';
@@ -10,10 +10,14 @@ import { Client } from '../../../services/client';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements AfterViewInit, OnDestroy {
 
   loginForm!: any;
   loginError = '';
+  private loginModalEl: HTMLElement | null = null;
+  private readonly handleLoginModalHidden = (_event: Event): void => {
+    this.resetFormState();
+  };
 
   constructor(private fb: FormBuilder, private clientService: Client) {
     this.loginForm = this.fb.group({
@@ -67,6 +71,25 @@ export class Login {
       modal.hide();
     }
   }
+
+  ngAfterViewInit(): void {
+    this.loginModalEl = document.getElementById('loginModal');
+    this.loginModalEl?.addEventListener('hidden.bs.modal', this.handleLoginModalHidden);
+  }
+
+  ngOnDestroy(): void {
+    this.loginModalEl?.removeEventListener('hidden.bs.modal', this.handleLoginModalHidden);
+  }
+
+  private resetFormState(): void {
+    this.loginForm.reset({
+      email: '',
+      password: ''
+    });
+    this.loginError = '';
+    this.showPassword = false;
+  }
+
   // Khai báo biến để kiểm tra ẩn/hiện cho từng ô
 showPassword = false;
 

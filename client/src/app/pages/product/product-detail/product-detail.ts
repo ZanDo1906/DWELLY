@@ -1,17 +1,17 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../services/product';
 import { Client } from '../../../services/client';
 import { CareInstruction } from '../../../services/care_instruction';
 import { Review } from '../../../services/review';
+import { Order_Details } from '../../../services/order_details';
+import { Cart } from '../../../services/cart';
 import { iProduct } from '../../../interfaces/product';
 import { iReview } from '../../../interfaces/review';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { MaintenanceModal } from '../maintenance-modal/maintenance-modal';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -40,11 +40,14 @@ export class ProductDetail implements OnInit, OnDestroy {
   dropdownOpen = false;
   totalFavorites: number = 0;
   isFavorite: boolean = false;
+  soldCount: number = 0;
+  showCartNotification = false;
   isMaintenanceOpen = false;
   selectedCareData: any = null;
   allCareInstructions: any[] = [];
   productCareInstruction: any = null;
   private routeSub: Subscription | null = null;
+  private cartNotificationTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     public productService: Product,
@@ -52,16 +55,25 @@ export class ProductDetail implements OnInit, OnDestroy {
     private careService: CareInstruction,     
     private clientService: Client, 
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private eRef: ElementRef,
-    private router: Router 
+    private router: Router,
+    private orderDetailsService: Order_Details,
+    private cartService: Cart
   ) {}
 
  @ViewChild('scrollRow') scrollRow!: ElementRef<HTMLDivElement>;
+ @ViewChild('reviewSortDropdown') reviewSortDropdown?: ElementRef<HTMLElement>;
 
  @HostListener('document:click', ['$event'])
-  clickout(event: any) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
+  clickout(event: MouseEvent) {
+    if (!this.dropdownOpen) return;
+
+    const dropdownElement = this.reviewSortDropdown?.nativeElement;
+    if (!dropdownElement) {
+      this.dropdownOpen = false;
+      return;
+    }
+
+    if (event.target instanceof Node && !dropdownElement.contains(event.target)) {
       this.dropdownOpen = false;
     }
   }
@@ -122,6 +134,8 @@ scrollRight() {
     loadExtraData() {
     if (!this.product) return;
 
+    this.loadSoldCount(this.product.Ma_san_pham);
+
     this.clientService.getFavoriteCount(this.product.Ma_san_pham).subscribe({
       next: (res) => {
         this.totalFavorites = res.count;
@@ -150,6 +164,20 @@ scrollRight() {
       }
     });
   }
+
+  private loadSoldCount(productId: string): void {
+    this.orderDetailsService.getOrderDetailsData().subscribe({
+      next: (orderDetails) => {
+        this.soldCount = orderDetails
+          .filter((detail) => String(detail.Ma_san_pham) === String(productId))
+          .reduce((sum, detail) => sum + Number(detail.So_luong || 0), 0);
+      },
+      error: () => {
+        this.soldCount = 0;
+      }
+    });
+  }
+
   checkIfFavorite() {
   if (!this.product) return;
 
@@ -198,6 +226,25 @@ scrollRight() {
   getClientName(maKhachHang: string): string {
     const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
     return client ? client.Ho_va_ten : maKhachHang;
+  }
+
+  getClientAvatar(maKhachHang: string): string {
+    const client = this.clients.find(c => c.Ma_khach_hang === maKhachHang);
+    const avatar = String(client?.Anh_dai_dien || '').trim();
+
+    if (!avatar) return 'assets/images/avatar.png';
+    if (avatar.startsWith('http') || avatar.startsWith('assets')) return avatar;
+    if (avatar.startsWith('/uploads')) return `http://localhost:3000${avatar}`;
+    if (avatar.startsWith('uploads/')) return `http://localhost:3000/${avatar}`;
+
+    return avatar;
+  }
+
+  onAvatarError(event: Event): void {
+    const img = event.target as HTMLImageElement | null;
+    if (!img) return;
+
+    img.src = 'assets/images/avatar.png';
   }
 
 openMaintenanceModal(videoIndex: number) {
@@ -386,18 +433,38 @@ getVideoTitle(index: number): string {
   buyClicked = false;
 
   onBuyClick() {
-  this.buyClicked = true;
+    if (!this.product) return;
 
-  this.router.navigate(['/payment-member'], {
-    queryParams: {
-      product: this.product?.Ma_san_pham,
-      qty: this.quantity
-    }
-  });
-}
-goToCart() {
-  this.router.navigate(['/cart-page']);
-}
+    this.buyClicked = true;
+
+    const checkoutQuantity = Math.max(1, this.quantity);
+    const totalAmount = this.product.Gia_ban * checkoutQuantity;
+
+    localStorage.setItem('checkoutItems', JSON.stringify({
+      items: [{ product: this.product, quantity: checkoutQuantity }],
+      voucherCode: '',
+      appliedVoucher: null,
+      summary: {
+        selectedCount: 1,
+        totalAmount,
+        discountAmount: 0,
+        finalTotal: totalAmount,
+      }
+    }));
+
+    const targetRoute = this.clientService.isLoggedIn()
+      ? '/payment-member'
+      : '/payment-non-member';
+
+    this.router.navigate([targetRoute]);
+  }
+
+  addToCart(): void {
+    if (!this.product) return;
+
+    this.cartService.addItem(this.product.Ma_san_pham, this.quantity);
+    this.router.navigate(['/cart-page']);
+  }
 
   zoomImage: string | null = null;
 
@@ -411,6 +478,11 @@ goToCart() {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
+
+    if (this.cartNotificationTimer) {
+      clearTimeout(this.cartNotificationTimer);
+      this.cartNotificationTimer = null;
+    }
   }
 }
 
