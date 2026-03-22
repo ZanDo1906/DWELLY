@@ -34,7 +34,7 @@ export class FaqList implements OnInit {
   searchText = '';
   selectedStatus: 'all' | 'unprocessed' | 'draft' | 'processed' = 'all';
   isStatusOpen = false;
-  sortType: 'az' | 'newest' | 'oldest' = 'az';
+  sortType: 'az' | 'newest' | 'oldest' | null = null;
 
   statusOptions: Array<{ label: string; value: 'all' | 'unprocessed' | 'draft' | 'processed' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
@@ -110,11 +110,15 @@ export class FaqList implements OnInit {
       return list.sort((a, b) => a.questionCode.localeCompare(b.questionCode));
     }
 
-    return list.sort((a, b) => {
-      const firstDate = a.submittedTimestamp;
-      const secondDate = b.submittedTimestamp;
-      return this.sortType === 'newest' ? secondDate - firstDate : firstDate - secondDate;
-    });
+    if (this.sortType === 'newest') {
+      return list.sort((a, b) => b.submittedTimestamp - a.submittedTimestamp);
+    }
+
+    if (this.sortType === 'oldest') {
+      return list.sort((a, b) => a.submittedTimestamp - b.submittedTimestamp);
+    }
+
+    return list;
   }
 
   get totalPages(): number {

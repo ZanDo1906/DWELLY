@@ -283,22 +283,22 @@
 
 /* Nút xóa */
 .delete-btn {
-    background: #6c5234;
-    border: 1px solid #6c5234;
-    color: #fff;
+    padding: 8px 12px;
     border-radius: 8px;
-    padding: 8px 14px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    color: #c05c5c;
     cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+    transition: 0.2s ease;
 }
 
 .delete-btn:hover {
-    background: #56422a;
-    border-color: #56422a;
+    background: #ffe5e5;
+    border-color: #c05c5c;
+}
+
+.delete-btn i {
+    font-size: 16px;
 }
 
 /* Keep table-row trash button identical to blog-list action button style */

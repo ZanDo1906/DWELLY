@@ -455,6 +455,12 @@ export class PaymentMember implements OnInit {
     this.showQRModal = false;
   }
 
+  getPurchasedProductIds(): string[] {
+    return this.cartItems
+      .map(item => item?.product?.Ma_san_pham)
+      .filter((productId): productId is string => typeof productId === 'string' && productId.trim().length > 0);
+  }
+
   formatPrice(price: number): string {
     return price.toLocaleString('vi-VN');
   }

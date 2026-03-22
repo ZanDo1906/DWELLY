@@ -38,7 +38,7 @@ export class PromotionList {
   searchText = '';
   selectedStatus: 'all' | 'active' | 'paused' = 'all';
   isStatusOpen = false;
-  sortType: 'az' | 'newest' | 'oldest' = 'az';
+  sortType: 'az' | 'newest' | 'oldest' | null = null;
 
   statusOptions: Array<{ label: string; value: 'all' | 'active' | 'paused' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
@@ -96,11 +96,15 @@ export class PromotionList {
       return list.sort((first, second) => first.promotionCode.localeCompare(second.promotionCode));
     }
 
-    return list.sort((first, second) => {
-      const firstTime = this.toTimestamp(first.startDate);
-      const secondTime = this.toTimestamp(second.startDate);
-      return this.sortType === 'newest' ? secondTime - firstTime : firstTime - secondTime;
-    });
+    if (this.sortType === 'newest') {
+      return list.sort((first, second) => this.toTimestamp(second.startDate) - this.toTimestamp(first.startDate));
+    }
+
+    if (this.sortType === 'oldest') {
+      return list.sort((first, second) => this.toTimestamp(first.startDate) - this.toTimestamp(second.startDate));
+    }
+
+    return list;
   }
 
   get totalPages(): number {

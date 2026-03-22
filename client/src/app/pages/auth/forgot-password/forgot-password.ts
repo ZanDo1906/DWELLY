@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Client } from '../../../services/client';
@@ -10,8 +11,11 @@ import { iClient } from '../../../interfaces/client';
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.css',
 })
-export class ForgotPassword implements OnInit, OnDestroy {
-  @ViewChild('otpContainer') otpContainer?: ElementRef<HTMLElement>;
+export class ForgotPassword {
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef<HTMLInputElement>>;
+
+// export class ForgotPassword implements OnInit, OnDestroy {
+//   @ViewChild('otpContainer') otpContainer?: ElementRef<HTMLElement>;
 
   step: number = 1; // 1 = nhập email/sđt, 2 = nhập OTP, 3 = đặt lại mật khẩu
   emailOrPhone: string = '';
@@ -167,30 +171,57 @@ export class ForgotPassword implements OnInit, OnDestroy {
 
   onOtpInput(index: number, event: Event): void {
     const input = event.target as HTMLInputElement;
-    let val = input.value.replace(/[^0-9]/g, '');
-    if (val.length > 0) val = val.substring(val.length - 1);
+    let value = input.value.replace(/[^0-9]/g, '');
 
-    // Đồng bộ cả input DOM và array
-    this.otp[index] = val;
-    input.value = val;
+    if (value.length > 0) {
+      value = value.substring(value.length - 1);
+    }
 
-    // Clear error ngay khi có thay đổi
+    this.otp[index] = value;
+    input.value = value;
+
     if (this.otpError) {
       this.otpError = '';
       this.otpTouched = false;
     }
 
+    if (value && index < 5) {
+      this.focusOtpInput(index + 1);
     // Tự động chuyển sang ô kế tiếp
     if (val && index < 5) {
       const nextInput = this.getOtpInput(index + 1);
       nextInput?.focus();
     }
-
-    // Debug: Log cả array và DOM value
-    console.log(`OTP[${index}] = "${val}", DOM value = "${input.value}", Array:`, this.otp);
   }
 
   onOtpKeydown(index: number, event: KeyboardEvent): void {
+    if (event.key === 'Backspace') {
+      const currentInput = this.getOtpInput(index);
+
+      // Nếu ô hiện tại có giá trị, xóa nó
+      if (this.otp[index] && this.otp[index] !== '') {
+        this.otp[index] = '';
+        if (currentInput) currentInput.value = '';
+        console.log(`Cleared OTP[${index}], Array:`, this.otp);
+        return;
+      }
+
+      // Nếu ô hiện tại trống và không phải ô đầu tiên, chuyển về ô trước
+      if (index > 0) {
+        const prevInput = this.getOtpInput(index - 1);
+        if (prevInput) {
+          this.otp[index - 1] = '';
+          prevInput.value = '';
+          prevInput.focus();
+          console.log(`Moved to previous OTP[${index - 1}], Array:`, this.otp);
+        }
+      }
+      return;
+    }
+
+    const allowControlKeys = ['Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (!/^\d$/.test(event.key) && !allowControlKeys.includes(event.key)) {
+      event.preventDefault();
     if (event.key === 'Backspace' && !this.otp[index] && index > 0) {
       const prevInput = this.getOtpInput(index - 1);
       prevInput?.focus();
@@ -211,6 +242,7 @@ export class ForgotPassword implements OnInit, OnDestroy {
 
       // Focus vào ô đầu tiên còn trống
       if (emptyIndexes.length > 0) {
+        this.focusOtpInput(emptyIndexes[0]);
         const firstEmptyInput = this.getOtpInput(emptyIndexes[0]);
         firstEmptyInput?.focus();
       }
@@ -247,12 +279,14 @@ export class ForgotPassword implements OnInit, OnDestroy {
     this.otpTouched = false;
 
     for (let i = 0; i < 6; i++) {
+      this.setOtpInputValue(i, '');
       const input = this.getOtpInput(i);
       if (input) input.value = '';
     }
 
     // Focus vào ô đầu tiên
     setTimeout(() => {
+      this.focusOtpInput(0);
       const firstInput = this.getOtpInput(0);
       firstInput?.focus();
     }, 100);
@@ -288,6 +322,7 @@ export class ForgotPassword implements OnInit, OnDestroy {
   resetOtpInputs(): void {
     this.otp = ['', '', '', '', '', ''];
     for (let i = 0; i < 6; i++) {
+      this.setOtpInputValue(i, '');
       const input = this.getOtpInput(i);
       if (input) input.value = '';
     }
@@ -295,9 +330,26 @@ export class ForgotPassword implements OnInit, OnDestroy {
 
     // Focus về ô đầu tiên
     setTimeout(() => {
+      this.focusOtpInput(0);
       const firstInput = this.getOtpInput(0);
       firstInput?.focus();
     }, 100);
+  }
+
+  private getOtpInput(index: number): HTMLInputElement | null {
+    return this.otpInputs?.get(index)?.nativeElement ?? null;
+  }
+
+  private focusOtpInput(index: number): void {
+    const input = this.getOtpInput(index);
+    input?.focus();
+  }
+
+  private setOtpInputValue(index: number, value: string): void {
+    const input = this.getOtpInput(index);
+    if (input) {
+      input.value = value;
+    }
   }
 
   private getOtpInput(index: number): HTMLInputElement | null {

@@ -168,7 +168,8 @@
                                 <i class="bi bi-pencil-square"></i>
                                 Ghi chú
                             </h3>
-                            <textarea class="note-input" placeholder="Nhập nội dung ghi chú của bạn" [(ngModel)]="note"></textarea>
+                            <textarea class="note-input" placeholder="Nhập nội dung ghi chú của bạn"
+                                [(ngModel)]="note"></textarea>
                             <label class="invoice-checkbox">
                                 <input type="checkbox" [(ngModel)]="wantInvoice" />
                                 <span>Tôi muốn xuất hóa đơn</span>
@@ -354,7 +355,7 @@
     </app-modal>
 
     <!-- QR Payment Modal -->
-    <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length" [orderCode]="createdOrderCode"
-        (closeModal)="closeQRPayment()">
+    <app-qr-payment *ngIf="showQRModal" [totalAmount]="getPaymentAmount()" [itemCount]="cartItems.length"
+        [orderCode]="createdOrderCode" [purchasedProductIds]="getPurchasedProductIds()" (closeModal)="closeQRPayment()">
     </app-qr-payment>
 </section>
