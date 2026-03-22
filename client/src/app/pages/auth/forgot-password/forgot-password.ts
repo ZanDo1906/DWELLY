@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Client } from '../../../services/client';
@@ -10,7 +10,9 @@ import { iClient } from '../../../interfaces/client';
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.css',
 })
-export class ForgotPassword {
+export class ForgotPassword implements OnInit, OnDestroy {
+  @ViewChild('otpContainer') otpContainer?: ElementRef<HTMLElement>;
+
   step: number = 1; // 1 = nhập email/sđt, 2 = nhập OTP, 3 = đặt lại mật khẩu
   emailOrPhone: string = '';
   maskedContact: string = ''; // Hiển thị ở bước 2
@@ -24,6 +26,7 @@ export class ForgotPassword {
   generatedOtp: string = '';
   resendCountdown: number = 0;
   private resendTimer: any = null;
+  private forgotModalShowHandler: EventListener | null = null;
 
   // Step 3: Reset password fields
   newPassword: string = '';
@@ -35,6 +38,41 @@ export class ForgotPassword {
   matchedClient: iClient | null = null;
 
   constructor(private clientService: Client) { }
+
+  ngOnInit(): void {
+    this.resetForm();
+    this.bindForgotPasswordModalEvents();
+  }
+
+  ngOnDestroy(): void {
+    if (this.resendTimer) {
+      clearInterval(this.resendTimer);
+      this.resendTimer = null;
+    }
+
+    const modalEl = document.getElementById('forgotPasswordModal');
+    if (modalEl && this.forgotModalShowHandler) {
+      modalEl.removeEventListener('show.bs.modal', this.forgotModalShowHandler);
+    }
+  }
+
+  private bindForgotPasswordModalEvents(): void {
+    // Component is inside a reusable Bootstrap modal, so reset state each time it opens.
+    setTimeout(() => {
+      const modalEl = document.getElementById('forgotPasswordModal');
+      if (!modalEl) return;
+
+      this.forgotModalShowHandler = () => {
+        this.resetForm();
+        setTimeout(() => {
+          const contactInput = document.getElementById('forgot-email-or-phone') as HTMLInputElement | null;
+          contactInput?.focus();
+        }, 50);
+      };
+
+      modalEl.addEventListener('show.bs.modal', this.forgotModalShowHandler);
+    }, 0);
+  }
 
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,7 +145,7 @@ export class ForgotPassword {
 
         this.errorMessage = '';
         this.maskedContact = this.maskContact(displayContact);
-        this.sendOtpNotification(displayContact);
+        this.sendOtpNotification(displayContact, false);
         this.step = 2;
       },
       error: () => {
@@ -144,7 +182,7 @@ export class ForgotPassword {
 
     // Tự động chuyển sang ô kế tiếp
     if (val && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
+      const nextInput = this.getOtpInput(index + 1);
       nextInput?.focus();
     }
 
@@ -153,33 +191,9 @@ export class ForgotPassword {
   }
 
   onOtpKeydown(index: number, event: KeyboardEvent): void {
-    if (event.key === 'Backspace') {
-      const currentInput = document.getElementById(`otp-${index}`) as HTMLInputElement;
-
-      // Nếu ô hiện tại có giá trị, xóa nó
-      if (this.otp[index] && this.otp[index] !== '') {
-        this.otp[index] = '';
-        if (currentInput) currentInput.value = '';
-        console.log(`Cleared OTP[${index}], Array:`, this.otp);
-        return;
-      }
-
-      // Nếu ô hiện tại trống và không phải ô đầu tiên, chuyển về ô trước
-      if (index > 0) {
-        const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
-        if (prevInput) {
-          this.otp[index - 1] = '';
-          prevInput.value = '';
-          prevInput.focus();
-          console.log(`Moved to previous OTP[${index - 1}], Array:`, this.otp);
-        }
-      }
-      return;
-    }
-
-    const allowControlKeys = ['Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
-    if (!/^\d$/.test(event.key) && !allowControlKeys.includes(event.key)) {
-      event.preventDefault();
+    if (event.key === 'Backspace' && !this.otp[index] && index > 0) {
+      const prevInput = this.getOtpInput(index - 1);
+      prevInput?.focus();
     }
   }
 
@@ -197,7 +211,7 @@ export class ForgotPassword {
 
       // Focus vào ô đầu tiên còn trống
       if (emptyIndexes.length > 0) {
-        const firstEmptyInput = document.getElementById(`otp-${emptyIndexes[0]}`) as HTMLInputElement;
+        const firstEmptyInput = this.getOtpInput(emptyIndexes[0]);
         firstEmptyInput?.focus();
       }
       return;
@@ -225,7 +239,7 @@ export class ForgotPassword {
   resendOTP(): void {
     if (this.resendCountdown > 0) return; // Đang chờ, không cho gửi lại
 
-    this.sendOtpNotification(this.emailOrPhone.trim());
+    this.sendOtpNotification(this.emailOrPhone.trim(), true);
 
     // Clear cả array và DOM inputs
     this.otp = ['', '', '', '', '', ''];
@@ -233,22 +247,24 @@ export class ForgotPassword {
     this.otpTouched = false;
 
     for (let i = 0; i < 6; i++) {
-      const input = document.getElementById(`otp-${i}`) as HTMLInputElement;
+      const input = this.getOtpInput(i);
       if (input) input.value = '';
     }
 
     // Focus vào ô đầu tiên
     setTimeout(() => {
-      const firstInput = document.getElementById('otp-0') as HTMLInputElement | null;
+      const firstInput = this.getOtpInput(0);
       firstInput?.focus();
     }, 100);
   }
 
-  private sendOtpNotification(contact: string): void {
+  private sendOtpNotification(contact: string, startCountdown: boolean): void {
     this.generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
     console.log('Sending OTP to:', contact);
     alert(`Mã OTP của bạn là: ${this.generatedOtp}`);
-    this.startResendCountdown();
+    if (startCountdown) {
+      this.startResendCountdown();
+    }
   }
 
   private startResendCountdown(): void {
@@ -272,16 +288,21 @@ export class ForgotPassword {
   resetOtpInputs(): void {
     this.otp = ['', '', '', '', '', ''];
     for (let i = 0; i < 6; i++) {
-      const input = document.getElementById(`otp-${i}`) as HTMLInputElement;
+      const input = this.getOtpInput(i);
       if (input) input.value = '';
     }
     console.log('OTP inputs reset, Array:', this.otp);
 
     // Focus về ô đầu tiên
     setTimeout(() => {
-      const firstInput = document.getElementById('otp-0') as HTMLInputElement | null;
+      const firstInput = this.getOtpInput(0);
       firstInput?.focus();
     }, 100);
+  }
+
+  private getOtpInput(index: number): HTMLInputElement | null {
+    if (!this.otpContainer?.nativeElement) return null;
+    return this.otpContainer.nativeElement.querySelector(`#otp-${index}`) as HTMLInputElement | null;
   }
 
   // Helper method để check OTP có đầy đủ không
