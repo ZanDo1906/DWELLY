@@ -12,6 +12,12 @@ export class Category {
   // url = '/assets/data/category.json';
   constructor(private http: HttpClient) { }
 
+  getNextCategoryCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/categories/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   getCategoryData(): Observable<iCategory[]> {
     return this.http
       .get<iCategory[]>(`${baseUrl}/categories`)

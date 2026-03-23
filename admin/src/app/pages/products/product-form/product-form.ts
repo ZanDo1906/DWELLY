@@ -147,7 +147,7 @@ export class ProductForm implements OnInit {
 
   const id = this.route.snapshot.paramMap.get('id');
   if (id) {
-    this.isEditMode = true; 
+    this.isEditMode = true;
     this.productService.getProductByCode(id).subscribe({
       next: (data) => {
         this.product = { ...data };
@@ -161,9 +161,18 @@ export class ProductForm implements OnInit {
       error: (err) => console.error('Không tìm thấy sản phẩm', err)
     });
   } else {
-      this.isEditMode = false; 
-    }
+    this.isEditMode = false;
+    // Lấy mã sản phẩm tiếp theo khi tạo mới
+    this.productService.getNextProductCode().subscribe({
+      next: (res) => {
+        this.product.Ma_san_pham = res.nextCode;
+      },
+      error: (err) => {
+        console.error('Không lấy được mã sản phẩm tiếp theo', err);
+      }
+    });
   }
+}
 
   private loadClassificationData(): void {
     this.categoryService.getCategoryData().subscribe({
@@ -398,6 +407,28 @@ export class ProductForm implements OnInit {
     this.openPopupDropdown = null;
     this.classificationForm = this.createEmptyClassificationForm();
     this.syncFormDefaultsForConcept();
+
+    if (this.activeClassificationType === 'category') {
+      this.categoryService.getNextCategoryCode().subscribe({
+        next: (res) => this.classificationForm.code = res.nextCode,
+        error: (err) => console.error('Không lấy được mã danh mục', err)
+      });
+    } else if (this.activeClassificationType === 'room') {
+      this.roomService.getNextRoomCode().subscribe({
+        next: (res) => this.classificationForm.code = res.nextCode,
+        error: (err) => console.error('Không lấy được mã loại phòng', err)
+      });
+    } else if (this.activeClassificationType === 'style') {
+      this.styleService.getNextStyleCode().subscribe({
+        next: (res) => this.classificationForm.code = res.nextCode,
+        error: (err) => console.error('Không lấy được mã phong cách', err)
+      });
+    } else if (this.activeClassificationType === 'concept') {
+      this.conceptService.getNextConceptCode().subscribe({
+        next: (res) => this.classificationForm.code = res.nextCode,
+        error: (err) => console.error('Không lấy được mã concept', err)
+      });
+    }
   }
 
   selectClassificationItem(code: string): void {

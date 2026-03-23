@@ -96,6 +96,10 @@ export class AddOrder implements OnInit {
   showCreateConfirm = false;
   isSavingOrder = false;
 
+  isProvinceOpen = false;
+  isDistrictOpen = false;
+  isWardOpen = false;
+
   constructor(
     private http: HttpClient,
     private orderService: OrderService,
@@ -144,6 +148,70 @@ export class AddOrder implements OnInit {
     this.wards = selectedDistrict?.wards || [];
     this.selectedWardCode = '';
   }
+
+  // --- DROP DOWN LOGIC ---
+  getProvinceName(): string {
+    if (!this.selectedProvinceCode) return this.isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố';
+    const p = this.provinces.find(x => String(x.code) === String(this.selectedProvinceCode));
+    return p ? p.name : 'Chọn Tỉnh/Thành phố';
+  }
+
+  getDistrictName(): string {
+    if (!this.selectedDistrictCode) return 'Chọn Quận/Huyện';
+    const d = this.districts.find(x => String(x.code) === String(this.selectedDistrictCode));
+    return d ? d.name : 'Chọn Quận/Huyện';
+  }
+
+  getWardName(): string {
+    if (!this.selectedWardCode) return 'Chọn Phường/Xã';
+    const w = this.wards.find(x => String(x.code) === String(this.selectedWardCode));
+    return w ? w.name : 'Chọn Phường/Xã';
+  }
+
+  toggleProvinceDropdown(event: Event): void {
+    if (this.isLoadingLocations) return;
+    event.stopPropagation();
+    this.isProvinceOpen = !this.isProvinceOpen;
+    this.isDistrictOpen = false;
+    this.isWardOpen = false;
+  }
+
+  toggleDistrictDropdown(event: Event): void {
+    if (this.isLoadingLocations || this.districts.length === 0) return;
+    event.stopPropagation();
+    this.isDistrictOpen = !this.isDistrictOpen;
+    this.isProvinceOpen = false;
+    this.isWardOpen = false;
+  }
+
+  toggleWardDropdown(event: Event): void {
+    if (this.isLoadingLocations || this.wards.length === 0) return;
+    event.stopPropagation();
+    this.isWardOpen = !this.isWardOpen;
+    this.isProvinceOpen = false;
+    this.isDistrictOpen = false;
+  }
+
+  selectProvince(code: number | string, event: Event): void {
+    event.stopPropagation();
+    this.selectedProvinceCode = String(code);
+    this.isProvinceOpen = false;
+    this.onProvinceChange();
+  }
+
+  selectDistrict(code: number | string, event: Event): void {
+    event.stopPropagation();
+    this.selectedDistrictCode = String(code);
+    this.isDistrictOpen = false;
+    this.onDistrictChange();
+  }
+
+  selectWard(code: number | string, event: Event): void {
+    event.stopPropagation();
+    this.selectedWardCode = String(code);
+    this.isWardOpen = false;
+  }
+  // ----------------------
 
   private loadData(): void {
     Promise.all([
@@ -471,6 +539,9 @@ export class AddOrder implements OnInit {
     const dropdownWrapper = target.closest('.dropdown-wrapper');
     if (!dropdownWrapper) {
       this.showStatusDropdown = false;
+      this.isProvinceOpen = false;
+      this.isDistrictOpen = false;
+      this.isWardOpen = false;
     }
   }
 }

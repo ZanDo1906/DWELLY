@@ -13,6 +13,24 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next category code
+router.get("/categories/next-code", async (req, res) => {
+    try {
+        const lastCategory = await Category.findOne({}).sort({ Ma_danh_muc: -1 });
+        let newNumber = 1;
+        if (lastCategory && lastCategory.Ma_danh_muc) {
+            const match = lastCategory.Ma_danh_muc.match(/^(\d+)$/);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // get all categories
 router.get("/categories", async (req, res) => {
     try {
@@ -39,10 +57,19 @@ router.get("/categories/:id", async (req, res) => {
 // create category
 router.post("/categories", async (req, res) => {
     try {
-        const { Ma_danh_muc } = req.body;
+        let { Ma_danh_muc } = req.body;
 
-        if (!Ma_danh_muc) {
-            return res.status(400).json({ message: "Thiếu Ma_danh_muc" });
+        if (!Ma_danh_muc || Ma_danh_muc.trim() === '') {
+            const lastCategory = await Category.findOne({}).sort({ Ma_danh_muc: -1 });
+            let newNumber = 1;
+            if (lastCategory && lastCategory.Ma_danh_muc) {
+                const match = lastCategory.Ma_danh_muc.match(/^(\d+)$/);
+                if (match) {
+                    newNumber = parseInt(match[1], 10) + 1;
+                }
+            }
+            Ma_danh_muc = String(newNumber).padStart(2, '0');
+            req.body.Ma_danh_muc = Ma_danh_muc;
         }
 
         const existedCategory = await Category.findOne({ Ma_danh_muc });

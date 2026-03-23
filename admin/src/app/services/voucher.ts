@@ -18,6 +18,12 @@ export class Voucher {
       .pipe(retry(2), catchError(this.handleError));
   }
 
+  getNextPromotionCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/vouchers/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   deleteVoucherById(voucherId: string): Observable<{ status: string }> {
     return this.http
       .delete<{ status: string }>(`${baseUrl}/vouchers/${voucherId}`)

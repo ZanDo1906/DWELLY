@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Voucher } from '../../../services/voucher';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog';
@@ -26,6 +27,8 @@ export interface PromotionFormData {
 export class PromotionForm {
   @Input() promotion: PromotionFormData | null = null;
   @Output() saveConfirmed = new EventEmitter<PromotionFormData>();
+
+  constructor(private voucherService: Voucher) {}
 
   get isEditMode(): boolean {
     return !!this.promotion;
@@ -73,6 +76,14 @@ export class PromotionForm {
 
     if (!this.promotion) {
       this.formValue = this.createEmptyFormValue();
+      this.voucherService.getNextPromotionCode().subscribe({
+        next: (res) => {
+          this.formValue.promotionCode = res.nextCode;
+        },
+        error: (err) => {
+          console.error('Lỗi khi lấy mã khuyến mãi tự động:', err);
+        }
+      });
       return;
     }
 

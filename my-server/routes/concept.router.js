@@ -46,6 +46,24 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next concept code
+router.get("/concepts/next-code", async (req, res) => {
+    try {
+        const lastConcept = await Concept.findOne({}).sort({ Ma_khong_gian: -1 });
+        let newNumber = 1;
+        if (lastConcept && lastConcept.Ma_khong_gian) {
+            const match = lastConcept.Ma_khong_gian.match(/^(\d+)$/);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // get all concepts
 router.get("/concepts", async (req, res) => {
   try {
@@ -72,10 +90,19 @@ router.get("/concepts/:id", async (req, res) => {
 // create concept
 router.post("/concepts", async (req, res) => {
   try {
-    const { Ma_khong_gian } = req.body;
+    let { Ma_khong_gian } = req.body;
 
-    if (!Ma_khong_gian) {
-      return res.status(400).json({ message: "Thiếu Ma_khong_gian" });
+    if (!Ma_khong_gian || Ma_khong_gian.trim() === '') {
+        const lastConcept = await Concept.findOne({}).sort({ Ma_khong_gian: -1 });
+        let newNumber = 1;
+        if (lastConcept && lastConcept.Ma_khong_gian) {
+            const match = lastConcept.Ma_khong_gian.match(/^(\d+)$/);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        Ma_khong_gian = String(newNumber).padStart(2, '0');
+        req.body.Ma_khong_gian = Ma_khong_gian;
     }
 
     const existedConcept = await Concept.findOne({ Ma_khong_gian });

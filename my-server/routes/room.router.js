@@ -13,6 +13,24 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next room code
+router.get("/rooms/next-code", async (req, res) => {
+    try {
+        const lastRoom = await Room.findOne({}).sort({ Ma_loai_phong: -1 });
+        let newNumber = 1;
+        if (lastRoom && lastRoom.Ma_loai_phong) {
+            const match = lastRoom.Ma_loai_phong.match(/^(\d+)$/);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // get all rooms
 router.get("/rooms", async (req, res) => {
     try {
@@ -39,10 +57,19 @@ router.get("/rooms/:id", async (req, res) => {
 // create room
 router.post("/rooms", async (req, res) => {
     try {
-        const { Ma_loai_phong } = req.body;
+        let { Ma_loai_phong } = req.body;
 
-        if (!Ma_loai_phong) {
-            return res.status(400).json({ message: "Thiếu Ma_loai_phong" });
+        if (!Ma_loai_phong || Ma_loai_phong.trim() === '') {
+            const lastRoom = await Room.findOne({}).sort({ Ma_loai_phong: -1 });
+            let newNumber = 1;
+            if (lastRoom && lastRoom.Ma_loai_phong) {
+                const match = lastRoom.Ma_loai_phong.match(/^(\d+)$/);
+                if (match) {
+                    newNumber = parseInt(match[1], 10) + 1;
+                }
+            }
+            Ma_loai_phong = String(newNumber).padStart(2, '0');
+            req.body.Ma_loai_phong = Ma_loai_phong;
         }
 
         const existedRoom = await Room.findOne({ Ma_loai_phong });

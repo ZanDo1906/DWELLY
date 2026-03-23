@@ -13,6 +13,27 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next blog code
+router.get("/blogs/next-code", async (req, res) => {
+    try {
+        const lastBlog = await Blog.findOne({
+            Ma_bai_viet: /^BV\d{1,4}$/i
+        }).sort({ Ma_bai_viet: -1 });
+        
+        let newNumber = 1;
+        if (lastBlog && lastBlog.Ma_bai_viet) {
+            const match = lastBlog.Ma_bai_viet.match(/^BV(\d+)$/i);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = 'BV' + String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 //get all blogs (2) -> using async await
 router.get("/blogs", async (req, res) => {
     try {
@@ -38,6 +59,29 @@ router.get("/blogs/:id", async (req, res) => {
 // Create new blog
 router.post("/blogs", async (req, res) => {
     try {
+        let { Ma_bai_viet } = req.body;
+
+        if (!Ma_bai_viet || Ma_bai_viet.trim() === '') {
+            const lastBlog = await Blog.findOne({
+                Ma_bai_viet: /^BV\d{1,4}$/i
+            }).sort({ Ma_bai_viet: -1 });
+            
+            let newNumber = 1;
+            if (lastBlog && lastBlog.Ma_bai_viet) {
+                const match = lastBlog.Ma_bai_viet.match(/^BV(\d+)$/i);
+                if (match) {
+                    newNumber = parseInt(match[1], 10) + 1;
+                }
+            }
+            Ma_bai_viet = 'BV' + String(newNumber).padStart(2, '0');
+            req.body.Ma_bai_viet = Ma_bai_viet;
+        }
+
+        const existedBlog = await Blog.findOne({ Ma_bai_viet: req.body.Ma_bai_viet });
+        if (existedBlog) {
+            return res.status(409).json({ message: "Mã bài viết đã tồn tại" });
+        }
+
         const newBlog = new Blog({
             Ma_bai_viet: req.body.Ma_bai_viet,
             Tieu_de: req.body.Tieu_de,

@@ -13,6 +13,27 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next voucher code
+router.get("/vouchers/next-code", async (req, res) => {
+    try {
+        const lastVoucher = await Voucher.findOne({
+            Ma_khuyen_mai: /^KM\d{1,4}$/i
+        }).sort({ Ma_khuyen_mai: -1 });
+
+        let newNumber = 1;
+        if (lastVoucher && lastVoucher.Ma_khuyen_mai) {
+            const match = lastVoucher.Ma_khuyen_mai.match(/^KM(\d+)$/i);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = 'KM' + String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 //get all vouchers (2) -> using async await
 router.get("/vouchers", async (req, res) => {
     try {
@@ -26,6 +47,24 @@ router.get("/vouchers", async (req, res) => {
 // create voucher
 router.post('/vouchers', async (req, res) => {
     try {
+        let { Ma_khuyen_mai } = req.body;
+
+        if (!Ma_khuyen_mai || Ma_khuyen_mai.trim() === '') {
+            const lastVoucher = await Voucher.findOne({
+                Ma_khuyen_mai: /^KM\d{1,4}$/i
+            }).sort({ Ma_khuyen_mai: -1 });
+
+            let newNumber = 1;
+            if (lastVoucher && lastVoucher.Ma_khuyen_mai) {
+                const match = lastVoucher.Ma_khuyen_mai.match(/^KM(\d+)$/i);
+                if (match) {
+                    newNumber = parseInt(match[1], 10) + 1;
+                }
+            }
+            Ma_khuyen_mai = 'KM' + String(newNumber).padStart(2, '0');
+            req.body.Ma_khuyen_mai = Ma_khuyen_mai;
+        }
+
         const existedVoucher = await Voucher.findOne({ Ma_khuyen_mai: req.body.Ma_khuyen_mai });
         if (existedVoucher) {
             return res.status(409).json({ message: 'Mã khuyến mãi đã tồn tại' });

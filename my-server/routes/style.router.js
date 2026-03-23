@@ -13,6 +13,24 @@ router.get("/", (req, res) => {
     res.send("Ok");
 });
 
+// get next style code
+router.get("/styles/next-code", async (req, res) => {
+    try {
+        const lastStyle = await Style.findOne({}).sort({ Ma_phong_cach: -1 });
+        let newNumber = 1;
+        if (lastStyle && lastStyle.Ma_phong_cach) {
+            const match = lastStyle.Ma_phong_cach.match(/^(\d+)$/);
+            if (match) {
+                newNumber = parseInt(match[1], 10) + 1;
+            }
+        }
+        const nextCode = String(newNumber).padStart(2, '0');
+        res.json({ nextCode });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // get all styles
 router.get("/styles", async (req, res) => {
     try {
@@ -39,10 +57,19 @@ router.get("/styles/:id", async (req, res) => {
 // create style
 router.post("/styles", async (req, res) => {
     try {
-        const { Ma_phong_cach } = req.body;
+        let { Ma_phong_cach } = req.body;
 
-        if (!Ma_phong_cach) {
-            return res.status(400).json({ message: "Thiếu Ma_phong_cach" });
+        if (!Ma_phong_cach || Ma_phong_cach.trim() === '') {
+            const lastStyle = await Style.findOne({}).sort({ Ma_phong_cach: -1 });
+            let newNumber = 1;
+            if (lastStyle && lastStyle.Ma_phong_cach) {
+                const match = lastStyle.Ma_phong_cach.match(/^(\d+)$/);
+                if (match) {
+                    newNumber = parseInt(match[1], 10) + 1;
+                }
+            }
+            Ma_phong_cach = String(newNumber).padStart(2, '0');
+            req.body.Ma_phong_cach = Ma_phong_cach;
         }
 
         const existedStyle = await Style.findOne({ Ma_phong_cach });

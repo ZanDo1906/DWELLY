@@ -17,6 +17,12 @@ export class Blog {
       .pipe(retry(2), catchError(this.handleError));
   }
   
+  getNextBlogCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/blogs/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  
   getBlogById(id: string): Observable<iBlog> {
     return this.http
       .get<iBlog>(`${baseUrl}/blogs/${id}`)

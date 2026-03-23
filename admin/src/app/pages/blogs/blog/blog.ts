@@ -30,7 +30,7 @@ export class Blog implements OnInit {
   isEditMode = false;
   blogId: string | null = null;
 
-  maBaiViet = 'BV' + Date.now().toString().slice(-6);
+  maBaiViet = '';
   today = new Date().toLocaleDateString('vi-VN');
   tieuDe = '';
   tomTat = '';
@@ -100,6 +100,15 @@ export class Blog implements OnInit {
 
     if (this.isEditMode && this.blogId) {
       this.loadBlogData(this.blogId);
+    } else if (!this.isEditMode && !restoreParam) {
+      this.blogService.getNextBlogCode().subscribe({
+        next: (res) => {
+          this.maBaiViet = res.nextCode;
+        },
+        error: (err) => {
+          console.error('Không thể lấy mã bài viết tự động:', err);
+        }
+      });
     }
   }
 

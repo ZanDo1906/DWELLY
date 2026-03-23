@@ -12,6 +12,12 @@ export class Concept {
   // url = '/assets/data/concept.json';
   constructor(private http: HttpClient) { }
 
+  getNextConceptCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/concepts/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   getConceptData(): Observable<iConcept[]> {
     return this.http
       .get<iConcept[]>(`${baseUrl}/concepts`)

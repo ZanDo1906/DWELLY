@@ -13,6 +13,12 @@ export class Room {
   // url = '/assets/data/room.json';
   constructor(private http: HttpClient) { }
 
+  getNextRoomCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/rooms/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   getRoomData(): Observable<iRoom[]> {
     return this.http
       .get<iRoom[]>(`${baseUrl}/rooms`)

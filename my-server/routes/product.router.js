@@ -1,6 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+
+// API lấy mã sản phẩm tiếp theo
+router.get('/products/next-code', async (req, res, next) => {
+  try {
+    const lastProduct = await Product.findOne({}).sort({ Ma_san_pham: -1 });
+    let newNumber = 1;
+    if (lastProduct && lastProduct.Ma_san_pham) {
+      const match = lastProduct.Ma_san_pham.match(/^(\d+)$/);
+      if (match) {
+        newNumber = parseInt(match[1], 10) + 1;
+      }
+    }
+    const nextCode = String(newNumber).padStart(2, '0');
+    res.json({ nextCode });
+  } catch (err) {
+    next(err);
+  }
+});
 const path = require('path');
 const Product = require('../models/Product');
 const upload = require('../upload');
@@ -48,6 +66,22 @@ router.post('/products/by-codes', async (req, res, next) => {
 //POST product
 router.post('/products', async (req, res, next) => {
   try {
+    // Nếu không có mã sản phẩm truyền lên, tự động sinh mã mới dạng số tăng dần (01, 02, ...)
+    let maSanPham = req.body.Ma_san_pham;
+    if (!maSanPham || maSanPham.trim() === '') {
+      // Lấy mã lớn nhất hiện tại (dạng số)
+      const lastProduct = await Product.findOne({}).sort({ Ma_san_pham: -1 });
+      let newNumber = 1;
+      if (lastProduct && lastProduct.Ma_san_pham) {
+        // Nếu mã là số, tăng tiếp
+        const match = lastProduct.Ma_san_pham.match(/^(\d+)$/);
+        if (match) {
+          newNumber = parseInt(match[1], 10) + 1;
+        }
+      }
+      maSanPham = String(newNumber).padStart(2, '0');
+      req.body.Ma_san_pham = maSanPham;
+    }
     const product = await Product.create(req.body);
     res.status(201).json(product);
   } catch (err) {

@@ -13,6 +13,12 @@ export class Style {
   // url = '/assets/data/style.json';
   constructor(private http: HttpClient) { }
 
+  getNextStyleCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/styles/next-code`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   getStyleData(): Observable<iStyle[]> {
     return this.http
       .get<iStyle[]>(`${baseUrl}/styles`)

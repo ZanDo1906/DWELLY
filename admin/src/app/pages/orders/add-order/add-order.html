@@ -129,46 +129,68 @@
               <div class="address-grid">
                 <div class="info-field address-field">
                   <label for="shippingProvince">Tỉnh/Thành phố <span class="required-mark">*</span></label>
-                  <select
-                    id="shippingProvince"
-                    class="info-input"
-                    [disabled]="isLoadingLocations"
-                    [(ngModel)]="selectedProvinceCode"
-                    [ngModelOptions]="{ standalone: true }"
-                    (ngModelChange)="onProvinceChange()"
-                  >
-                    <option value="">{{ isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố' }}</option>
-                    <option *ngFor="let province of provinces" [value]="province.code">{{ province.name }}</option>
-                  </select>
+                  <div class="dropdown-wrapper address-dropdown" [class.open]="isProvinceOpen">
+                    <div class="dropdown-trigger" [class.disabled]="isLoadingLocations" (click)="toggleProvinceDropdown($event)">
+                      <span>{{ getProvinceName() }}</span>
+                      <i class="bi bi-chevron-down custom-select-icon" [class.rotate]="isProvinceOpen"></i>
+                    </div>
+                    <ul class="dropdown-menu open" *ngIf="isProvinceOpen">
+                      <li>
+                        <a href="javascript:void(0)" (click)="selectProvince('', $event)" [class.active]="selectedProvinceCode === ''">
+                          {{ isLoadingLocations ? 'Đang tải dữ liệu...' : 'Chọn Tỉnh/Thành phố' }}
+                        </a>
+                      </li>
+                      <li *ngFor="let province of provinces">
+                        <a href="javascript:void(0)" (click)="selectProvince(province.code, $event)" [class.active]="selectedProvinceCode === province.code + ''">
+                          {{ province.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div class="info-field address-field">
                   <label for="shippingDistrict">Quận/Huyện <span class="required-mark">*</span></label>
-                  <select
-                    id="shippingDistrict"
-                    class="info-input"
-                    [disabled]="isLoadingLocations || districts.length === 0"
-                    [(ngModel)]="selectedDistrictCode"
-                    [ngModelOptions]="{ standalone: true }"
-                    (ngModelChange)="onDistrictChange()"
-                  >
-                    <option value="">Chọn Quận/Huyện</option>
-                    <option *ngFor="let district of districts" [value]="district.code">{{ district.name }}</option>
-                  </select>
+                  <div class="dropdown-wrapper address-dropdown" [class.open]="isDistrictOpen">
+                    <div class="dropdown-trigger" [class.disabled]="isLoadingLocations || districts.length === 0" (click)="toggleDistrictDropdown($event)">
+                      <span>{{ getDistrictName() }}</span>
+                      <i class="bi bi-chevron-down custom-select-icon" [class.rotate]="isDistrictOpen"></i>
+                    </div>
+                    <ul class="dropdown-menu open" *ngIf="isDistrictOpen">
+                      <li>
+                        <a href="javascript:void(0)" (click)="selectDistrict('', $event)" [class.active]="selectedDistrictCode === ''">
+                          Chọn Quận/Huyện
+                        </a>
+                      </li>
+                      <li *ngFor="let district of districts">
+                        <a href="javascript:void(0)" (click)="selectDistrict(district.code, $event)" [class.active]="selectedDistrictCode === district.code + ''">
+                          {{ district.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div class="info-field address-field">
                   <label for="shippingWard">Phường/Xã <span class="required-mark">*</span></label>
-                  <select
-                    id="shippingWard"
-                    class="info-input"
-                    [disabled]="isLoadingLocations || wards.length === 0"
-                    [(ngModel)]="selectedWardCode"
-                    [ngModelOptions]="{ standalone: true }"
-                  >
-                    <option value="">Chọn Phường/Xã</option>
-                    <option *ngFor="let ward of wards" [value]="ward.code">{{ ward.name }}</option>
-                  </select>
+                  <div class="dropdown-wrapper address-dropdown" [class.open]="isWardOpen">
+                    <div class="dropdown-trigger" [class.disabled]="isLoadingLocations || wards.length === 0" (click)="toggleWardDropdown($event)">
+                      <span>{{ getWardName() }}</span>
+                      <i class="bi bi-chevron-down custom-select-icon" [class.rotate]="isWardOpen"></i>
+                    </div>
+                    <ul class="dropdown-menu open" *ngIf="isWardOpen">
+                      <li>
+                        <a href="javascript:void(0)" (click)="selectWard('', $event)" [class.active]="selectedWardCode === ''">
+                          Chọn Phường/Xã
+                        </a>
+                      </li>
+                      <li *ngFor="let ward of wards">
+                        <a href="javascript:void(0)" (click)="selectWard(ward.code, $event)" [class.active]="selectedWardCode === ward.code + ''">
+                          {{ ward.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div class="info-field address-field">

@@ -1,3 +1,4 @@
+
 import { iProduct } from './../interfaces/product';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, switchMap, throwError } from 'rxjs';
@@ -10,6 +11,12 @@ const baseUrl = "http://localhost:3000";
 })
 export class Product {
   constructor(private http: HttpClient) {}
+
+  getNextProductCode(): Observable<{ nextCode: string }> {
+    return this.http
+      .get<{ nextCode: string }>(`${baseUrl}/products/next-code`)
+      .pipe(catchError(this.handleError));
+  }
 
   getProductData(): Observable<iProduct[]> {
     return this.http

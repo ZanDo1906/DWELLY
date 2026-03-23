@@ -176,4 +176,22 @@ export class Sidebar implements OnInit {
 
     return 'badge-default';
   }
+  
+    confirmLogout(): void {
+      this.logout();
+      // Đóng modal xác nhận nếu dùng Bootstrap hoặc custom modal
+      const modal = document.getElementById('logoutConfirmModal');
+      if (modal) {
+        // Nếu dùng Bootstrap 5 modal
+        // @ts-ignore
+        if (window.bootstrap && window.bootstrap.Modal) {
+          // @ts-ignore
+          const bsModal = window.bootstrap.Modal.getInstance(modal) || new window.bootstrap.Modal(modal);
+          bsModal.hide();
+        } else {
+          // Nếu là custom modal, có thể ẩn bằng cách thêm class hoặc thuộc tính
+          modal.style.display = 'none';
+        }
+      }
+    }
 }
