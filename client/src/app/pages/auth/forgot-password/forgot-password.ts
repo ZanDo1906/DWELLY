@@ -2,7 +2,6 @@ import { Component, ElementRef, QueryList, ViewChildren, OnDestroy, OnInit } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Client } from '../../../services/client';
-import { iClient } from '../../../interfaces/client';
 
 @Component({
   selector: 'app-forgot-password',
@@ -26,9 +25,12 @@ export class ForgotPassword {
   otp: string[] = ['', '', '', '', '', ''];
   otpTouched: boolean = false;
   otpError: string = '';
-  generatedOtp: string = '';
+  readonly otpValidityMinutes: number = 3;
+  otpExpiryCountdown: number = 0;
+  private forgotClientId: string = '';
   resendCountdown: number = 0;
   private resendTimer: any = null;
+  private otpExpiryTimer: any = null;
   private forgotModalShowHandler: EventListener | null = null;
 
   // Step 3: Reset password fields
@@ -38,7 +40,6 @@ export class ForgotPassword {
   passwordError: string = '';
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
-  matchedClient: iClient | null = null;
 
   constructor(private clientService: Client) { }
 
@@ -51,6 +52,11 @@ export class ForgotPassword {
     if (this.resendTimer) {
       clearInterval(this.resendTimer);
       this.resendTimer = null;
+    }
+
+    if (this.otpExpiryTimer) {
+      clearInterval(this.otpExpiryTimer);
+      this.otpExpiryTimer = null;
     }
 
     const modalEl = document.getElementById('forgotPasswordModal');
@@ -125,47 +131,22 @@ export class ForgotPassword {
 
   private verifyContactInDatabase(): void {
     const contact = this.emailOrPhone.trim();
-    const isEmail = this.isValidEmail(contact);
-
-    this.clientService.getClientData().subscribe({
-      next: (clients) => {
-        const matchedClient = clients.find(client => {
-          if (isEmail) {
-            return String(client.Email || '').trim().toLowerCase() === contact.toLowerCase();
-          }
-          return String(client.So_dien_thoai || '').trim() === contact;
-        }) || null;
-
-        if (!matchedClient) {
-          this.errorMessage = 'Email hoặc số điện thoại không khớp';
-          return;
-        }
-
-        this.matchedClient = matchedClient;
-        const displayContact = isEmail
-          ? String(matchedClient.Email || '').trim()
-          : String(matchedClient.So_dien_thoai || '').trim();
-
+    this.clientService.requestForgotPasswordOtp({ emailOrPhone: contact }).subscribe({
+      next: (res) => {
         this.errorMessage = '';
-        this.maskedContact = this.maskContact(displayContact);
-        this.sendOtpNotification(displayContact, false);
+        this.forgotClientId = String(res?.clientId || '');
+        this.maskedContact = String(res?.maskedContact || '');
+        const otp = String(res?.otp || '');
+        if (otp) {
+          alert(`Mã OTP của bạn là: ${otp}\nMã có hiệu lực trong ${this.otpValidityMinutes} phút.`);
+        }
+        this.startOtpExpiryCountdown();
         this.step = 2;
       },
-      error: () => {
-        this.errorMessage = 'Không thể kiểm tra dữ liệu tài khoản. Vui lòng thử lại';
+      error: (error) => {
+        this.errorMessage = error?.error?.message || 'Không thể gửi mã OTP. Vui lòng thử lại';
       }
     });
-  }
-
-  maskContact(contact: string): string {
-    if (this.isValidEmail(contact)) {
-      // Mask email: ab***@gmail.com
-      const [name, domain] = contact.split('@');
-      return name.substring(0, 2) + '***@' + domain;
-    } else {
-      // Mask phone: 0915****03
-      return contact.substring(0, 4) + '****' + contact.substring(8);
-    }
   }
 
   onOtpInput(index: number, event: Event): void {
@@ -247,25 +228,54 @@ export class ForgotPassword {
     console.log('OTP submitted:', otpCode);
     this.otpError = '';
 
-    if (!this.generatedOtp) {
-      this.otpError = 'Mã OTP chưa được tạo. Vui lòng gửi lại mã';
+    if (!this.forgotClientId) {
+      this.otpError = 'Phiên xác thực không hợp lệ. Vui lòng gửi lại mã OTP';
       return;
     }
 
-    if (otpCode === this.generatedOtp) {
-      this.step = 3;
-      console.log('OTP verified successfully, moving to step 3');
-    } else {
-      this.otpError = 'Mã OTP không chính xác. Vui lòng thử lại!';
-      // Reset OTP inputs để nhập lại
+    if (this.otpExpiryCountdown <= 0) {
+      this.otpError = `Mã OTP đã hết hạn sau ${this.otpValidityMinutes} phút. Vui lòng gửi lại mã mới`;
       this.resetOtpInputs();
+      return;
     }
+
+    this.clientService.verifyForgotPasswordOtp({ clientId: this.forgotClientId, otp: otpCode }).subscribe({
+      next: () => {
+        this.otpError = '';
+        if (this.otpExpiryTimer) {
+          clearInterval(this.otpExpiryTimer);
+          this.otpExpiryTimer = null;
+        }
+        this.otpExpiryCountdown = 0;
+        this.step = 3;
+        console.log('OTP verified successfully, moving to step 3');
+      },
+      error: (error) => {
+        this.otpError = error?.error?.message || 'Xác thực OTP thất bại. Vui lòng thử lại';
+        this.resetOtpInputs();
+      }
+    });
   }
 
   resendOTP(): void {
     if (this.resendCountdown > 0) return; // Đang chờ, không cho gửi lại
 
-    this.sendOtpNotification(this.emailOrPhone.trim(), true);
+    this.clientService.requestForgotPasswordOtp({ emailOrPhone: this.emailOrPhone.trim() }).subscribe({
+      next: (res) => {
+        this.forgotClientId = String(res?.clientId || this.forgotClientId);
+        this.maskedContact = String(res?.maskedContact || this.maskedContact);
+        const otp = String(res?.otp || '');
+        if (otp) {
+          alert(`Mã OTP mới của bạn là: ${otp}\nMã có hiệu lực trong ${this.otpValidityMinutes} phút.`);
+        }
+        this.startOtpExpiryCountdown();
+        this.startResendCountdown();
+      },
+      error: (error) => {
+        this.otpError = error?.error?.message || 'Không thể gửi lại mã OTP. Vui lòng thử lại';
+        return;
+      }
+    });
 
     // Clear cả array và DOM inputs
     this.otp = ['', '', '', '', '', ''];
@@ -283,15 +293,6 @@ export class ForgotPassword {
     }, 100);
   }
 
-  private sendOtpNotification(contact: string, startCountdown: boolean): void {
-    this.generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log('Sending OTP to:', contact);
-    alert(`Mã OTP của bạn là: ${this.generatedOtp}`);
-    if (startCountdown) {
-      this.startResendCountdown();
-    }
-  }
-
   private startResendCountdown(): void {
     if (this.resendTimer) {
       clearInterval(this.resendTimer);
@@ -307,6 +308,31 @@ export class ForgotPassword {
         this.resendTimer = null;
       }
     }, 1000);
+  }
+
+  private startOtpExpiryCountdown(): void {
+    if (this.otpExpiryTimer) {
+      clearInterval(this.otpExpiryTimer);
+      this.otpExpiryTimer = null;
+    }
+
+    this.otpExpiryCountdown = this.otpValidityMinutes * 60;
+    this.otpExpiryTimer = setInterval(() => {
+      this.otpExpiryCountdown--;
+
+      if (this.otpExpiryCountdown <= 0) {
+        this.otpExpiryCountdown = 0;
+        clearInterval(this.otpExpiryTimer);
+        this.otpExpiryTimer = null;
+      }
+    }, 1000);
+  }
+
+  getOtpExpiryDisplay(): string {
+    const totalSeconds = Math.max(0, this.otpExpiryCountdown);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
   // Helper method to reset OTP inputs
@@ -437,12 +463,12 @@ export class ForgotPassword {
       return;
     }
 
-    if (!this.matchedClient?.Ma_khach_hang) {
+    if (!this.forgotClientId) {
       alert('Không tìm thấy tài khoản cần cập nhật. Vui lòng thực hiện lại');
       return;
     }
 
-    this.clientService.resetPassword(this.matchedClient.Ma_khach_hang, {
+    this.clientService.resetPassword(this.forgotClientId, {
       newPassword: this.newPassword,
     }).subscribe({
       next: () => {
@@ -467,7 +493,8 @@ export class ForgotPassword {
     this.otp = ['', '', '', '', '', ''];
     this.otpTouched = false;
     this.otpError = '';
-    this.generatedOtp = '';
+    this.otpExpiryCountdown = 0;
+    this.forgotClientId = '';
     this.resendCountdown = 0;
 
     this.newPassword = '';
@@ -476,11 +503,15 @@ export class ForgotPassword {
     this.passwordError = '';
     this.showNewPassword = false;
     this.showConfirmPassword = false;
-    this.matchedClient = null;
 
     if (this.resendTimer) {
       clearInterval(this.resendTimer);
       this.resendTimer = null;
+    }
+
+    if (this.otpExpiryTimer) {
+      clearInterval(this.otpExpiryTimer);
+      this.otpExpiryTimer = null;
     }
   }
 }

@@ -73,6 +73,16 @@ export class Client {
       .patch(`${baseUrl}/clients/${id}/reset-password`, data)
       .pipe(retry(2), catchError(this.handleError));
   }
+  requestForgotPasswordOtp(data: { emailOrPhone: string }): Observable<any> {
+    return this.http
+      .post(`${baseUrl}/clients/forgot-password`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  verifyForgotPasswordOtp(data: { clientId: string; otp: string }): Observable<any> {
+    return this.http
+      .post(`${baseUrl}/clients/verify-otp`, data)
+      .pipe(retry(2), catchError(this.handleError));
+  }
   uploadAvatar(formData: FormData): Observable<any> {
     return this.http
       .post(`${baseUrl}/upload/avatar`, formData)
