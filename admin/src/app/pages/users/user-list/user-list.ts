@@ -17,7 +17,7 @@ export class UserList implements OnInit, AfterViewInit {
   pageSize = 3;
   currentPage = 1;
   searchTerm = '';
-  sortType: 'a-z' | 'newest' | 'oldest' | null = null;
+  sortMode: 'a-z' | 'za' | 'newest' | 'oldest' | '' = '';
   statusFilter: 'all' | 'active' | 'inactive' | null = null;
   statusFilterLabel = 'Tất cả trạng thái';
   dropdownOpen = false;
@@ -58,11 +58,13 @@ export class UserList implements OnInit, AfterViewInit {
   get sortedUsers(): iClient[] {
     let sorted = [...this.filteredUsers];
     
-    if (this.sortType === 'a-z') {
+    if (this.sortMode === 'a-z') {
       sorted.sort((a, b) => a.Ho_va_ten.localeCompare(b.Ho_va_ten));
-    } else if (this.sortType === 'newest') {
+    } else if (this.sortMode === 'za') {
+      sorted.sort((a, b) => b.Ho_va_ten.localeCompare(a.Ho_va_ten));
+    } else if (this.sortMode === 'newest') {
       sorted.sort((a, b) => new Date(b.Ngay_tao).getTime() - new Date(a.Ngay_tao).getTime());
-    } else if (this.sortType === 'oldest') {
+    } else if (this.sortMode === 'oldest') {
       sorted.sort((a, b) => new Date(a.Ngay_tao).getTime() - new Date(b.Ngay_tao).getTime());
     } else {
       // Default sort by customer code: C01, C02, C03...
@@ -97,8 +99,17 @@ export class UserList implements OnInit, AfterViewInit {
     this.applyFilters();
   }
 
-  setSortType(type: 'a-z' | 'newest' | 'oldest'): void {
-    this.sortType = this.sortType === type ? null : type;
+  toggleSort(mode: string): void {
+    if (mode === 'a-z') {
+      this.sortMode = this.sortMode === 'a-z' ? 'za' : 'a-z';
+    } else {
+      this.sortMode = mode as 'newest' | 'oldest';
+    }
+    this.currentPage = 1;
+  }
+
+  setSortMode(mode: 'newest' | 'oldest'): void {
+    this.sortMode = this.sortMode === mode ? '' : (mode as any);
     this.currentPage = 1;
   }
 

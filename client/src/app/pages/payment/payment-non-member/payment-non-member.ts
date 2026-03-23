@@ -254,11 +254,10 @@ export class PaymentNonMember implements OnInit {
   }
 
   handleVoucherSelected(voucher: iVoucher): void {
-    // Chỉ điền mã vào input, chưa áp dụng.
+    // Chọn voucher từ popup là áp dụng ngay.
     this.voucherCode = voucher.Ma_so;
     this.voucherError = '';
-    // Reset appliedVoucher để user bấm "Áp dụng" như cart-page.
-    this.appliedVoucher = null;
+    this.appliedVoucher = voucher;
   }
 
   clearVoucher(): void {
@@ -683,6 +682,7 @@ export class PaymentNonMember implements OnInit {
           Tong_tien: this.getFinalTotal(),
           Hinh_thuc_thanh_toan: this.paymentMethod === 'deposit' ? 'Thanh toán cọc' : 'Thanh toán toàn bộ',
           Phi_van_chuyen: this.getShippingFee(),
+          Ma_khuyen_mai: this.appliedVoucher?.Ma_khuyen_mai,
           Ghi_chu: this.note,
           Xuat_hoa_don: this.wantInvoice,
           Thong_tin_khach_vang_lai: {

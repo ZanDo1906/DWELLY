@@ -295,11 +295,10 @@ export class CartPage implements OnInit {
   }
 
   handleVoucherSelected(voucher: iVoucher): void {
-    // Chỉ điền mã vào input, chưa áp dụng
+    // Chọn voucher từ popup là áp dụng ngay
     this.voucherCode = voucher.Ma_so;
     this.voucherError = '';
-    // Reset appliedVoucher để user phải bấm "Áp dụng"
-    this.appliedVoucher = null;
+    this.appliedVoucher = voucher;
   }
 
   clearVoucher(): void {

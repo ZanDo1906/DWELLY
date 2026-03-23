@@ -7,6 +7,7 @@ db.connect();
 
 //Import Order model
 const Order = require('../models/Order');
+const Voucher = require('../models/Voucher');
 
 const ORDER_STATUSES = new Set([
     'Chờ duyệt',
@@ -147,6 +148,9 @@ router.get('/orders/user/:id', async (req, res) => {
 });
 
 router.post('/orders', async (req, res) => {
+    let appliedVoucherCode;
+    let voucherConsumed = false;
+
     try {
         const payload = req.body || {};
 
@@ -159,6 +163,63 @@ router.post('/orders', async (req, res) => {
             return res.status(400).json({ message: 'Trạng thái đơn hàng không hợp lệ' });
         }
 
+        const incomingVoucherIdentifier =
+            (typeof payload.Ma_khuyen_mai === 'string' && payload.Ma_khuyen_mai.trim())
+            || (typeof payload.Ma_so === 'string' && payload.Ma_so.trim())
+            || (typeof payload.voucherCode === 'string' && payload.voucherCode.trim())
+            || '';
+
+        if (incomingVoucherIdentifier) {
+            const now = new Date();
+            const matchedVoucher = await Voucher.findOne(
+                {
+                    $or: [
+                        { Ma_khuyen_mai: incomingVoucherIdentifier },
+                        { Ma_so: incomingVoucherIdentifier },
+                    ],
+                    Trang_thai: true,
+                }
+            ).lean();
+
+            if (!matchedVoucher) {
+                return res.status(400).json({
+                    message: 'Mã khuyến mãi không hợp lệ hoặc không hoạt động',
+                });
+            }
+
+            if (Number(matchedVoucher.So_luong_con_lai || 0) <= 0) {
+                return res.status(400).json({
+                    message: 'Mã khuyến mãi đã hết lượt sử dụng',
+                });
+            }
+
+            const startDate = new Date(matchedVoucher.Ngay_bat_dau);
+            const endDate = new Date(matchedVoucher.Ngay_het_han);
+            if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime()) || now < startDate || now > endDate) {
+                return res.status(400).json({
+                    message: 'Mã khuyến mãi đã hết hạn hoặc chưa có hiệu lực',
+                });
+            }
+
+            const consumedVoucher = await Voucher.findOneAndUpdate(
+                {
+                    Ma_khuyen_mai: matchedVoucher.Ma_khuyen_mai,
+                    So_luong_con_lai: { $gt: 0 },
+                },
+                { $inc: { So_luong_con_lai: -1 } },
+                { new: true }
+            );
+
+            if (!consumedVoucher) {
+                return res.status(400).json({
+                    message: 'Mã khuyến mãi đã hết lượt sử dụng',
+                });
+            }
+
+            appliedVoucherCode = consumedVoucher.Ma_khuyen_mai;
+            voucherConsumed = true;
+        }
+
         const newOrder = await Order.create({
             Ma_don_mua: maDonMua,
             Ma_khach_hang: payload.Ma_khach_hang || undefined,
@@ -168,7 +229,7 @@ router.post('/orders', async (req, res) => {
             Hinh_thuc_thanh_toan: payload.Hinh_thuc_thanh_toan || 'Thanh toán toàn bộ',
             Trang_thai: normalizedStatus,
             Thoi_gian_da_giao: normalizedStatus === 'Đã giao' ? new Date() : undefined,
-            Ma_khuyen_mai: payload.Ma_khuyen_mai || undefined,
+            Ma_khuyen_mai: appliedVoucherCode,
             Phi_van_chuyen: phiVanChuyen,
             Xuat_hoa_don: Boolean(payload.Xuat_hoa_don),
             Ghi_chu: payload.Ghi_chu || '',
@@ -179,6 +240,16 @@ router.post('/orders', async (req, res) => {
 
         res.status(201).json({ message: 'Tạo đơn hàng thành công', order: newOrder });
     } catch (err) {
+        if (voucherConsumed && appliedVoucherCode) {
+            try {
+                await Voucher.findOneAndUpdate(
+                    { Ma_khuyen_mai: appliedVoucherCode },
+                    { $inc: { So_luong_con_lai: 1 } }
+                );
+            } catch (rollbackError) {
+                console.error('Rollback voucher failed:', rollbackError.message);
+            }
+        }
         res.status(500).json({ message: err.message });
     }
 });
