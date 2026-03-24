@@ -53,7 +53,7 @@
               <p class="user-detail"><strong>Email:</strong> {{ user.Email }}</p>
             </div>
             <div class="user-actions">
-              <button class="action-btn view-btn" (click)="openUserForm(user)">👁 Xem chi tiết</button>
+              <button class="action-btn view-btn" (click)="openUserForm(user)"><i class="bi bi-eye"></i>  Xem chi tiết</button>
               <button class="action-btn disable-btn" (click)="requestToggleUserStatus(user)">
                 <i class="bi" [ngClass]="user.Trang_thai ? 'bi-slash-circle' : 'bi-arrow-counterclockwise'"></i>
                 {{ user.Trang_thai ? 'Vô hiệu hóa' : 'Khôi phục tài khoản' }}
