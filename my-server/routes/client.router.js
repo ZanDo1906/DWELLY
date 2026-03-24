@@ -316,6 +316,120 @@ router.patch("/clients/:id/change-password", async (req, res) => {
   }
 });
 
+// ================= FORGOT PASSWORD - STEP 1: VERIFY EMAIL/PHONE & SEND OTP =================
+const clientOtpStorage = {};
+const CLIENT_OTP_EXPIRY = 3 * 60 * 1000; // 3 minutes
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function maskContact(contact) {
+  if (String(contact).includes('@')) {
+    const [name, domain] = String(contact).split('@');
+    return name.substring(0, 2) + '***@' + domain;
+  }
+  const normalizedPhone = normalizePhone(contact);
+  return normalizedPhone.substring(0, 4) + '****' + normalizedPhone.substring(8);
+}
+
+router.post("/clients/forgot-password", async (req, res) => {
+  try {
+    const { emailOrPhone } = req.body;
+    const normalizedInput = String(emailOrPhone || "").trim();
+
+    if (!normalizedInput) {
+      return res.status(400).json({ message: "Vui lòng nhập Email hoặc Số điện thoại" });
+    }
+
+    const normalizedEmail = normalizeEmail(normalizedInput);
+    const normalizedPhoneInput = normalizePhone(normalizedInput);
+
+    const client = await Client.findOne({
+      $or: [
+        { Email: { $regex: new RegExp(`^${escapeRegex(normalizedEmail)}$`, 'i') } },
+        { So_dien_thoai: normalizedPhoneInput }
+      ]
+    });
+
+    if (!client) {
+      return res.status(404).json({ message: "Email hoặc Số điện thoại không tồn tại trong hệ thống" });
+    }
+
+    const otp = generateOTP();
+    const clientId = String(client.Ma_khach_hang || '');
+
+    if (!clientId) {
+      return res.status(500).json({ message: "Không tìm thấy mã khách hàng" });
+    }
+
+    const displayContact = normalizedInput.includes('@')
+      ? String(client.Email || '').trim()
+      : normalizePhone(client.So_dien_thoai || normalizedInput);
+
+    clientOtpStorage[clientId] = {
+      otp,
+      contact: displayContact,
+      createdAt: Date.now(),
+      attempts: 0
+    };
+
+    setTimeout(() => {
+      delete clientOtpStorage[clientId];
+    }, CLIENT_OTP_EXPIRY);
+
+    console.log(`\n========== CLIENT OTP FOR ${displayContact} ==========`);
+    console.log(`OTP Code: ${otp}`);
+    console.log(`Expires in: ${CLIENT_OTP_EXPIRY / 1000} seconds`);
+    console.log(`========== END CLIENT OTP ==========\n`);
+
+    return res.json({
+      message: "Đã gửi mã xác thực",
+      clientId,
+      maskedContact: maskContact(displayContact),
+      otp
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
+
+// ================= FORGOT PASSWORD - STEP 2: VERIFY OTP =================
+router.post("/clients/verify-otp", async (req, res) => {
+  try {
+    const { clientId, otp } = req.body;
+
+    if (!clientId || !otp) {
+      return res.status(400).json({ message: "Vui lòng nhập mã xác thực" });
+    }
+
+    const otpData = clientOtpStorage[clientId];
+
+    if (!otpData) {
+      return res.status(400).json({ message: "Mã xác thực đã hết hạn hoặc không tồn tại. Vui lòng yêu cầu mã mới" });
+    }
+
+    if (Date.now() - otpData.createdAt > CLIENT_OTP_EXPIRY) {
+      delete clientOtpStorage[clientId];
+      return res.status(400).json({ message: "Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới" });
+    }
+
+    if (otpData.attempts >= 5) {
+      delete clientOtpStorage[clientId];
+      return res.status(429).json({ message: "Quá nhiều lần nhập sai. Vui lòng yêu cầu mã xác thực mới" });
+    }
+
+    if (otpData.otp !== String(otp)) {
+      otpData.attempts += 1;
+      return res.status(400).json({ message: "Mã xác thực không chính xác" });
+    }
+
+    return res.json({ message: "Xác thực thành công", clientId });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+});
+
 // ================== RESET PASSWORD (FORGOT PASSWORD) ==================
 router.patch("/clients/:id/reset-password", async (req, res) => {
   try {
