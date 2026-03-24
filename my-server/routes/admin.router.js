@@ -120,7 +120,7 @@ router.post("/loginAdmin", async (req, res) => {
 // ================= FORGOT PASSWORD - STEP 1: VERIFY EMAIL/PHONE & SEND OTP =================
 // In-memory storage for OTP (in production, use Redis or database)
 const otpStorage = {};
-const OTP_EXPIRY = 5 * 60 * 1000; // 5 minutes
+const OTP_EXPIRY = 3 * 60 * 1000; // 3 minutes
 
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString();
