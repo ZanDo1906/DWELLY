@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
+import { Product } from '../../../services/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
@@ -56,6 +57,7 @@ interface CheckoutAddress {
   styleUrl: './payment-member.css',
 })
 export class PaymentMember implements OnInit {
+  products: iProduct[] = [];
   rooms: iRoom[] = [];
   cartItems: CheckoutItem[] = [];
   checkoutSummaryFromCart: CheckoutSummary | null = null;
@@ -78,8 +80,23 @@ export class PaymentMember implements OnInit {
   selectedAddressIndex: number = -1;
   tempSelectedAddressIndex: number = -1;
   isLoadingAddress: boolean = false;
+  currentUserRankCode: string = '';
+
+  private readonly conceptDiscountPercent = 10;
+
+  private readonly rankOrder: Record<string, number> = {
+    DONG: 1,
+    PH01: 1,
+    BAC: 2,
+    PH02: 2,
+    VANG: 3,
+    PH03: 3,
+    KIMCUONG: 4,
+    PH04: 4,
+  };
 
   constructor(
+    private productService: Product,
     private roomService: Room,
     private voucherService: Voucher,
     private orderService: Order,
@@ -89,6 +106,17 @@ export class PaymentMember implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.currentUserRankCode = this.getCurrentUserRankCode();
+
+    this.productService.getProductData().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
+
     // Load rooms first
     this.roomService.getRoomData().subscribe({
       next: (roomData) => {
@@ -132,6 +160,8 @@ export class PaymentMember implements OnInit {
       addresses: this.clientService.getClientAddress(this.userId).pipe(catchError(() => of({ address: [] as any[] }))),
     }).subscribe({
       next: ({ client, addresses }) => {
+        this.currentUserRankCode = client?.Ma_phan_hang || this.currentUserRankCode;
+
         const customerName = client?.Ho_va_ten || fallbackName;
         const customerPhone = client?.So_dien_thoai || fallbackPhone;
         const rawAddresses = Array.isArray(addresses?.address) && addresses.address.length > 0
@@ -244,10 +274,10 @@ export class PaymentMember implements OnInit {
   }
 
   handleVoucherSelected(voucher: iVoucher): void {
-    // Chọn voucher từ popup là áp dụng ngay.
+    // Chọn từ popup chỉ điền mã; cần bấm "Áp dụng" để kích hoạt giảm giá.
     this.voucherCode = voucher.Ma_so;
     this.voucherError = '';
-    this.appliedVoucher = voucher;
+    this.appliedVoucher = null;
   }
 
   clearVoucher(): void {
@@ -322,6 +352,10 @@ export class PaymentMember implements OnInit {
     );
   }
 
+  getTotalQuantity(): number {
+    return this.cartItems.reduce((total, item) => total + item.quantity, 0);
+  }
+
   getShippingFee(): number {
     return this.shippingMethod === 'fast' ? 100000 : 0;
   }
@@ -373,6 +407,12 @@ export class PaymentMember implements OnInit {
         return;
       }
 
+      if (!this.canUseVoucherByRank(voucher)) {
+        this.voucherError = 'Hạng thành viên của bạn chưa đủ điều kiện áp dụng mã này';
+        this.appliedVoucher = null;
+        return;
+      }
+
       this.appliedVoucher = voucher;
       this.voucherError = '';
     } else {
@@ -382,8 +422,7 @@ export class PaymentMember implements OnInit {
   }
 
   getDiscountAmount(): number {
-    if (!this.appliedVoucher) return 0;
-    return (this.getTotalAmount() * this.appliedVoucher.Phan_tram_giam) / 100;
+    return this.getConceptDiscountAmount() + this.getVoucherDiscountAmount();
   }
 
   increaseQuantity(index: number): void {
@@ -477,5 +516,136 @@ export class PaymentMember implements OnInit {
 
   formatPrice(price: number): string {
     return price.toLocaleString('vi-VN');
+  }
+
+  getConceptDiscountAmount(): number {
+    const conceptSummary = this.getConceptSummary(this.cartItems);
+    return (conceptSummary.eligibleSubtotal * this.conceptDiscountPercent) / 100;
+  }
+
+  getCompletedConceptSetCount(): number {
+    return this.getConceptSummary(this.cartItems).completedSetCount;
+  }
+
+  getVoucherDiscountAmount(): number {
+    if (!this.appliedVoucher) return 0;
+    return (this.getTotalAmount() * this.appliedVoucher.Phan_tram_giam) / 100;
+  }
+
+  private getConceptSummary(items: CheckoutItem[]): { completedSetCount: number; eligibleSubtotal: number } {
+    if (!this.products.length) {
+      return { completedSetCount: 0, eligibleSubtotal: 0 };
+    }
+
+    const requiredProductsByConcept = new Map<string, Set<string>>();
+    for (const product of this.products) {
+      if (product.Trang_thai === false) {
+        continue;
+      }
+
+      const conceptCode = product.Ma_khong_gian;
+      if (!conceptCode) {
+        continue;
+      }
+
+      if (!requiredProductsByConcept.has(conceptCode)) {
+        requiredProductsByConcept.set(conceptCode, new Set<string>());
+      }
+      requiredProductsByConcept.get(conceptCode)!.add(product.Ma_san_pham);
+    }
+
+    const purchasedProductsByConcept = new Map<string, Map<string, { quantity: number; price: number }>>();
+    for (const item of items) {
+      if (item.quantity <= 0) {
+        continue;
+      }
+
+      const conceptCode = item.product?.Ma_khong_gian;
+      const productCode = item.product?.Ma_san_pham;
+      if (!conceptCode || !productCode) {
+        continue;
+      }
+
+      if (!purchasedProductsByConcept.has(conceptCode)) {
+        purchasedProductsByConcept.set(conceptCode, new Map<string, { quantity: number; price: number }>());
+      }
+
+      const conceptItems = purchasedProductsByConcept.get(conceptCode)!;
+      const current = conceptItems.get(productCode) || { quantity: 0, price: item.product.Gia_ban };
+      current.quantity += item.quantity;
+      current.price = item.product.Gia_ban;
+      conceptItems.set(productCode, current);
+    }
+
+    let completedSetCount = 0;
+    let eligibleSubtotal = 0;
+
+    requiredProductsByConcept.forEach((requiredProducts, conceptCode) => {
+      if (requiredProducts.size === 0) {
+        return;
+      }
+
+      const purchasedProducts = purchasedProductsByConcept.get(conceptCode);
+      if (!purchasedProducts || purchasedProducts.size < requiredProducts.size) {
+        return;
+      }
+
+      let conceptSetCount = Number.MAX_SAFE_INTEGER;
+      let conceptSingleSetSubtotal = 0;
+
+      requiredProducts.forEach((productCode) => {
+        const purchased = purchasedProducts.get(productCode);
+        if (!purchased) {
+          conceptSetCount = 0;
+          return;
+        }
+
+        conceptSetCount = Math.min(conceptSetCount, purchased.quantity);
+        conceptSingleSetSubtotal += purchased.price;
+      });
+
+      if (conceptSetCount > 0 && conceptSetCount !== Number.MAX_SAFE_INTEGER) {
+        completedSetCount += conceptSetCount;
+        eligibleSubtotal += conceptSingleSetSubtotal * conceptSetCount;
+      }
+    });
+
+    return { completedSetCount, eligibleSubtotal };
+  }
+
+  private canUseVoucherByRank(voucher: iVoucher): boolean {
+    const requiredRankLevel = this.getRankLevel(voucher.Ma_phan_hang_toi_thieu);
+    if (requiredRankLevel === 0) {
+      return true;
+    }
+
+    const userRankLevel = this.getRankLevel(this.currentUserRankCode);
+    return userRankLevel >= requiredRankLevel;
+  }
+
+  private getCurrentUserRankCode(): string {
+    try {
+      const userRaw = localStorage.getItem('current_user');
+      if (!userRaw) return '';
+
+      const user = JSON.parse(userRaw);
+      return user?.Ma_phan_hang || '';
+    } catch {
+      return '';
+    }
+  }
+
+  private getRankLevel(rankCode: string): number {
+    const normalized = this.normalizeRank(rankCode);
+    return this.rankOrder[normalized] || 0;
+  }
+
+  private normalizeRank(value: string): string {
+    return (value || '')
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toUpperCase()
+      .replace(/[\s_-]+/g, '');
   }
 }

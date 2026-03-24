@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
+import { Product } from '../../../services/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
@@ -42,6 +43,7 @@ interface CheckoutPayload {
   styleUrl: './payment-non-member.css',
 })
 export class PaymentNonMember implements OnInit {
+  products: iProduct[] = [];
   rooms: iRoom[] = [];
   cartItems: CheckoutItem[] = [];
   checkoutSummaryFromCart: CheckoutSummary | null = null;
@@ -60,6 +62,8 @@ export class PaymentNonMember implements OnInit {
   wantInvoice: boolean = false;
   createdOrderCode: string = '';
   isLoggedIn: boolean = false;
+
+  private readonly conceptDiscountPercent = 10;
 
   // Address form fields
   fullName: string = '';
@@ -104,6 +108,7 @@ export class PaymentNonMember implements OnInit {
   otpValidationError: string = '';
 
   constructor(
+    private productService: Product,
     private roomService: Room,
     private voucherService: Voucher,
     private http: HttpClient,
@@ -114,6 +119,15 @@ export class PaymentNonMember implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = !!localStorage.getItem('userId');
+
+    this.productService.getProductData().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
 
     // Load rooms first
     this.roomService.getRoomData().subscribe({
@@ -205,6 +219,10 @@ export class PaymentNonMember implements OnInit {
     );
   }
 
+  getTotalQuantity(): number {
+    return this.cartItems.reduce((total, item) => total + item.quantity, 0);
+  }
+
   getShippingFee(): number {
     return this.shippingMethod === 'fast' ? 100000 : 0;
   }
@@ -268,10 +286,10 @@ export class PaymentNonMember implements OnInit {
   }
 
   handleVoucherSelected(voucher: iVoucher): void {
-    // Chọn voucher từ popup là áp dụng ngay.
+    // Chọn từ popup chỉ điền mã; cần bấm "Áp dụng" để kích hoạt giảm giá.
     this.voucherCode = voucher.Ma_so;
     this.voucherError = '';
-    this.appliedVoucher = voucher;
+    this.appliedVoucher = null;
   }
 
   clearVoucher(): void {
@@ -281,8 +299,102 @@ export class PaymentNonMember implements OnInit {
   }
 
   getDiscountAmount(): number {
+    return this.getConceptDiscountAmount() + this.getVoucherDiscountAmount();
+  }
+
+  getConceptDiscountAmount(): number {
+    const conceptSummary = this.getConceptSummary(this.cartItems);
+    return (conceptSummary.eligibleSubtotal * this.conceptDiscountPercent) / 100;
+  }
+
+  getCompletedConceptSetCount(): number {
+    return this.getConceptSummary(this.cartItems).completedSetCount;
+  }
+
+  getVoucherDiscountAmount(): number {
     if (!this.appliedVoucher) return 0;
     return (this.getTotalAmount() * this.appliedVoucher.Phan_tram_giam) / 100;
+  }
+
+  private getConceptSummary(items: CheckoutItem[]): { completedSetCount: number; eligibleSubtotal: number } {
+    if (!this.products.length) {
+      return { completedSetCount: 0, eligibleSubtotal: 0 };
+    }
+
+    const requiredProductsByConcept = new Map<string, Set<string>>();
+    for (const product of this.products) {
+      if (product.Trang_thai === false) {
+        continue;
+      }
+
+      const conceptCode = product.Ma_khong_gian;
+      if (!conceptCode) {
+        continue;
+      }
+
+      if (!requiredProductsByConcept.has(conceptCode)) {
+        requiredProductsByConcept.set(conceptCode, new Set<string>());
+      }
+      requiredProductsByConcept.get(conceptCode)!.add(product.Ma_san_pham);
+    }
+
+    const purchasedProductsByConcept = new Map<string, Map<string, { quantity: number; price: number }>>();
+    for (const item of items) {
+      if (item.quantity <= 0) {
+        continue;
+      }
+
+      const conceptCode = item.product?.Ma_khong_gian;
+      const productCode = item.product?.Ma_san_pham;
+      if (!conceptCode || !productCode) {
+        continue;
+      }
+
+      if (!purchasedProductsByConcept.has(conceptCode)) {
+        purchasedProductsByConcept.set(conceptCode, new Map<string, { quantity: number; price: number }>());
+      }
+
+      const conceptItems = purchasedProductsByConcept.get(conceptCode)!;
+      const current = conceptItems.get(productCode) || { quantity: 0, price: item.product.Gia_ban };
+      current.quantity += item.quantity;
+      current.price = item.product.Gia_ban;
+      conceptItems.set(productCode, current);
+    }
+
+    let completedSetCount = 0;
+    let eligibleSubtotal = 0;
+
+    requiredProductsByConcept.forEach((requiredProducts, conceptCode) => {
+      if (requiredProducts.size === 0) {
+        return;
+      }
+
+      const purchasedProducts = purchasedProductsByConcept.get(conceptCode);
+      if (!purchasedProducts || purchasedProducts.size < requiredProducts.size) {
+        return;
+      }
+
+      let conceptSetCount = Number.MAX_SAFE_INTEGER;
+      let conceptSingleSetSubtotal = 0;
+
+      requiredProducts.forEach((productCode) => {
+        const purchased = purchasedProducts.get(productCode);
+        if (!purchased) {
+          conceptSetCount = 0;
+          return;
+        }
+
+        conceptSetCount = Math.min(conceptSetCount, purchased.quantity);
+        conceptSingleSetSubtotal += purchased.price;
+      });
+
+      if (conceptSetCount > 0 && conceptSetCount !== Number.MAX_SAFE_INTEGER) {
+        completedSetCount += conceptSetCount;
+        eligibleSubtotal += conceptSingleSetSubtotal * conceptSetCount;
+      }
+    });
+
+    return { completedSetCount, eligibleSubtotal };
   }
 
   increaseQuantity(index: number): void {
