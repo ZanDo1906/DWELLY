@@ -197,7 +197,10 @@ export class RoomVisualizer implements OnInit {
   }
 
   getProductPrice(product: iProduct): string {
-    return `${this.vndFormatter.format(product.Gia_ban || 0)}đ`;
+    if (!product?.Gia_ban) return '0đ';
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    const finalPrice = product.Gia_ban * (1 - discount / 100);
+    return `${this.vndFormatter.format(finalPrice)}đ`;
   }
 
   getCategoryName(product: iProduct): string {

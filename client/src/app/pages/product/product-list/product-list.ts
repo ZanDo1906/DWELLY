@@ -159,6 +159,12 @@ export class ProductList implements OnInit {
     this.displayedCount = 9;
   }
 
+  getFinalPrice(product: iProduct): number {
+    if (!product?.Gia_ban) return 0;
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    return product.Gia_ban * (1 - discount / 100);
+  }
+
   get filteredProducts(): iProduct[] {
     let filtered = this.products;
 
@@ -174,7 +180,8 @@ export class ProductList implements OnInit {
       const roomTypeMatch = this.selectedRoomTypes.size === 0 || this.selectedRoomTypes.has(product.Ma_loai_phong);
       const styleMatch = this.selectedStyles.size === 0 || this.selectedStyles.has(product.Ma_phong_cach);
       const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(product.Ma_danh_muc);
-      const priceMatch = product.Gia_ban >= this.minPrice && product.Gia_ban <= this.maxPrice;
+      const finalPrice = this.getFinalPrice(product);
+      const priceMatch = finalPrice >= this.minPrice && finalPrice <= this.maxPrice;
       return roomTypeMatch && styleMatch && categoryMatch && priceMatch;
     });
   }
@@ -184,10 +191,10 @@ export class ProductList implements OnInit {
     
     switch (this.currentSort) {
       case 'price-asc':
-        sorted.sort((a, b) => a.Gia_ban - b.Gia_ban);
+        sorted.sort((a, b) => this.getFinalPrice(a) - this.getFinalPrice(b));
         break;
       case 'price-desc':
-        sorted.sort((a, b) => b.Gia_ban - a.Gia_ban);
+        sorted.sort((a, b) => this.getFinalPrice(b) - this.getFinalPrice(a));
         break;
       case 'rating':
         sorted.sort((a, b) => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
 import { Room } from '../../../services/room';
@@ -37,7 +37,7 @@ interface CheckoutPayload {
 
 @Component({
   selector: 'app-cart-page',
-  imports: [CommonModule, FormsModule, VoucherPopup, Modal],
+  imports: [CommonModule, FormsModule, VoucherPopup, Modal, RouterLink],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css',
 })
@@ -127,15 +127,26 @@ export class CartPage implements OnInit {
     return this.cartItems.filter(item => item.selected).length;
   }
 
+  getFinalPrice(product: iProduct): number {
+    if (!product?.Gia_ban) return 0;
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    return product.Gia_ban * (1 - discount / 100);
+  }
+
   getSelectedTotal(): number {
     return this.cartItems
       .filter(item => item.selected)
-      .reduce((total, item) => total + (item.product.Gia_ban * item.quantity), 0);
+      .reduce((total, item) => total + (this.getFinalPrice(item.product) * item.quantity), 0);
   }
 
   getDiscountAmount(): number {
     if (!this.appliedVoucher) return 0;
     return (this.getSelectedTotal() * this.appliedVoucher.Phan_tram_giam) / 100;
+  }
+
+  getProductImage(product: iProduct): string {
+    const firstImage = product.Hinh_anh?.[0] || '';
+    return this.productService.getImgUrl(firstImage);
   }
 
   getFinalTotal(): number {

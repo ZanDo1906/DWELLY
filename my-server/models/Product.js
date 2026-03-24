@@ -10,6 +10,7 @@ const Product = new Scheme({
     Chat_lieu: { type: String, required: true },
     Hinh_anh: [{ type: String, required: true }],
     So_luong_ton_kho: { type: Number, default: 0 },
+    Phan_tram_giam_gia: { type: Number, default: 0, min: 0, max: 100 },
     Ma_loai_phong: { type: String, required: true },
     Ma_phong_cach: { type: String, required: true },
     Ma_danh_muc: { type: String, required: true },

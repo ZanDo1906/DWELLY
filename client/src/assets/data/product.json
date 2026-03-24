@@ -17,7 +17,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "05",
         "Ma_khong_gian": "15",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "02",
@@ -37,7 +38,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "07",
         "Ma_khong_gian": "15",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "03",
@@ -57,7 +59,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "13",
         "Ma_khong_gian": "15",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 25
     },
     {
         "Ma_san_pham": "04",
@@ -77,7 +80,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "15",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "05",
@@ -97,7 +101,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "05",
         "Ma_khong_gian": "16",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "06",
@@ -117,7 +122,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "16",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "07",
@@ -137,7 +143,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "16",
         "Ma_khong_gian": "16",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "08",
@@ -157,7 +164,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "07",
         "Ma_khong_gian": "16",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "09",
@@ -177,7 +185,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "05",
         "Ma_khong_gian": "17",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "10",
@@ -197,7 +206,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "06",
         "Ma_khong_gian": "17",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "11",
@@ -217,7 +227,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "13",
         "Ma_khong_gian": "17",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "12",
@@ -237,7 +248,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "17",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "13",
@@ -257,7 +269,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "18",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "14",
@@ -277,7 +290,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "16",
         "Ma_khong_gian": "18",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "15",
@@ -297,7 +311,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "07",
         "Ma_khong_gian": "18",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "16",
@@ -317,7 +332,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "18",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "17",
@@ -337,7 +353,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "01",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "18",
@@ -357,7 +374,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "11",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "19",
@@ -377,7 +395,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "01",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "20",
@@ -397,7 +416,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "1",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "21",
@@ -417,7 +437,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "1",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "22",
@@ -437,7 +458,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "4",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "23",
@@ -457,7 +479,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "4",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "24",
@@ -477,7 +500,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "4",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "25",
@@ -497,7 +521,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "4",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "26",
@@ -517,7 +542,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "3",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "27",
@@ -537,7 +563,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "11",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "28",
@@ -557,7 +584,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "02",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "29",
@@ -577,7 +605,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "02",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "30",
@@ -597,7 +626,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "02",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "31",
@@ -617,7 +647,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "02",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "32",
@@ -637,7 +668,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "03",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "33",
@@ -657,7 +689,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "03",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "34",
@@ -677,7 +710,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "03",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "35",
@@ -697,7 +731,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "03",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "36",
@@ -717,7 +752,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "07",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "37",
@@ -737,7 +773,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "07",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 25
     },
     {
         "Ma_san_pham": "38",
@@ -757,7 +794,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "17",
         "Ma_khong_gian": "07",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "39",
@@ -777,7 +815,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "07",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "40",
@@ -797,7 +836,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "08",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "41",
@@ -817,7 +857,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "08",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "42",
@@ -837,7 +878,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "17",
         "Ma_khong_gian": "08",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "43",
@@ -857,7 +899,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "08",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "44",
@@ -877,7 +920,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "09",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "45",
@@ -897,7 +941,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "09",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "46",
@@ -917,7 +962,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "17",
         "Ma_khong_gian": "09",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "47",
@@ -937,7 +983,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "09",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "48",
@@ -957,7 +1004,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "10",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "49",
@@ -977,7 +1025,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "10",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "50",
@@ -997,7 +1046,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "10",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "51",
@@ -1017,7 +1067,8 @@
         "Ma_phong_cach": "02",
         "Ma_danh_muc": "17",
         "Ma_khong_gian": "10",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "52",
@@ -1037,7 +1088,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "05",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "53",
@@ -1057,7 +1109,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "12",
         "Ma_khong_gian": "05",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "54",
@@ -1077,7 +1130,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "05",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 25
     },
     {
         "Ma_san_pham": "55",
@@ -1097,7 +1151,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "05",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "56",
@@ -1117,7 +1172,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "06",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "57",
@@ -1137,7 +1193,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "06",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "58",
@@ -1157,7 +1214,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "10",
         "Ma_khong_gian": "06",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "59",
@@ -1177,7 +1235,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "09",
         "Ma_khong_gian": "06",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "60",
@@ -1197,7 +1256,8 @@
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "04",
         "Ma_khong_gian": "11",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "61",
@@ -1217,7 +1277,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "05",
         "Ma_khong_gian": "13",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "62",
@@ -1237,7 +1298,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "16",
         "Ma_khong_gian": "13",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "63",
@@ -1257,7 +1319,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "06",
         "Ma_khong_gian": "13",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 20
     },
     {
         "Ma_san_pham": "64",
@@ -1277,7 +1340,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "07",
         "Ma_khong_gian": "13",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "65",
@@ -1297,7 +1361,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "07",
         "Ma_khong_gian": "14",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 25
     },
     {
         "Ma_san_pham": "66",
@@ -1317,7 +1382,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "05",
         "Ma_khong_gian": "14",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "67",
@@ -1337,7 +1403,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "06",
         "Ma_khong_gian": "14",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 25
     },
     {
         "Ma_san_pham": "68",
@@ -1357,7 +1424,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "14",
         "Ma_khong_gian": "14",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "69",
@@ -1377,7 +1445,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "01",
         "Ma_khong_gian": "12",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 15
     },
     {
         "Ma_san_pham": "70",
@@ -1397,7 +1466,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "02",
         "Ma_khong_gian": "12",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 30
     },
     {
         "Ma_san_pham": "71",
@@ -1417,7 +1487,8 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "16",
         "Ma_khong_gian": "12",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     },
     {
         "Ma_san_pham": "72",
@@ -1437,6 +1508,7 @@
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "03",
         "Ma_khong_gian": "12",
-        "Trang_thai": true
+        "Trang_thai": true,
+        "Phan_tram_giam_gia": 10
     }
 ]

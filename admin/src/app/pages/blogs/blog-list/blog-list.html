@@ -29,8 +29,8 @@
               A-Z
             </button>
 
-            <button class="filter-btn" (click)="sortMode='newest'" [class.active]="sortMode==='newest'">Mới nhất</button>
-            <button class="filter-btn" (click)="sortMode='oldest'" [class.active]="sortMode==='oldest'">Cũ nhất</button>
+            <button class="filter-btn" (click)="setDateSort('newest')" [class.active]="sortMode==='newest'">Mới nhất</button>
+            <button class="filter-btn" (click)="setDateSort('oldest')" [class.active]="sortMode==='oldest'">Cũ nhất</button>
 
             <div class="dropdown-wrapper">
               <div class="dropdown-selected" (click)="toggleDropdown($event)">

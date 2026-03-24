@@ -40,7 +40,7 @@
           <div class="info">
             <strong>{{ p.Ten_san_pham }}</strong>
             <p>{{ p.Chat_lieu }}</p>
-            <p>{{ p.Gia_ban | number:'1.0-0' }} VNĐ</p>
+            <p>{{ getFinalPrice(p) | number:'1.0-0' }} VNĐ</p>
           </div>
 
           <div class="actions">

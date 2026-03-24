@@ -40,21 +40,23 @@
                                         <input type="checkbox" [(ngModel)]="item.selected"
                                             (change)="updateSelection()" />
                                     </label>
-                                    <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham"
-                                        class="product-img" />
-                                    <div class="product-details">
-                                        <p class="product-name">{{item.product.Ten_san_pham}}</p>
-                                        <span
-                                            class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
-                                    </div>
+                                    <a [routerLink]="['/product', item.product.Ma_san_pham]" class="product-link d-flex align-items-center column-gap-3" style="text-decoration: none; color: inherit;">
+                                        <img [src]="getProductImage(item.product)" [alt]="item.product.Ten_san_pham"
+                                            class="product-img" />
+                                        <div class="product-details">
+                                            <p class="product-name" style="margin-bottom: 0;">{{item.product.Ten_san_pham}}</p>
+                                            <span
+                                                class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="item-cell item-price">{{formatPrice(item.product.Gia_ban)}} VNĐ</div>
+                                <div class="item-cell item-price">{{formatPrice(getFinalPrice(item.product))}} VNĐ</div>
                                 <div class="item-cell item-qty">
                                     <button class="qty-btn" (click)="decreaseQuantity(i)">−</button>
                                     <span class="qty-number">{{item.quantity}}</span>
                                     <button class="qty-btn" (click)="increaseQuantity(i)">+</button>
                                 </div>
-                                <div class="item-cell item-total">{{formatPrice(item.product.Gia_ban * item.quantity)}}
+                                <div class="item-cell item-total">{{formatPrice(getFinalPrice(item.product) * item.quantity)}}
                                     VNĐ</div>
                                 <div class="item-cell item-action">
                                     <button class="btn-delete" (click)="openDeleteModal(i)">

@@ -6,6 +6,7 @@ import { iReview } from '../../interfaces/review';
 import { Review } from '../../services/review';
 import { Client } from '../../services/client';
 import { Cart } from '../../services/cart';
+import { Product } from '../../services/product';
 
 @Component({
   selector: 'app-product-card',
@@ -33,6 +34,7 @@ export class ProductCard implements OnInit {
     private reviewService: Review,
     private clientService: Client,
     private cartService: Cart,
+    private productService: Product,
     private router: Router
   ) {}
 
@@ -118,30 +120,29 @@ export class ProductCard implements OnInit {
   }
 
   getMainImage(): string {
-  return this.mainImage || this.product?.Hinh_anh?.[0] || 'assets/images/no-image.png';
-}
-
+    const rawImage = this.mainImage || this.product?.Hinh_anh?.[0];
+    return rawImage ? this.productService.getImgUrl(rawImage) : 'assets/images/no-image.png';
+  }
 
   getHoverImage(): string {
-    return this.product?.Hinh_anh?.[1] || this.product?.Hinh_anh?.[0] || 'assets/images/no-image.png';
+    const rawImage = this.product?.Hinh_anh?.[1] || this.product?.Hinh_anh?.[0];
+    return rawImage ? this.productService.getImgUrl(rawImage) : 'assets/images/no-image.png';
   }
 
   getFormattedPrice(): string {
-    return this.product?.Gia_ban
-      ? this.product.Gia_ban.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ'
-      : '';
+    if (!this.product?.Gia_ban) return '';
+    const discount = (this.product as any).Phan_tram_giam_gia ?? 0;
+    const finalPrice = this.product.Gia_ban * (1 - discount / 100);
+    return finalPrice.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
   }
 
   getOldPrice(): string {
     if (!this.product?.Gia_ban) return '';
-    const giaCu = this.product.Gia_ban / 0.75;
-    return giaCu.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
+    return this.product.Gia_ban.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
   }
 
   getDiscountPercent(): number {
-    if (!this.product?.Gia_ban) return 0;
-    const giaCu = this.product.Gia_ban / 0.75;
-    return Math.round((1 - this.product.Gia_ban / giaCu) * 100);
+    return (this.product as any).Phan_tram_giam_gia ?? 0;
   }
 
   getStarIcon(): string {

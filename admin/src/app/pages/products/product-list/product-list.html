@@ -26,9 +26,9 @@
               A-Z
             </button>
 
-            <button class="filter-btn" (click)="sortMode='highest'" [class.active]="sortMode==='highest'">Giá
+            <button class="filter-btn" (click)="setOtherSort('highest')" [class.active]="sortMode==='highest'">Giá
               cao</button>
-            <button class="filter-btn" (click)="sortMode='lowest'" [class.active]="sortMode==='lowest'">Giá
+            <button class="filter-btn" (click)="setOtherSort('lowest')" [class.active]="sortMode==='lowest'">Giá
               thấp</button>
 
             <div class="dropdown-wrapper">

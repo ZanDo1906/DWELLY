@@ -207,9 +207,23 @@ selectStatus(status: string, event: Event): void {
 
   return list;
 }
-    toggleSort(mode: string): void {
-  if (mode === 'az') { this.sortMode = this.sortMode === 'az' ? 'za' : 'az'; } else { this.sortMode = mode; } this.currentPage = 1;
-}
+  toggleSort(mode: 'az'): void {
+    if (mode === 'az') {
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
+      this.currentPage = 1;
+    }
+  }
+
+  setOtherSort(mode: 'highest' | 'lowest'): void {
+    this.sortMode = this.sortMode === mode ? '' : mode;
+    this.currentPage = 1;
+  }
 
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.filteredProducts.length / this.pageSize));

@@ -8,8 +8,8 @@
     <img *ngIf="enableHover" class="hover-img" [src]="getHoverImage()" alt="{{ product.Ten_san_pham }}">
 
 
-    <span class="discount-tag" *ngIf="($any(product).Phan_tram_giam_gia ?? getDiscountPercent()) > 0">
-      -{{ ($any(product).Phan_tram_giam_gia ?? getDiscountPercent()) | number:'1.0-0' }}%
+    <span class="discount-tag" *ngIf="getDiscountPercent() > 0">
+      -{{ getDiscountPercent() }}%
     </span>
   </div>
 
@@ -19,8 +19,8 @@
       <span class="new-price">{{ getFormattedPrice() }}</span>
       <span
         class="old-price"
-        *ngIf="($any(product).Phan_tram_giam_gia ?? getDiscountPercent()) > 0 && ($any(product).Phan_tram_giam_gia ?? getDiscountPercent()) < 100">
-        {{ (product.Gia_ban / (1 - (($any(product).Phan_tram_giam_gia ?? getDiscountPercent()) / 100))) | number:'1.0-0' }} VNĐ
+        *ngIf="getDiscountPercent() > 0">
+        {{ getOldPrice() }}
       </span>
     </div>
 

@@ -19,14 +19,19 @@
           </div>
 
           <div class="filter-group">
-            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'az'" (click)="setSortType('az')">
-              <i class="bi bi-check2" aria-hidden="true"></i> A-Z
+            <button class="filter-btn" (click)="toggleSort('az')"
+              [class.active]="sortMode === 'az' || sortMode === 'za'">
+              <i class="bi"
+                [ngClass]="sortMode === 'az' ? 'bi-arrow-down' : (sortMode === 'za' ? 'bi-arrow-up' : 'bi-arrow-down')"></i>
+              A-Z
             </button>
 
-            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'newest'" (click)="setSortType('newest')">Mới
-              nhất</button>
-            <button class="filter-btn" [class.active]="hasSortInteracted && sortType === 'oldest'" (click)="setSortType('oldest')">Cũ
-              nhất</button>
+            <button class="filter-btn" (click)="setDateSort('newest')" [class.active]="sortMode === 'newest'">
+              Mới nhất
+            </button>
+            <button class="filter-btn" (click)="setDateSort('oldest')" [class.active]="sortMode === 'oldest'">
+              Cũ nhất
+            </button>
 
             <div class="dropdown-wrapper">
               <div class="dropdown-selected" (click)="toggleStatusDropdown($event)">

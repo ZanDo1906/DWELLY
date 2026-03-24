@@ -127,14 +127,20 @@ export class ConceptDetail implements OnInit, OnDestroy {
     this.dropdownOpen = false;
   }
 
+  getFinalPrice(product: iProduct): number {
+    if (!product?.Gia_ban) return 0;
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    return product.Gia_ban * (1 - discount / 100);
+  }
+
   sortProducts() {
     if (!this.relatedProducts.length) return;
 
     if (this.sortType === 'highest') {
-      this.relatedProducts.sort((a, b) => b.Gia_ban - a.Gia_ban);
+      this.relatedProducts.sort((a, b) => this.getFinalPrice(b) - this.getFinalPrice(a));
     }
     if (this.sortType === 'lowest') {
-      this.relatedProducts.sort((a, b) => a.Gia_ban - b.Gia_ban);
+      this.relatedProducts.sort((a, b) => this.getFinalPrice(a) - this.getFinalPrice(b));
     }
   }
 

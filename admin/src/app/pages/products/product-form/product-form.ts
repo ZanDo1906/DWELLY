@@ -46,14 +46,14 @@ export class ProductForm implements OnInit {
   @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   constructor(
-  private route: ActivatedRoute,
-  private router: Router,
-  public productService: Product,
-  private categoryService: Category,
-  private roomService: Room,
-  private styleService: Style,
-  private conceptService: Concept
-) {}
+    private route: ActivatedRoute,
+    private router: Router,
+    public productService: Product,
+    private categoryService: Category,
+    private roomService: Room,
+    private styleService: Style,
+    private conceptService: Concept
+  ) { }
   product: iProduct = {
     Ma_san_pham: '',
     Ten_san_pham: '',
@@ -143,36 +143,36 @@ export class ProductForm implements OnInit {
   }
 
   async ngOnInit() {
-  this.loadClassificationData();
+    this.loadClassificationData();
 
-  const id = this.route.snapshot.paramMap.get('id');
-  if (id) {
-    this.isEditMode = true;
-    this.productService.getProductByCode(id).subscribe({
-      next: (data) => {
-        this.product = { ...data };
-        this.product.Ma_khong_gian = this.product.Ma_khong_gian || '';
-        this.images = this.product.Hinh_anh.length
-          ? [...this.product.Hinh_anh]
-          : [null, null, null, null];
-        this.checkAndAddNewPlaceholder();
-        this.syncOriginalState();
-      },
-      error: (err) => console.error('Không tìm thấy sản phẩm', err)
-    });
-  } else {
-    this.isEditMode = false;
-    // Lấy mã sản phẩm tiếp theo khi tạo mới
-    this.productService.getNextProductCode().subscribe({
-      next: (res) => {
-        this.product.Ma_san_pham = res.nextCode;
-      },
-      error: (err) => {
-        console.error('Không lấy được mã sản phẩm tiếp theo', err);
-      }
-    });
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode = true;
+      this.productService.getProductByCode(id).subscribe({
+        next: (data) => {
+          this.product = { ...data };
+          this.product.Ma_khong_gian = this.product.Ma_khong_gian || '';
+          this.images = this.product.Hinh_anh.length
+            ? [...this.product.Hinh_anh]
+            : [null, null, null, null];
+          this.checkAndAddNewPlaceholder();
+          this.syncOriginalState();
+        },
+        error: (err) => console.error('Không tìm thấy sản phẩm', err)
+      });
+    } else {
+      this.isEditMode = false;
+      // Lấy mã sản phẩm tiếp theo khi tạo mới
+      this.productService.getNextProductCode().subscribe({
+        next: (res) => {
+          this.product.Ma_san_pham = res.nextCode;
+        },
+        error: (err) => {
+          console.error('Không lấy được mã sản phẩm tiếp theo', err);
+        }
+      });
+    }
   }
-}
 
   private loadClassificationData(): void {
     this.categoryService.getCategoryData().subscribe({
@@ -598,8 +598,8 @@ export class ProductForm implements OnInit {
         const oldFilename = this.extractConceptUploadFilename(previousImagePath);
         if (oldFilename) {
           this.conceptService.deleteConceptImage(oldFilename).subscribe({
-            next: () => {},
-            error: () => {}
+            next: () => { },
+            error: () => { }
           });
         }
 
@@ -851,51 +851,51 @@ export class ProductForm implements OnInit {
   showError(msg: string): void {
     alert(msg);
   }
-  
-  uploadImages(id: string): void {
-  const formData = new FormData();
-  this.fileInputs.forEach((input) => {
-    const files = input.nativeElement.files;
-    if (files && files.length > 0) {
-      Array.from(files).forEach(file => {
-        formData.append('images', file);
-      });
-    }
-  });
 
-  this.productService.uploadImages(id, formData).subscribe({
-    next: () => console.log('Ảnh đã upload'),
-    error: (err) => console.error('Lỗi upload ảnh', err)
-  });
-}
+  uploadImages(id: string): void {
+    const formData = new FormData();
+    this.fileInputs.forEach((input) => {
+      const files = input.nativeElement.files;
+      if (files && files.length > 0) {
+        Array.from(files).forEach(file => {
+          formData.append('images', file);
+        });
+      }
+    });
+
+    this.productService.uploadImages(id, formData).subscribe({
+      next: () => console.log('Ảnh đã upload'),
+      error: (err) => console.error('Lỗi upload ảnh', err)
+    });
+  }
 
 
   previewImage(event: any, index: number): void {
-  const input = event.target as HTMLInputElement;
-  const files = input?.files;
-  if (!files || files.length === 0) return;
+    const input = event.target as HTMLInputElement;
+    const files = input?.files;
+    if (!files || files.length === 0) return;
 
-  Array.from(files).forEach((file, idx) => {
-    this.selectedFiles.push(file);
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      if (idx === 0) {
-        this.images[index] = e.target.result;
-      } else {
-       
-        this.images.splice(index + idx, 0, e.target.result);
-      }
-      this.checkAndAddNewPlaceholder();
-    };
-    reader.readAsDataURL(file);
-  });
-}
+    Array.from(files).forEach((file, idx) => {
+      this.selectedFiles.push(file);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        if (idx === 0) {
+          this.images[index] = e.target.result;
+        } else {
+
+          this.images.splice(index + idx, 0, e.target.result);
+        }
+        this.checkAndAddNewPlaceholder();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 
   private checkAndAddNewPlaceholder(): void {
     if (!this.images.some(img => img === null)) {
       this.images.push(null);
     }
-    
+
     const lastIndex = this.images.lastIndexOf(null);
     this.images = this.images.filter((img, idx) => img !== null || idx === lastIndex);
   }
@@ -906,7 +906,7 @@ export class ProductForm implements OnInit {
     const input = this.fileInputs.toArray()[index];
     input?.nativeElement.click();
   }
-  
+
   deleteProduct(): void {
     if (!this.product.Ma_san_pham) {
       alert('Không có mã sản phẩm để xóa!');
@@ -934,27 +934,27 @@ export class ProductForm implements OnInit {
     });
   }
 
-removeImage(index: number, event: Event): void {
-  event.stopPropagation();
+  removeImage(index: number, event: Event): void {
+    event.stopPropagation();
 
-  const img = this.images[index];
-  if (!img) return;
+    const img = this.images[index];
+    if (!img) return;
 
-  if (img.startsWith('data:')) {
-    const base64Index = this.images
-      .slice(0, index)
-      .filter(i => i && i.startsWith('data:')).length;
-    this.selectedFiles.splice(base64Index, 1);
+    if (img.startsWith('data:')) {
+      const base64Index = this.images
+        .slice(0, index)
+        .filter(i => i && i.startsWith('data:')).length;
+      this.selectedFiles.splice(base64Index, 1);
+
+      this.images.splice(index, 1);
+      this.checkAndAddNewPlaceholder();
+      return;
+    }
 
     this.images.splice(index, 1);
     this.checkAndAddNewPlaceholder();
-    return;
+    this.showSuccess('Bấm "Lưu sản phẩm" để cập nhật thay đổi!');
   }
-
-  this.images.splice(index, 1);
-  this.checkAndAddNewPlaceholder();
-  this.showSuccess('Bấm "Lưu sản phẩm" để cập nhật thay đổi!');
-}
 
 
   private isFormEmpty(): boolean {
@@ -1052,14 +1052,14 @@ removeImage(index: number, event: Event): void {
       );
       return;
     }
-    
+
     const formData = new FormData();
     let hasNewFiles = this.selectedFiles.length > 0;
 
     this.selectedFiles.forEach(file => formData.append('images', file));
 
     this.product.Hinh_anh = this.images
-  .filter(img => img && !img.startsWith('data:')) as string[];
+      .filter(img => img && !img.startsWith('data:')) as string[];
 
     const payload: any = {
       ...this.product,
@@ -1083,7 +1083,7 @@ removeImage(index: number, event: Event): void {
     } else {
       this.productService.addProduct(payload).subscribe({
         next: (res) => {
-          const newCode = res.Ma_san_pham; 
+          const newCode = res.Ma_san_pham;
           if (hasNewFiles) {
             this.uploadAfterSave(newCode, formData);
           } else {
@@ -1138,8 +1138,8 @@ removeImage(index: number, event: Event): void {
 
     this.resetForm();
   }
-  
-  
+
+
   private resetForm(): void {
     this.product = {
       Ma_san_pham: '',

@@ -69,21 +69,21 @@
                             </div>
 
                             <div class="product-item" *ngFor="let item of cartItems; let i = index">
-                                <div class="product-info">
-                                    <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham" />
+                                <a [routerLink]="['/product', item.product.Ma_san_pham]" class="product-info" style="text-decoration: none; color: inherit;">
+                                    <img [src]="getProductImage(item.product)" [alt]="item.product.Ten_san_pham" />
                                     <div class="product-details">
                                         <p class="product-name">{{item.product.Ten_san_pham}}</p>
                                         <span
                                             class="product-category">{{getRoomName(item.product.Ma_loai_phong)}}</span>
                                     </div>
-                                </div>
-                                <div class="product-price">{{formatPrice(item.product.Gia_ban)}} VNĐ</div>
+                                </a>
+                                <div class="product-price">{{formatPrice(getFinalPrice(item.product))}} VNĐ</div>
                                 <div class="product-qty">
                                     <button class="qty-btn" (click)="decreaseQuantity(i)">-</button>
                                     <span class="qty-number">{{item.quantity}}</span>
                                     <button class="qty-btn" (click)="increaseQuantity(i)">+</button>
                                 </div>
-                                <div class="product-total">{{formatPrice(item.product.Gia_ban * item.quantity)}} VNĐ
+                                <div class="product-total">{{formatPrice(getFinalPrice(item.product) * item.quantity)}} VNĐ
                                 </div>
                             </div>
                         </div>

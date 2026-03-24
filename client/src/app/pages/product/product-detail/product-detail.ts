@@ -394,11 +394,21 @@ getVideoTitle(index: number): string {
     return (this.getCount(star) * 100) / total;
   }
 
+  getDiscountPercent(p: iProduct | undefined): number {
+    if (!p) return 0;
+    return (p as any).Phan_tram_giam_gia ?? 0;
+  }
+
   getOldPrice(p: iProduct | undefined): string {
-  if (!p?.Gia_ban) return '';
-  const giaCu = p.Gia_ban / 0.75;
-  return giaCu.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
-}
+    if (!p?.Gia_ban) return '';
+    return p.Gia_ban.toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
+  }
+  
+  getFinalPrice(p: iProduct | undefined): number {
+    if (!p?.Gia_ban) return 0;
+    const discount = this.getDiscountPercent(p);
+    return p.Gia_ban * (1 - discount / 100);
+  }
 
   averageRating = 0;
   Math = Math;
@@ -438,7 +448,8 @@ getVideoTitle(index: number): string {
     this.buyClicked = true;
 
     const checkoutQuantity = Math.max(1, this.quantity);
-    const totalAmount = this.product.Gia_ban * checkoutQuantity;
+    const finalPrice = this.getFinalPrice(this.product);
+    const totalAmount = finalPrice * checkoutQuantity;
 
     localStorage.setItem('checkoutItems', JSON.stringify({
       items: [{ product: this.product, quantity: checkoutQuantity }],

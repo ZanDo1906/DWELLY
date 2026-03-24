@@ -99,13 +99,17 @@ export class UserList implements OnInit, AfterViewInit {
     this.applyFilters();
   }
 
-  toggleSort(mode: string): void {
+  toggleSort(mode: 'a-z'): void {
     if (mode === 'a-z') {
-      this.sortMode = this.sortMode === 'a-z' ? 'za' : 'a-z';
-    } else {
-      this.sortMode = mode as 'newest' | 'oldest';
+      if (this.sortMode === 'a-z') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'a-z';
+      }
+      this.currentPage = 1;
     }
-    this.currentPage = 1;
   }
 
   setSortMode(mode: 'newest' | 'oldest'): void {

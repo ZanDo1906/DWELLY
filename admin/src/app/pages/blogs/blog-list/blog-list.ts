@@ -126,12 +126,21 @@ export class BlogList implements OnInit {
     this.dropdownOpen = false;
   }
 
-  toggleSort(mode: string): void {
+  toggleSort(mode: 'az'): void {
     if (mode === 'az') {
-      this.sortMode = this.sortMode === 'az' ? 'za' : 'az';
-    } else {
-      this.sortMode = mode;
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
+      this.currentPage = 1;
     }
+  }
+
+  setDateSort(mode: 'newest' | 'oldest'): void {
+    this.sortMode = this.sortMode === mode ? '' : mode;
     this.currentPage = 1;
   }
 

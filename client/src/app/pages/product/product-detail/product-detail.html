@@ -76,11 +76,11 @@
           </div>
 
           <div class="price-box">
-            <span class="discount-tag">-25%</span>
+            <span class="discount-tag" *ngIf="getDiscountPercent(product) > 0">-{{ getDiscountPercent(product) }}%</span>
             <span class="new-price">
-              {{ product?.Gia_ban | number:'1.0-0' }} VNĐ
+              {{ getFinalPrice(product) | number:'1.0-0' }} VNĐ
             </span>
-            <span class="old-price">
+            <span class="old-price" *ngIf="getDiscountPercent(product) > 0 && getDiscountPercent(product) < 100">
               {{ getOldPrice(product) }}
             </span>
           </div>

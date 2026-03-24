@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
@@ -49,7 +51,7 @@ interface CheckoutAddress {
 
 @Component({
   selector: 'app-payment-member',
-  imports: [CommonModule, FormsModule, QRPayment, Modal, VoucherPopup],
+  imports: [CommonModule, FormsModule, QRPayment, Modal, VoucherPopup, RouterLink],
   templateUrl: './payment-member.html',
   styleUrl: './payment-member.css',
 })
@@ -82,7 +84,8 @@ export class PaymentMember implements OnInit {
     private voucherService: Voucher,
     private orderService: Order,
     private orderDetailsService: Order_Details,
-    private clientService: Client
+    private clientService: Client,
+    private productService: Product
   ) { }
 
   ngOnInit(): void {
@@ -302,9 +305,20 @@ export class PaymentMember implements OnInit {
     return room ? room.Ten_loai_phong : '';
   }
 
+  getProductImage(product: iProduct): string {
+    const firstImage = product.Hinh_anh?.[0] || '';
+    return this.productService.getImgUrl(firstImage);
+  }
+
+  getFinalPrice(product: iProduct): number {
+    if (!product?.Gia_ban) return 0;
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    return product.Gia_ban * (1 - discount / 100);
+  }
+
   getTotalAmount(): number {
     return this.cartItems.reduce((total, item) =>
-      total + (item.product.Gia_ban * item.quantity), 0
+      total + (this.getFinalPrice(item.product) * item.quantity), 0
     );
   }
 
@@ -438,7 +452,7 @@ export class PaymentMember implements OnInit {
         Ma_don_mua: orderCode,
         details: this.cartItems.map((item) => ({
           Ma_san_pham: item.product.Ma_san_pham,
-          Don_gia: item.product.Gia_ban,
+          Don_gia: this.getFinalPrice(item.product),
           So_luong: item.quantity,
         })),
       }));

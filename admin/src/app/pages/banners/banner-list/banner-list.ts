@@ -27,8 +27,7 @@ export class BannerList implements OnInit {
   selectedPage: 'all' | string = 'all';
   isStatusOpen = false;
   isPageOpen = false;
-  sortType: 'az' | 'newest' | 'oldest' = 'az';
-  hasSortInteracted = false;
+  sortMode: '' | 'az' | 'za' | 'newest' | 'oldest' = '';
 
   statusOptions: Array<{ label: string; value: 'all' | 'active' | 'inactive' }> = [
     { label: 'Tất cả trạng thái', value: 'all' },
@@ -119,15 +118,20 @@ export class BannerList implements OnInit {
   get sortedBanners(): BannerItem[] {
     const list = [...this.filteredBanners];
 
-    if (this.sortType === 'az') {
-      return list.sort((a, b) => a.Tieu_de.localeCompare(b.Tieu_de));
+    if (this.sortMode === 'az' || this.sortMode === 'za') {
+      list.sort((a, b) => {
+        const comp = a.Tieu_de.localeCompare(b.Tieu_de);
+        return this.sortMode === 'az' ? comp : -comp;
+      });
+    } else if (this.sortMode === 'newest' || this.sortMode === 'oldest') {
+      list.sort((a, b) => {
+        const timeA = new Date(a.Ngay_cap_nhat || 0).getTime();
+        const timeB = new Date(b.Ngay_cap_nhat || 0).getTime();
+        return this.sortMode === 'newest' ? timeB - timeA : timeA - timeB;
+      });
     }
 
-    return list.sort((a, b) => {
-      const timeA = new Date(a.Ngay_cap_nhat || 0).getTime();
-      const timeB = new Date(b.Ngay_cap_nhat || 0).getTime();
-      return this.sortType === 'newest' ? timeB - timeA : timeA - timeB;
-    });
+    return list;
   }
 
   get totalPages(): number {
@@ -195,10 +199,22 @@ export class BannerList implements OnInit {
     this.isPageOpen = false;
   }
 
-  setSortType(type: 'az' | 'newest' | 'oldest'): void {
-    this.hasSortInteracted = true;
-    this.sortType = type;
+  setDateSort(mode: 'newest' | 'oldest'): void {
+    this.sortMode = this.sortMode === mode ? '' : mode;
     this.currentPage = 1;
+  }
+
+  toggleSort(mode: 'az'): void {
+    if (mode === 'az') {
+      if (this.sortMode === 'az') {
+        this.sortMode = 'za';
+      } else if (this.sortMode === 'za') {
+        this.sortMode = '';
+      } else {
+        this.sortMode = 'az';
+      }
+      this.currentPage = 1;
+    }
   }
 
   toggleSelectPage(event: Event): void {

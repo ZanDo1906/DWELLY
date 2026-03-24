@@ -122,6 +122,12 @@ export class Wishlist implements OnInit {
     );
   }
 
+  getFinalPrice(product: iProduct): number {
+    if (!product?.Gia_ban) return 0;
+    const discount = product.Phan_tram_giam_gia ?? 0;
+    return product.Gia_ban * (1 - discount / 100);
+  }
+
   sortByPrice() {
   this.currentSort = 'price';
 
@@ -129,8 +135,8 @@ export class Wishlist implements OnInit {
 
   this.products = [...this.products].sort((a, b) => {
     return this.priceSort === 'desc'
-      ? b.Gia_ban - a.Gia_ban
-      : a.Gia_ban - b.Gia_ban;
+      ? this.getFinalPrice(b) - this.getFinalPrice(a)
+      : this.getFinalPrice(a) - this.getFinalPrice(b);
   });
   }
   sortByFavoriteOrder() {

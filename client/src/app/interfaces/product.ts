@@ -7,6 +7,7 @@ export interface iProduct {
     Chat_lieu: string;
     Hinh_anh: string[];         // Array<String>
     So_luong_ton_kho: number;
+    Phan_tram_giam_gia?: number; // Added discount percentage
     Ma_loai_phong: string;      // ObjectId (FK)
     Ma_phong_cach: string;      // ObjectId (FK)
     Ma_danh_muc: string;        // ObjectId (FK)
