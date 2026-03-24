@@ -110,11 +110,12 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(0);
+  transform-origin: top center;
   display: flex;
   gap: 12px;
   flex-wrap: nowrap;
-  animation: slideDown 0.3s ease;
+  animation: slideDown 0.25s ease;
   justify-content: center;
   padding-top: 15px;
   min-width: max-content;
@@ -123,11 +124,11 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
