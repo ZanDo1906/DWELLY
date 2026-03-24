@@ -9,6 +9,30 @@ db.connect();
 const Order = require('../models/Order');
 const Voucher = require('../models/Voucher');
 const Client = require('../models/Client');
+const Ranking = require('../models/Ranking');
+const Notification = require('../models/Notification');
+const Product = require('../models/Product');
+const Order_Detail = require('../models/Order_Detail');
+
+async function updateClientTier(clientId) {
+    if (!clientId) return;
+    try {
+        const client = await Client.findOne({ Ma_khach_hang: clientId }).lean();
+        if (!client) return;
+
+        const rankings = await Ranking.find({}).sort({ Diem_toi_thieu: -1 }).lean();
+        const qualifiedRanking = rankings.find(r => client.Tong_diem >= r.Diem_toi_thieu);
+
+        if (qualifiedRanking && client.Ma_phan_hang !== qualifiedRanking.Ma_phan_hang) {
+            await Client.findOneAndUpdate(
+                { Ma_khach_hang: clientId },
+                { $set: { Ma_phan_hang: qualifiedRanking.Ma_phan_hang, updatedAt: new Date() } }
+            );
+        }
+    } catch (error) {
+        console.error('Update client tier failed:', error.message);
+    }
+}
 
 const ORDER_STATUSES = new Set([
     'Chờ duyệt',
@@ -217,8 +241,39 @@ router.post('/orders', async (req, res) => {
                 });
             }
 
+            if (consumedVoucher.So_luong_con_lai === 0) {
+                 consumedVoucher.Trang_thai = false;
+                 await consumedVoucher.save();
+            }
+
             appliedVoucherCode = consumedVoucher.Ma_khuyen_mai;
             voucherConsumed = true;
+        }
+
+        // Inventory Pre-check
+        if (payload.items && Array.isArray(payload.items) && payload.items.length > 0) {
+            for (const item of payload.items) {
+                const product = await Product.findOne({ Ma_san_pham: item.Ma_san_pham }).lean();
+                if (!product || product.So_luong_ton_kho < item.So_luong) {
+                    if (voucherConsumed && appliedVoucherCode) {
+                        try {
+                            const rbVoucher = await Voucher.findOneAndUpdate(
+                                { Ma_khuyen_mai: appliedVoucherCode },
+                                { $inc: { So_luong_con_lai: 1 } },
+                                { new: true }
+                            );
+                            if (rbVoucher && rbVoucher.So_luong_con_lai > 0 && !rbVoucher.Trang_thai) {
+                                rbVoucher.Trang_thai = true;
+                                await rbVoucher.save();
+                            }
+                        } catch (rollbackError) {}
+                    }
+                    return res.status(400).json({ 
+                        errorType: 'INSUFFICIENT_STOCK',
+                        message: `Sản phẩm "${product ? product.Ten_san_pham : item.Ma_san_pham}" chỉ còn ${product ? product.So_luong_ton_kho : 0} cái, không đủ số lượng để đặt.`
+                    });
+                }
+            }
         }
 
         const newOrder = await Order.create({
@@ -241,6 +296,18 @@ router.post('/orders', async (req, res) => {
 
         // Logged-in customers earn points: 0.1% of order value.
         if (payload.Ma_khach_hang) {
+            try {
+                await Notification.create({
+                    Ma_khach_hang: payload.Ma_khach_hang,
+                    Tieu_de: 'Đặt hàng thành công',
+                    Noi_dung: `Đơn hàng #${maDonMua} của bạn đã được tiếp nhận và đang chờ duyệt.`,
+                    Loai: 'orders',
+                    Lien_ket: `/user-layout/order-detail/${maDonMua}`
+                });
+            } catch (notifyErr) {
+                console.error('Create notification failed:', notifyErr.message);
+            }
+
             const earnedPoints = Number(tongTien) * 0.001;
 
             if (earnedPoints > 0) {
@@ -249,9 +316,20 @@ router.post('/orders', async (req, res) => {
                         { Ma_khach_hang: payload.Ma_khach_hang },
                         { $inc: { Tong_diem: earnedPoints }, $set: { updatedAt: new Date() } }
                     );
+                    await updateClientTier(payload.Ma_khach_hang);
                 } catch (pointsError) {
                     console.error('Update loyalty points failed:', pointsError.message);
                 }
+            }
+        }
+
+        // Deduct inventory
+        if (payload.items && Array.isArray(payload.items)) {
+            for (const item of payload.items) {
+                await Product.findOneAndUpdate(
+                    { Ma_san_pham: item.Ma_san_pham },
+                    { $inc: { So_luong_ton_kho: -item.So_luong } }
+                );
             }
         }
 
@@ -259,10 +337,15 @@ router.post('/orders', async (req, res) => {
     } catch (err) {
         if (voucherConsumed && appliedVoucherCode) {
             try {
-                await Voucher.findOneAndUpdate(
+                const rbVoucher = await Voucher.findOneAndUpdate(
                     { Ma_khuyen_mai: appliedVoucherCode },
-                    { $inc: { So_luong_con_lai: 1 } }
+                    { $inc: { So_luong_con_lai: 1 } },
+                    { new: true }
                 );
+                if (rbVoucher && rbVoucher.So_luong_con_lai > 0 && !rbVoucher.Trang_thai) {
+                    rbVoucher.Trang_thai = true;
+                    await rbVoucher.save();
+                }
             } catch (rollbackError) {
                 console.error('Rollback voucher failed:', rollbackError.message);
             }
@@ -307,6 +390,38 @@ router.patch("/orders/:id", async (req, res) => {
             } else if (requestedStatus === 'Hoàn thành' || requestedStatus === 'Đã hủy' || requestedStatus === 'Bị từ chối') {
                 updateData.Thoi_gian_da_giao = existingOrder.Thoi_gian_da_giao;
             }
+
+            // Deduct loyalty points and restore product stock if order is canceled or rejected AND it wasn't already canceled/rejected
+            if (currentStatus !== requestedStatus && (requestedStatus === 'Đã hủy' || requestedStatus === 'Bị từ chối')) {
+                // Restore points
+                if (existingOrder.Ma_khach_hang) {
+                    const deductedPoints = Number(existingOrder.Tong_tien) * 0.001;
+                    if (deductedPoints > 0) {
+                        try {
+                            await Client.findOneAndUpdate(
+                                { Ma_khach_hang: existingOrder.Ma_khach_hang },
+                                { $inc: { Tong_diem: -deductedPoints }, $set: { updatedAt: new Date() } }
+                            );
+                            await updateClientTier(existingOrder.Ma_khach_hang);
+                        } catch (pointsError) {
+                            console.error('Rollback loyalty points failed:', pointsError.message);
+                        }
+                    }
+                }
+
+                // Restore stock
+                try {
+                    const orderDetails = await Order_Detail.find({ Ma_don_mua: existingOrder.Ma_don_mua }).lean();
+                    for (const detail of orderDetails) {
+                        await Product.findOneAndUpdate(
+                            { Ma_san_pham: detail.Ma_san_pham },
+                            { $inc: { So_luong_ton_kho: detail.So_luong } }
+                        );
+                    }
+                } catch (stockError) {
+                    console.error('Stock restoration failed:', stockError.message);
+                }
+            }
         }
 
         if (Object.prototype.hasOwnProperty.call(updateData, 'Xuat_hoa_don')) {
@@ -320,6 +435,35 @@ router.patch("/orders/:id", async (req, res) => {
             updateData,
             { new: true, runValidators: true }
         );
+
+        // Notify client of status change
+        if (updatedOrder && updateData.Trang_thai && existingOrder.Ma_khach_hang && currentStatus !== updateData.Trang_thai) {
+            try {
+                let title = 'Cập nhật đơn hàng';
+                let message = `Đơn hàng #${updatedOrder.Ma_don_mua} đã chuyển sang trạng thái: ${updateData.Trang_thai}.`;
+                
+                if (updateData.Trang_thai === 'Đang giao') {
+                    title = 'Đơn hàng đang giao';
+                    message = `Đơn hàng #${updatedOrder.Ma_don_mua} của bạn đang trên đường đến. Vui lòng chú ý điện thoại.`;
+                } else if (updateData.Trang_thai === 'Đã giao') {
+                    title = 'Giao hàng thành công';
+                    message = `Đơn hàng #${updatedOrder.Ma_don_mua} đã giao thành công. Cảm ơn bạn đã tin dùng dịch vụ DWELLY!`;
+                } else if (updateData.Trang_thai === 'Đã hủy') {
+                    title = 'Đơn hàng đã hủy';
+                    message = `Đơn hàng #${updatedOrder.Ma_don_mua} đã bị hủy.`;
+                }
+
+                await Notification.create({
+                    Ma_khach_hang: existingOrder.Ma_khach_hang,
+                    Tieu_de: title,
+                    Noi_dung: message,
+                    Loai: 'orders',
+                    Lien_ket: `/user-layout/order-detail/${updatedOrder.Ma_don_mua}`
+                });
+            } catch (notifyErr) {
+                console.error('Create notification failed:', notifyErr.message);
+            }
+        }
 
         res.json(updatedOrder);
     } catch (err) {

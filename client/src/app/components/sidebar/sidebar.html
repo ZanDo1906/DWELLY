@@ -50,7 +50,7 @@
       <li class="menu-item" routerLink="/user-layout/notifications" routerLinkActive="active">
         <i class="bi bi-bell"></i>
         <span>Thông báo</span>
-        <span class="badge">2</span>
+        <span class="badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
       </li>
     </ul>
   </div>

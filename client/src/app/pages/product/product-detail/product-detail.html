@@ -392,11 +392,18 @@
         </div>
 
 
-        <app-maintenance-modal
-          *ngIf="isMaintenanceOpen"
-          [data]="selectedCareData"
-          (close)="closeMaintenanceModal()">
-        </app-maintenance-modal>
+        <!-- Stock Error Modal -->
+        <app-modal modalId="stockErrorModalProduct" title="Rất tiếc, sản phẩm đã quá số lượng" [showTitleAndLine]="true" [showCloseButton]="true" [showHeader]="true" (close)="closeStockErrorModal()">
+            <div class="text-center p-4">
+                <div class="mb-3">
+                    <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+                </div>
+                <p class="my-3" style="color: #666; font-size: 1.1rem;">{{stockErrorMessage}}</p>
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn px-4 py-2 text-white" style="background-color: #6c5234; border: none; border-radius: 4px;" (click)="closeStockErrorModal()">Đã hiểu</button>
+                </div>
+            </div>
+        </app-modal>
 
 
 

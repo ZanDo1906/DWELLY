@@ -12,8 +12,8 @@
         <nav class="breadcrumb">
         <ol>
             <li><a routerLink="/product-list">Quản lý sản phẩm</a></li>
-            <li *ngIf="!product.Ma_san_pham">Thêm sản phẩm mới</li>
-            <li *ngIf="product.Ma_san_pham">Chi tiết sản phẩm</li>
+            <li *ngIf="!isEditMode">Thêm sản phẩm mới</li>
+            <li *ngIf="isEditMode">Chi tiết sản phẩm</li>
         </ol>
         </nav>
 

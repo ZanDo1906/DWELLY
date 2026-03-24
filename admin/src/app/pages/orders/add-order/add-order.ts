@@ -265,6 +265,18 @@ export class AddOrder implements OnInit {
     return room ? room.Ten_loai_phong : 'Không xác định';
   }
 
+  getProductImage(img: string | undefined): string {
+    // In add-order we unfortunately don't have injected Product service naturally. Workaround:
+    if (!img) return 'assets/img/default-product.png';
+    if (img.startsWith('data:')) return img;
+    if (img.startsWith('http')) return img;
+    if (img.startsWith('assets/images/product')) return `http://localhost:3000/${img}`;
+    if (img.startsWith('assets')) return img;
+    if (img.startsWith('/uploads')) return `http://localhost:3000${img}`;
+
+    return `http://localhost:3000/uploads/products/${img}`;
+  }
+
   formatPrice(price: number): string {
     return price.toLocaleString('vi-VN');
   }

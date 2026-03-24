@@ -280,6 +280,10 @@ export class OrderDetail implements OnInit {
     return room ? room.Ten_loai_phong : 'Không xác định';
   }
 
+  getProductImage(img: string | undefined): string {
+    return this.productService.getImgUrl(img || '');
+  }
+
   formatPrice(price: number): string {
     return `${Number(price || 0).toLocaleString('vi-VN')} VNĐ`;
   }

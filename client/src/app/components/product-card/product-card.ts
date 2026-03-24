@@ -87,12 +87,17 @@ export class ProductCard implements OnInit {
     });
 }
   goToCart(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
-  this.cartService.addItem(this.product.Ma_san_pham);
-  this.showCartNotification = true;
-  setTimeout(() => this.showCartNotification = false, 1500);
-}
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.isOutOfStock()) return;
+    this.cartService.addItem(this.product.Ma_san_pham);
+    this.showCartNotification = true;
+    setTimeout(() => this.showCartNotification = false, 1500);
+  }
+  
+  isOutOfStock(): boolean {
+    return this.product?.So_luong_ton_kho === 0;
+  }
   
   prevImage() {
     if (!this.product.Hinh_anh) return;

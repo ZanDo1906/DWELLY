@@ -17,7 +17,7 @@
                             <div class="product-table-header">
                                 <div class="header-cell header-product">
                                     <label class="checkbox-wrapper">
-                                        <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+                                        <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" [disabled]="cartItems.length === 0" />
                                         <span>Sản phẩm</span>
                                     </label>
                                 </div>
@@ -38,11 +38,18 @@
                                 <div class="item-cell item-product">
                                     <label class="checkbox-wrapper">
                                         <input type="checkbox" [(ngModel)]="item.selected"
-                                            (change)="updateSelection()" />
+                                            (change)="updateSelection()" [disabled]="item.product.So_luong_ton_kho === 0" />
                                     </label>
-                                    <a [routerLink]="['/product', item.product.Ma_san_pham]" class="product-link d-flex align-items-center column-gap-3" style="text-decoration: none; color: inherit;">
-                                        <img [src]="getProductImage(item.product)" [alt]="item.product.Ten_san_pham"
-                                            class="product-img" />
+                                    <a [routerLink]="['/product', item.product.Ma_san_pham]" class="product-link d-flex align-items-center column-gap-3 position-relative" style="text-decoration: none; color: inherit;">
+                                        <div class="position-relative">
+                                            <img [src]="getProductImage(item.product)" [alt]="item.product.Ten_san_pham"
+                                                class="product-img" [class.opacity-50]="item.product.So_luong_ton_kho === 0" />
+                                            <span class="discount-tag badge rounded-0 text-white position-absolute top-0 start-0" 
+                                                  style="background-color: #6c5234;"
+                                                  *ngIf="item.product.So_luong_ton_kho === 0">
+                                                Hết hàng
+                                            </span>
+                                        </div>
                                         <div class="product-details">
                                             <p class="product-name" style="margin-bottom: 0;">{{item.product.Ten_san_pham}}</p>
                                             <span
@@ -146,6 +153,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Stock Error Modal -->
+    <app-modal modalId="stockErrorModalCart" title="Rất tiếc, số lượng không đủ" [showTitleAndLine]="true" [showCloseButton]="true" [showHeader]="true" (close)="closeStockErrorModal()">
+        <div class="text-center p-4">
+            <div class="mb-3">
+                <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+            </div>
+            <p class="my-3" style="color: #666; font-size: 1.1rem;">{{stockErrorMessage}}</p>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn px-4 py-2 text-white" style="background-color: #6c5234; border: none; border-radius: 4px;" (click)="closeStockErrorModal()">Đã hiểu</button>
+            </div>
+        </div>
+    </app-modal>
 
     <!-- Voucher Modal -->
     <app-modal modalId="voucherModal" (close)="closeVoucherPopup()" title="Khuyến mãi">

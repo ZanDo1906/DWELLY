@@ -142,6 +142,12 @@ export class OrderDetail implements OnInit {
     });
   }
 
+  getProductImage(productInfo: any): string {
+    if (!productInfo) return 'https://via.placeholder.com/64';
+    const firstImage = productInfo.Hinh_anh?.[0] || '';
+    return firstImage ? this.productService.getImgUrl(firstImage) : 'https://via.placeholder.com/64';
+  }
+
   getTotalProducts(): number {
     return this.orderDetails.reduce((sum, item) => sum + item.So_luong, 0);
   }

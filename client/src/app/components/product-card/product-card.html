@@ -8,8 +8,11 @@
     <img *ngIf="enableHover" class="hover-img" [src]="getHoverImage()" alt="{{ product.Ten_san_pham }}">
 
 
-    <span class="discount-tag" *ngIf="getDiscountPercent() > 0">
+    <span class="discount-tag" *ngIf="getDiscountPercent() > 0 && !isOutOfStock()">
       -{{ getDiscountPercent() }}%
+    </span>
+    <span class="discount-tag" *ngIf="isOutOfStock()" style="background-color: #555;">
+      Hết hàng
     </span>
   </div>
 
@@ -34,7 +37,10 @@
           [ngClass]="isFavorite(product.Ma_san_pham) ? 'bi-heart-fill' : 'bi-heart'"
           (click)="toggleFavorite($event, product.Ma_san_pham)">
         </i>
-        <i class="bi bi-cart"
+        <i class="bi"
+          [ngClass]="isOutOfStock() ? 'bi-cart-x text-muted' : 'bi-cart'"
+          [style.cursor]="isOutOfStock() ? 'not-allowed' : 'pointer'"
+          [title]="isOutOfStock() ? 'Sản phẩm đã hết hàng' : 'Thêm vào giỏ hàng'"
           (click)="goToCart($event)">
         </i>
       </div>

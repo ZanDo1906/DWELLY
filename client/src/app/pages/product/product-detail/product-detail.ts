@@ -11,6 +11,7 @@ import { iProduct } from '../../../interfaces/product';
 import { iReview } from '../../../interfaces/review';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { MaintenanceModal } from '../maintenance-modal/maintenance-modal';
+import { Modal } from '../../../components/modal/modal';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +22,8 @@ import { Subscription } from 'rxjs';
     DecimalPipe, 
     DatePipe, 
     ProductCard, 
-    MaintenanceModal
+    MaintenanceModal,
+    Modal
   ],
   templateUrl: './product-detail.html',
   styleUrls: ['./product-detail.css'],
@@ -46,6 +48,8 @@ export class ProductDetail implements OnInit, OnDestroy {
   selectedCareData: any = null;
   allCareInstructions: any[] = [];
   productCareInstruction: any = null;
+  
+  stockErrorMessage: string = '';
   private routeSub: Subscription | null = null;
   private cartNotificationTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -304,7 +308,11 @@ getVideoTitle(index: number): string {
 
   increase() {
     if (!this.product) return;
-    if (this.quantity < this.product.So_luong_ton_kho) this.quantity++;
+    if (this.quantity < this.product.So_luong_ton_kho) {
+      this.quantity++;
+    } else {
+      this.openStockErrorModal(`Rất tiếc, sản phẩm này chỉ còn ${this.product.So_luong_ton_kho} sản phẩm trong kho.`);
+    }
   }
 
   decrease() {
@@ -445,6 +453,11 @@ getVideoTitle(index: number): string {
   onBuyClick() {
     if (!this.product) return;
 
+    if (this.product.So_luong_ton_kho === 0 || this.quantity > this.product.So_luong_ton_kho) {
+      this.openStockErrorModal(`Rất tiếc, sản phẩm này chỉ còn ${this.product.So_luong_ton_kho} sản phẩm trong kho.`);
+      return;
+    }
+
     this.buyClicked = true;
 
     const checkoutQuantity = Math.max(1, this.quantity);
@@ -473,8 +486,30 @@ getVideoTitle(index: number): string {
   addToCart(): void {
     if (!this.product) return;
 
+    if (this.product.So_luong_ton_kho === 0 || this.quantity > this.product.So_luong_ton_kho) {
+      this.openStockErrorModal(`Rất tiếc, sản phẩm này chỉ còn ${this.product.So_luong_ton_kho} sản phẩm trong kho.`);
+      return;
+    }
+
     this.cartService.addItem(this.product.Ma_san_pham, this.quantity);
     this.router.navigate(['/cart-page']);
+  }
+
+  openStockErrorModal(message: string): void {
+    this.stockErrorMessage = message;
+    const modalEl = document.getElementById('stockErrorModalProduct');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const existingModal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+      existingModal.show();
+    }
+  }
+
+  closeStockErrorModal(): void {
+    const modalEl = document.getElementById('stockErrorModalProduct');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
   }
 
   zoomImage: string | null = null;

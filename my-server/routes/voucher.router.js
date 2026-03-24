@@ -7,6 +7,8 @@ db.connect();
 
 //Import Voucher model
 const Voucher = require('../models/Voucher');
+const Client = require('../models/Client');
+const Notification = require('../models/Notification');
 
 //Define API
 router.get("/", (req, res) => {
@@ -72,6 +74,24 @@ router.post('/vouchers', async (req, res) => {
 
         const voucher = new Voucher(req.body);
         const savedVoucher = await voucher.save();
+
+        // Broadcast notification to all active users
+        try {
+            const activeClients = await Client.find({ Trang_thai: true }).select('Ma_khach_hang').lean();
+            if (activeClients && activeClients.length > 0) {
+                const notifications = activeClients.map(client => ({
+                    Ma_khach_hang: client.Ma_khach_hang,
+                    Tieu_de: 'Mã khuyến mãi mới!',
+                    Noi_dung: `Voucher ${savedVoucher.Ma_khuyen_mai} giảm ${savedVoucher.Phan_tram_giam}% đã có sẵn. Nhanh tay sử dụng trước khi hết hạn!`,
+                    Loai: 'promos',
+                    Lien_ket: '/user-layout/products'
+                }));
+                await Notification.insertMany(notifications);
+            }
+        } catch (notifyErr) {
+            console.error('Broadcast voucher notification failed:', notifyErr.message);
+        }
+
         res.status(201).json(savedVoucher);
     } catch (err) {
         res.status(500).json({ message: err.message });

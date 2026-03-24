@@ -148,6 +148,12 @@ export class Orders implements OnInit {
       .trim();
   }
 
+  getProductImage(product: iProduct | undefined): string {
+    if (!product) return 'assets/images/placeholder.png';
+    const firstImage = product.Hinh_anh?.[0] || '';
+    return firstImage ? this.productService.getImgUrl(firstImage) : 'assets/images/placeholder.png';
+  }
+
   getOrderData(): void {
     if (!this.currentCustomerId) {
       this.orders = [];

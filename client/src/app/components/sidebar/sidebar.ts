@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 import { Client } from '../../services/client';
 import { iClient } from '../../interfaces/client';
+import { NotificationService } from '../../services/notification';
 import { Modal } from '../modal/modal';
 
 @Component({
@@ -17,9 +18,14 @@ export class Sidebar implements OnInit {
   currentUrl = '';
   userInfo: iClient | null = null;
   userId: string = '';
+  unreadCount: number = 0;
   private readonly avatarFallback = 'https://i.pravatar.cc/100';
 
-  constructor(private router: Router, private clientService: Client) {
+  constructor(
+    private router: Router, 
+    private clientService: Client,
+    private notificationService: NotificationService
+  ) {
     // Track route changes
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -32,10 +38,20 @@ export class Sidebar implements OnInit {
     this.userId = localStorage.getItem('userId') || '';
     if (this.userId) {
       this.loadUserInfo();
+      this.loadUnreadCount();
     } else {
       this.refreshUserInfo();
     }
     this.currentUrl = this.router.url;
+
+    // Listen to notification updates globally
+    if (typeof window !== 'undefined') {
+      window.addEventListener('notifications-updated', () => {
+        if (this.userId) {
+          this.loadUnreadCount();
+        }
+      });
+    }
   }
 
    loadUserInfo(): void {
@@ -51,6 +67,16 @@ export class Sidebar implements OnInit {
     });
   }
 
+  loadUnreadCount(): void {
+    if (!this.userId) return;
+    this.notificationService.getNotificationsByUser(this.userId).subscribe({
+      next: (notifications) => {
+        this.unreadCount = notifications.filter(n => !n.Da_doc).length;
+      },
+      error: (err) => console.error('Error fetching notifications:', err)
+    });
+  }
+
   isOrdersActive(): boolean {
     return this.currentUrl.includes('/user-layout/orders') || 
            this.currentUrl.includes('/user-layout/order-detail');
@@ -61,6 +87,7 @@ export class Sidebar implements OnInit {
     this.userId = localStorage.getItem('userId') || '';
     if (this.userId) {
       this.loadUserInfo();
+      this.loadUnreadCount();
     } else {
       this.refreshUserInfo();
     }
@@ -70,6 +97,7 @@ export class Sidebar implements OnInit {
   onUserLogout(): void {
     this.userInfo = null;
     this.userId = '';
+    this.unreadCount = 0;
     this.isLoggedIn = false;
   }
 

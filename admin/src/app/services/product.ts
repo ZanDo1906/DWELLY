@@ -65,6 +65,7 @@ export class Product {
   if (url.startsWith('data:')) return url;
   if (url.startsWith('http')) return url;
 
+  if (url.startsWith('assets/images/product')) return `${baseUrl}/${url}`;
   if (url.startsWith('assets')) return url;
 
   if (url.startsWith('/uploads')) {

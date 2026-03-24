@@ -25,6 +25,7 @@ export interface iOrder {
     Phi_van_chuyen: number;
     Xuat_hoa_don?: boolean;
     Ghi_chu: string;
+    items?: any[];
     Ngay_dat: Date;
     Ma_quan_tri_vien_duyet?: string;     // ObjectId (FK)
     Dia_chi?: string;

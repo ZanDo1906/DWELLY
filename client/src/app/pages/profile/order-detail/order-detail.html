@@ -109,7 +109,7 @@
         </div>
 
         <div class="product-item" *ngFor="let detail of orderDetails">
-          <img [src]="detail.productInfo?.Hinh_anh?.[0] || 'https://via.placeholder.com/64'" 
+          <img [src]="getProductImage(detail.productInfo)" 
                [alt]="detail.productInfo?.Ten_san_pham || 'Product'" />
           <div class="info">
             <strong>{{ detail.productInfo?.Ten_san_pham || detail.Ma_san_pham }}</strong>

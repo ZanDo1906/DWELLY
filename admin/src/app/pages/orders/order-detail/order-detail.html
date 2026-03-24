@@ -57,7 +57,7 @@
 
               <div class="product-item" *ngFor="let item of cartItems">
                 <div class="product-info">
-                  <img [src]="item.product.Hinh_anh[0] || 'assets/images/default-product.png'">
+                  <img [src]="getProductImage(item.product.Hinh_anh[0])" [alt]="item.product.Ten_san_pham">
                   <div class="product-details">
                     <p class="product-name">
                       {{ item.product.Ten_san_pham }}

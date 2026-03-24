@@ -57,6 +57,8 @@ export class CartPage implements OnInit {
   isLoggedIn: boolean = false;
   currentUserRankCode: string = '';
 
+  stockErrorMessage: string = '';
+
   private readonly conceptDiscountPercent = 10;
 
   private readonly rankOrder: Record<string, number> = {
@@ -114,7 +116,11 @@ export class CartPage implements OnInit {
             .map(item => {
               const product = this.products.find(p => p.Ma_san_pham === item.productId);
               if (!product) return null;
-              return { product, quantity: item.quantity, selected: item.selected };
+              return { 
+                product, 
+                quantity: item.quantity, 
+                selected: product.So_luong_ton_kho > 0 ? item.selected : false 
+              };
             })
             .filter(item => item !== null) as CartItem[];
           this.updateSelection();
@@ -132,12 +138,19 @@ export class CartPage implements OnInit {
   }
 
   toggleSelectAll(): void {
-    this.cartItems.forEach(item => item.selected = this.selectAll);
+    this.cartItems.forEach(item => {
+      if (item.product.So_luong_ton_kho > 0) {
+        item.selected = this.selectAll;
+      } else {
+        item.selected = false;
+      }
+    });
     this.syncCart();
   }
 
   updateSelection(): void {
-    this.selectAll = this.cartItems.length > 0 && this.cartItems.every(item => item.selected);
+    const selectableItems = this.cartItems.filter(item => item.product.So_luong_ton_kho > 0);
+    this.selectAll = selectableItems.length > 0 && selectableItems.every(item => item.selected);
     this.syncCart();
   }
 
@@ -221,11 +234,35 @@ export class CartPage implements OnInit {
   }
 
   increaseQuantity(index: number): void {
-    this.cartItems[index].quantity++;
+    const item = this.cartItems[index];
+
+    if (item.quantity >= item.product.So_luong_ton_kho) {
+      this.openStockErrorModal(`Rất tiếc, sản phẩm "${item.product.Ten_san_pham}" chỉ còn ${item.product.So_luong_ton_kho} sản phẩm trong kho.`);
+      return;
+    }
+
+    item.quantity++;
     this.cartService.updateQuantity(
-      this.cartItems[index].product.Ma_san_pham,
-      this.cartItems[index].quantity
+      item.product.Ma_san_pham,
+      item.quantity
     );
+  }
+
+  openStockErrorModal(message: string): void {
+    this.stockErrorMessage = message;
+    const modalEl = document.getElementById('stockErrorModalCart');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const existingModal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+      existingModal.show();
+    }
+  }
+
+  closeStockErrorModal(): void {
+    const modalEl = document.getElementById('stockErrorModalCart');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
   }
 
   decreaseQuantity(index: number): void {

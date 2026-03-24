@@ -46,8 +46,8 @@ export class VoucherPopup implements OnInit {
     // Load vouchers
     this.voucherService.getVoucherData().subscribe({
       next: (data) => {
-        // Show all vouchers from DB; unavailable vouchers are disabled in UI.
-        this.vouchers = data;
+        // Chỉ hiển thị voucher đang hoạt động (Trang_thai === true)
+        this.vouchers = data.filter(v => v.Trang_thai === true);
         this.filteredVouchers = [...this.vouchers];
 
         // Set current voucher if exists

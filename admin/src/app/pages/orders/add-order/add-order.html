@@ -50,7 +50,7 @@
                 <div class="search-results-list" *ngIf="searchResults.length > 0">
                   <div class="search-result-item" *ngFor="let product of searchResults">
                     <div class="search-result-info">
-                      <img [src]="product.Hinh_anh[0]" [alt]="product.Ten_san_pham" class="search-result-img">
+                      <img [src]="getProductImage(product.Hinh_anh[0])" [alt]="product.Ten_san_pham" class="search-result-img">
                       <div class="search-result-details">
                         <p class="search-result-name">{{product.Ten_san_pham}}</p>
                         <span class="search-result-sku">SKU: {{product.Ma_san_pham}}</span>
@@ -80,7 +80,7 @@
 
               <div class="product-item" *ngFor="let item of cartItems; let i = index">
                 <div class="product-info">
-                  <img [src]="item.product.Hinh_anh[0]" [alt]="item.product.Ten_san_pham">
+                  <img [src]="getProductImage(item.product.Hinh_anh[0])" [alt]="item.product.Ten_san_pham">
                   <div class="product-details">
                     <p class="product-name">
                       {{item.product.Ten_san_pham}}

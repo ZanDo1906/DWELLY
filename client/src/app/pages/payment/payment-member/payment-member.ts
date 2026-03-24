@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
-import { Product } from '../../../services/product';
 import { Room } from '../../../services/room';
 import { iRoom } from '../../../interfaces/room';
 import { Voucher } from '../../../services/voucher';
@@ -57,6 +56,7 @@ interface CheckoutAddress {
   styleUrl: './payment-member.css',
 })
 export class PaymentMember implements OnInit {
+
   products: iProduct[] = [];
   rooms: iRoom[] = [];
   cartItems: CheckoutItem[] = [];
@@ -65,6 +65,7 @@ export class PaymentMember implements OnInit {
   productToDelete: iProduct | null = null;
   deleteIndex: number = -1;
   showQRModal: boolean = false;
+  stockErrorMessage: string = '';
   shippingMethod: string = 'standard'; // 'standard' or 'fast'
   paymentMethod: string = 'deposit'; // 'deposit' (30%) or 'full' (100%)
   vouchers: iVoucher[] = [];
@@ -101,8 +102,7 @@ export class PaymentMember implements OnInit {
     private voucherService: Voucher,
     private orderService: Order,
     private orderDetailsService: Order_Details,
-    private clientService: Client,
-    private productService: Product
+    private clientService: Client
   ) { }
 
   ngOnInit(): void {
@@ -479,6 +479,11 @@ export class PaymentMember implements OnInit {
         Ma_khuyen_mai: this.appliedVoucher?.Ma_khuyen_mai,
         Ghi_chu: this.note,
         Xuat_hoa_don: this.wantInvoice,
+        items: this.cartItems.map(item => ({
+          Ma_san_pham: item.product.Ma_san_pham,
+          So_luong: item.quantity,
+          Ten_san_pham: item.product.Ten_san_pham
+        }))
       }));
 
       const orderCode = created?.order?.Ma_don_mua;
@@ -496,12 +501,49 @@ export class PaymentMember implements OnInit {
         })),
       }));
 
+      // Backend đã tự động tính toán và cập nhật điểm/phân hạng khi tạo đơn hàng thành công
+
       this.createdOrderCode = orderCode;
       this.showQRModal = true;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating order:', error);
-      alert('Không thể tạo đơn hàng. Vui lòng thử lại.');
+      if (error?.error?.errorType === 'INSUFFICIENT_STOCK') {
+        this.openStockErrorModal(error.error.message);
+      } else {
+        alert('Không thể tạo đơn hàng. Vui lòng thử lại.');
+      }
     }
+  }
+
+  openStockErrorModal(message: string): void {
+    this.stockErrorMessage = message;
+    const modalEl = document.getElementById('stockErrorModalPayment');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const existingModal = (window as any).bootstrap.Modal.getOrCreateInstance(modalEl);
+      existingModal.show();
+    }
+  }
+
+  closeStockErrorModal(): void {
+    const modalEl = document.getElementById('stockErrorModalPayment');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+  }
+
+
+
+  /**
+   * Lấy tên hiển thị của phân hạng
+   */
+  private getRankLabel(rank: string): string {
+    const normalized = this.normalizeRank(rank);
+    if (normalized === 'DONG' || normalized === 'PH01') return 'Đồng';
+    if (normalized === 'BAC' || normalized === 'PH02') return 'Bạc';
+    if (normalized === 'VANG' || normalized === 'PH03') return 'Vàng';
+    if (normalized === 'KIMCUONG' || normalized === 'PH04') return 'Kim cương';
+    return rank;
   }
 
   closeQRPayment(): void {

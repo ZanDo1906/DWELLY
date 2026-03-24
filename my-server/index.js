@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 const uploadDir = path.join(process.cwd(), process.env.UPLOAD_DIR || 'uploads');
 app.use('/uploads', express.static(uploadDir));
 
+//Serve mock client assets for cross-app consistency (Admin app needs these to render product.json mock images)
+const clientAssetsDir = path.join(process.cwd(), '../client/src/assets');
+app.use('/assets', express.static(clientAssetsDir));
+
 
 //Import router
 const productRoute = require('./routes/product.router');
@@ -71,6 +75,9 @@ app.use("/", uploadRoute);
 
 const cartRoute = require('./routes/cart.router');
 app.use("/", cartRoute);
+
+const notificationRoute = require('./routes/notification.router');
+app.use("/", notificationRoute);
 
 // const aiRoute = require('./routes/ai.router');
 // app.use("/", aiRoute);

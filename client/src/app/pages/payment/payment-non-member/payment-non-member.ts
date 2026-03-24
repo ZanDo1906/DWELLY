@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Product } from '../../../services/product';
 import { iProduct } from '../../../interfaces/product';
 import { Product } from '../../../services/product';
 import { Room } from '../../../services/room';
@@ -114,7 +113,6 @@ export class PaymentNonMember implements OnInit {
     private http: HttpClient,
     private orderService: Order,
     private orderDetailsService: Order_Details,
-    private productService: Product
   ) { }
 
   ngOnInit(): void {

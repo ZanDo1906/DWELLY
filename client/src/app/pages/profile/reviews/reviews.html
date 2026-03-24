@@ -148,7 +148,7 @@
     <div class="review-product" *ngFor="let item of getVisibleItems(orderItem)">
       <div class="thumb">
         <img 
-          [src]="item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
+          [src]="getProductImage(item.product)" 
           [alt]="item.product?.Ten_san_pham"
         />
       </div>
@@ -213,7 +213,7 @@
            [class.reviewed]="reviewedProductIds.has(item.Ma_san_pham)">
         
         <div class="product-image">
-          <img [src]="item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'" 
+          <img [src]="getProductImage(item.product)" 
                [alt]="item.product?.Ten_san_pham" />
         </div>
         
@@ -244,7 +244,7 @@
       <div class="review-view-item" *ngFor="let entry of viewReviewItems">
         <div class="review-view-product">
           <img
-            [src]="entry.item.product?.Hinh_anh?.[0] || 'assets/images/placeholder.png'"
+            [src]="getProductImage(entry.item.product)"
             [alt]="entry.item.product?.Ten_san_pham" />
           <div>
             <h6>{{ entry.item.product?.Ten_san_pham }}</h6>
@@ -271,7 +271,7 @@
   <!-- FORM VIEW: Review Form -->
   <div *ngIf="modalView === 'form' && currentSelectedProduct">
     <app-review-moda
-      [imgSrc]="currentSelectedProduct.product?.Hinh_anh?.[0] || ''"
+      [imgSrc]="getProductImage(currentSelectedProduct.product)"
       [productName]="currentSelectedProduct.product?.Ten_san_pham || ''"
       [quantity]="currentSelectedProduct.So_luong || 0"
       [reviewRating]="reviewRating"

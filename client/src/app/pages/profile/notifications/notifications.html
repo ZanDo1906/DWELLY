@@ -16,81 +16,40 @@
 
             <!-- Tabs -->
             <div class="notification-tabs mb-3">
-                <div class="tab" [class.active]="activeTab === 'all'" (click)="changeTab('all')">Tất cả <span>8</span>
-                </div>
-                <div class="tab" [class.active]="activeTab === 'orders'" (click)="changeTab('orders')">Đơn hàng
-                    <span>3</span></div>
-                <div class="tab" [class.active]="activeTab === 'promos'" (click)="changeTab('promos')">Khuyến mãi
-                    <span>2</span></div>
-                <div class="tab" [class.active]="activeTab === 'system'" (click)="changeTab('system')">Hệ thống
-                    <span>3</span></div>
+                <div class="tab" [class.active]="activeTab === 'all'" (click)="changeTab('all')">Tất cả <span>{{ getTabCount('all') }}</span></div>
+                <div class="tab" [class.active]="activeTab === 'orders'" (click)="changeTab('orders')">Đơn hàng <span>{{ getTabCount('orders') }}</span></div>
+                <div class="tab" [class.active]="activeTab === 'promos'" (click)="changeTab('promos')">Khuyến mãi <span>{{ getTabCount('promos') }}</span></div>
+                <div class="tab" [class.active]="activeTab === 'system'" (click)="changeTab('system')">Hệ thống <span>{{ getTabCount('system') }}</span></div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="filteredNotifications.length === 0" class="text-center py-5">
+                <p class="text-muted">Bạn không có thông báo nào ở danh mục này.</p>
             </div>
 
             <!-- Notification Cards -->
-
-            <!-- Card 1: Order Success -->
-            <div class="notification-card unread" (click)="markAsRead('notif-1')">
-                <div class="notification-icon success">
-                    <i class="bi bi-card-list"></i>
+            <div *ngFor="let notif of filteredNotifications" class="notification-card" [class.unread]="!notif.Da_doc" (click)="markAsRead(notif)" [style.cursor]="'pointer'">
+                <div class="notification-icon"
+                     [ngClass]="{
+                         'success': notif.Loai === 'orders' && notif.Tieu_de.includes('thành công'),
+                         'processing': notif.Loai === 'orders' && !notif.Tieu_de.includes('thành công'),
+                         'promo': notif.Loai === 'promos',
+                         'bell': notif.Loai === 'system'
+                     }">
+                     <i class="bi"
+                        [ngClass]="{
+                            'bi-card-list': notif.Loai === 'orders',
+                            'bi-percent': notif.Loai === 'promos',
+                            'bi-bell': notif.Loai === 'system'
+                        }"></i>
                 </div>
                 <div class="notification-content">
                     <div class="notification-header">
-                        <h3 class="notification-title">Đơn hàng của bạn đã giao thành công</h3>
-                        <span class="unread-dot"></span>
+                        <h3 class="notification-title">{{ notif.Tieu_de }}</h3>
+                        <span *ngIf="!notif.Da_doc" class="unread-dot"></span>
                     </div>
-                    <p class="notification-text">
-                        Đơn hàng với mã #VGR001 đã được giao thành công. Cảm ơn bạn đã tin tưởng VGreen!
-                    </p>
-                    <span class="notification-time">15/01/2024 10:30</span>
-                </div>
-            </div>
-
-            <!-- Card 2: General Notification -->
-            <div class="notification-card" (click)="markAsRead('notif-2')">
-                <div class="notification-icon bell">
-                    <i class="bi bi-bell"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <h3 class="notification-title">Thông báo khác</h3>
-                    </div>
-                    <p class="notification-text">
-                        Sản phẩm từ giỏ hàng của bạn đã được cập nhật giá. Kiểm tra ngay!
-                    </p>
-                    <span class="notification-time">14/01/2024 15:20</span>
-                </div>
-            </div>
-
-            <!-- Card 3: Promotion -->
-            <div class="notification-card unread" (click)="markAsRead('notif-3')">
-                <div class="notification-icon promo">
-                    <i class="bi bi-percent"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <h3 class="notification-title">Khuyến mãi</h3>
-                        <span class="unread-dot"></span>
-                    </div>
-                    <p class="notification-text">
-                        Bạn có mới voucher từ chương trình khuyến mãi tháng 1. Sử dụng ngay!
-                    </p>
-                    <span class="notification-time">13/01/2024 09:15</span>
-                </div>
-            </div>
-
-            <!-- Card 4: Order Processing -->
-            <div class="notification-card" (click)="markAsRead('notif-4')">
-                <div class="notification-icon processing">
-                    <i class="bi bi-card-list"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-header">
-                        <h3 class="notification-title">Đơn hàng đang được xử lý</h3>
-                    </div>
-                    <p class="notification-text">
-                        Đơn hàng #VGR002 của bạn đang được chuẩn bị và sẽ được giao trong 2-3 ngày tới.
-                    </p>
-                    <span class="notification-time">12/01/2024 14:45</span>
+                    <p class="notification-text">{{ notif.Noi_dung }}</p>
+                    <span class="notification-time">{{ notif.Ngay_tao | date:'dd/MM/yyyy HH:mm' }}</span>
                 </div>
             </div>
 

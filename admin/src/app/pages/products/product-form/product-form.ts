@@ -1075,7 +1075,7 @@ export class ProductForm implements OnInit {
             this.uploadAfterSave(idFromUrl, formData);
           } else {
             this.showSuccess('Cập nhật thành công!');
-            // this.router.navigate(['/product-list']);
+            this.router.navigate(['/product-list']);
           }
         },
         error: (err) => this.showError('Lỗi cập nhật: ' + err.message)
@@ -1088,7 +1088,7 @@ export class ProductForm implements OnInit {
             this.uploadAfterSave(newCode, formData);
           } else {
             this.showSuccess('Thêm mới thành công!');
-            // this.router.navigate(['/product-list']);
+            this.router.navigate(['/product-list']);
           }
         },
         error: (err) => this.showError('Lỗi thêm mới: ' + err.message)
@@ -1103,14 +1103,7 @@ export class ProductForm implements OnInit {
         localStorage.removeItem('dwelly_product_draft');
         this.selectedFiles = [];
 
-        this.productService.getProductByCode(code).subscribe({
-          next: (data) => {
-            this.product = { ...data };
-            this.images = [...data.Hinh_anh];
-            this.checkAndAddNewPlaceholder();
-            this.syncOriginalState();
-          }
-        });
+        this.router.navigate(['/product-list']);
       },
       error: () => this.showError('Đã lưu thông tin nhưng tải ảnh thất bại!')
     });
