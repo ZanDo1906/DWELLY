@@ -2,7 +2,7 @@
 <div class="voucher-content">
     <!-- Search Section -->
     <div class="search-section">
-        
+
         <label class="search-label">Nhập mã khuyến mãi</label>
         <div class="search-wrapper">
             <input type="text" class="search-input" placeholder="Nhập mã khuyến mãi" [(ngModel)]="searchCode" />
@@ -18,7 +18,8 @@
 
         <div class="voucher-list">
             <label class="voucher-item" *ngFor="let voucher of filteredVouchers"
-                [class.selected]="selectedVoucher?.Ma_so === voucher.Ma_so">
+                [class.selected]="selectedVoucher?.Ma_so === voucher.Ma_so"
+                [class.unavailable]="!isVoucherUsable(voucher)">
                 <div class="voucher-icon">
                     <i class="bi bi-ticket-perforated"></i>
                 </div>
@@ -26,9 +27,13 @@
                     <p class="voucher-title">Giảm {{voucher.Phan_tram_giam}}% cho đơn hàng</p>
                     <p class="voucher-condition">Mã: {{voucher.Ma_so}}</p>
                     <p class="voucher-expiry">Hết hạn: {{formatDate(voucher.Ngay_het_han)}}</p>
+                    <p class="voucher-rank-note" *ngIf="!isVoucherUsable(voucher)">
+                        <i class="bi bi-slash-circle"></i>
+                        Chỉ áp dụng từ hạng {{getVoucherMinRankLabel(voucher)}} trở lên
+                    </p>
                 </div>
                 <input type="radio" name="voucher" [value]="voucher.Ma_so" [(ngModel)]="selectedVoucherCode"
-                    (change)="selectVoucher(voucher)" />
+                    [disabled]="!isVoucherUsable(voucher)" (change)="selectVoucher(voucher)" />
             </label>
         </div>
 

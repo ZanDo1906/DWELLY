@@ -8,6 +8,7 @@ db.connect();
 //Import Order model
 const Order = require('../models/Order');
 const Voucher = require('../models/Voucher');
+const Client = require('../models/Client');
 
 const ORDER_STATUSES = new Set([
     'Chờ duyệt',
@@ -102,11 +103,11 @@ router.get("/", (req, res) => {
 //get all orders (2) -> using async await
 router.get("/orders", async (req, res) => {
     try {
-            await applyOrderStatusMaintenance();
-            let orders = await Order.find({});
-            res.json(orders);
-    }catch (err) {
-        res.json({er: err.message});
+        await applyOrderStatusMaintenance();
+        let orders = await Order.find({});
+        res.json(orders);
+    } catch (err) {
+        res.json({ er: err.message });
     }
 });
 
@@ -114,7 +115,7 @@ router.get("/orders", async (req, res) => {
 router.get("/orders/:id", async (req, res) => {
     try {
         await applyOrderStatusMaintenance();
-        let  order = await Order.findOne({ Ma_don_mua: req.params.id });
+        let order = await Order.findOne({ Ma_don_mua: req.params.id });
         if (!order) {
             return res.status(404).json({ message: "Đơn hàng không tồn tại" });
         }
@@ -237,6 +238,22 @@ router.post('/orders', async (req, res) => {
             Ma_quan_tri_vien_duyet: payload.Ma_quan_tri_vien_duyet || undefined,
             updatedAt: new Date(),
         });
+
+        // Logged-in customers earn points: 0.1% of order value.
+        if (payload.Ma_khach_hang) {
+            const earnedPoints = Number(tongTien) * 0.001;
+
+            if (earnedPoints > 0) {
+                try {
+                    await Client.findOneAndUpdate(
+                        { Ma_khach_hang: payload.Ma_khach_hang },
+                        { $inc: { Tong_diem: earnedPoints }, $set: { updatedAt: new Date() } }
+                    );
+                } catch (pointsError) {
+                    console.error('Update loyalty points failed:', pointsError.message);
+                }
+            }
+        }
 
         res.status(201).json({ message: 'Tạo đơn hàng thành công', order: newOrder });
     } catch (err) {

@@ -122,6 +122,18 @@
     background-color: #F9F6F3;
 }
 
+.voucher-item.unavailable {
+    border-color: #D9D9D9;
+    background-color: #F3F3F3;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.voucher-item.unavailable:hover {
+    border-color: #D9D9D9;
+    background-color: #F3F3F3;
+}
+
 .voucher-icon {
     width: 48px;
     height: 48px;
@@ -136,6 +148,14 @@
 .voucher-icon i {
     font-size: 28px;
     color: #546745;
+}
+
+.voucher-item.unavailable .voucher-icon {
+    background-color: #ECECEC;
+}
+
+.voucher-item.unavailable .voucher-icon i {
+    color: #9A9A9A;
 }
 
 .voucher-info {
@@ -163,12 +183,25 @@
     margin: 0;
 }
 
+.voucher-rank-note {
+    font-size: 13px;
+    color: #9A9A9A;
+    margin: 8px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .voucher-item input[type="radio"] {
     width: 24px;
     height: 24px;
     cursor: pointer;
     accent-color: #546745;
     flex-shrink: 0;
+}
+
+.voucher-item.unavailable input[type="radio"] {
+    cursor: not-allowed;
 }
 
 .no-vouchers {
