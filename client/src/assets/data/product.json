@@ -415,7 +415,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "12",
-        "Ma_khong_gian": "1",
+        "Ma_khong_gian": "01",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 30
     },
@@ -436,7 +436,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "14",
-        "Ma_khong_gian": "1",
+        "Ma_khong_gian": "01",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 10
     },
@@ -457,7 +457,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "10",
-        "Ma_khong_gian": "4",
+        "Ma_khong_gian": "04",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 10
     },
@@ -478,7 +478,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "09",
-        "Ma_khong_gian": "4",
+        "Ma_khong_gian": "04",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 30
     },
@@ -499,7 +499,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "12",
-        "Ma_khong_gian": "4",
+        "Ma_khong_gian": "04",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 30
     },
@@ -520,7 +520,7 @@
         "Ma_loai_phong": "03",
         "Ma_phong_cach": "01",
         "Ma_danh_muc": "14",
-        "Ma_khong_gian": "4",
+        "Ma_khong_gian": "04",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 30
     },
@@ -541,7 +541,7 @@
         "Ma_loai_phong": "01",
         "Ma_phong_cach": "03",
         "Ma_danh_muc": "02",
-        "Ma_khong_gian": "3",
+        "Ma_khong_gian": "11",
         "Trang_thai": true,
         "Phan_tram_giam_gia": 10
     },
@@ -679,10 +679,10 @@
         "Kich_thuoc": "Thanh ngang ốp trần: 1.0 m; Chao đèn: Ø18 cm; Dây treo tối đa 1.2 m",
         "Chat_lieu": "Thép không gỉ mạ Chrome & Thủy tinh Opal mờ",
         "Hinh_anh": [
-            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh1.png",
-            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh2.png",
-            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh3.png",
-            "assets/images/product/PHONG_AN/style_modern/concept_3/sp1/anh4.png"
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp3/anh1.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp3/anh2.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp3/anh3.png",
+            "assets/images/product/PHONG_AN/style_modern/concept_3/sp3/anh4.png"
         ],
         "So_luong_ton_kho": 12,
         "Ma_loai_phong": "03",

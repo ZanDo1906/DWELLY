@@ -14,12 +14,12 @@
           />
         </a>
 
-        <!-- Navigation -->
-        <nav class="header-nav">
+        <!-- Desktop Navigation -->
+        <nav class="header-nav d-none d-lg-flex">
           <!-- <a href="#"><i class="bi bi-search"></i></a> -->
           <a  routerLink="/about-us" routerLinkActive="active">Giới thiệu</a>
           <a routerLink="/product-list" routerLinkActive="active" >Sản phẩm</a>
-          <a routerLink="/concept-list">Gợi ý không gian</a>
+          <a routerLink="/concept-list" (click)="clearConceptState()">Gợi ý không gian</a>
           <a routerLink="/room-visualizer">Trải nghiệm không gian</a>
           <a routerLink="/cart-page" class="cart-link">
             <i class="bi bi-cart"></i>
@@ -37,15 +37,62 @@
               data-bs-toggle="modal"
               data-bs-target="#loginModal"
             >
-              <i class="bi bi-person"></i> {{ displayName }}
             </button>
           </ng-template>
         </nav>
+
+        <!-- Mobile Actions -->
+        <div class="header-mobile-actions d-flex d-lg-none align-items-center gap-3">
+          <a routerLink="/cart-page" class="cart-link">
+            <i class="bi bi-cart"></i>
+            <span class="cart-count-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+          </a>
+          <button class="btn-mobile-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
         </div>
       </div>
     </div>
   </section>
 </header>
+
+<!-- Mobile Offcanvas Menu -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <div class="offcanvas-header pb-0">
+    <h5 class="offcanvas-title" id="mobileMenuLabel">
+      <img src="assets/images/logo/logo.png" alt="Dwelly" height="30" />
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="mobile-nav-list">
+      <ng-container *ngIf="isLoggedIn; else mobileLoginTrigger">
+        <a class="mobile-nav-item account-info" [routerLink]="['/user-layout/info']" (click)="closeMobileMenu()">
+          <i class="bi bi-person-circle"></i> Xin chào, {{ displayName }}
+        </a>
+      </ng-container>
+      <ng-template #mobileLoginTrigger>
+        <button
+          type="button"
+          class="mobile-nav-item account-info border-0 bg-transparent text-start w-100"
+          data-bs-toggle="modal"
+          data-bs-target="#loginModal"
+          (click)="closeMobileMenu()"
+        >
+          <i class="bi bi-person-circle"></i> Đăng nhập / Đăng ký
+        </button>
+      </ng-template>
+
+      <hr class="my-3">
+
+      <a routerLink="/about-us" routerLinkActive="active" class="mobile-nav-item" (click)="closeMobileMenu()">Giới thiệu</a>
+      <a routerLink="/product-list" routerLinkActive="active" class="mobile-nav-item" (click)="closeMobileMenu()">Sản phẩm</a>
+      <a routerLink="/concept-list" class="mobile-nav-item" (click)="clearConceptState(); closeMobileMenu()">Gợi ý không gian</a>
+      <a routerLink="/room-visualizer" class="mobile-nav-item" (click)="closeMobileMenu()">Trải nghiệm không gian</a>
+    </div>
+  </div>
+</div>
 
 <!-- <app-modal modalId="registerModal" [showHeader]="true">
   <app-register></app-register>

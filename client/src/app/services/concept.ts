@@ -5,10 +5,19 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 
 const baseUrl = "http://localhost:3000";
 
+export interface ConceptListState {
+  selectedRoomTypes: string[];
+  selectedStyles: string[];
+  displayedCount: number;
+  scrollPosition: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class Concept {
+  listState: ConceptListState | null = null;
+  
   constructor(private http: HttpClient) { }
   getConceptData(): Observable<iConcept[]> {
     return this.http

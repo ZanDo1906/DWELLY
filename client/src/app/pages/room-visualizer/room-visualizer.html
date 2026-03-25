@@ -61,13 +61,14 @@
                 </div>
 
                 <div class="filters-wrap">
-                  <div class="search-box">
-                    <span class="search-icon">⌕</span>
+                  <div class="search-wrapper">
                     <input
                       type="text"
+                      class="search-input"
                       [value]="searchTerm"
                       (input)="setSearchTerm($any($event.target).value)"
                       placeholder="Tìm kiếm" />
+                    <i class="bi bi-search"></i>
                   </div>
 
                   <div class="filter-dropdowns">

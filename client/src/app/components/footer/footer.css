@@ -67,3 +67,96 @@
   color: #6C5234;
   background-color: #FDF8F5;
 }
+
+/* =========================
+   BACK TO TOP BUTTON
+========================= */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #6C5234;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(108, 82, 52, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background-color: #4a3620;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(108, 82, 52, 0.4);
+}
+
+.back-to-top:active {
+  transform: translateY(0);
+}
+
+.back-to-top i {
+  font-size: 18px;
+  height: 20px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+  }
+  
+  .back-to-top span {
+    display: none; /* Hide text on mobile for small icon-only button */
+  }
+  
+  .back-to-top i {
+    margin-top: 0;
+  }
+}
+
+/* =========================
+   RESPONSIVE FOOTER STACKING
+========================= */
+@media (max-width: 768px) {
+  .site-footer {
+    text-align: center;
+  }
+  
+  .footer-title {
+    margin-top: 32px !important;
+  }
+  
+  .col-lg-4:first-child .footer-title {
+    margin-top: 16px !important; 
+  }
+  
+  .site-footer .d-flex.align-items-center.gap-3 {
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  
+  .footer-link {
+    padding: 6px 0;
+    display: inline-block;
+  }
+}

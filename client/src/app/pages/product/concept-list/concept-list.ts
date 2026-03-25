@@ -40,7 +40,14 @@ export class ConceptList implements OnInit {
   constructor(private conceptService: Concept, private bannerService: Banner) {}
 
   ngOnInit(): void {
-    this.loadConcepts();
+    const savedState = this.conceptService.listState;
+    if (savedState) {
+      this.selectedRoomTypes = new Set(savedState.selectedRoomTypes);
+      this.selectedStyles = new Set(savedState.selectedStyles);
+      this.displayedCount = savedState.displayedCount;
+    }
+
+    this.loadConcepts(savedState?.scrollPosition);
     this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
       const banner = banners
         .filter((b) => b.Trang_thai && (b.Trang === 'concept' || b.Trang === 'Gợi ý không gian'))
@@ -55,15 +62,30 @@ export class ConceptList implements OnInit {
     });
   }
 
-  loadConcepts(): void {
+  loadConcepts(scrollTo?: number): void {
     this.conceptService.getConceptData().subscribe(
       (data: iConcept[]) => {
         this.concepts = data;
+        if (scrollTo !== undefined) {
+          setTimeout(() => {
+            window.scrollTo({ top: scrollTo, behavior: 'instant' });
+          }, 150);
+          this.conceptService.listState = null;
+        }
       },
       (error) => {
         console.error('Error loading concepts:', error);
       }
     );
+  }
+
+  saveState(): void {
+    this.conceptService.listState = {
+      selectedRoomTypes: Array.from(this.selectedRoomTypes),
+      selectedStyles: Array.from(this.selectedStyles),
+      displayedCount: this.displayedCount,
+      scrollPosition: window.scrollY || document.documentElement.scrollTop
+    };
   }
 
   toggleRoomType(roomTypeId: string): void {

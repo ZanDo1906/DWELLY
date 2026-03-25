@@ -70,6 +70,7 @@ export const routes: Routes = [
             { path: 'notifications', component: Notifications }, 
             { path: 'orders', component: Orders }, 
             { path: 'order-detail', component: OrderDetail }, 
+            { path: 'order-detail/:id', component: OrderDetail },
             { path: 'returns', component: Returns}, 
             { path: 'reviews', component: Reviews}, 
             { path: 'wishlist', component: Wishlist}, 

@@ -52,6 +52,12 @@ export class Sidebar implements OnInit {
       this.currentUrl.includes('/product-form');
   }
 
+  isUsersActive(): boolean { return this.currentUrl.includes('/user'); }
+  isFaqsActive(): boolean { return this.currentUrl.includes('/faq'); }
+  isBlogsActive(): boolean { return this.currentUrl.includes('/blog'); }
+  isPromotionsActive(): boolean { return this.currentUrl.includes('/promotion'); }
+  isBannersActive(): boolean { return this.currentUrl.includes('/banner'); }
+
   @HostListener('window:admin-login')
   onAdminLogin(): void {
     this.refreshUserInfo();

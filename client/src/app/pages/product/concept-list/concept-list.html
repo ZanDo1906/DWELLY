@@ -4,11 +4,13 @@
       <div class="site-inner">
 
         <!-- BANNER -->
-  <div class="concept-banner" *ngIf="heroData">
-    <img [src]="heroData.backgroundImage" [alt]="heroData.title" class="banner-img">
-    <div class="banner-overlay">
-      <h1 class="banner-text">{{ heroData.title }}</h1>
-    </div>
+  <div class="concept-banner">
+    <ng-container *ngIf="heroData">
+      <img [src]="heroData.backgroundImage" [alt]="heroData.title" class="banner-img">
+      <div class="banner-overlay">
+        <h1 class="banner-text">{{ heroData.title }}</h1>
+      </div>
+    </ng-container>
   </div>
         <!-- FILTER SECTION -->
         <div class="filter-section">
@@ -89,7 +91,9 @@
 
         <!-- CONCEPT GRID -->
         <div class="concept-grid">
-          <div class="concept-card" *ngFor="let concept of displayedConcepts" [routerLink]="['/concept-detail', concept.Ma_khong_gian]">
+          <div class="concept-card" *ngFor="let concept of displayedConcepts" 
+               (click)="saveState()"
+               [routerLink]="['/concept-detail', concept.Ma_khong_gian]">
             <div class="concept-img-wrapper">
               <img [src]="concept.Hinh_anh" [alt]="concept.Ten_khong_gian" class="concept-img">
               <div class="concept-overlay">

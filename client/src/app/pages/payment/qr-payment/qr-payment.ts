@@ -31,6 +31,7 @@ export class QRPayment implements OnInit, OnDestroy {
   @Input() purchasedProductIds: string[] = [];
 
   showSuccessModal: boolean = false;
+  paymentCompleted: boolean = false;
   remainingTime = '10:00';
   private countdown: any;
   private secondsLeft = 600; // 10 minutes in seconds
@@ -86,6 +87,7 @@ export class QRPayment implements OnInit, OnDestroy {
         clearInterval(this.confirmTimer);
         this.confirmTimer = null;
         this.removePurchasedItemsFromCart();
+        this.paymentCompleted = true;
         this.showSuccessModal = true;
         setTimeout(() => {
           const modalEl = document.getElementById('successModal');
@@ -108,12 +110,27 @@ export class QRPayment implements OnInit, OnDestroy {
     this.close();
   }
 
+  hideSuccessModalOnly() {
+    const modalEl = document.getElementById('successModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+    this.showSuccessModal = false;
+  }
+
   trackOrder(): void {
     const isLoggedIn = !!localStorage.getItem('userId');
 
     if (!isLoggedIn) {
-      alert('Vui lòng đăng nhập để theo dõi đơn hàng.');
-      this.closeSuccessModal();
+      this.hideSuccessModalOnly();
+      setTimeout(() => {
+        const trackModalEl = document.getElementById('nonMemberTrackModal');
+        if (trackModalEl && (window as any).bootstrap?.Modal) {
+          const modal = (window as any).bootstrap.Modal.getOrCreateInstance(trackModalEl);
+          modal.show();
+        }
+      }, 300);
       return;
     }
 
@@ -128,6 +145,16 @@ export class QRPayment implements OnInit, OnDestroy {
 
   continueShopping(): void {
     this.closeSuccessModal();
+    this.router.navigate(['/product-list']);
+  }
+
+  continueShoppingFromTrack(): void {
+    const modalEl = document.getElementById('nonMemberTrackModal');
+    if (modalEl && (window as any).bootstrap?.Modal) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+      modal?.hide();
+    }
+    this.close();
     this.router.navigate(['/product-list']);
   }
 

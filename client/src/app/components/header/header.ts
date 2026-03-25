@@ -8,6 +8,7 @@ import { Register } from '../../pages/auth/register/register';
 import { Modal } from '../modal/modal';
 import { VerifyAccount } from '../../pages/auth/verify-account/verify-account';
 import { Cart } from '../../services/cart';
+import { Concept } from '../../services/concept';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,25 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private router: Router,
     private cartService: Cart,
+    private conceptService: Concept,
   ) {}
+
+  clearConceptState(): void {
+    this.conceptService.listState = null;
+    if (this.router.url === '/concept-list') {
+      window.location.reload();
+    }
+  }
+
+  closeMobileMenu(): void {
+    const offcanvasEl = document.getElementById('mobileMenu');
+    if (offcanvasEl) {
+      const bsOffcanvas = (window as any).bootstrap?.Offcanvas?.getInstance(offcanvasEl);
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.refreshDisplayName();

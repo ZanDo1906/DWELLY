@@ -399,7 +399,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom:0;
+  margin-bottom: 0;
   min-height: 72px;
 }
 

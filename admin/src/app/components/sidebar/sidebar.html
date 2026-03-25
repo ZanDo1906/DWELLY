@@ -28,7 +28,7 @@
         </a>
       </li>
       <li>
-        <a class="menu-item" routerLink="/user-list" routerLinkActive="active">
+        <a class="menu-item" routerLink="/user-list" [class.active]="isUsersActive()">
           <i class="bi bi-people"></i>
           <span>Quản lý khách hàng</span>
         </a>
@@ -46,25 +46,25 @@
         </a>
       </li>
       <li>
-        <a class="menu-item" routerLink="/faq-list" routerLinkActive="active">
+        <a class="menu-item" routerLink="/faq-list" [class.active]="isFaqsActive()">
           <i class="bi bi-question-circle"></i>
           <span>Quản lý FAQs</span>
         </a>
       </li>
       <li>
-        <a class="menu-item" routerLink="/blog-list" routerLinkActive="active">
+        <a class="menu-item" routerLink="/blog-list" [class.active]="isBlogsActive()">
           <i class="bi bi-journal-text"></i>
           <span>Quản lý Blogs</span>
         </a>
       </li>
       <li>
-        <a class="menu-item" routerLink="/promotion-list" routerLinkActive="active">
+        <a class="menu-item" routerLink="/promotion-list" [class.active]="isPromotionsActive()">
           <i class="bi bi-tag"></i>
           <span>Quản lý khuyến mãi</span>
         </a>
       </li>
       <li>
-        <a class="menu-item" routerLink="/banner-list" routerLinkActive="active">
+        <a class="menu-item" routerLink="/banner-list" [class.active]="isBannersActive()">
           <i class="bi bi-images"></i>
           <span>Quản lý Banner</span>
         </a>

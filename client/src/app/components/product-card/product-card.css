@@ -1,6 +1,6 @@
 .product-card {
   position: relative;
-  width: 263.5px;           
+  width: 263.5px;
   border-radius: 0px;
   overflow: hidden;
   background: #fff;
@@ -68,7 +68,7 @@
 
 .product-name {
   min-height: 40px;
-  font-size: 16px;    
+  font-size: 16px;
   font-weight: 600;
   color: #373737;
   margin-bottom: 6px;
@@ -86,7 +86,7 @@
 }
 
 .new-price {
-  font-size: 15px; 
+  font-size: 15px;
   font-weight: 600;
   color: #A34343;
 }
@@ -170,8 +170,46 @@
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateX(-50%) translateY(8px); }
-  15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-  85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-  100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  85% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+}
+
+.rating-score {
+  font-size: 11px;
+  color: #666;
+}
+
+.actions {
+  gap: 8px;
+}
+
+.actions i {
+  font-size: 16px;
+}
+
+.discount-tag {
+  font-size: 10px;
+  padding: 2px 5px;
+  top: 6px;
+  left: 6px;
+  border-radius: 4px;
+}
 }

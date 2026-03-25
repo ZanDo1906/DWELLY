@@ -407,6 +407,13 @@
 
 
 
+        <!-- Maintenance Modal -->
+        <app-maintenance-modal
+          *ngIf="isMaintenanceOpen"
+          [data]="selectedCareData"
+          (close)="closeMaintenanceModal()">
+        </app-maintenance-modal>
+
       </div>
     </div>
   </div>

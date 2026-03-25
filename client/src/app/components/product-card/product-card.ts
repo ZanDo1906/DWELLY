@@ -17,8 +17,8 @@ import { Product } from '../../services/product';
 })
 export class ProductCard implements OnInit {
   @Input() product!: iProduct;
-@Input() mainImage?: string;
- @Input() enableHover: boolean = true;
+  @Input() mainImage?: string;
+  @Input() enableHover: boolean = true;
 
   hover = false;
   currentImageIndex = 0;
@@ -26,7 +26,7 @@ export class ProductCard implements OnInit {
   reviews: iReview[] = [];
   averageRating = 0;
   heartActive = false;
-  
+
 
   showCartNotification = false;
 
@@ -36,7 +36,7 @@ export class ProductCard implements OnInit {
     private cartService: Cart,
     private productService: Product,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.product) {
@@ -51,41 +51,41 @@ export class ProductCard implements OnInit {
 
   isFavorite(productId: string): boolean {
 
-  const user = this.clientService.getCurrentUser();
-  if (!user || !user.favorites) return false;
+    const user = this.clientService.getCurrentUser();
+    if (!user || !user.favorites) return false;
 
-  return user.favorites.includes(productId);
+    return user.favorites.includes(productId);
 
-}
+  }
 
   toggleFavorite(event: Event, productId: string) {
 
-  event.preventDefault();
-  event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-  const user = this.clientService.getCurrentUser();
-  if (!user) return;
+    const user = this.clientService.getCurrentUser();
+    if (!user) return;
 
-  const maKhachHang = user.customerCode ?? user.Ma_khach_hang;
+    const maKhachHang = user.customerCode ?? user.Ma_khach_hang;
 
-  this.clientService.toggleFavorite(maKhachHang, productId)
-    .subscribe({
+    this.clientService.toggleFavorite(maKhachHang, productId)
+      .subscribe({
 
-      next: (res: any) => {
+        next: (res: any) => {
 
-        user.favorites = res.favorites;
+          user.favorites = res.favorites;
 
-        localStorage.setItem(
-          'current_user',
-          JSON.stringify(user)
-        );
+          localStorage.setItem(
+            'current_user',
+            JSON.stringify(user)
+          );
 
-      },
+        },
 
-      error: (err) => console.error(err)
+        error: (err) => console.error(err)
 
-    });
-}
+      });
+  }
   goToCart(event: Event) {
     event.preventDefault();
     event.stopPropagation();
@@ -94,11 +94,11 @@ export class ProductCard implements OnInit {
     this.showCartNotification = true;
     setTimeout(() => this.showCartNotification = false, 1500);
   }
-  
+
   isOutOfStock(): boolean {
     return this.product?.So_luong_ton_kho === 0;
   }
-  
+
   prevImage() {
     if (!this.product.Hinh_anh) return;
     this.currentImageIndex =

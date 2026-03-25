@@ -96,3 +96,83 @@
 .site-header.over-hero .header-nav i {
   color: #ffffff;
 }
+
+/* =========================
+   MOBILE ACTIONS & MENU
+========================= */
+.header-mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-mobile-actions .cart-link {
+  color: #6C5234;
+  text-decoration: none;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.btn-mobile-menu {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #6C5234;
+  font-size: 30px; /* Slightly larger for easier tapping */
+  display: flex;
+  align-items: center;
+}
+
+/* Over Hero Colors for Mobile */
+.site-header.over-hero .header-mobile-actions .cart-link,
+.site-header.over-hero .header-mobile-actions .btn-mobile-menu {
+  color: #ffffff;
+}
+
+/* Offcanvas Menu Styles */
+.offcanvas-body {
+  padding: 20px;
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Slight spacing between rows */
+}
+
+.mobile-nav-item {
+  text-decoration: none;
+  color: #373737;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 0; /* Tall enough target for touch */
+  border-bottom: 1px solid #f2f2f2;
+  transition: color 0.3s;
+}
+
+.mobile-nav-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item.active {
+  color: #6c5234;
+}
+
+.mobile-nav-item.account-info {
+  color: #6c5234;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: none;
+  padding-top: 5px;
+}
+
+.mobile-nav-item.account-info i {
+  font-size: 24px;
+}

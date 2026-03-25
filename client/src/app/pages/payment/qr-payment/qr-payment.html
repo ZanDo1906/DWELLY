@@ -1,4 +1,4 @@
-<div class="modal-overlay" *ngIf="!showSuccessModal" (click)="close()">
+<div class="modal-overlay" *ngIf="!paymentCompleted" (click)="close()">
     <div class="modal-box" (click)="$event.stopPropagation()">
 
         <h3 class="modal-title">QR THANH TOÁN</h3>
@@ -59,6 +59,23 @@
         <div class="success-buttons">
             <button class="btn-continue" (click)="continueShopping()">Tiếp tục mua sắm</button>
             <button class="btn-track" (click)="trackOrder()">Theo dõi đơn hàng</button>
+        </div>
+    </div>
+</app-modal>
+
+<!-- Non-Member Track Order Modal -->
+<app-modal modalId="nonMemberTrackModal" [showHeader]="false">
+    <div class="success-box p-4 text-center">
+        <div class="mb-3">
+             <i class="bi bi-envelope-check" style="font-size: 3rem; color: #6b5344;"></i>
+        </div>
+        <h3 class="success-title" style="margin-bottom: 15px;">Thông tin đơn hàng đã được gửi!</h3>
+        <p class="success-message" style="margin-bottom: 25px;">
+            Cảm ơn bạn đã tin tưởng DWELLY. Mọi thông tin chi tiết về đơn hàng của bạn đã được gửi đến <strong>Email</strong> và <strong>Số điện thoại</strong> bạn đã cung cấp.<br><br>
+            Vui lòng kiểm tra hộp thư đến (hoặc thư rác) để theo dõi tiến trình giao hàng nhé!
+        </p>
+        <div class="success-buttons" style="justify-content: center;">
+            <button class="btn-continue" style="width: 100%; max-width: 250px;" (click)="continueShoppingFromTrack()">Tiếp tục mua hàng</button>
         </div>
     </div>
 </app-modal>

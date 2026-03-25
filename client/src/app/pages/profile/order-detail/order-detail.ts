@@ -7,7 +7,7 @@ import { Client} from '../../../services/client';
 import { Order_Details } from '../../../services/order_details';
 import { Product } from '../../../services/product';
 import { Voucher } from '../../../services/voucher';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { iOrder } from '../../../interfaces/order';
 import { iClient } from '../../../interfaces/client';
 import { iVoucher } from '../../../interfaces/voucher';
@@ -31,6 +31,7 @@ export class OrderDetail implements OnInit {
   customerAddress = 'Chưa có';
   
   constructor(
+    private route: ActivatedRoute,
     private orderService: Order,
     private router: Router,
     private clientService: Client,
@@ -40,7 +41,14 @@ export class OrderDetail implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.orderId = localStorage.getItem('orderId') || '';
+    const idFromUrl = this.route.snapshot.paramMap.get('id');
+    if (idFromUrl) {
+      this.orderId = idFromUrl;
+      localStorage.setItem('orderId', idFromUrl);
+    } else {
+      this.orderId = localStorage.getItem('orderId') || '';
+    }
+
     if (this.orderId) {
       this.loadOrderInfo();
     }
