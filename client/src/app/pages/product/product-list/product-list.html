@@ -19,9 +19,13 @@
               <div class="filter-group">
                 <h6 class="filter-title">Loại phòng</h6>
                 <div class="filter-options">
-                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('02')" (change)="toggleRoomType('02')"> Phòng ngủ</label>
-                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('01')" (change)="toggleRoomType('01')"> Phòng khách</label>
-                  <label><input type="checkbox" [checked]="selectedRoomTypes.has('03')" (change)="toggleRoomType('03')"> Phòng ăn</label>
+                  <label *ngFor="let room of roomTypes">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedRoomTypes.has(room.Ma_loai_phong)"
+                      (change)="toggleRoomType(room.Ma_loai_phong)">
+                    {{ room.Ten_loai_phong }}
+                  </label>
                 </div>
               </div>
 
@@ -29,12 +33,13 @@
               <div class="filter-group">
                 <h6 class="filter-title">Loại sản phẩm</h6>
                 <div class="filter-options">
-                  <label><input type="checkbox" [checked]="selectedCategories.has('01')" (change)="toggleCategory('01')"> Sofa</label>
-                  <label><input type="checkbox" [checked]="selectedCategories.has('02')" (change)="toggleCategory('02')"> Bàn trà</label>
-                  <label><input type="checkbox" [checked]="selectedCategories.has('04')" (change)="toggleCategory('04')"> Tủ trang trí</label>
-                  <label><input type="checkbox" [checked]="selectedCategories.has('03')" (change)="toggleCategory('03')"> Kệ tivi</label>
-                  <label><input type="checkbox" [checked]="selectedCategories.has('14')" (change)="toggleCategory('14')"> Thảm</label>
-                  <label><input type="checkbox" [checked]="selectedCategories.has('17')" (change)="toggleCategory('17')"> Ghế đơn</label>
+                  <label *ngFor="let category of categories">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedCategories.has(category.Ma_danh_muc)"
+                      (change)="toggleCategory(category.Ma_danh_muc)">
+                    {{ category.Ten_danh_muc }}
+                  </label>
                 </div>
               </div>
 
@@ -42,9 +47,13 @@
               <div class="filter-group">
                 <h6 class="filter-title">Phong cách</h6>
                 <div class="filter-options">
-                  <label><input type="checkbox" [checked]="selectedStyles.has('01')" (change)="toggleStyle('01')"> Tối giản</label>
-                  <label><input type="checkbox" [checked]="selectedStyles.has('02')" (change)="toggleStyle('02')"> Hiện đại</label>
-                  <label><input type="checkbox" [checked]="selectedStyles.has('03')" (change)="toggleStyle('03')"> Bắc Âu</label>
+                  <label *ngFor="let style of styles">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedStyles.has(style.Ma_phong_cach)"
+                      (change)="toggleStyle(style.Ma_phong_cach)">
+                    {{ style.Ten_phong_cach }}
+                  </label>
                 </div>
               </div>
 
