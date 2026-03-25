@@ -145,7 +145,7 @@
     </div>
 
     <!-- Product item -->
-    <div class="review-product" *ngFor="let item of getVisibleItems(orderItem)">
+    <div class="review-product" *ngFor="let item of getDisplayedItems(orderItem)">
       <div class="thumb">
         <img 
           [src]="getProductImage(item.product)" 
@@ -163,8 +163,12 @@
     </div>
 
     <!-- Collapse -->
-    <div class="text-center collapse-toggle" *ngIf="getVisibleItems(orderItem).length > 2">
-      Thu gọn <i class="bi bi-chevron-up"></i>
+    <div
+      class="text-center collapse-toggle"
+      *ngIf="getVisibleItems(orderItem).length > 2"
+      (click)="toggleOrderExpand(orderItem)">
+      {{ isOrderExpanded(orderItem) ? 'Thu gọn' : 'Xem thêm' }}
+      <i class="bi" [ngClass]="isOrderExpanded(orderItem) ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
     </div>
 
     <!-- Footer -->
@@ -177,7 +181,7 @@
       <div class="actions">
         <button 
           class="btn btn-primary-custom"
-          *ngIf="!orderItem.hasReview"
+          *ngIf="!orderItem.isFullyReviewed"
           [disabled]="!orderItem.canReview"
           (click)="openReviewModal(orderItem)">
           Đánh giá

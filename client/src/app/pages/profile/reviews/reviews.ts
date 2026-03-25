@@ -15,7 +15,8 @@ import { iProduct } from '../../../interfaces/product';
 interface OrderItemWithReview {
   order: iOrder;
   items: (iOrderDetail & { product: iProduct })[];
-  hasReview: boolean;
+  hasReview: boolean; // Has at least one product review in this order
+  isFullyReviewed: boolean; // All products in this order are reviewed
   canReview: boolean; // Order completed and within 7 days
   reviewRatings: number[];
   productRatings: Record<string, number>;
@@ -35,6 +36,7 @@ interface ReviewViewItem {
 export class Reviews implements OnInit {
   orderWithReviews: OrderItemWithReview[] = [];
   filteredOrders: OrderItemWithReview[] = [];
+  expandedOrders: Set<string> = new Set();
   
   currentCustomerId: string = '';
   
@@ -91,8 +93,10 @@ export class Reviews implements OnInit {
   ): void {
     this.customerReviews = reviews.filter(r => r.Ma_khach_hang === this.currentCustomerId);
 
-    // Filter orders for current customer
-    const customerOrders = orders.filter(o => o.Ma_khach_hang === this.currentCustomerId);
+    // Only completed orders of current customer are shown on review page
+    const customerOrders = orders.filter(
+      o => o.Ma_khach_hang === this.currentCustomerId && o.Trang_thai === 'Hoàn thành'
+    );
 
     this.orderWithReviews = customerOrders.map(order => {
       // Get order details for this order
@@ -115,8 +119,11 @@ export class Reviews implements OnInit {
         productRatings[review.Ma_san_pham] = review.Diem_danh_gia;
       });
 
-      // Check if ALL products in the order have been reviewed
-      const hasReview = items.length > 0 && items.every(item =>
+      // Consider order reviewed if it has at least one reviewed product
+      const hasReview = customerOrderReviews.length > 0;
+
+      // Used to decide whether the order can still be reviewed further
+      const isFullyReviewed = items.length > 0 && items.every(item =>
         customerOrderReviews.some(r => r.Ma_san_pham === item.Ma_san_pham)
       );
 
@@ -129,6 +136,7 @@ export class Reviews implements OnInit {
         order,
         items,
         hasReview,
+        isFullyReviewed,
         canReview,
         reviewRatings,
         productRatings,
@@ -244,6 +252,27 @@ export class Reviews implements OnInit {
     return orderItem.items.filter(item =>
       orderItem.productRatings[item.Ma_san_pham] === this.selectedRatingFilter
     );
+  }
+
+  getDisplayedItems(orderItem: OrderItemWithReview): (iOrderDetail & { product: iProduct })[] {
+    const visibleItems = this.getVisibleItems(orderItem);
+    if (this.isOrderExpanded(orderItem)) {
+      return visibleItems;
+    }
+    return visibleItems.slice(0, 2);
+  }
+
+  isOrderExpanded(orderItem: OrderItemWithReview): boolean {
+    return this.expandedOrders.has(orderItem.order.Ma_don_mua);
+  }
+
+  toggleOrderExpand(orderItem: OrderItemWithReview): void {
+    const orderId = orderItem.order.Ma_don_mua;
+    if (this.expandedOrders.has(orderId)) {
+      this.expandedOrders.delete(orderId);
+      return;
+    }
+    this.expandedOrders.add(orderId);
   }
 
   getVisibleTotalPrice(orderItem: OrderItemWithReview): number {
@@ -506,7 +535,7 @@ export class Reviews implements OnInit {
   }
 
   get notReviewedCount(): number {
-    return this.orderWithReviews.filter(o => !o.hasReview && o.canReview).length;
+    return this.orderWithReviews.filter(o => !o.hasReview).length;
   }
 
   get reviewedCount(): number {
