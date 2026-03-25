@@ -6,6 +6,12 @@ import { iProduct } from '../../../interfaces/product';
 import { ProductCard } from '../../../components/product-card/product-card';
 import { Review } from '../../../services/review';
 import { iReview } from '../../../interfaces/review';
+import { Room } from '../../../services/room';
+import { Style } from '../../../services/style';
+import { Category } from '../../../services/category';
+import { iRoom } from '../../../interfaces/room';
+import { iStyle } from '../../../interfaces/style';
+import { iCategory } from '../../../interfaces/category';
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +22,9 @@ import { iReview } from '../../../interfaces/review';
 export class ProductList implements OnInit {
   products: iProduct[] = [];
   reviews: iReview[] = [];
+  roomTypes: iRoom[] = [];
+  styles: iStyle[] = [];
+  categories: iCategory[] = [];
   displayedCount: number = 9;
   itemsPerPage: number = 9;
   selectedRoomTypes: Set<string> = new Set();
@@ -28,11 +37,20 @@ export class ProductList implements OnInit {
   currentSort: string = 'price-asc';
   productRatings: Map<string, number> = new Map();
 
-  constructor(private productService: Product, private reviewService: Review) {}
+  constructor(
+    private productService: Product,
+    private reviewService: Review,
+    private roomService: Room,
+    private styleService: Style,
+    private categoryService: Category
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
     this.loadReviews();
+    this.loadRoomTypes();
+    this.loadStyles();
+    this.loadCategories();
   }
 
   loadProducts(): void {
@@ -54,6 +72,39 @@ export class ProductList implements OnInit {
       },
       (error) => {
         console.error('Error loading reviews:', error);
+      }
+    );
+  }
+
+  loadRoomTypes(): void {
+    this.roomService.getRoomData().subscribe(
+      (data: iRoom[]) => {
+        this.roomTypes = data;
+      },
+      (error) => {
+        console.error('Error loading room types:', error);
+      }
+    );
+  }
+
+  loadStyles(): void {
+    this.styleService.getStyleData().subscribe(
+      (data: iStyle[]) => {
+        this.styles = data;
+      },
+      (error) => {
+        console.error('Error loading styles:', error);
+      }
+    );
+  }
+
+  loadCategories(): void {
+    this.categoryService.getCategoryData().subscribe(
+      (data: iCategory[]) => {
+        this.categories = data;
+      },
+      (error) => {
+        console.error('Error loading categories:', error);
       }
     );
   }
