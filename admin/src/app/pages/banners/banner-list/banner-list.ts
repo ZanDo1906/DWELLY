@@ -37,11 +37,9 @@ export class BannerList implements OnInit {
 
   pageOptions: Array<{ label: string; value: string }> = [
     { label: 'Tất cả trang', value: 'all' },
-    { label: 'Trang chủ', value: 'home' },
-    { label: 'Giới thiệu', value: 'about' },
-    { label: 'Sản phẩm', value: 'product' },
-    { label: 'Khuyến mãi', value: 'promotion' },
-    { label: 'Liên hệ', value: 'contact' },
+    { label: 'Trang chủ', value: 'Trang chủ' },
+    { label: 'Giới thiệu', value: 'Giới thiệu' },
+    { label: 'Gợi ý không gian', value: 'Gợi ý không gian' },
   ];
 
   selectedIds = new Set<string>();
