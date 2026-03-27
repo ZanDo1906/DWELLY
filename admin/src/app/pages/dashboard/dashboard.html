@@ -4,13 +4,21 @@
             <div class="site-inner dashboard-page">
                 <h2 class="page-title">Dashboard</h2>
 
-                <div class="period-filter">
-                    <select class="period-select" [value]="selectedPeriod" (change)="onPeriodChange($event)">
-                        <option *ngFor="let option of periodOptions" [value]="option.key">
-                            {{ option.label }}
-                        </option>
-                    </select>
-                </div>
+                                <div class="period-filter">
+                                    <div class="dropdown-wrapper" (clickOutside)="closePeriodDropdownOnOutsideClick()">
+                                        <div class="dropdown-selected" (click)="togglePeriodDropdown($event)">
+                                            {{ selectedPeriodLabel }}
+                                            <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="periodDropdownOpen"></i>
+                                        </div>
+                                        <div class="dropdown-menu" *ngIf="periodDropdownOpen">
+                                            <div class="dropdown-item" *ngFor="let option of periodOptions"
+                                                (click)="selectPeriod(option.key, option.label, $event)"
+                                                [class.active]="selectedPeriod === option.key">
+                                                {{ option.label }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                 <div class="summary-grid">
                     <div class="summary-card summary-revenue">

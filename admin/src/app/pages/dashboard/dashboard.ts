@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { iCategory } from '../../interfaces/category';
 import { iOrderDetail } from '../../interfaces/order_details';
@@ -35,13 +35,33 @@ interface CategoryShareItem {
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, AfterViewInit, OnDestroy {
+  // ...existing properties...
+
+  ngAfterViewInit(): void {
+    document.addEventListener('click', this.handleDocumentClick);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.handleDocumentClick);
+  }
+
+  handleDocumentClick = (event: MouseEvent) => {
+    const dropdown = document.querySelector('.period-filter .dropdown-wrapper');
+    if (dropdown && !dropdown.contains(event.target as Node)) {
+      this.periodDropdownOpen = false;
+    }
+  };
   selectedPeriod: PeriodKey = 'this-week';
   periodOptions: { key: PeriodKey; label: string }[] = [
     { key: 'this-week', label: 'Tuần này' },
     { key: 'this-month', label: 'Tháng này' },
     { key: 'this-year', label: 'Năm này' },
   ];
+  periodDropdownOpen = false;
+  get selectedPeriodLabel(): string {
+    return this.periodOptions.find(opt => opt.key === this.selectedPeriod)?.label || '';
+  }
 
   dataLoaded = false;
 
@@ -89,10 +109,22 @@ export class Dashboard implements OnInit {
     });
   }
 
-  onPeriodChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedPeriod = target.value as PeriodKey;
-    this.refreshDashboard();
+  togglePeriodDropdown(event: Event): void {
+    event.stopPropagation();
+    this.periodDropdownOpen = !this.periodDropdownOpen;
+  }
+
+  selectPeriod(key: PeriodKey, label: string, event: Event): void {
+    event.stopPropagation();
+    if (this.selectedPeriod !== key) {
+      this.selectedPeriod = key;
+      this.refreshDashboard();
+    }
+    this.periodDropdownOpen = false;
+  }
+
+  closePeriodDropdownOnOutsideClick(): void {
+    this.periodDropdownOpen = false;
   }
 
   get donutBackground(): string {
