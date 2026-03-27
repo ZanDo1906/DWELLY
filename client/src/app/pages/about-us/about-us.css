@@ -24,16 +24,15 @@
   margin-bottom: 20px;
 }
 
-.aboutus-hero-section::before {
-  content: '';
+.aboutus-hero-bg-layer {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  height: 100%;
   background-image: var(--bg-image, url('../../../assets/images/banner/banner-aboutus.png'));
   background-size: cover;
   background-repeat: no-repeat;
@@ -46,9 +45,39 @@
   transition: opacity 1.2s ease, transform 1.6s ease;
  
 }
-.aboutus-hero-section.is-visible::before {
+
+.aboutus-hero-section.is-visible .aboutus-hero-bg-layer.active {
   opacity: 1;
   transform: scale(1);
+}
+
+.aboutus-hero-bg-layer.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.hero-indicators .indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-indicators .indicator.active {
+  background: white;
+  transform: scale(1.2);
 }
 
 
