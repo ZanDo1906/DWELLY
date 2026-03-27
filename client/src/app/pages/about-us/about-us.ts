@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Banner } from '../../services/banner';
 import { iBanner } from '../../interfaces/banner';
@@ -9,25 +9,69 @@ import { iBanner } from '../../interfaces/banner';
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })
-export class AboutUs implements OnInit, AfterViewInit {
+export class AboutUs implements OnInit, AfterViewInit, OnDestroy {
   heroData: any = null;
+  heroBanners: iBanner[] = [];
+  currentHeroIndex = 0;
+  heroInterval: any;
 
   constructor(private bannerService: Banner) {}
 
   ngOnInit() {
     this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
-      const banner = banners
+      this.heroBanners = banners
         .filter((b) => b.Trang_thai && (b.Trang === 'about' || b.Trang === 'Giới thiệu'))
-        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0))[0];
+        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0));
 
-      if (banner) {
-        this.heroData = {
-          title: banner.Tieu_de_chinh || banner.Tieu_de,
-          subtitle: banner.Tieu_de_phu,
-          backgroundImage: banner.Hinh_anh
-        };
+      if (this.heroBanners.length === 0) {
+        return;
+      }
+
+      this.updateHeroData();
+
+      if (this.heroBanners.length > 1) {
+        this.startHeroSlider();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.heroInterval) {
+      clearInterval(this.heroInterval);
+    }
+  }
+
+  private updateHeroData(): void {
+    const heroBanner = this.heroBanners[this.currentHeroIndex];
+    if (!heroBanner) {
+      return;
+    }
+
+    this.heroData = {
+      title: (heroBanner.Tieu_de_chinh || heroBanner.Tieu_de || '').trim(),
+      subtitle: (heroBanner.Tieu_de_phu || '').trim(),
+      backgroundImage: (heroBanner.Hinh_anh || '').trim(),
+    };
+  }
+
+  private startHeroSlider(): void {
+    if (this.heroInterval) {
+      clearInterval(this.heroInterval);
+    }
+
+    this.heroInterval = setInterval(() => {
+      this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroBanners.length;
+      this.updateHeroData();
+    }, 5000);
+  }
+
+  setHeroIndex(index: number): void {
+    this.currentHeroIndex = index;
+    this.updateHeroData();
+
+    if (this.heroBanners.length > 1) {
+      this.startHeroSlider();
+    }
   }
 
   // annimation banner

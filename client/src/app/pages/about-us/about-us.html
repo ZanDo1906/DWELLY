@@ -1,5 +1,13 @@
-<section class="aboutus-hero-section animate-on-scroll" data-animation="hero"
-         [style.--bg-image]="heroData?.backgroundImage ? 'url(' + heroData.backgroundImage + ')' : null">
+<section class="aboutus-hero-section animate-on-scroll" data-animation="hero">
+    <div *ngFor="let banner of heroBanners; let i = index"
+      class="aboutus-hero-bg-layer"
+      [class.active]="i === currentHeroIndex"
+      [style.background-image]="(banner.Hinh_anh && banner.Hinh_anh !== '') ? 'url(' + banner.Hinh_anh + ')' : 'url(assets/images/banner/banner-aboutus.png)'">
+    </div>
+    <div class="aboutus-hero-bg-layer active" *ngIf="heroBanners.length === 0"
+      style="background-image: url('assets/images/banner/banner-aboutus.png');">
+    </div>
+
     <div class="container-fluid aboutus-hero-content">
         <div class="px-4">
           <div class="hero-text text-center">
@@ -11,6 +19,14 @@
               <hr>
           </div>
         </div>
+    </div>
+
+    <div class="hero-indicators" *ngIf="heroBanners.length > 1">
+      <span *ngFor="let banner of heroBanners; let i = index"
+            class="indicator"
+            [class.active]="i === currentHeroIndex"
+            (click)="setHeroIndex(i)">
+      </span>
     </div>
 </section>
 

@@ -40,8 +40,6 @@ export class BannerForm implements OnChanges {
     { label: 'Trang chủ', value: 'Trang chủ' },
     { label: 'Giới thiệu', value: 'Giới thiệu' },
     { label: 'Gợi ý không gian', value: 'Gợi ý không gian' },
-    { label: 'Sản phẩm', value: 'Sản phẩm' },
-    { label: 'Liên hệ', value: 'Liên hệ' },
   ];
   overlayOptions: Array<{ label: string; value: 'none' | 'dark' | 'light' | 'gradient' | 'custom' }> = [
     { label: 'Nâu đậm (mặc định)', value: 'dark' },

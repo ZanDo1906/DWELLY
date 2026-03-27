@@ -13,9 +13,17 @@
 }
 
 .concept-banner .banner-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.concept-banner .banner-img.active {
+  opacity: 1;
 }
 
 .banner-overlay {
@@ -28,6 +36,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 .banner-text {
@@ -37,6 +46,30 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-align: center;
+}
+
+.hero-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.hero-indicators .indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-indicators .indicator.active {
+  background: #ffffff;
+  transform: scale(1.2);
 }
 
 /* FILTER SECTION */

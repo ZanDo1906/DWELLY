@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -13,8 +13,11 @@ import { iBanner } from '../../../interfaces/banner';
   templateUrl: './concept-list.html',
   styleUrl: './concept-list.css',
 })
-export class ConceptList implements OnInit {
+export class ConceptList implements OnInit, OnDestroy {
   heroData: any = null;
+  heroBanners: iBanner[] = [];
+  currentHeroIndex = 0;
+  heroInterval: any;
   concepts: iConcept[] = [];
   displayedCount: number = 6;
   itemsPerPage: number = 6;
@@ -49,17 +52,58 @@ export class ConceptList implements OnInit {
 
     this.loadConcepts(savedState?.scrollPosition);
     this.bannerService.getBannerData().subscribe((banners: iBanner[]) => {
-      const banner = banners
+      this.heroBanners = banners
         .filter((b) => b.Trang_thai && (b.Trang === 'concept' || b.Trang === 'Gợi ý không gian'))
-        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0))[0];
+        .sort((a, b) => Number(a.Thu_tu || 0) - Number(b.Thu_tu || 0));
 
-      if (banner) {
-        this.heroData = {
-          title: banner.Tieu_de_chinh || banner.Tieu_de,
-          backgroundImage: banner.Hinh_anh
-        };
+      if (this.heroBanners.length === 0) {
+        return;
+      }
+
+      this.updateHeroData();
+
+      if (this.heroBanners.length > 1) {
+        this.startHeroSlider();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.heroInterval) {
+      clearInterval(this.heroInterval);
+    }
+  }
+
+  private updateHeroData(): void {
+    const heroBanner = this.heroBanners[this.currentHeroIndex];
+    if (!heroBanner) {
+      return;
+    }
+
+    this.heroData = {
+      title: (heroBanner.Tieu_de_chinh || heroBanner.Tieu_de || '').trim(),
+      backgroundImage: (heroBanner.Hinh_anh || '').trim(),
+    };
+  }
+
+  private startHeroSlider(): void {
+    if (this.heroInterval) {
+      clearInterval(this.heroInterval);
+    }
+
+    this.heroInterval = setInterval(() => {
+      this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroBanners.length;
+      this.updateHeroData();
+    }, 5000);
+  }
+
+  setHeroIndex(index: number): void {
+    this.currentHeroIndex = index;
+    this.updateHeroData();
+
+    if (this.heroBanners.length > 1) {
+      this.startHeroSlider();
+    }
   }
 
   loadConcepts(scrollTo?: number): void {

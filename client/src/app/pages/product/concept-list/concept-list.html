@@ -5,12 +5,26 @@
 
         <!-- BANNER -->
   <div class="concept-banner">
-    <ng-container *ngIf="heroData">
-      <img [src]="heroData.backgroundImage" [alt]="heroData.title" class="banner-img">
-      <div class="banner-overlay">
-        <h1 class="banner-text">{{ heroData.title }}</h1>
-      </div>
-    </ng-container>
+    <img *ngFor="let banner of heroBanners; let i = index"
+         [src]="(banner.Hinh_anh && banner.Hinh_anh !== '') ? banner.Hinh_anh : 'assets/images/banner/bg_goiykhonggian.jpeg'"
+         [alt]="banner.Tieu_de_chinh || banner.Tieu_de || 'Gợi ý không gian'"
+         class="banner-img"
+         [class.active]="i === currentHeroIndex">
+    <img *ngIf="heroBanners.length === 0"
+         src="assets/images/banner/bg_goiykhonggian.jpeg"
+         alt="Gợi ý không gian"
+         class="banner-img active">
+
+    <div class="banner-overlay">
+      <h1 class="banner-text">{{ heroData?.title || 'GỢI Ý KHÔNG GIAN' }}</h1>
+    </div>
+
+    <div class="hero-indicators" *ngIf="heroBanners.length > 1">
+      <span *ngFor="let banner of heroBanners; let i = index"
+            class="indicator"
+            [class.active]="i === currentHeroIndex"
+            (click)="setHeroIndex(i)"></span>
+    </div>
   </div>
         <!-- FILTER SECTION -->
         <div class="filter-section">
