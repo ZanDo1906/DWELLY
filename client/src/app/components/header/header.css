@@ -64,10 +64,19 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  color: #6C5234;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  box-shadow: none;
 }
 
 .header-nav i {
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .cart-link {
