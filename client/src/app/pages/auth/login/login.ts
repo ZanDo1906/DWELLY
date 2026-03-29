@@ -49,7 +49,7 @@ export class Login implements AfterViewInit, OnDestroy {
       next: (res: any) => {
         this.clientService.saveLoginData(res);
         localStorage.setItem('token', res.token);
-        localStorage.setItem('userName', res.user.fullName);
+        localStorage.setItem('userName', res.user.fullName); // lấy đúng tên từ backend
         localStorage.setItem('userEmail', res.user.email);
         localStorage.setItem('userId', res.user.customerCode || res.user.id);
         localStorage.removeItem('userAvatar');

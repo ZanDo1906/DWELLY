@@ -17,6 +17,9 @@ import { Concept } from '../../services/concept';
   styleUrl: './header.css',
 })
 export class Header implements OnInit, AfterViewInit, OnDestroy {
+    private displayNameListener = () => {
+      this.refreshDisplayName();
+    };
   displayName = 'Tài khoản';
   isLoggedIn = false;
   isOverHero = false;
@@ -54,6 +57,9 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
       const uniqueProductIds = new Set(items.map((item) => item.productId));
       this.cartCount = uniqueProductIds.size;
     });
+
+    // Listen for display name update event
+    window.addEventListener('user-displayname-updated', this.displayNameListener);
   }
 
   scrollToTop(): void {
@@ -71,6 +77,8 @@ export class Header implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.routeSubscription?.unsubscribe();
     this.cartSubscription?.unsubscribe();
+
+    window.removeEventListener('user-displayname-updated', this.displayNameListener);
   }
 
   @HostListener('window:scroll')

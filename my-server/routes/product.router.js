@@ -26,6 +26,7 @@ const upload = require('../upload');
 //GET all products
 router.get('/products', async (req, res, next) => {
   try {
+    // Trả về toàn bộ sản phẩm (không lọc trạng thái)
     const products = await Product.find().sort({ createdAt: -1 });
     res.json(products);
   } catch (err) {

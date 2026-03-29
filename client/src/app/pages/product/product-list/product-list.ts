@@ -56,7 +56,8 @@ export class ProductList implements OnInit {
   loadProducts(): void {
     this.productService.getProductData().subscribe(
       (data: iProduct[]) => {
-        this.products = data;
+        // Chỉ hiển thị sản phẩm đang kinh doanh
+        this.products = data.filter(p => p.Trang_thai === true);
       },
       (error) => {
         console.error('Error loading products:', error);

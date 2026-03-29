@@ -14,6 +14,16 @@ import { phoneValidator } from '../../../validator/check.validator';
   styleUrl: './info.css',
 })
 export class Info implements OnInit {
+    private updateHeaderDisplayNameFromServer() {
+      this.clientService.getClientById(this.userId).subscribe({
+        next: (data) => {
+          this.userInfo = data;
+          localStorage.setItem('userName', this.userInfo?.Ho_va_ten || '');
+          localStorage.setItem('userAvatar', this.userInfo?.Anh_dai_dien || '');
+          window.dispatchEvent(new Event('user-displayname-updated'));
+        }
+      });
+    }
   isEditing = false;
   showPassword = false;
   toastMessage = '';
@@ -81,20 +91,16 @@ export class Info implements OnInit {
     };
 
     this.clientService.updateClient(this.userId, updateData).subscribe({
-      next: (response) => {
-        console.log('Update successful:', response);
+      next: () => {
         this.isEditing = false;
         this.isSaving = false;
-        // Update localStorage with new info
-        if (this.userInfo) {
-          localStorage.setItem('userAvatar', this.userInfo.Anh_dai_dien || '');
-        }
-        // Emit user-updated event for sidebar to reload
-        const event = new Event('user-updated');
-        window.dispatchEvent(event);
+        // Cập nhật lại header từ server (tránh undefined)
+        this.updateHeaderDisplayNameFromServer();
+        // Emit user-updated event cho sidebar
+        window.dispatchEvent(new Event('user-updated'));
         // Show success toast
         this.pushToast('Cập nhật thông tin thành công!', 'success');
-        // Reload user info to get updated data
+        // Reload user info để cập nhật giao diện
         this.loadUserInfo();
       },
       error: (err) => {
